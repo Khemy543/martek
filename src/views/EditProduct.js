@@ -29,12 +29,8 @@ function EditProduct(props) {
   const [description, setDescription] = React.useState('');
   const [isActive, setIsActive] = React.useState(false);
 
-  let user =1;
-  let all_data = JSON.parse(localStorage.getItem('ShopData'));
-
-  if(all_data !== null){
-    user = all_data[0];
-  }
+ 
+  let merchandiser = localStorage.getItem("shop_access_token")
 
   React.useEffect(()=>{
 
@@ -64,7 +60,7 @@ function EditProduct(props) {
        setIsActive(true);
     axios.post('https://martek.herokuapp.com/api/e-trader/product/'+props.location.state.id+'/update',
     {product_name, in_stock, price, description,category}, {
-      headers:{'Authorization':`Bearer ${user}`}
+      headers:{'Authorization':`Bearer ${merchandiser}`}
     }).then(res => {
         console.log(res.data)
         setIsActive(false)
@@ -162,7 +158,7 @@ function EditProduct(props) {
                   <Row>
                     <Col className="ml-auto mr-auto" md="6">
                       <Button className="btn-fill" color="info" block type="submit">
-                        Edit
+                        Save Changes
                       </Button>
                     </Col>
                   </Row>

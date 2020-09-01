@@ -43,17 +43,13 @@ function ExamplesNavbar() {
   const [loggedin , setLoggedin] = React.useState(false);
   
   const toggle = () => setDropdownOpen(prevState => !prevState);
-  
-  let user =1;
-  let all_data = JSON.parse(localStorage.getItem('ShopData'));
-  if(all_data !== null){
-    user = all_data[0];
-  }
+ 
+  let merchandiser = localStorage.getItem('shop_access_token')
 
   React.useEffect(()=>{
     
     axios.get("https://martek.herokuapp.com/api/merchandiser",{
-        headers:{ 'Authorization':`Bearer ${user}`}
+        headers:{ 'Authorization':`Bearer ${merchandiser}`}
 }
 )
 .then(res=>{
@@ -66,7 +62,7 @@ function ExamplesNavbar() {
 }).catch(error=>{
    
 })
-},[user]);
+},[merchandiser]);
 
 const Logout=(e)=>{
   document.documentElement.classList.toggle("nav-open");
@@ -74,7 +70,7 @@ const Logout=(e)=>{
   setNavbarCollapse(false);
 
   axios.post("https://martek.herokuapp.com/api/merchandiser/logout",null,{
-    headers:{ 'Authorization':`Bearer ${user}`}
+    headers:{ 'Authorization':`Bearer ${merchandiser}`}
   })
   .then(res=>{
     localStorage.removeItem("ShopData");
@@ -180,7 +176,7 @@ const Logout=(e)=>{
                 document.documentElement.classList.toggle("nav-open");
                 setDropdownOpen(false);
               }}><i className="fa fa-user"/> <Link to="/shop/settings">{company_name}</Link></ListGroupItem>
-            <ListGroupItem style={{border:"none", textAlign:"left"}} className="userdrop" onClick={Logout}><i className="fa fa-sign-out"/> <a href="#">LOGOUT</a></ListGroupItem>
+            <ListGroupItem style={{border:"none", textAlign:"left"}} className="userdrop" onClick={Logout}><i className="fa fa-sign-out"/> <a href="#">SIGN OUT</a></ListGroupItem>
             </ListGroup>
             </PopoverBody>
             </UncontrolledPopover>

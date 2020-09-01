@@ -16,11 +16,8 @@ import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
 
 
-let user =1;
-let all_data = JSON.parse(localStorage.getItem('ShopData'));
-if(all_data !== null){      
-  user = all_data[0];
-}
+
+let merchandiser = localStorage.getItem("shop_access_token")
 
 class ShopUploadImages extends React.Component{
 
@@ -47,7 +44,7 @@ class ShopUploadImages extends React.Component{
     axios({method:"post",
     url:"https://martek.herokuapp.com/api/e-trader/"+this.state.product_id+"/product-images",
     data:bodyFormData,
-    headers:{'Authorization':`Bearer ${user}`, "Content-Type":"mutipart/form-data"},
+    headers:{'Authorization':`Bearer ${merchandiser}`, "Content-Type":"mutipart/form-data"},
     onUploadProgress: (progressEvent) => {
         const {loaded , total} = progressEvent;
         let percentage = Math.floor(loaded * 100 / total);

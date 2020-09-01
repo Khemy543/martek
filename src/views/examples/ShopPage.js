@@ -56,18 +56,12 @@ function ShopPage(props) {
     }
   };
 
-  
-
-  let user =1;
-  let all_data = JSON.parse(localStorage.getItem('ShopData'));
-  if(all_data !== null){
-    user = all_data[0];
-  }
+let merchandiser = localStorage.getItem("shop_access_token")
   
   React.useEffect(()=>{
     setIsActive(true);
       axios.get("https://martek.herokuapp.com/api/merchandiser",{
-          headers:{ 'Authorization':`Bearer ${user}`}
+          headers:{ 'Authorization':`Bearer ${merchandiser}`}
   }
   )
   .then(res=>{
@@ -92,7 +86,7 @@ function ShopPage(props) {
       
   })
  
-},[user])
+},[merchandiser])
 
 
   document.documentElement.classList.remove("nav-open");

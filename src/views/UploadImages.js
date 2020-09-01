@@ -14,8 +14,8 @@ import DemoFooter from "../components/Footers/DemoFooter";
 import ImageUploader from 'react-images-upload';
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
-let user =null;
-let all_data = null
+
+
 class UploadImages extends React.Component {
     
     constructor(props) {
@@ -33,12 +33,7 @@ class UploadImages extends React.Component {
     }
 
     componentDidMount(){
-        
-       all_data = JSON.parse(localStorage.getItem('storageData'));
-        
-        if(all_data !== null){      
-            user = all_data[0];
-          }
+        let user = localStorage.getItem('access_token')
     }
 
     onDrop(picture) {
@@ -51,21 +46,17 @@ class UploadImages extends React.Component {
     
 
     handleSubmit=(e)=>{
-        all_data = JSON.parse(localStorage.getItem('storageData'));
-        
-        if(all_data !== null){      
-            user = all_data[0];
-          }
-          console.log(user)
-    e.preventDefault();
-    console.log(this.state.pictures.length);
-    const file = new Blob(this.state.pictures);
-    const bodyFormData = new FormData();
-    bodyFormData.set('product_images',file, file.filename);
+        let user = localStorage.getItem('access_token')      
+        console.log(user)
+        e.preventDefault();
+        console.log(this.state.pictures.length);
+        const file = new Blob(this.state.pictures);
+        const bodyFormData = new FormData();
+        bodyFormData.set('product_images',file, file.filename);
 
-    const options = {
-        
-    }
+        const options = {
+            
+        }
 
     axios({
             method:'post',

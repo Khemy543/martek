@@ -29,7 +29,7 @@ import {
   Row,
   Input,
   Col, Card, CardBody,CardTitle, Spinner,
-  InputGroup,InputGroupAddon,InputGroupText
+  InputGroup,InputGroupAddon,InputGroupText,Modal,ModalBody, ModalFooter,ModalHeader
 } from "reactstrap";
 
 import axios from "axios";
@@ -60,13 +60,11 @@ function ShopView(props) {
   const [unfollowDisable , setUnfollowDisable] =React.useState(false);
   const [reviews, setReviews] = React.useState([]);
   const [reviewAdd, setReview] = React.useState("");
-  const [rating, setRating] = React.useState(0)
+  const [rating, setRating] = React.useState(0);
+  const [average, setAverage] = React.useState(0);
+  const [reportmodal, setReportmodal] = React.useState(false);
   
-  let user=null;
-  let all_data = JSON.parse(localStorage.getItem('storageData'));
-        if(all_data !== null){
-          user = all_data[0];
-        }
+  let user = localStorage.getItem('access_token')
 
   const toggle = tab => {
     if (activeTab !== tab) {
@@ -83,8 +81,8 @@ function ShopView(props) {
         .catch(error=>{
         });
 
-        let all_data = JSON.parse(localStorage.getItem('storageData'));
-        if(all_data !== null){
+        let authenticated = localStorage.getItem('access_token')
+        if(authenticated !== null){
          setLoggedIn(true);
         }
         else{
@@ -121,7 +119,7 @@ function ShopView(props) {
 },[props.location.state.id]);
 
 const postReview=()=>{
-  if(reviewAdd !== ""){
+  if(reviewAdd !== "" || rating !== 0){
   setIsActive(true)
   axios.post("https://martek.herokuapp.com/api/add-shop/reviews",
     {
@@ -234,6 +232,8 @@ const changeRating=( newRating )=> {
               <div></div> 
                }
                </div>
+               <br/>
+               <span style={{color:"red", fontSize:"12px", fontWeight:600, cursor:"pointer"}} onClick={()=>setReportmodal(true)}>REPORT</span>
               </Col>
 
             </Row> 
@@ -333,7 +333,7 @@ const changeRating=( newRating )=> {
                       starDimension="15px"
                       starSpacing="2px"
                       />
-                  <p style={{fontSize:"10px"}}>08/15/2020</p>
+                  <p style={{fontSize:"10px"}}>{value.date}</p>
                   <p style={{fontWeight:400}}>{value.review}</p>
                   </Col>
                 </Row>
@@ -377,6 +377,23 @@ const changeRating=( newRating )=> {
           </TabContent>
         </Container>
       </div>
+      <Modal isOpen={reportmodal}>
+            <ModalHeader>
+                Report Shop
+            </ModalHeader>
+            <ModalBody>
+            <Row>
+                <Col md="12">
+                <Input type="textarea" placeholder="report message..."/>
+
+                </Col>
+            </Row>
+            </ModalBody>
+            <ModalFooter style={{border:"none",marginBottom:"20px", marginRight:"15px"}}>
+                <Button color="info">Report</Button>
+                <Button color="danger" onClick={()=>setReportmodal(false)}>Close</Button>
+            </ModalFooter>
+        </Modal>
       </LoadingOverlay>
     </div>
   );

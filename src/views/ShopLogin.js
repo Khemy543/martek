@@ -111,10 +111,7 @@ export default function ShopLoginPage(props) {
   }).then(res => {
     console.log(res.data)
     if(res.data.statusCode === 200){
-        const token_data  = res.data.access_token;
-        const loggedin = true;
-        storageData.push(token_data,loggedin)
-        localStorage.setItem('ShopData',JSON.stringify(storageData));
+        localStorage.setItem('shop_access_token', res.data.access_token)
         setIsActive(false)
         history.push("/shop/shop-page")
     }

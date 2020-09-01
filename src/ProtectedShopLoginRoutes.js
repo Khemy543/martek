@@ -5,7 +5,7 @@ class ProtectedShopLoginRoute extends React.Component {
 
     render() {
         const Component = this.props.component;
-        const isAuthenticated = localStorage.getItem('ShopData')
+        const isAuthenticated = localStorage.getItem('shop_access_token')
         
        
         if(isAuthenticated === null){

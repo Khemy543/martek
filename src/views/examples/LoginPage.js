@@ -61,12 +61,8 @@ function LoginPage(props){
     config, email, password
   }).then(res => {
     if(res.data.statusCode === 200){
-        const token_data  = res.data.access_token;
-        const token_expire = res.data.expires_in;
-        const loggedin = true;
-        storageData.push(token_data,loggedin,token_expire)
-        localStorage.setItem('storageData',JSON.stringify(storageData));
-        window.location.reload("/");
+        localStorage.setItem('access_token',res.data.access_token);
+        window.location.reload("/")
         setIsActive(false);
         
     }

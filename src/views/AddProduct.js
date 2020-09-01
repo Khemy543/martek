@@ -31,12 +31,7 @@ function AddProduct(){
   const [description, setDescription] = React.useState('');
   const [isActive , setIsAcitve] = React.useState(false);
 
-  let user =1;
-  let all_data = JSON.parse(localStorage.getItem('storageData'));
-
-  if(all_data !== null){
-    user = all_data[0];
-  }
+  let user = localStorage.getItem('access_token')
 
 
 

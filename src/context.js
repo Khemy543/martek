@@ -58,41 +58,25 @@ class ProductProvider extends React.Component{
         this.setState({modal:!this.state.modal}) 
     }
     componentWillMount(){
-        let all_data = JSON.parse(localStorage.getItem('storageData'));
-        
-        if(all_data !== null){
-          user = all_data[0];
-        }
+        user = localStorage.getItem('access_token')
         user_id = localStorage.getItem("user_id");
+        
     }
     
     componentWillUpdate(){
-        let all_data = JSON.parse(localStorage.getItem('storageData'));
-
-        
-        if(all_data !== null){
-          user = all_data[0];
-        }
+        user = localStorage.getItem('access_token')
         user_id = localStorage.getItem("user_id");
 
     }
 
     componentDidUpdate(){
-        let all_data = JSON.parse(localStorage.getItem('storageData'));
-        
-        if(all_data !== null){
-          user = all_data[0];
-        }
+        user = localStorage.getItem('access_token')
         user_id = localStorage.getItem("user_id");
 
     }
 
     componentDidMount(){
-        let all_data = JSON.parse(localStorage.getItem('storageData'));
-        
-        if(all_data !== null){
-          user = all_data[0];
-        }
+        user = localStorage.getItem('access_token')
         user_id = localStorage.getItem("user_id");
 
 
@@ -468,16 +452,13 @@ this.setState(()=>{
 }
 
     isTokenExpired() {
-        let all_data = JSON.parse(localStorage.getItem('storageData'));
-        
-        if(all_data !== null){
-          user = all_data[0];
-        }
-        console.log("token:",user)
+        user = localStorage.getItem('access_token');
         try {
-            const decoded = decode(user);
-            if (decoded.exp < Date.now() / 1000) { // Checking if token is expired.
+            const decoded = decode(user);/* 
+            console.log(decoded.exp, (Date.now()/1000)-120) */
+            if (decoded.exp < (Date.now() / 1000)) { // Checking if token is expired.
                 localStorage.clear();
+                window.location.reload("/")
             }
         }
         catch (err) {
@@ -532,11 +513,7 @@ this.setState(()=>{
 
 
     follow = (id)=>{
-        let all_data = JSON.parse(localStorage.getItem('storageData'));
-        
-        if(all_data !== null){
-          user = all_data[0];
-        }
+        user = localStorage.getItem('access_token')
     
            axios.post("https://martek.herokuapp.com/api/follow/"+id+"/shop",null,{headers:{
             "Authorization":`Bearer ${user}`}})
@@ -558,11 +535,7 @@ this.setState(()=>{
         }
 
     unfollow=(id)=>{
-        let all_data = JSON.parse(localStorage.getItem('storageData'));
-        
-        if(all_data !== null){
-          user = all_data[0];
-        }
+        user = localStorage.getItem('access_token')
         this.setState({loader:true})
         axios.post("https://martek.herokuapp.com/api/unfollow/"+id+"/shop",null,{headers:{
             "Authorization":`Bearer ${user}`}})
@@ -592,11 +565,7 @@ this.setState(()=>{
     
 //logout
 logout = ()=>{
-    let all_data = JSON.parse(localStorage.getItem('storageData'));
-    
-    if(all_data !== null){
-      user = all_data[0];
-    }
+    user = localStorage.getItem('access_token')
     this.setState({spinner:true});
     axios.post("https://martek.herokuapp.com/api/auth/logout", null, {
         headers:{'Authorization':`Bearer ${user}`}

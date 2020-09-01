@@ -12,30 +12,26 @@ import{
 } from "reactstrap";
 
 // core components
-import ExamplesNavbar from "../components/Navbars/ExamplesNavbar.js";
-import DemoFooter from "../components/Footers/DemoFooter";
-import Product from "../components/Product.js";
 import axios from 'axios';
 //import history from "../history.js";
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
+import StarRatings from 'react-star-ratings';
 
 //context
 import { ProductConsumer } from "../context";
-let user =null;
 
 function ShopDetailsPage(props){
     const [popoverOpen, setPopoverOpen] = React.useState(false);
     const [product, setProduct] = React.useState([]);
     const [owner ,setOwner] = React.useState([]);
     const [isActive, setIsActive] = React.useState(false);
+    const [reviews,setReviews] = React.useState([])
     
+    
+    let merchandiser = localStorage.getItem("shop_access_token")
 
     React.useEffect(()=>{
-        let all_data = JSON.parse(localStorage.getItem('ShopData'));
-        if(all_data !== null){
-          user = all_data[0];
-        }
           setIsActive(true);
           axios.get("https://martek.herokuapp.com/api/product/"+props.location.state.id+"/details")
           .then(res=>{
@@ -45,14 +41,27 @@ function ShopDetailsPage(props){
               setIsActive(false)
           })
           .catch(error=>{
-          })},[props.location.state.id]);
+          });
+
+
+          axios.get("https://martek.herokuapp.com/api/product/"+props.location.state.id+"/reviews")
+            .then(res=>{
+                console.log(res.data);
+                setReviews(res.data)
+
+            })
+            .catch(error=>{
+                console.log(error)
+            })
+        
+        },[props.location.state.id]);
 
     const toggle = () => setPopoverOpen(!popoverOpen);
 
     const handleDelete=()=>{
         setIsActive(true)
         axios.delete("https://martek.herokuapp.com/api/e-trader/product/"+props.location.state.id+"/delete",{
-            headers:{"Authorization":`Bearer ${user}`}
+            headers:{"Authorization":`Bearer ${merchandiser}`}
         })
         .then(res=>{
             props.history.push("/shop/shop-page");
@@ -174,29 +183,53 @@ function ShopDetailsPage(props){
                                     </Card>
                             </Col>
                             </Row>
-                            <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px", marginTop:"20px"}}>
+
+                            <Row style={{ marginTop:"20px"}}>
+                            <h4 style={{marginBottom:"20px", marginLeft:"20px"}}>REVIEWS</h4>
                             <Col md="12">
-                                <Card className="card-plain">
-                                    <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
-                                        <h4 style={{fontSize:"18px"}}>RELATED ITEMS</h4>
-                                        </CardTitle>
-                                    <CardBody>
-                                    <Row>
-                                    <ProductConsumer>
-                                        {
-                                            value => {
-                                                return value.products.map(product => {
-                                                    return <Product key={product.id} product={product}/>;
-                                                })
-                                            }
-                                        }
-                                        </ProductConsumer>
-                                        </Row>
-                                        </CardBody>
-                                    </Card>
+                            {reviews.length <=0 ?
+                            <Row>
+                                <Col md="6" className="ml-auto mr-auto">
+                                    <h4 style={{textAlign:"center",marginBottom:"10px"}}>No Reviews</h4>
+                                </Col>
+                            </Row>
+                            :
+                            <Row>
+                            <Col md="6" className="ml-auto mr-auto" style={{maxHeight:"50vh",overflowY:"scroll"}}>
+                            {reviews.map(value=>(
+                                <Row style={{borderBottom:"1px solid #F1EAE0",marginBottom:"10px"}}>
+                                <Col md="3" sm="3" xs="3" lg="3" className="ml-auto mr-auto">
+                                <div className="avatar">
+                                <img
+                                    alt="#"
+                                    className="img-circle img-no-padding img-responsive"
+                                    src={require("../assets/img/new_logo.png")}
+                                    style={{border:"1px solid #eaeaea"}}
+                                />
+                                </div>
+                                </Col>
+                                <Col md="9" sm="9" xs="9" lg="9" style={{textAlign:"left"}}>
+                                <h5 style={{marginTop:"0px", fontWeight:"bold", marginBottom:"-4px"}}>{value.user.name}</h5>
+                                <StarRatings
+                                    rating={value.rating}
+                                    starRatedColor="#D4AF37"
+                                    numberOfStars={5}
+                                    name='rating'
+                                    starDimension="15px"
+                                    starSpacing="2px"
+                                    />
+                                <p style={{fontSize:"10px"}}>08/15/2020</p>
+                                <p style={{fontWeight:400}}>{value.review}</p>
+                                </Col>
+                                </Row>
+                            ))}
                             </Col>
                             </Row>
-                                    </Container>
+                            }
+                            </Col>
+                            </Row>
+                            
+                            </Container>
 
                                 )}
                         </ProductConsumer>

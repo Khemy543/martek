@@ -17,6 +17,8 @@ import UserLayout from "./layouts/userLayout.js";
 import ShopLayout from "./layouts/shopLayout.js";
 import AuthLayout from "./layouts/authLayout.js";
 import VerificationLayout from "./layouts/verificationLayout.js";
+import UserDetails from "views/Payment/UserDetails";
+import AccountDetails from "views/Payment/AccountDetails";
 
 
 
@@ -33,6 +35,8 @@ const Routes = () => {
             <Route path="/shop" render={props => <ShopLayout {...props} />} />
             <Route path="/auth" render={props => <AuthLayout {...props} />} />
             <Route path="/api/auth" render={props => <VerificationLayout {...props} />} />
+            <Route exact path="/payment/information" component={UserDetails} />
+            <Route exact path="/payment/account-details" component={AccountDetails} />
             <Redirect from= "/" to="/user/home" />
             <Route exact path="*" component={ PageNotFound } />
               

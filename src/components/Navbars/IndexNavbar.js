@@ -79,13 +79,14 @@ function IndexNavbar(props) {
   
   
 
-  React.useEffect(()=>{
-    let user =1;
-    let all_data = JSON.parse(localStorage.getItem('storageData'));
-    if(all_data !== null){
-      user = all_data[0];
-    }
-      
+React.useEffect(()=>{
+ let user = localStorage.getItem('access_token');
+
+  if(localStorage.getItem('access_token') !== null){
+    setLoggedin(true);
+  }else{
+    setLoggedin(false);
+  }
       axios.get("https://martek.herokuapp.com/api/auth/user",{
           headers:{ 'Authorization':`Bearer ${user}`}
   }
@@ -94,7 +95,6 @@ function IndexNavbar(props) {
       if(res.data!== null){
         localStorage.setItem("user_id",res.data.id);
         setName(res.data.name);
-        setLoggedin(true);
       }
   }).catch(error=>{
   });
@@ -313,9 +313,14 @@ function IndexNavbar(props) {
                   <ListGroupItem style={{border:"none", textAlign:"left"}} className="userdrop" onClick={() => {
                 document.documentElement.classList.toggle("nav-open");
                 setDropdownOpen(false);
+              }}><i className="fa fa-tablet"/> <Link to="/user/products">My Products</Link></ListGroupItem>
+
+              <ListGroupItem style={{border:"none", textAlign:"left"}} className="userdrop" onClick={() => {
+                document.documentElement.classList.toggle("nav-open");
+                setDropdownOpen(false);
               }}><i className="fa fa-users"/> <Link to="/user/following">Following <Badge color="danger">{value.followShops.length}</Badge></Link></ListGroupItem>
                   <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop" onClick={()=>{value.logout(); document.documentElement.classList.toggle("nav-open");
-                setDropdownOpen(false); }}><i className="fa fa-sign-out"/> LOGOUT</ListGroupItem>
+                setDropdownOpen(false); }}><i className="fa fa-sign-out"/> SIGN OUT</ListGroupItem>
                   </ListGroup>
                   </PopoverBody>
                   </UncontrolledPopover>
@@ -393,14 +398,16 @@ function IndexNavbar(props) {
               </NavLink>
             </NavItem>
             <Collapse isOpen={campusCollapse}>
-            {campusList.map((campus,index)=>(
-              <div>
+            {campusList.map((value,index)=>(
+              <div key={index}>
               <NavLink style={{fontWeight:600, fontSize:"12px", lineHeight:"1.5em", color:"#9A9A9A"}} className="text-uppercase"
-              onClick={()=>{history.push(`/user/campus-home/${campus.campus}`,{id:campus.id}); document.documentElement.classList.toggle("nav-open");setNavbarCollapse(false)}}
-              tag={Naver}
-              activeClassName="active"
+              onClick={()=>{
+                history.push("/user/campus-home/"+value.campus+"",{id:value.id}); 
+                document.documentElement.classList.toggle("nav-open");
+                setNavbarCollapse(false)
+                }}
               >
-              <i className="fa fa-graduation-cap mr-3"/> {campus.campus}
+              <i className="fa fa-graduation-cap mr-3"/> {value.campus}
               </NavLink>
             </div>
           ))}
@@ -460,7 +467,7 @@ function IndexNavbar(props) {
                 setNavbarCollapse(false);
               }}
               >
-              <i className="fa fa-sign-out mr-3"/> logout
+              <i className="fa fa-sign-out mr-3"/> Sign Out
               </NavLink>
             </NavItem>
             </>}

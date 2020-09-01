@@ -43,11 +43,8 @@ function DemoFooter() {
   
   const toggle =() => setModal(!modal);
   const toggleAlertModal =() => setAlertModal(!alertModal);
-  let user =null;
-  let all_data = JSON.parse(localStorage.getItem('storageData'));
-  if(all_data !== null){
-    user = all_data[0];
-  }
+ 
+  let user = localStorage.getItem('access_token');
   
   React.useEffect(()=>{
     axios.get("https://martek.herokuapp.com/api/auth/user",{

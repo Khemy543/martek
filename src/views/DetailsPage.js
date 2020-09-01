@@ -10,7 +10,7 @@ import{
     CardBody,
     Modal,
     ModalBody, ModalHeader, Button,
-    InputGroupText,InputGroupAddon,Input,InputGroup
+    InputGroupText,InputGroupAddon,Input,InputGroup,ModalFooter
 } from "reactstrap";
 import axios from "axios";
 import StarRatings from 'react-star-ratings';
@@ -22,11 +22,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 //context
 import { ProductConsumer } from "../context";
 
-let user=null;
-  let all_data = JSON.parse(localStorage.getItem('storageData'));
-        if(all_data !== null){
-          user = all_data[0];
-        }
+let user = localStorage.getItem('access_token')
 
 class DetailsPage extends React.Component{
     state={
@@ -38,7 +34,9 @@ class DetailsPage extends React.Component{
         reviews:[],
         reviewAdd:"",
         loggedin:false,
-        rating:0
+        rating:0,
+        reportmodal:false,
+        average:0
     }
     
      toggle = () => this.setState({modal:!this.state.modal});
@@ -56,15 +54,18 @@ class DetailsPage extends React.Component{
             axios.get("https://martek.herokuapp.com/api/product/"+this.props.location.state.id+"/reviews")
             .then(res=>{
                 console.log(res.data);
-                this.setState({reviews:res.data})
+                this.setState({reviews:res.data.product_reviews});
+                if(res.data.average_rating !== null){
+                    this.setState({average:Math.round(res.data.average_rating)})
+                }
 
             })
             .catch(error=>{
                 console.log(error)
             })
 
-            let all_data = JSON.parse(localStorage.getItem('storageData'));
-        if(all_data !== null){
+        let authenticated = localStorage.getItem('access_token');
+        if(authenticated !== null){
          this.setState({loggedin:true});
         }
         else{
@@ -73,7 +74,7 @@ class DetailsPage extends React.Component{
         }
 
         postReview=()=>{
-            if(this.state.reviewAdd !== ""){
+            if(this.state.reviewAdd !== "" || this.state.rating !== 0){
             this.setState({isActive:true})
             axios.post("https://martek.herokuapp.com/api/add-product/reviews",
             {
@@ -158,7 +159,7 @@ class DetailsPage extends React.Component{
                                                 </Col>
                                                 <Col  md="6" sm="6" xs="6" lg="6">
                                                 <StarRatings
-                                                rating={4}
+                                                rating={this.state.average}
                                                 starRatedColor="#CFB53B"
                                                 numberOfStars={5}
                                                 name='rating'
@@ -210,7 +211,9 @@ class DetailsPage extends React.Component{
                                         onClick={()=>this.setState({modal:true})}
                                         >
                                             buy now
-                                            </Button>
+                                        </Button>
+                                        <br/>
+                                        <span style={{color:"red", fontSize:"12px", fontWeight:600, cursor:"pointer"}} onClick={()=>this.setState({reportmodal:true})}>REPORT</span>
                                             <Modal isOpen={this.state.modal} toggle={this.toggle}>
                                             <ModalHeader>
                                                     Seller's Information
@@ -323,7 +326,7 @@ class DetailsPage extends React.Component{
                                     starDimension="15px"
                                     starSpacing="2px"
                                     />
-                                <p style={{fontSize:"10px"}}>08/15/2020</p>
+                                <p style={{fontSize:"10px"}}>{value.date}</p>
                                 <p style={{fontWeight:400}}>{value.review}</p>
                                 </Col>
                                 </Row>
@@ -365,6 +368,23 @@ class DetailsPage extends React.Component{
                                     </Container>
                             )}
                         </ProductConsumer>
+                        <Modal isOpen={this.state.reportmodal}>
+                            <ModalHeader>
+                                Report Item
+                            </ModalHeader>
+                            <ModalBody>
+                            <Row>
+                                <Col md="12">
+                                <Input type="textarea" placeholder="report message..."/>
+
+                                </Col>
+                            </Row>
+                            </ModalBody>
+                            <ModalFooter style={{border:"none",marginBottom:"20px", marginRight:"15px"}}>
+                                <Button color="info">Report</Button>
+                                <Button color="danger" onClick={()=>this.setState({reportmodal:false})}>Close</Button>
+                            </ModalFooter>
+                        </Modal>
                         </div>
                     </div>
                     </LoadingOverlay>

@@ -12,8 +12,8 @@ const {increment, decrement, removeItem } = value;
                 <img
                 className="image-fluid"
                 alt="#"
-                src={img}
-                style={{height:"5rem", width:'5rem'}}
+                src={require("../../assets/img/phone.png")}
+                style={{height:"4.5rem", width:'4.5rem'}}
                 
                 />
                 

@@ -15,8 +15,8 @@ function ShopCard(props){
         const [loggedIn, setLoggedIn] = React.useState(false);
         const {id , shop_id, company_name ,shop_name, company_description } = props.shop;
         React.useEffect(()=>{
-            let all_data = JSON.parse(localStorage.getItem('storageData'));
-            if(all_data !== null){
+            let authenticated = localStorage.getItem('access_token');
+            if(authenticated !== null){
              setLoggedIn(true);
             }
             else{

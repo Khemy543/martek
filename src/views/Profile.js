@@ -33,11 +33,7 @@ function Profile(){
   const toggle = () => setPopoverOpen(!popoverOpen);
 
 
-  let user =1;
-  let all_data = JSON.parse(localStorage.getItem('storageData'));
-  if(all_data !== null){
-    user = all_data[0];
-  }
+  let user = localStorage.getItem('access_token')
   
   const handleDelete=()=>{
     setPopoverOpen(false);
