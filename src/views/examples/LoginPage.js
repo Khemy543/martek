@@ -98,7 +98,6 @@ function LoginPage(props){
         <div className="filter" />
         <Container style={{marginTop:"40px"}}>
           <Row>
-            
             <Col className="ml-auto mr-auto" lg="4">
             
               <Card className="card-register ml-auto mr-auto" color="info">

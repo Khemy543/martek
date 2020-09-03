@@ -17,6 +17,7 @@ import EditProduct from "./views/EditProduct.js";
 import ShopDetailsPage from "./views/ShopPageDetails.js";
 import ShopUploadImages from "./views/ShopProductUpload.js";
 import ShopPage from "views/examples/ShopPage.js";
+import UserProducts from "./views/UserProducts.js";
 
 import RegisterPage from "./views/RegisterPage.js";
 import LoginPage from "views/examples/LoginPage.js";
@@ -33,6 +34,8 @@ import Legon from "./views/CampusHome/LEGON.js";
 import Uner from "./views/CampusHome/UNER.js";
 import Umat from "./views/CampusHome/UMAT.js";
 import Upsa from "./views/CampusHome/UPSA.js";
+import UserProductDetails from "views/UserProductDetails.js";
+import UserEditProduct from "views/UserEditProduct.js";
 
 
 
@@ -108,6 +111,21 @@ var routes = [
         path: "/edit-profile",
         protectedRoute:true,
         component: EditProfile,
+        layout: "/user"
+      },
+      {
+        path: "/user-products",
+        component: UserProducts,
+        layout: "/user"
+      },
+      {
+        path: "/edit-user-products",
+        component: UserEditProduct,
+        layout: "/user"
+      },
+      {
+        path: "/user-product-details",
+        component: UserProductDetails,
         layout: "/user"
       },
       {

@@ -36,8 +36,6 @@ import axios from "axios";
 import {ProductConsumer } from "../context.js";
 import StarRatings from 'react-star-ratings';
 // core components
-import IndexNavbar from "components/Navbars/IndexNavbar.js";
-import DemoFooter from "components/Footers/DemoFooter.js";
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
 
@@ -63,6 +61,8 @@ function ShopView(props) {
   const [rating, setRating] = React.useState(0);
   const [average, setAverage] = React.useState(0);
   const [reportmodal, setReportmodal] = React.useState(false);
+  const[reportSent,setReportsent] = React.useState(false)
+  const [message, setMessage] = React.useState("");
   
   let user = localStorage.getItem('access_token')
 
@@ -110,7 +110,8 @@ function ShopView(props) {
         axios.get("https://martek.herokuapp.com/api/shop/"+props.location.state.id+"/reviews")
         .then(res=>{
           console.log("reviews:",res.data);
-          setReviews(res.data)
+          setReviews(res.data.product_reviews);
+          setAverage(Math.round(res.data.average_rating));
         })
         .catch(error=>{
           console.log(error)
@@ -148,10 +149,29 @@ const postReview=()=>{
 }
 }
 
+
+const handlePostReport=()=>{
+  axios.post("https://martek.herokuapp.com/api/add-shop/report",
+  {report:message, shop_report:1,merchandiser_id:props.location.state.id},
+  { headers:{"Authorization":`Bearer ${user}`}})
+  .then(res=>{
+    console.log(res.data)
+    if(res.data.status === "saved"){
+      setReportsent(true)
+    }
+  })
+  .catch(error=>{
+    console.log(error.response.data)
+  })
+}
+
 const changeRating=( newRating )=> {
  setRating(newRating)
 }
 
+const toggleReportModal=()=>{
+  setReportmodal(!reportmodal)
+}
 
   document.documentElement.classList.remove("nav-open");
   React.useEffect(() => {
@@ -198,7 +218,7 @@ const changeRating=( newRating )=> {
               
               <p>{description}</p>
               <StarRatings
-                rating={4}
+                rating={average}
                 starRatedColor="#CFB53B"
                 numberOfStars={5}
                 name='rating'
@@ -377,22 +397,33 @@ const changeRating=( newRating )=> {
           </TabContent>
         </Container>
       </div>
-      <Modal isOpen={reportmodal}>
+      <Modal isOpen={reportmodal} toggle={()=>toggleReportModal()}>
             <ModalHeader>
-                Report Shop
+                <h4 style={{fontWeight:"bold",fontSize:"17px", marginTop:"0px"}}>Report Shop</h4>
             </ModalHeader>
+            {!reportSent?
+            <>
             <ModalBody>
             <Row>
                 <Col md="12">
-                <Input type="textarea" placeholder="report message..."/>
+                <Input type="textarea" placeholder="report message..." value={message} onChange={(e)=>setMessage(e.target.value)}/>
 
                 </Col>
             </Row>
             </ModalBody>
             <ModalFooter style={{border:"none",marginBottom:"20px", marginRight:"15px"}}>
-                <Button color="info">Report</Button>
+                <Button color="info" onClick={()=>handlePostReport()}>Report</Button>
                 <Button color="danger" onClick={()=>setReportmodal(false)}>Close</Button>
             </ModalFooter>
+            </>
+            :
+            <>
+            <div style={{textAlign:'center',marginTop:"10px",marginBottom:"10px"}}>
+            <p style={{fontWeight:"bold"}}><i className="fa fa-check mr-1" style={{color:"green", fontSize:"20px"}}/> sent!!</p>
+              <p>Thanks for the report!<br/>Action is being taken, Feedback will be sent soon</p>
+            </div>
+            </>
+            }
         </Modal>
       </LoadingOverlay>
     </div>

@@ -61,12 +61,15 @@ function RegisterPage() {
       setIsActive(true);
           axios.get("https://martek.herokuapp.com/api/campuses")
           .then(res=>{
-              const campuses = res.data;
+            console.log(res.data)
               if(res.status === 200){
-                setCampusList(campuses)
+                setCampusList(res.data)
                 setIsActive(false)
               } 
-          });
+          })
+          .catch(error=>{
+            console.log(error)
+          })
       },[])
   const handleSubmit = (e) =>{
     e.preventDefault();

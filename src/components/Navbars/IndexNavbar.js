@@ -313,7 +313,7 @@ React.useEffect(()=>{
                   <ListGroupItem style={{border:"none", textAlign:"left"}} className="userdrop" onClick={() => {
                 document.documentElement.classList.toggle("nav-open");
                 setDropdownOpen(false);
-              }}><i className="fa fa-tablet"/> <Link to="/user/products">My Products</Link></ListGroupItem>
+              }}><i className="fa fa-tablet"/> <Link to="/user/user-products">My Products</Link></ListGroupItem>
 
               <ListGroupItem style={{border:"none", textAlign:"left"}} className="userdrop" onClick={() => {
                 document.documentElement.classList.toggle("nav-open");

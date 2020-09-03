@@ -1,6 +1,6 @@
 import React from "react";
 
-import axios from "axios";
+
 // core components
 import ExamplesNavbar from "../components/Navbars/ExamplesNavbar.js";
 import DemoFooter from "../components/Footers/DemoFooter";
@@ -10,28 +10,28 @@ import{
     Container,
     Row,
     Col,
-    Form,  Label, Input,
+    Form,Label, Input,
     Button, InputGroup, InputGroupAddon, InputGroupText
 } from "reactstrap";
+import axios from "axios";
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
-import history from "../history.js";
+//import history from "../history.js";
 //context
 //import { ProductConsumer } from "../context.js";
 
-
-
-function AddToShop(){
+function UserEditProduct(props) {
   const [categoryList, setCategoryList]=React.useState([]);
   const [product_name, setProduct_name] = React.useState('');
   const [price, setPrice] = React.useState('');
   const [category, setCategory] = React.useState(1);
   const [in_stock, setIn_stock] = React.useState('');
-  //const [imageLink, setImageLink] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [isActive, setIsActive] = React.useState(false);
 
-  let merchandiser = localStorage.getItem("shop_access_token")
+ 
+  let user = localStorage.getItem("access_token")
+
   React.useEffect(()=>{
 
       axios.get("https://martek.herokuapp.com/api/categories")
@@ -39,26 +39,39 @@ function AddToShop(){
         const categories = res.data
         setCategoryList(categories);
       })
-    },[]);
+      .catch(error=>{
+      });
+
+      axios.get("https://martek.herokuapp.com/api/product/"+props.location.state.id+"/details")
+      .then(res=>{
+        console.log(res.data)
+        setProduct_name(res.data.product_name);
+        setDescription(res.data.description);
+        setIn_stock(res.data.in_stock);
+        setPrice(res.data.price);
+
+      })
+      .catch(error=>{
+      })
+    },[props.location.state.id]);
     
     const handleSubmit = (e) =>{
       e.preventDefault();
        setIsActive(true);
-    axios.post('https://martek.herokuapp.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
-      headers:{'Authorization':`Bearer ${merchandiser}`}
+    axios.post('https://martek.herokuapp.com/api/e-trader/product/'+props.location.state.id+'/update',
+    {product_name, in_stock, price, description,category}, {
+      headers:{'Authorization':`Bearer ${user}`}
     }).then(res => {
-      if(res.data.status === "success"){
-        const product_id = res.data.product_id;
+        console.log(res.data)
         setIsActive(false)
-        history.push("/shop/upload-shop-images",{product_id})
-      }
-     
+        props.history.push("/user/user-product-details",{id:props.location.state.id})
     }).catch(error => {
+      setIsActive(false)
+      console.log(error)
     })
   
   }
-  
-  
+   
         return(
             <div>
               <LoadingOverlay 
@@ -70,7 +83,7 @@ function AddToShop(){
                 <div className="main">
                 <div className="section">
                 <br/>
-              
+                
                 <Container>
             <Row>
               <Col className="ml-auto mr-auto" md="8">
@@ -86,7 +99,7 @@ function AddToShop(){
                             <i className="nc-icon nc-layout-11" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Item Name" type="text" name="product_name" value={product_name} onChange={e => setProduct_name(e.target.value)}/>
+                        <Input placeholder="Item Name" type="text" value={product_name} disabled onChange={e => setProduct_name(e.target.value)}/>
                       </InputGroup>
                     </Col>
                     <Col md="6">
@@ -111,12 +124,12 @@ function AddToShop(){
                             <i className="nc-icon nc-chart-pie-36" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Category" type="select" value={category} onChange={e => setCategory(e.target.value)}>
-                       {categoryList.map(value => <option key={value.id} value={value.id}>{value.category}</option>)}
-                        </Input>
+                        <Input placeholder="Category" type="select" value={category} onChange={e => setCategory(e.target.value)} disabled>
+                        {categoryList.map(value => <option key={value.id} value={value.id}>{value.category}</option>)}
+                         </Input>
                       </InputGroup>
                     </Col>
-                    <Col md="6">
+                    {/* <Col md="6">
                       <Label>QUANTITY</Label>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
@@ -127,11 +140,8 @@ function AddToShop(){
                         <Input placeholder="Quantity" type="number" name="in_stock" value={in_stock} onChange={e => setIn_stock(e.target.value)}/>
                       </InputGroup>
                      
-                      </Col>
+                      </Col> */}
                   </Row>
-                  
-                  
-                
                  
                 <br/>
                   <Row>
@@ -139,9 +149,8 @@ function AddToShop(){
                   <Input
                     placeholder="Description"
                     type="textarea"
-                    rows="4"  
+                    rows="4"
                     value={description} name="description" onChange={e => setDescription(e.target.value)}
-
                   />
                   </Col>
                   </Row>
@@ -149,7 +158,7 @@ function AddToShop(){
                   <Row>
                     <Col className="ml-auto mr-auto" md="6">
                       <Button className="btn-fill" color="info" block type="submit">
-                        Next
+                        Save Changes
                       </Button>
                     </Col>
                   </Row>
@@ -162,6 +171,6 @@ function AddToShop(){
                 </LoadingOverlay>
             </div>
         );
-    }
-
-export default AddToShop;
+    
+}
+export default UserEditProduct;

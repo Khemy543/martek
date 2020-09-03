@@ -9,46 +9,29 @@ import { Link } from "react-router-dom";
 import{
     Container,
     Row,
-    Col,
-   Input,
-    Button, InputGroup, InputGroupAddon, InputGroupText,Popover,PopoverBody,PopoverHeader,
+    Col,Card, CardBody,CardTitle
     
 } from "reactstrap";
 //import { ProductConsumer } from "../context";
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
-//import ShopCard from "../components/ShopCard.js";
 import history from "../history.js";
 
-function Profile(){
-  const [name, setName] = React.useState("");
-  const [email, setEmail] = React.useState("");
-  const [phone, setPhone] = React.useState("");
-  const [campus, setCampus] = React.useState("");
+function UserProducts(){
   const [isActive, setIsActive] = React.useState(false);
-  const [popoverOpen, setPopoverOpen] = React.useState(false);
-  
-  
-    
-  const toggle = () => setPopoverOpen(!popoverOpen);
-
-
-  let user =null;
-  let all_data = JSON.parse(localStorage.getItem('storageData'));
-  if(all_data !== null){
-    user = all_data[0];
-  }
-  
-  c
+  const [products, setProducts] = React.useState([]);
+ 
+  let user = localStorage.getItem('access_token')
   React.useEffect(()=>{
-    axios.get("https://martek.herokuapp.com/api/merchandiser/"+res.data.id+"/products"
-    )
-      .then(response=>{
-          setShopProducts(response.data[0]);
+    axios.get("https://martek.herokuapp.com/api/e-trader/get-user-products",{
+      headers:{"Authorization":`Bearer ${user}`}
+  }).then(res=>{
+          console.log(res.data)
+          setProducts(res.data);
           setIsActive(false)
       })
       .catch(error=>{
-          console.log(error)
+          console.log(error.response.data)
       })
   },[])
 
@@ -64,12 +47,27 @@ function Profile(){
                 <br/>
                 <br/>
                 
-                      <Container>
-             
+                <Container>
+                  <Row>
+                  {products.map((value,key)=>(
+                  <Col lg="3" md="4" sm="6" xs="6">
+                  <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"10px 0px 0px 0px", padding:"0px 0px 0px 0px",cursor:"pointer"}}>
+                    <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
+                        {value.product_name}
+                        </CardTitle>
+                        <br/>
+                        
+                        <div style={{textAlign:"center"}} onClick={()=>history.push("/user/user-product-details",{id:value.id})}>
+                        <img alt="#" src={require("../assets/img/iphone.png")} style={{ maxHeight:"185.13px",maxWidth:"100px"}}/>
+                        </div>
+                        
+                        <br/>
+                        <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ {value.price}</CardBody>
+                    </Card>
+                    </Col>
+                    ))}
+                  </Row>
                 </Container>
-                
-                
-
                     </div>
 
                 </div>

@@ -21,18 +21,19 @@ import StarRatings from 'react-star-ratings';
 //context
 import { ProductConsumer } from "../context";
 
-function ShopDetailsPage(props){
+function UserProductDetails(props){
     const [popoverOpen, setPopoverOpen] = React.useState(false);
     const [product, setProduct] = React.useState([]);
     const [owner ,setOwner] = React.useState([]);
     const [isActive, setIsActive] = React.useState(false);
     const [reviews,setReviews] = React.useState([]);
-    const [average,setAverage] = React.useState(0)
+    const [average,setAverage] = React.useState(0);
     
     
-    let merchandiser = localStorage.getItem("shop_access_token")
+    let user = localStorage.getItem("access_token")
 
     React.useEffect(()=>{
+        console.log(props)
           setIsActive(true);
           axios.get("https://martek.herokuapp.com/api/product/"+props.location.state.id+"/details")
           .then(res=>{
@@ -56,17 +57,17 @@ function ShopDetailsPage(props){
                 console.log(error)
             })
         
-        },[props.location.state.id]);
+        },[]);
 
     const toggle = () => setPopoverOpen(!popoverOpen);
 
     const handleDelete=()=>{
         setIsActive(true)
         axios.delete("https://martek.herokuapp.com/api/e-trader/product/"+props.location.state.id+"/delete",{
-            headers:{"Authorization":`Bearer ${merchandiser}`}
+            headers:{"Authorization":`Bearer ${user}`}
         })
         .then(res=>{
-            props.history.push("/shop/shop-page");
+            props.history.push("/user/user-products");
             setIsActive(false)
         })
         .catch(error=>{
@@ -112,20 +113,20 @@ function ShopDetailsPage(props){
                                         <Col md="5">
                                         <Card className="card-plain" style={{borderRight:"1px solid #eaeaea"}}>
                                         <CardTitle style={{padding:"15px 0px 0px 0px", margin:"10px 15px 15px 15px"}}>
-                                            <Row>
-                                                <Col>
-                                                <h3 className="category" style={{marginTop:"5px", marginLeft:"20px"}}>
-                                                    {product_name}
-                                                    </h3>
-                                                    <h4 style={{fontSize:"14px", marginLeft:"20px", marginTop:"3px"}}>{company_name} | share</h4>
-                                                    <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>¢ {price}</h4>
-                                                    <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>in stock : {in_stock}</h4>
-                                                    {/* <div style={{float:'right', marginTop:"-15px", marginRight:"40%"}}>
-                                                    <i className="fa fa-heart-o mr-2" style={{fontWeight:"bold", color:"red"}}/>
-                                                    <i className="fa fa-share-alt" style={{fontWeight:"bold", color:"blue"}}/>
-                                                    </div> */}
-                                                </Col>
-                                                <Col  md="6" sm="6" xs="6" lg="6">
+                                        <h3 className="category" style={{marginTop:"5px", marginLeft:"20px"}}>
+                                            {product_name}
+                                        </h3>
+                                        <Row>
+                                            <Col>
+                                            <h4 style={{fontSize:"14px", marginLeft:"20px", marginTop:"3px"}}>{company_name} | share</h4>
+                                            <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>¢ {price}</h4>
+                                            <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>in stock : {in_stock}</h4>
+                                            {/* <div style={{float:'right', marginTop:"-15px", marginRight:"40%"}}>
+                                            <i className="fa fa-heart-o mr-2" style={{fontWeight:"bold", color:"red"}}/>
+                                            <i className="fa fa-share-alt" style={{fontWeight:"bold", color:"blue"}}/>
+                                            </div> */}
+                                            </Col>
+                                            <Col  md="6" sm="6" xs="6" lg="6" className="mt-5">
                                                 <StarRatings
                                                 rating={average}
                                                 starRatedColor="#CFB53B"
@@ -135,14 +136,13 @@ function ShopDetailsPage(props){
                                                 starSpacing="2px"
                                                 />
                                                 </Col>
-                                            </Row>
-                                           
+                                        </Row>
                                            
                                             <Button
                                             style={{ marginRight:"30px", marginTop:"20px"}}
                                             color="info"
                                             block
-                                            onClick={()=>props.history.push("/shop/edit-product",{id:props.location.state.id})}
+                                            onClick={()=>props.history.push("/user/edit-user-products",{id:props.location.state.id})}
                                             
                                             >
                                            Edit Product
@@ -260,4 +260,4 @@ function ShopDetailsPage(props){
         );
     
 }
-export default ShopDetailsPage;
+export default UserProductDetails;

@@ -22,7 +22,7 @@ import FormControl from '@material-ui/core/FormControl';
 import clsx from 'clsx';
 import BounceLoader from "react-spinners/BounceLoader";
 import Container from '@material-ui/core/Container';
-/* import history from "../history.js"; */
+import history from "../history.js";
 import {Alert} from "reactstrap";
  
 import axios from "axios";
@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function OwnShop({history}){
+export default function OwnShop(props){
 
   const [company_name, setCompany_name] = React.useState("");
   const [email, setEmail] = React.useState("");

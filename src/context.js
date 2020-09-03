@@ -112,20 +112,22 @@ class ProductProvider extends React.Component{
         
     }
 
-/* 
-    //handle getshops
-    getCampusShops(pageNumber=1,id){
-        this.setState({isActive:false, id:id})
-        axios.get("http://martek.herokuapp.com/api/get-campus/"+id+"/shop?page="+pageNumber+"")
-        .then(res=>{
-            console.log(res.data)
-            this.setState({shops:res.data, isActive:false});
-        })
-        .catch(error=>{
-            console.log(error)
-        });
-      }
- */
+
+    //token
+isTokenExpired() {
+    let authenticated = localStorage.getItem('access_token');
+     try {
+         const decoded = decode(authenticated);
+         if (decoded.exp < (Date.now() / 1000)) { // Checking if token is expired.
+             localStorage.clear();
+             window.location.reload("/")
+         }
+     }
+     catch (err) {
+         return false;
+     }
+ }
+
     //get following shops
 
     getFollowingShops(){
@@ -451,20 +453,7 @@ this.setState(()=>{
 
 }
 
-    isTokenExpired() {
-        user = localStorage.getItem('access_token');
-        try {
-            const decoded = decode(user);/* 
-            console.log(decoded.exp, (Date.now()/1000)-120) */
-            if (decoded.exp < (Date.now() / 1000)) { // Checking if token is expired.
-                localStorage.clear();
-                window.location.reload("/")
-            }
-        }
-        catch (err) {
-            return false;
-        }
-    }
+    
     //Electronics
 
     //copies of products

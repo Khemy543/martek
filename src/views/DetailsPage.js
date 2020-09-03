@@ -36,7 +36,9 @@ class DetailsPage extends React.Component{
         loggedin:false,
         rating:0,
         reportmodal:false,
-        average:0
+        average:0,
+        message:"",
+        reportSent:false
     }
     
      toggle = () => this.setState({modal:!this.state.modal});
@@ -107,6 +109,26 @@ class DetailsPage extends React.Component{
               rating: newRating
             });
           }
+
+
+        handlePostReport=()=>{
+            axios.post("https://martek.herokuapp.com/api/add-product/report",
+            {report:this.state.message, product_id:this.props.location.state.id},
+            { headers:{"Authorization":`Bearer ${user}`}})
+            .then(res=>{
+                console.log(res.data);
+                if(res.data.status == "saved"){
+                    this.setState({reportSent:true})
+                }
+            })
+            .catch(error=>{
+                console.log(error.response.data)
+            })
+        }
+
+        toggleReportModal=()=>{
+            this.setState({reportmodal:!this.state.reportmodal})
+        }
 
         render(){
 
@@ -368,22 +390,33 @@ class DetailsPage extends React.Component{
                                     </Container>
                             )}
                         </ProductConsumer>
-                        <Modal isOpen={this.state.reportmodal}>
-                            <ModalHeader>
-                                Report Item
+                        <Modal isOpen={this.state.reportmodal} toggle={()=>this.toggleReportModal()}>
+                        <ModalHeader>
+                                <h4 style={{fontWeight:"bold",fontSize:"17px", marginTop:"0px"}}>Report Product</h4>
                             </ModalHeader>
+                            {!this.state.reportSent?
+                            <>
                             <ModalBody>
                             <Row>
                                 <Col md="12">
-                                <Input type="textarea" placeholder="report message..."/>
+                                <Input type="textarea" placeholder="report message..." value={this.state.message} onChange={(e)=>this.setState({message:e.target.value})}/>
 
                                 </Col>
                             </Row>
                             </ModalBody>
                             <ModalFooter style={{border:"none",marginBottom:"20px", marginRight:"15px"}}>
-                                <Button color="info">Report</Button>
-                                <Button color="danger" onClick={()=>this.setState({reportmodal:false})}>Close</Button>
+                                <Button color="info" onClick={()=>this.handlePostReport()}>Report</Button>
+                                <Button color="danger" onClick={()=>this.setReportmodal(false)}>Close</Button>
                             </ModalFooter>
+                            </>
+                            :
+                            <>
+                            <div style={{textAlign:'center',marginTop:"10px",marginBottom:"10px"}}>
+                            <p style={{fontWeight:"bold"}}><i className="fa fa-check mr-1" style={{color:"green", fontSize:"20px"}}/> sent!!</p>
+                            <p>Thanks for the report!<br/>Action is being taken, Feedback will be sent soon</p>
+                            </div>
+                            </>
+                            }
                         </Modal>
                         </div>
                     </div>
