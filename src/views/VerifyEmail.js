@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import queryString from 'query-string'
+import axios from "axios";
 
 //import reactstrap
 import{
@@ -13,8 +14,24 @@ import{
     Button
 } from "reactstrap";
 
+var domain = "https://martek.herokuapp.com/"
+export default function VerifyEmail(props){
 
-export default function VerifyEmail(){
+    const handleVerify=()=>{
+        console.log(props.location);
+        const param = queryString.parse(props.location.search);
+        console.log(param.token);
+        let token = param.token;
+        axios.post(`${domain}/api/email/verify`,token)
+        .then(res=>{
+            console.log(res.data)
+        })
+        .catch(error=>{
+            console.log(error.response.data)
+        })
+
+
+    }
     return(
     
             <div>
@@ -33,7 +50,7 @@ export default function VerifyEmail(){
                                 Welcome to Martek,<br/>You are almost done. Please click on the button below to verify your email.
                             </p>
                                 <Button style={{marginTop:"50px"}} color='success'
-                                onClick={()=>{}}
+                                onClick={()=>handleVerify()}
                                 >click to verify</Button>
                         </CardBody>
                     </Card>

@@ -42,7 +42,7 @@ function Profile(){
         headers:{"Authorization":`Bearer ${user}`}
     })
     .then(res=>{
-        localStorage.removeItem('storageData');
+        localStorage.removeItem('access_token');
         window.location.reload("/");
         setIsActive(false)
     })
