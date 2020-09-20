@@ -30,7 +30,7 @@ export default function WaitVerification(props){
                             </div>
                             <br/>
                             <p style={{fontWeight:500, fontSize:"13px"}}> 
-                               Hello,<br/>We now need to verify your Email address. We've sent an email to <a href="!#" style={{color:'red',fontWeight:500}} disabled>{props.location.state.email}</a> to verify your email
+                               Hello,<br/>We now need to verify your Email address. We've sent an email to to verify your email
                                address. Please click on the link in the email to continue. 
                             </p>
                                 <Button style={{marginTop:"50px"}} color='info'>Resend Mail</Button>

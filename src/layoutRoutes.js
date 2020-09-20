@@ -212,7 +212,7 @@ var routes = [
         layout: "/auth"
       },
       {
-        path: "/email/verify/:userId",
+        path: "/email/verify",
         component: VerifyEmail,
         layout: "/api/auth"
       },,
