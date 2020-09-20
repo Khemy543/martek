@@ -22,7 +22,7 @@ export default function VerifyEmail(props){
         const param = queryString.parse(props.location.search);
         console.log(param.token);
         let token = param.token;
-        axios.post(`${domain}/api/email/verify`,token)
+        axios.post(`${domain}/api/auth/email/verify`,token)
         .then(res=>{
             console.log(res.data)
         })
