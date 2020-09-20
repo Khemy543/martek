@@ -14,7 +14,7 @@ import{
     Button
 } from "reactstrap";
 
-var domain = "https://martek.herokuapp.com/"
+var domain = "https://martek.herokuapp.com"
 export default function VerifyEmail(props){
 
     const handleVerify=()=>{
