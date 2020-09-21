@@ -1,6 +1,4 @@
 import React from "react";
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
 //import { Link } from "react-scroll";
 // reactstrap components
 import{
@@ -63,7 +61,8 @@ function Home({history}){
         setIsActive(true);
         axios.get("https://martek.herokuapp.com/api/categories")
         .then(res=>{
-          const categories = res.data
+          const categories = res.data;
+          console.log(categories)
           setCategoryList(categories);
           setIsActive(false)
         });
@@ -113,10 +112,6 @@ function Home({history}){
       
         return(
             <div>
-                <LoadingOverlay 
-                active = {isActive}
-                spinner={<BounceLoader color={'#4071e1'}/>}
-                >
             <React.Fragment>
                 <br/>
                 <br/>
@@ -178,10 +173,17 @@ function Home({history}){
                             <Row>
                         <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                             <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
-                                <h3 style={{borderBottom:"1px solid #eaeaea", fontWeight:"bold"}} className="category">
+                            <Row style={{borderBottom:"1px solid #eaeaea"}}>
+                                <Col sm="6" md="6" lg="6" xl="6" xs="6">
+                                <h3 style={{fontWeight:"bold"}} className="category">
                                     <i className="fa fa-gg" style={{color:"#ff8d00"}}/> PHONES & ACCESSORIES
                                     
-                                    </h3>
+                                </h3>
+                                </Col>
+                                <Col sm="6" md="6" lg="6" xl="6" xs="6">
+                                <p style={{fontWeight:600, fontSize:"13px", float:"right",marginTop:"10px"}}>SEE ALL <i className="fa fa-chevron-right"/></p>
+                                </Col>
+                            </Row>
                                 </CardTitle>
                                 <CardBody>
                                 <Container>
@@ -456,13 +458,16 @@ function Home({history}){
                             </Container>
                             </TabPane>
                             <TabPane className="text-center" tabId="2" id="shops">
-                                
+                                    {shops.data !== undefined && shops.data.length<=0?
+                                    <Container>
+                                    <h4 style={{fontWeight:500}}>No Shops Available</h4>
+                                    </Container>
+                                    :
                                     <Container>
                                     {shops && renderShops()}
                                     
                                     </Container>
-                               
-                                    
+                                    }
                             </TabPane>
 
                             <TabPane className="text-center" tabId="3" id="categories">
@@ -470,7 +475,7 @@ function Home({history}){
                                 {categoryList.map((value,index)=>(
                                     <Col md="6" className="mt-auto mb-auto">
                                     <Card className="card-plain" style={{backgroundColor:"white",cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} 
-                                    onClick = {()=>history.push("/user/categories",{category_id:value.id, category_name:value.category})}
+                                    onClick = {()=>history.push("/user/categories",{category_id:value.id, category_name:value.category, image:`${value.id}.jpg`})}
 
                                     >
                                        <CardBody>
@@ -495,7 +500,6 @@ function Home({history}){
                     
                     </div>
                 </React.Fragment>
-                </LoadingOverlay>
                 </div>
         );
     }

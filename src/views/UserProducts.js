@@ -47,8 +47,10 @@ function UserProducts(){
                 <br/>
                 <br/>
                 
-                <Container>
-                  <Row>
+                <Container style={{marginTop:"20px"}}>
+                <p style={{marginBottom:"10px", fontSize:"13px"}}><span style={{cursor:"pointer"}} onClick={()=>this.props.history.push("/user/home")}>Home</span><i className="fa fa-chevron-right"/> user products</p>
+                  <Row style={{marginTop:"50px"}}>
+                  
                   {products.map((value,key)=>(
                   <Col lg="3" md="4" sm="6" xs="6">
                   <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"10px 0px 0px 0px", padding:"0px 0px 0px 0px",cursor:"pointer"}}>

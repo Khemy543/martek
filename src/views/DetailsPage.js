@@ -138,10 +138,6 @@ class DetailsPage extends React.Component{
 
         return(
             <div>
-                <LoadingOverlay 
-                active = {this.state.isActive}
-                spinner={<BounceLoader color={'#4071e1'}/>}
-                >
                 <div className="main">
                     <br/>
                     <br/>
@@ -420,7 +416,6 @@ class DetailsPage extends React.Component{
                         </Modal>
                         </div>
                     </div>
-                    </LoadingOverlay>
                 </div>
         );
     }

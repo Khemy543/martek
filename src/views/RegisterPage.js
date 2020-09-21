@@ -26,6 +26,7 @@ import  history  from "../history.js";
 
 //axios
 import axios from "axios";
+import IndexNavbar from "components/Navbars/IndexNavbar.js";
 
 axios.defaults.withCredentials = false;
 //axios.defaults.headers.common['Auth-Token'] = 'foo bar';
@@ -90,8 +91,8 @@ function RegisterPage() {
       setTimeout(
         function(){
             setModal(false);
-            /* history.push("/auth/wait-verification",{email:email}) */
-            history.push("/auth/login-page")
+            history.push("/auth/wait-verification",{email:email})
+            
         },
         1500
     )
@@ -121,22 +122,11 @@ function RegisterPage() {
   });
   return (
     <div>
-      <LoadingOverlay 
-      active = {isActive}
-      spinner={<BounceLoader color={'#4071e1'}/>}
-      >
-      <div
-        className="page-header"
-        style={{
-          backgroundImage: "url(" + require("assets/img/header.jpg") + ")"
-        }}
-      >
-        <div className="filter" />
-        <Container style={{marginTop:"-10px"}}>
+    <IndexNavbar />
+        <Container style={{marginTop:"120px"}}>
           <Row>
-            <Col className="ml-auto mr-auto" lg="5" md="6">
-              <Card className="card-plain ml-auto mr-auto" color="info" style={{borderRadius:"10px", paddingLeft:'20px', paddingRight:"20px"}}>
-                <h3 className="title mx-auto" style={{fontWeight:500}}>REGISTER</h3>
+            <Col className="ml-auto mr-auto" lg="6" md="6">
+                <h4 className="title mx-auto" style={{fontWeight:600, fontSize:"14px", color:"#ff6a00"}}>CREATE AN ACCOUNT</h4>
                 {alert?
                   <Alert color="warning" fade={true} style={{textAlign:"center", fontWeight:500}}>
                   {errorMessage}
@@ -145,7 +135,7 @@ function RegisterPage() {
                 <div>
                 </div>
                 }
-                <Form className="register-form" onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit}>
                   <Row>
                     <Col>
                   <label style={{fontWeight:500,color:"white"}}>Name</label>
@@ -186,19 +176,15 @@ function RegisterPage() {
                   Register
                   </Button>
                 </Form>
-              
-              </Card>
+                <p style={{textAlign:"center"}}>Already have an account?</p>
+                <div style={{textAlign:"center"}}>
+                <Button
+                style={{backgroundColor:"transparent", borderColor:"transparent", color:"#ff6a00"}}
+                >LOGIN</Button>
+                </div>
             </Col>
           </Row>
         </Container>
-        <br/>
-        <div className="footer register-footer text-center">
-          <h6>
-            © {new Date().getFullYear()}, made with{" "}
-            <i className="fa fa-heart heart" />martek
-          </h6>
-        </div>
-      </div>
       <Modal isOpen={modal} className="login-modal">
       
       <ModalBody style={{color:"white", fontSize:"12px", fontWeight:500}} className="text-center">
@@ -206,7 +192,6 @@ function RegisterPage() {
       </ModalBody>
       
     </Modal>
-      </LoadingOverlay>
     </div>
   );
 }

@@ -83,10 +83,6 @@ function UserProductDetails(props){
 
         return(
             <div>
-                 <LoadingOverlay 
-                        active = {isActive}
-                        spinner={<BounceLoader color={'#4071e1'}/>}
-                        >
                 <div className="main">
                     <br/>
                     <br/>
@@ -255,7 +251,6 @@ function UserProductDetails(props){
                         
                         </div>
                     </div>
-                    </LoadingOverlay>
                 </div>
         );
     

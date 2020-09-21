@@ -6,6 +6,7 @@ import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
 import Pagination from "react-js-pagination";
 import history from "../history.js";
+import Product from "components/Product.js";
 //react strap
 import{
     Container,
@@ -46,41 +47,29 @@ class Categories extends React.Component {
             <React.Fragment>
             <Container>
                 <Row>
-            <ProductConsumer>
-            {(value=>(
-            data[0].map((product,index)=>(
-                <Col lg="3" md="4" sm="6" xs="6" style={{padding:"0px 0px 0px 0px"}} key={index}>
-                <Card style={{borderRight:"1px solid #eaeaea", margin:"20px 0px 0px 10px", padding:"10px 20px 20px 10px",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", transition:"all 1s linear", background:'white'}} className="card-plain" id="product-card">
-                    <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px",height:"20px"}}>
-                        {product.product_name}
-                    </CardTitle>
-                    <br/>
-                    
-                            <div>
-                            <div style={{textAlign:"center"}} className="first-img" >
-                    <div onClick={()=> history.push("/user/product-details",{id:product.id})}>
-                    <img alt="#" src={require("../assets/img/iphone.png")} style={{maxHeight:"185.13px", maxWidth:"100px"}} className="to-go"/>
-                    <img alt="#" src={require("../assets/img/flatscreen.png")} style={{maxHeight:"185.13px", maxWidth:"100px"}} className="img-top"/>
-                    </div>  
-                    </div>
-                    
-                    <br/>
-                    
-                    <CardBody style={{padding:"0px 0px 0px 0px"}}>
-                        <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", marginRight:"30px"}}> ¢ {product.price}</h3>
-                        
-                        
-                                                            
-                        </CardBody>
-                            </div>
-                    
-                    
-                    
-                    </Card>
-            </Col>
-            ))
-            ))}
-            </ProductConsumer>
+                    <Card style={{width:"100%", border:"1px solid #eaeaea", margborderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
+                            <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
+                            <Row style={{borderBottom:"1px solid #eaeaea"}}>
+                                <Col sm="12" md="12" lg="12" xl="12" xs="12">
+                                <h3 style={{fontWeight:"bold"}} className="category">
+                                    <i className="fa fa-gg" style={{color:"#ff8d00"}}/> PHONES & ACCESSORIES
+                                    
+                                </h3>
+                                </Col>
+                            </Row>
+                                </CardTitle>
+                                <CardBody>
+                                <Container>
+                                    <Row>
+                                     {data[0].map((product,index)=>{
+                                        return <Product key={product.id} product={product}/>;
+
+                                        })}
+                                    </Row>
+                                </Container>
+                            </CardBody>
+    
+                            </Card>
             </Row>
             <br/>
             <br/>
@@ -88,9 +77,9 @@ class Categories extends React.Component {
             <Row>
                 <Col md="10" className="ml-auto mr-auto">
                 <Pagination
-                totalItemsCount={meta.total}
-                activePage={meta.current_page}
-                itemsCountPerPage={meta.per_page}
+                totalItemsCount={meta&&meta.total}
+                activePage={meta&&meta.current_page}
+                itemsCountPerPage={meta&&meta.per_page}
                 onChange={(pageNumber)=>this.getProducts(pageNumber)}
                 itemClass="page-item"
                 linkClass="page-link"
@@ -107,25 +96,34 @@ class Categories extends React.Component {
         const {products} = this.state;
     return(
         <div>
-            <LoadingOverlay 
-                active = {this.state.isActive}
-                spinner={<BounceLoader color={'#4071e1'}/>}
-                >
             <div className="main">
                 <div className="section">
                 <br/>
                
                 <Container>
-                <h3 style={{marginBottom:"10px"}}>{this.props.location.state.category_name}</h3>
-                <Row>
+                <p style={{marginBottom:"10px", fontSize:"13px"}}><span style={{cursor:"pointer"}} onClick={()=>this.props.history.push("/user/home")}>Home</span><i className="fa fa-chevron-right"/> {this.props.location.state.category_name}</p>
+                
+                <div style={{textAlign:"center"}}>
+                <img src={require(`assets/img/categories/${this.props.location.state.image}`)} className="image"/>
+                
+                </div>
+                {this.state.products !== null && this.state.products.data !== undefined && this.state.products.data[0].length <=0?
+                    <Row>
+                    <Col md="6" className="ml-auto mr-auto">
+
+                    <h4 style={{fontWeight:500}}>No Products Available</h4>
+                    </Col>
+                    </Row>
+                    :
+                <Row style={{marginTop:"30px"}}>
                 {products && this.renderProducts()}
                 </Row>
+                }
                 </Container>
 
                     </div>
 
                 </div>
-                </LoadingOverlay>
             </div>
     );
 }

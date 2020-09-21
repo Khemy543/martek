@@ -72,10 +72,6 @@ function Profile(){
 
     return(
         <div>
-          <LoadingOverlay 
-            active = {isActive}
-            spinner={<BounceLoader color={'#4071e1'}/>}
-            >
             <div className="main">
                 <div className="section">
                 <br/>
@@ -170,7 +166,6 @@ function Profile(){
                     </div>
 
                 </div>
-                </LoadingOverlay>
             </div>
     );
 }

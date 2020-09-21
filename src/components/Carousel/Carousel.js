@@ -55,7 +55,6 @@ const CarouselView = (props) => {
       >
       <div className="image-holder" style={{textAlign:"center"}}>
         <img src={item.src} alt={item.altText} className="image"/>
-         
         
       </div> 
         

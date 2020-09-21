@@ -20,7 +20,7 @@ class Product extends React.Component{
         return(
                 
                 <Col lg="3" md="4" sm="6" xs="6" style={{padding:"0px 0px 0px 0px"}}>
-                    <Card style={{borderRight:"1px solid #eaeaea", margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px", transition:"all 1s linear", background:'white'}} className="card-plain" id="product-card">
+                    <Card style={{margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px", transition:"all 1s linear", background:'white'}} className="card-plain" id="product-card">
                         <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px", overflow:"hidden", height:"20px"}}>
                             {product_name}
                         </CardTitle>

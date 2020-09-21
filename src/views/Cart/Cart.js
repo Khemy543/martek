@@ -27,10 +27,6 @@ class Cart extends React.Component{
     render(){
         return(
             <div>
-                 <LoadingOverlay 
-                active = {this.state.isActive}
-                spinner={<BounceLoader color={'#4071e1'}/>}
-                >
                 <br/>
                 <br/>
                 <div className="main">
@@ -61,7 +57,6 @@ class Cart extends React.Component{
                         
                         </div>
                     </div>
-                    </LoadingOverlay>
                 </div>
         );
     }

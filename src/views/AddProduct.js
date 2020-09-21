@@ -65,23 +65,17 @@ function AddProduct(){
   
         return(
             <div>
-              <LoadingOverlay 
-              active = {isActive}
-              spinner={<BounceLoader color={'#4071e1'}/>}
-              >
-                
-                
                 <div className="main">
                 <div className="section">
                 <br/>
               
                 <Container>
             <Row>
-              <Col className="ml-auto mr-auto" md="8">
+              <Col className="ml-auto mr-auto" md="5">
                 
                 <Form className="contact-form" onSubmit={handleSubmit}>
                   <Row>
-                    <Col md="6">
+                    <Col>
                     <Label>ITEM NAME</Label>
                       <InputGroup>
                       
@@ -93,7 +87,9 @@ function AddProduct(){
                         <Input placeholder="Item Name" type="text" name="product_name" value={product_name} onChange={e => setProduct_name(e.target.value)} required/>
                       </InputGroup>
                     </Col>
-                    <Col md="6">
+                  </Row>
+                  <Row>
+                  <Col>
                     <Label>PRICE</Label>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
@@ -107,7 +103,7 @@ function AddProduct(){
                   </Row>
     
                   <Row>
-                    <Col md="6">
+                    <Col>
                     <Label>CATEGORY</Label>
                       <InputGroup>
                         <InputGroupAddon addonType="prepend">
@@ -152,7 +148,6 @@ function AddProduct(){
           </Container>
                 </div>
                 </div>
-                </LoadingOverlay>
             </div>
         );
     }

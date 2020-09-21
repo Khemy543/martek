@@ -95,10 +95,6 @@ function EditProfile(props){
 
     return(
         <div>
-          <LoadingOverlay 
-            active = {isActive}
-            spinner={<BounceLoader color={'#4071e1'}/>}
-            >
             <div className="main">
                 <div className="section">
                 <br/>
@@ -187,7 +183,6 @@ function EditProfile(props){
                     </div>
 
                 </div>
-                </LoadingOverlay>
                 <Modal isOpen={modal} className="login-modal">
       
                 <ModalBody style={{color:"white", fontSize:"12px", fontWeight:500}} className="text-center">

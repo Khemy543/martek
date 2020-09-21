@@ -36,8 +36,6 @@
         overflow: hidden;
         object-fit: cover;
         margin-top: 15px;
-        -webkit-filter: drop-shadow(16px 16px 10px rgba(0,0,0,0.9));
-        filter: brightness(50%);
     }
 }
 
@@ -46,8 +44,6 @@
     .image{
         width:93% !important;
         height: 45vh;
-        -webkit-filter: drop-shadow(16px 16px 10px rgba(0,0,0,0.9));
-        filter: brightness(50%);
 
     }
 

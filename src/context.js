@@ -960,14 +960,9 @@ searchShopPrediction=(searchValue)=>{
                 handleSubmit:this.handleSubmit
                 
             }}>
-            <LoadingOverlay
-                active={this.state.spinner}
-                spinner={<BounceLoader color={'#4071e1'}/>}
-                >
                
 
                 {this.props.children}
-                </LoadingOverlay>
                 <Container>
                 <Col className="ml-auto mr-auto" md="12">
                 <Modal isOpen={this.state.modal} toggle={this.toggle} style={{maxHeight:"40px", maxWidth:"300px"}} className="alert-modal">
