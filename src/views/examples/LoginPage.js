@@ -134,7 +134,7 @@ function LoginPage(props){
                   <Button
                     className="btn-link"
                     tag={Link}
-                    to="!#"
+                    to="/auth/forgot-password"
                   >
                     Forgot password?
                   </Button> 

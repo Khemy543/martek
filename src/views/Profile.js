@@ -77,8 +77,11 @@ function Profile(){
                 <br/>
                 <br/>
                 
-                      <Container>
-                <Col className="ml-auto mr-auto" md="6">
+                <Container>
+                <p style={{marginBottom:"10px", fontSize:"13px"}}><span style={{cursor:"pointer"}} onClick={()=>history.push("/user/home")}>Home</span><i className="fa fa-chevron-right"/> {name}</p>
+               
+                <Col className="ml-auto mr-auto" md="6" style={{marginTop:"20px"}}>
+               
                 <Row>
                     <Col>
                     <Row>

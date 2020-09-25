@@ -10,6 +10,8 @@ import axios from "axios";
 import ImageUploader from 'react-images-upload';
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
+import IndexNavbar from "components/Navbars/IndexNavbar";
+import DemoFooter from "components/Footers/DemoFooter";
 // core components
 //import IndexNavbar from "../components/Navbars/IndexNavbar.js";
 //import DemoFooter from "../components/Footers/DemoFooter";
@@ -21,8 +23,9 @@ class UploadShopAvatar extends React.Component{
          this.state = { 
              avatar: [],
               cover:[],
+              valid_id:[],
              store_id:this.props.location.state.id, 
-             isActive:false, activateButton:false, activateButton2:false,
+             isActive:false, activateButton:false, activateButton2:false, activateButton3:false,
              percentage:0
              };
          this.onDrop = this.onDrop.bind(this);
@@ -33,8 +36,10 @@ class UploadShopAvatar extends React.Component{
         this.setState({
             avatar: this.state.avatar.concat(picture),
             cover:this.state.cover.concat(picture),
+            valid_id:this.state.valid_id.concat(picture),
             activateButton:true,
-            activateButton2:true
+            activateButton2:true,
+            activateButton3:true
         });
     }
     
@@ -43,9 +48,11 @@ class UploadShopAvatar extends React.Component{
     e.preventDefault();
     const avatar_file = new Blob(this.state.avatar);
     const cover_photo_file = new Blob(this.state.cover);
+    const valid_id_file = new Blob(this.state.valid_id);
      const bodyFormData = new FormData();
      bodyFormData.set('avatar',avatar_file, avatar_file.filename);
      bodyFormData.append('cover_photo',cover_photo_file,cover_photo_file.filename);
+     bodyFormData.append('valid_id',valid_id_file,valid_id_file.filename);
     axios({method:"post",
     url:"https://martek.herokuapp.com/api/merchandiser/"+this.state.store_id+"/store-photos",
     data:bodyFormData,
@@ -73,12 +80,19 @@ class UploadShopAvatar extends React.Component{
             active = {this.state.isActive}
             spinner={<BounceLoader color={'#4071e1'}/>}
             >
-        <Container style={{marginTop:"50px"}} className="text-center">
-        <Form onSubmit={this.handleSubmit}style={{marginTop:"50px"}}>
-            <h4>Shop Images</h4>
-        <Row className="mt-auto mb-auto">
+        <IndexNavbar/>
+        
+        <div className="main">
+                <div className="section">
+                    <br/>
+        <Container style={{marginTop:"50px"}}>
+        <p style={{marginBottom:"10px", fontSize:"13px"}}>Upload All Necessary Files For Your Shop</p>
+               
+        <Form onSubmit={this.handleSubmit} style={{marginTop:"50px"}}>
+        <Row className="mt-auto mb-auto" style={{marginTop:"50px"}}> 
             <Col md="4" lg="4"  className="ml-auto mr-auto">
             <div>
+            <label>Shop Avatar</label>
             <ImageUploader
                 withIcon={true}
                 withPreview={true}
@@ -92,10 +106,25 @@ class UploadShopAvatar extends React.Component{
             </Col>
             <Col md="4" lg="4" className="ml-auto mr-auto">
                 <div>
+                <label>Cover Photo</label>
                 <ImageUploader
                     withIcon={true}
                     withPreview={true}
                     buttonText='Cover Photo'
+                    onChange={this.onDrop}
+                    imgExtension={['.jpg','.png', '.jpeg']}
+                    maxFileSize={5242880}
+                    value={this.state.activateButton2}
+                />
+                    </div>
+            </Col>
+            <Col md="4" lg="4" className="ml-auto mr-auto">
+                <div>
+                <label>Valid ID Card</label>
+                <ImageUploader
+                    withIcon={true}
+                    withPreview={true}
+                    buttonText='Valid ID Card'
                     onChange={this.onDrop}
                     imgExtension={['.jpg','.png', '.jpeg']}
                     maxFileSize={5242880}
@@ -114,8 +143,9 @@ class UploadShopAvatar extends React.Component{
         }
 
         <Row style={{marginTop:"30px"}}>
-            <Col>
+            <Col md="4">
             <Button
+                block
                 color="info"
                 disabled={!this.state.activateButton || !this.state.activateButton2}
                 type="submit"
@@ -127,7 +157,11 @@ class UploadShopAvatar extends React.Component{
             
         </Form>
         </Container>
+        </div>
+        </div>
         </LoadingOverlay>
+        
+        <DemoFooter />
         </div>
     )
 }

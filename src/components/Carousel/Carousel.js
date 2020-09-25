@@ -11,11 +11,11 @@ import "./Carousel.css";
 
 const items = [
   {
-    src: require('../../assets/img/image1.jpg')
+    src: require('../../assets/img/image1.jpeg')
    
   },
   {
-    src: require('../../assets/img/image2.jpg')
+    src: require('../../assets/img/image2.jpeg')
   
   },
   {

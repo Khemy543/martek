@@ -4,9 +4,6 @@
 .inline{
     display: inline;
 }
-.category{
-    font-size: 20px;
-}
 .section{
     background-color: #f7f7f7 !important;
     overflow-x: hidden;
@@ -38,7 +35,7 @@
 }
 .img-container div h4{
     font-size: 15px;
-    font-weight:bold;
+    font-weight:500;
 }
 
 .img-container div img{
@@ -50,6 +47,9 @@
     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 @media (max-width:800px){
+    .category{
+        font-size: 14px !important;
+    }
     .justify-content-end{
         display: none;
     }
@@ -102,6 +102,9 @@
 
 
 @media(min-width:801px){
+    .category{
+        font-size: 20px;
+    }
 
     .phone-nav{
         display: none;
@@ -278,4 +281,17 @@
   .notification{
       top:0;
       right:0;
+  }
+
+  .footer li.nav-item a{
+      font-size: 12px;
+  }
+
+  .footer a.nav-link{
+      font-weight: 500;
+  }
+
+  .footer{
+      margin-top: 30px;
+      border-top: 0 2px 12px rgba(0,0,0,0.1);
   }

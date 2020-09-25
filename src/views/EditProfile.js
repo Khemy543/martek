@@ -9,7 +9,7 @@ import{
     Container,
     Row,
     Col,
-    Form, Label, Input,
+    Form, Label, Input, Nav, NavItem,NavLink,TabContent,TabPane, 
     Button, InputGroup, InputGroupAddon, InputGroupText,Modal,ModalBody, Alert
    
 } from "reactstrap";
@@ -18,7 +18,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 import history from "../history.js";
 
 function EditProfile(props){
-    
+  const [activeTab, setActiveTab] = React.useState("1");
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [phone, setPhone] = React.useState("");
@@ -27,11 +27,18 @@ function EditProfile(props){
   const [userID, setUserID] = React.useState("");
   const [isActive, setIsActive] = React.useState(false);
   const [modal, setModal] = React.useState(false);
-  const [alert, setAlert] = React.useState(false)
+  const [alert, setAlert] = React.useState(false);
+  const [eye1, setEye1] = React.useState(false);
+  const [eye2, setEye2] = React.useState(false);
+  const [eye3, setEye3] = React.useState(false);
 
     
   let user = localStorage.getItem('access_token')
-  
+  const toggle = tab => {
+    if (activeTab !== tab) {
+      setActiveTab(tab);
+    }
+  };
   const handleProfileUpdate=(e)=>{
     setIsActive(true);
     e.preventDefault();
@@ -100,23 +107,58 @@ function EditProfile(props){
                 <br/>
                 <br/>
                 <Container>
-                  <Form onSubmit={handleProfileUpdate}>
-                <Col className="ml-auto mr-auto" md="6">
+                <div className="nav-tabs-navigation">
+                <div className="nav-tabs-wrapper">
+                  <Nav role="tablist" tabs>
+                    <NavItem>
+                      <NavLink
+                        className={activeTab === "1" ? "active" : ""}
+                        onClick={() => {
+                          toggle("1");
+                        }}
+                        style={{cursor:"pointer"}}
+                      >
+                        Edit Profile
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+
+                    <NavLink  style={{cursor:"pointer"}}
+                      className={activeTab === "2" ? "active" : ""}
+                      onClick={() => {
+                        toggle("2");
+                      }}
+                    >
+                    Change Password
+                    </NavLink>
+                  </NavItem>
+                  </Nav>
+                </div>
+              </div>
+              {/* Tab panes */}
+            <TabContent className="" activeTab={activeTab}>
+              <TabPane tabId="1" id="follows">
+              <Container>
+                  <Row>
+                <Col md="6" className="ml-auto mr-auto">
                 {alert?
                 <Alert color="danger" className="text-center">
                   Email or Phone is taken!!
                 </Alert>:
                 <div>
                 </div>}
+                
                 <Row>
                     <Col>
+                    
+                <Form onSubmit={handleProfileUpdate}>
                     <Row>
                     <Col>
                         <label>NAME</label>
                         <InputGroup>
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="nc-icon nc-money-coins" />
+                            <i className="nc-icon nc-money-coins"/>
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input placeholder="Name" type="text" value={name} onChange={e=>setName(e.target.value)}/>
@@ -173,11 +215,71 @@ function EditProfile(props){
                 color="info"
                 type="submit"
                 >update profile
-                    </Button>
-                    </Col>
+                  </Button>
+                  </Form>
+                  </Col>
                 </Row>
                 </Col>
+                </Row>
+                </Container>
+                </TabPane>
+                
+                <TabPane tabId="2" id="password">
+                <Container>
+                <Row>
+                <Col md="6" className="ml-auto mr-auto">
+                <Form>
+                <Row>
+                  <Col>
+                  <label>CURRENT PASSWORD</label>
+                  <InputGroup>
+                        
+                    <Input type={!eye1?"password":"text"} placeholder="Current Password"/>
+                    <InputGroupAddon addonType="append">
+                          <InputGroupText>
+                            <i className={eye1?"fa fa-eye":"fa fa-eye-slash"} onClick={()=>setEye1(!eye1)}/>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                    </InputGroup>
+                  </Col>
+                </Row>
+                  <br/>
+                <Row>
+                  <Col>
+                  <label>NEW PASSWORD</label>
+                  <InputGroup>
+                        
+                    <Input type={!eye2?"password":"text"} placeholder="New Password"/>
+                    <InputGroupAddon addonType="append">
+                          <InputGroupText>
+                            <i className={eye2?"fa fa-eye":"fa fa-eye-slash"} onClick={()=>setEye2(!eye2)}/>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                    </InputGroup>
+                  </Col>
+                </Row>
+                <br/>
+                <Row>
+                  <Col>
+                  <label>RETYPE PASSWORD</label>
+                  <InputGroup>
+                    <Input type={!eye3? "password":"text"} placeholder="Retype Password"/>
+                    <InputGroupAddon addonType="append">
+                          <InputGroupText>
+                            <i className={eye3?"fa fa-eye":"fa fa-eye-slash"}  onClick={()=>setEye3(!eye3)}/>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                    </InputGroup>
+                  </Col>
+                </Row>
+                  <br/>
+                  <Button type="submit" color="info" block>Submit</Button>
                 </Form>
+                </Col>
+                </Row>
+                </Container>
+                </TabPane>
+                </TabContent>
                 </Container>
 
                     </div>

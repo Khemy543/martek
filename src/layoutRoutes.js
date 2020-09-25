@@ -36,6 +36,10 @@ import Umat from "./views/CampusHome/UMAT.js";
 import Upsa from "./views/CampusHome/UPSA.js";
 import UserProductDetails from "views/UserProductDetails.js";
 import UserEditProduct from "views/UserEditProduct.js";
+import VerifyShopEmail from "views/verifyShopMail.js";
+import WaitShopVerification from "views/await-shopVerification.js";
+import ForgotPassword from "views/ForgotPassword.js";
+import ResetPassword from "views/ResetPassword.js";
 
 
 
@@ -202,6 +206,16 @@ var routes = [
         layout: "/auth"
       },
       {
+        path: "/forgot-password",
+        component: ForgotPassword,
+        layout: "/auth"
+      },
+      {
+        path: "/reset-password",
+        component: ResetPassword,
+        layout: "/auth"
+      },
+      {
         path: "/upload-avatar",
         component: UploadShopAvatar,
         layout: "/auth"
@@ -215,10 +229,20 @@ var routes = [
         path: "/email/verify",
         component: VerifyEmail,
         layout: "/api/auth"
-      },,
+      },
       {
         path: "/wait-verification",
         component: WaitVerification,
+        layout: "/auth"
+      },
+       {
+        path: "/shopmail/verify",
+        component: VerifyShopEmail,
+        layout: "/api/auth"
+      },
+      {
+        path: "/wait-shop-verification",
+        component: WaitShopVerification,
         layout: "/auth"
       },
 

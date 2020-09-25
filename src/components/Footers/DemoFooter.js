@@ -21,7 +21,7 @@ import React,{useState} from "react";
 import { Link } from "react-router-dom";
 // reactstrap components
 import { Row, Container, Modal, ModalBody, ModalHeader,Col, Button, Form, Input, InputGroup,Alert,
-  InputGroupAddon,InputGroupText, ModalFooter
+  InputGroupAddon,InputGroupText, ModalFooter, Nav, NavLink, NavItem
 
 } from "reactstrap";
 import axios from "axios";
@@ -86,33 +86,75 @@ function DemoFooter() {
   
   }
   return (
-    <footer className="footer footer-black footer-white">
+    <footer className="footer footer-black">
       <Container>
         <Row>
-          <nav className="footer-nav">
-            <ul>
-              <li>
-                <Link to="#"
-                  
-                >
-                  <img alt="#" src={require("../../assets/img/martlogo.png")} style={{maxWidth:"120px", height:"30px"}}/>
-                </Link>
-              </li>
-              <li>
-                <Link to="#"
-                 onClick={()=>{setModal(true)}} 
-                >
-                  contact us
-                </Link>
-              </li>
-              <li>
-                <Link to="https://orion-innovations.herokuapp.com" target="blank">
-                  help
-                </Link>
-              </li>
-            </ul>
-          </nav>
-          <Modal isOpen={modal} toggle={toggle}>
+        <Col>
+        <Nav>
+          <NavItem>
+            <NavLink>
+            <img alt="#" src={require("../../assets/img/martlogo.png")} style={{maxWidth:"120px", height:"30px"}}/>
+            </NavLink>
+          </NavItem>
+        </Nav>
+        </Col>
+
+        <Col>
+        <Nav>
+          <NavItem>
+            <NavLink style={{paddingLeft:"0px"}}>
+            LET US HELP YOU
+            </NavLink>
+            <a>Help Center</a><br/>
+            <a>Contact Us</a><br/>
+            <a>How to buy on Martek</a><br/>
+            <a>Report Product</a>
+          </NavItem>
+        </Nav>
+        </Col>
+
+        <Col>
+        <Nav>
+          <NavItem>
+            <NavLink style={{paddingLeft:"0px"}}>
+            ABOUT MARTEK
+            </NavLink>
+            <a>About Us</a><br/>
+            <a>Terms and Conditions</a><br/>
+            <a>Privacy Policy</a>
+          </NavItem>
+        </Nav>
+        </Col>
+
+        <Col>
+        <Nav>
+          <NavItem>
+            <NavLink style={{paddingLeft:"0px"}}>
+            MAKE MONEY ON MARTEK
+            </NavLink>
+            <a>Sell on Martek</a><br/>
+            <a>Own a shop on Martek</a><br/>
+            <a>Service Charges</a>
+          </NavItem>
+        </Nav>
+        </Col>
+
+        <Col>
+        <Nav>
+          <NavItem>
+            <NavLink style={{paddingLeft:"0px"}}>
+            <div className="credits ml-auto">
+            <span className="copyright">
+              © {new Date().getFullYear()}, made with{" "}
+              <i className="fa fa-heart heart" /> martek
+            </span>
+          </div>
+            </NavLink>
+          </NavItem>
+        </Nav>
+        </Col>
+
+          {/* <Modal isOpen={modal} toggle={toggle}>
           <LoadingOverlay 
           active = {isActive}
           spinner={<FadeLoader color={'#4071e1'}/>}
@@ -238,27 +280,16 @@ function DemoFooter() {
             </LoadingOverlay>
                 
             </Modal>
-          <div className="credits ml-auto">
-            <span className="copyright">
-              © {new Date().getFullYear()}, made with{" "}
-              <i className="fa fa-heart heart" /> martek
-            </span>
-          </div>
-
-          {/* <div className="credits ml-auto">
-            <span className="copyright">
-             web designed by  <img src={require("../../assets/img/orion-logo.png")} style={{height:"10px", maxWidth:"110px"}}/>
-            </span>
-          </div> */}
-        </Row>
-                <Col className="ml-auto mr-auto" md="12">
+            <Col className="ml-auto mr-auto" md="12">
                 <Modal isOpen={alertModal} toggle={toggleAlertModal} style={{maxHeight:"40px", maxWidth:"300px"}} className="alert-modal">
                         <ModalBody>
                     <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white"}}>SENT!!</h4>
                     </ModalBody>
                     
                     </Modal>
-                </Col>
+                </Col> */}
+        </Row>
+                
       </Container>
     </footer>
   );

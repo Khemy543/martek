@@ -26,6 +26,8 @@ import history from "../history.js";
 import {Alert} from "reactstrap";
  
 import axios from "axios";
+import IndexNavbar from 'components/Navbars/IndexNavbar.js';
+import DemoFooter from "components/Footers/DemoFooter"
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -132,11 +134,11 @@ export default function OwnShop(props){
 
   return (
     <div>
-    <LoadingOverlay 
-    active = {isActive}
-    spinner={<BounceLoader color={'#4071e1'}/>}
-    >
-        <Container component="main" maxWidth="sm" style={{marginTop:"50px"}}>
+    <IndexNavbar />
+    
+    <div className="main">
+                <div className="section">
+        <Container component="main" maxWidth="sm" style={{marginTop:"80px"}}>
           <div className={classes.paper}>
         <Avatar className={classes.avatar}>
             {/* <LockOutlinedIcon /> */}
@@ -300,7 +302,9 @@ export default function OwnShop(props){
           </form>
           </div>
         </Container>
-    </LoadingOverlay>
+        </div>
+        </div>
+        <DemoFooter />
     </div>
   );
 }

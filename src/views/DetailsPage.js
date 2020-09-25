@@ -38,11 +38,11 @@ class DetailsPage extends React.Component{
         reportmodal:false,
         average:0,
         message:"",
-        reportSent:false
     }
     
      toggle = () => this.setState({modal:!this.state.modal});
       
+     toggleReportModal = ()=>this.setState({reportmodal:!this.state.reportmodal})
         componentDidMount(){
             this.setState({isActive:true})
             axios.get("https://martek.herokuapp.com/api/product/"+this.props.location.state.id+"/details")
@@ -118,16 +118,12 @@ class DetailsPage extends React.Component{
             .then(res=>{
                 console.log(res.data);
                 if(res.data.status == "saved"){
-                    this.setState({reportSent:true})
+                    this.setState({reportmodal:true})
                 }
             })
             .catch(error=>{
-                console.log(error.response.data)
+                console.log(error)
             })
-        }
-
-        toggleReportModal=()=>{
-            this.setState({reportmodal:!this.state.reportmodal})
         }
 
         render(){
@@ -192,7 +188,7 @@ class DetailsPage extends React.Component{
                                             <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>¢ {price}</h4>
                                             </Col>
                                             <Col>
-                                            <h5 style={{fontSize:"16px", marginTop:"20px"}}>IN STOCK : {in_stock}</h5>
+                                            <h5 style={{fontSize:"13px", marginTop:"20px"}}>IN STOCK : {in_stock}</h5>
                                             </Col>
                                             <Col>
                                             {/* <div style={{marginTop:"20px"}}>
@@ -230,8 +226,6 @@ class DetailsPage extends React.Component{
                                         >
                                             buy now
                                         </Button>
-                                        <br/>
-                                        <span style={{color:"red", fontSize:"12px", fontWeight:600, cursor:"pointer"}} onClick={()=>this.setState({reportmodal:true})}>REPORT</span>
                                             <Modal isOpen={this.state.modal} toggle={this.toggle}>
                                             <ModalHeader>
                                                     Seller's Information
@@ -270,7 +264,7 @@ class DetailsPage extends React.Component{
                                
                             </Card>
                         </Row>
-                        <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
+                        <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px", marginTop:"-15px"}}>
                             <Col md="12">
                                 <Card className="card-plain">
                                     <CardTitle>
@@ -285,7 +279,7 @@ class DetailsPage extends React.Component{
                             </Col>
                             </Row>
                             <br/>
-                            <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
+                            <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px", marginTop:"-15px"}}>
                             <Col md="12">
                                 <Card className="card-plain">
                                     <CardBody>
@@ -310,7 +304,7 @@ class DetailsPage extends React.Component{
                             </Col>
                             </Row>
                             
-                            <Row style={{ marginTop:"20px"}}>
+                            <Row style={{ marginTop:"5px"}}>
                             <h4 style={{marginBottom:"20px", marginLeft:"20px"}}>REVIEWS</h4>
                             <Col md="12">
                             {this.state.reviews.length <=0 ?
@@ -380,39 +374,30 @@ class DetailsPage extends React.Component{
                             </Row>
                             </Col>
                             </Row>
-                            
-                            
-                           
-                                    </Container>
+
+                            <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px",marginTop:"35px"}}>
+                            <Col md="10">
+                                <Card className="card-plain">
+                                    <CardBody>
+                                    <Input type="textarea" placeholder="report product..." value={this.state.message} onChange={(e)=>this.setState({message:e.target.value})}/>
+                                    </CardBody>
+                                    </Card>
+                            </Col>
+
+                            <Col md="2">
+                            <Button style={{marginTop:"20px", backgroundColor:"transparent", color:"#17a2b8", borderColor:"transparent"}} color="info" onClick={()=>this.handlePostReport()}>Send Report</Button>
+                                    
+                            </Col>
+                            </Row>
+
+                        </Container>
                             )}
                         </ProductConsumer>
                         <Modal isOpen={this.state.reportmodal} toggle={()=>this.toggleReportModal()}>
-                        <ModalHeader>
-                                <h4 style={{fontWeight:"bold",fontSize:"17px", marginTop:"0px"}}>Report Product</h4>
-                            </ModalHeader>
-                            {!this.state.reportSent?
-                            <>
-                            <ModalBody>
-                            <Row>
-                                <Col md="12">
-                                <Input type="textarea" placeholder="report message..." value={this.state.message} onChange={(e)=>this.setState({message:e.target.value})}/>
-
-                                </Col>
-                            </Row>
-                            </ModalBody>
-                            <ModalFooter style={{border:"none",marginBottom:"20px", marginRight:"15px"}}>
-                                <Button color="info" onClick={()=>this.handlePostReport()}>Report</Button>
-                                <Button color="danger" onClick={()=>this.setReportmodal(false)}>Close</Button>
-                            </ModalFooter>
-                            </>
-                            :
-                            <>
                             <div style={{textAlign:'center',marginTop:"10px",marginBottom:"10px"}}>
                             <p style={{fontWeight:"bold"}}><i className="fa fa-check mr-1" style={{color:"green", fontSize:"20px"}}/> sent!!</p>
                             <p>Thanks for the report!<br/>Action is being taken, Feedback will be sent soon</p>
                             </div>
-                            </>
-                            }
                         </Modal>
                         </div>
                     </div>

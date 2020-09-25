@@ -174,14 +174,16 @@ function Home({history}){
                         <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                             <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
                             <Row style={{borderBottom:"1px solid #eaeaea"}}>
-                                <Col sm="6" md="6" lg="6" xl="6" xs="6">
-                                <h3 style={{fontWeight:"bold"}} className="category">
+                                <Col sm="9" md="9" lg="9" xl="9" xs="9">
+                                <h3 style={{fontWeight:500}} className="category">
                                     <i className="fa fa-gg" style={{color:"#ff8d00"}}/> PHONES & ACCESSORIES
                                     
                                 </h3>
                                 </Col>
-                                <Col sm="6" md="6" lg="6" xl="6" xs="6">
-                                <p style={{fontWeight:600, fontSize:"13px", float:"right",marginTop:"10px"}}>SEE ALL <i className="fa fa-chevron-right"/></p>
+                                <Col sm="3" md="3" lg="3" xl="3" xs="3">
+                                <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}} 
+                                onClick = {()=>history.push("/user/categories",{category_id:2, category_name:"Phones and Accessories", image:"2.jpg"})}
+                                >ALL <i className="fa fa-chevron-right"/></p>
                                 </Col>
                             </Row>
                                 </CardTitle>
@@ -208,7 +210,7 @@ function Home({history}){
                         <Row>
                         <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                         <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
-                            <h3 style={{borderBottom:"1px solid #eaeaea", fontWeight:"bold"}} className="category">
+                            <h3 style={{borderBottom:"1px solid #eaeaea", fontWeight:500}} className="category">
                                 <i className="fa fa-gg" style={{color:"#ff8d00"}}/> NEW THIS WEEK
                                 
                                 </h3>
@@ -252,7 +254,7 @@ function Home({history}){
                                             <div>
                                                 <Col>
                                             <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px"}}>
-                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
+                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:500, padding:"0px 0px 0px 0px"}}>
                                                 LG TV 150 X 140 INCHES CURVE TV
                                                     </CardTitle>
                                                     <br/>
@@ -260,14 +262,14 @@ function Home({history}){
                                                     <img alt="#" src={require("../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
                                                     </div>
                                                     <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
+                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:500,padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
                                                 </Card>
                                                 </Col>
                                             </div>
                                             <div>
                                             <Col>
                                             <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px"}}>
-                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
+                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:500, padding:"0px 0px 0px 0px"}}>
                                                 LG TV 150 X 140 INCHES CURVE TV
                                                     </CardTitle>
                                                     <br/>
@@ -275,14 +277,14 @@ function Home({history}){
                                                     <img alt="#" src={require("../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
                                                     </div>
                                                     <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
+                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:500,padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
                                                 </Card>
                                                 </Col>
                                             </div>
                                             <div>
                                             <Col>
                                             <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px"}}>
-                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
+                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:500, padding:"0px 0px 0px 0px"}}>
                                                 LG TV 150 X 140 INCHES CURVE TV
                                                     </CardTitle>
                                                     <br/>
@@ -290,14 +292,14 @@ function Home({history}){
                                                     <img alt="#" src={require("../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
                                                     </div>
                                                     <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
+                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:500,padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
                                                 </Card>
                                                 </Col>
                                             </div>
                                             <div>
                                             <Col>
                                             <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px"}}>
-                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
+                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:500, padding:"0px 0px 0px 0px"}}>
                                                 LG TV 150 X 140 INCHES CURVE TV
                                                     </CardTitle>
                                                     <br/>
@@ -305,7 +307,7 @@ function Home({history}){
                                                     <img alt="#" src={require("../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
                                                     </div>
                                                     <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
+                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:500,padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
                                                 </Card>
                                                 </Col>
                                             </div>
@@ -321,12 +323,21 @@ function Home({history}){
 
                             <Row>
                     <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
-                        <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
-                            <h3 style={{borderBottom:"1px solid #eaeaea", fontWeight:"bold"}} className="category">
-                                <i className="fa fa-gg" style={{color:"#ff8d00"}}/> FASHION
-                               
+                    <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
+                            <Row style={{borderBottom:"1px solid #eaeaea"}}>
+                                <Col sm="9" md="9" lg="9" xl="9" xs="9">
+                                <h3 style={{fontWeight:500}} className="category">
+                                    <i className="fa fa-gg" style={{color:"#ff8d00"}}/> FASHION
+                                    
                                 </h3>
-                            </CardTitle>
+                                </Col>
+                                <Col sm="3" md="3" lg="3" xl="3" xs="3">
+                                <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}}
+                                onClick = {()=>history.push("/user/categories",{category_id:3, category_name:"Fashion", image:"3.jpg"})}
+                                >ALL <i className="fa fa-chevron-right"/></p>
+                                </Col>
+                            </Row>
+                                </CardTitle>
                             <CardBody>
                             <Container>
                                 <Row>
@@ -352,12 +363,21 @@ function Home({history}){
 
                     <Row>
                     <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
-                        <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
-                            <h3 style={{borderBottom:"1px solid #eaeaea", fontWeight:"bold"}} className="category">
-                                <i className="fa fa-gg" style={{color:"#ff8d00"}}/> ELECTRONICS & APPLIANCES
-                               
+                    <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
+                            <Row style={{borderBottom:"1px solid #eaeaea"}}>
+                                <Col sm="9" md="9" lg="9" xl="9" xs="9">
+                                <h3 style={{fontWeight:500}} className="category">
+                                    <i className="fa fa-gg" style={{color:"#ff8d00"}}/> ELECTRONICS & APPLIANCES
+                                    
                                 </h3>
-                            </CardTitle>
+                                </Col>
+                                <Col sm="3" md="3" lg="3" xl="3" xs="3">
+                                <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}}
+                                onClick = {()=>history.push("/user/categories",{category_id:1, category_name:"Electronics", image:"1.jpg"})}
+                                >ALL <i className="fa fa-chevron-right"/></p>
+                                </Col>
+                            </Row>
+                                </CardTitle>
                             <CardBody>
                             <Container>
                                 <Row>
@@ -382,7 +402,7 @@ function Home({history}){
                     
                         <Row>
                         <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
-                            <CardTitle style={{borderBottom:"1px solid #eaeaea", fontWeight:"bold", marginLeft:"15px", marginRight:"15px", fontSize:"20px"}}>
+                            <CardTitle style={{borderBottom:"1px solid #eaeaea", fontWeight:500, marginLeft:"15px", marginRight:"15px", fontSize:"20px"}}>
                             <i className="fa fa-gg" style={{color:"#ff8d00"}}/>  FEATURED CATEGORY
                                 </CardTitle>
                                 <CardBody >
