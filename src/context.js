@@ -2,8 +2,6 @@ import React from "react";
 //import { detailProduct } from "./dummy_data";
 import _ from "lodash";
 import axios from 'axios';
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
 import { Modal, ModalBody, Col, Container} from "reactstrap";
 import decode from "jwt-decode";
 

@@ -14,6 +14,7 @@ import {
 // core components
 import LoadingOverlay from "react-loading-overlay";
 import FadeLoader from "react-spinners/FadeLoader";
+import history from "../../history.js";
 
 function UserDetails(props) {
 const [isActive, setIsActive] = React.useState(false);
@@ -26,7 +27,7 @@ const [amount, setAmount] = React.useState("");
 const handleSubmit=(e)=>{
     setIsActive(true)
     e.preventDefault();
-    props.history.push("/payment/account-details", {firtsname:firtsname,lastname:lastname, email:email,amount:amount});
+    props.history.push("/payment/account", {firtsname:firtsname,lastname:lastname, email:email,amount:amount});
     setIsActive(false)
     
 }

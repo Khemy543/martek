@@ -23,18 +23,22 @@ class AccountDetails extends React.Component{
         card:true,
         mobile:false,
         po:false,
-        email:this.props.location.state.email,
-        amount:this.props.location.state.amount,
+        email:"",
+        amount:"",
         date:"",
         cardno:"",
         cvv:"",
-        firstname:this.props.location.state.firstname,
-        lastname:this.props.location.state.lastname,
+        firstname:"",
+        lastname:"",
         authurl:"",
         modalOpen:false,
         phonenumber:"",
         network:"MTN",
         voucher:""
+    }
+
+    componentDidMount(){
+        console.log(this.props)
     }
 
 handleCardSubmit=(e)=>{

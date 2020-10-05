@@ -40,6 +40,9 @@ import VerifyShopEmail from "views/verifyShopMail.js";
 import WaitShopVerification from "views/await-shopVerification.js";
 import ForgotPassword from "views/ForgotPassword.js";
 import ResetPassword from "views/ResetPassword.js";
+import ContactUs from "views/ContactUs.js";
+import UserDetails from "views/Payment/UserDetails.js";
+import AccountDetails from "views/Payment/AccountDetails.js";
 
 
 
@@ -146,6 +149,25 @@ var routes = [
         path: "/following",
         protectedRoute:true,
         component: ShopFollowing,
+        layout: "/user"
+      },
+      {
+        path: "/contact-us",
+        component: ContactUs,
+        layout: "/user"
+      },
+      
+      {
+        path: "/payment/information",
+        protectedRoute:true,
+        component: UserDetails,
+        layout: "/user"
+      },
+      
+      {
+        path: "/payment/account",
+        protectedRoute:true,
+        component: AccountDetails,
         layout: "/user"
       },
       {

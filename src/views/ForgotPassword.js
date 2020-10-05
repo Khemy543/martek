@@ -20,7 +20,10 @@ export default function ForgotPassword(props){
 
     const toggle=()=>setVisible(!visible);
 
-   
+   const handleSubmit=(e)=>{
+    e.preventDefault();
+    console.log("submitting")
+   }
     return(
     
             <div>
@@ -28,8 +31,8 @@ export default function ForgotPassword(props){
             <div className="section" style={{height:"100vh"}}>
             
             <Container className="centered">
-            <Row>
-             <Col md="6" lg="6" sm="12" xs="12" style={{marginLeft:"50%", marginTop:"15%",transform:"translate(-50%,-50%)"}}>
+            <Row style={{marginTop:"100px"}}>
+             <Col md="6" lg="6" sm="12" xs="12" style={{marginLeft:"50%", marginTop:"20%",transform:"translate(-50%,-50%)"}}>
                    {/*  <div>
                     <Alert isOpen={visible} toggle={toggle}  color="danger" fade={true} style={{fontWeight:500, textTransform:"capitalize"}}>
                         {message}
@@ -45,10 +48,10 @@ export default function ForgotPassword(props){
                             </Col>
                         </Row>
                             <br/>
-                            <form>
+                            <form onSubmit={handleSubmit}>
                             <label style={{fontWeight:500}}>Email Address</label>
-                            <Input type="email" placeholder="eg: example@gmail.com"/>
-                            <Button style={{marginTop:"50px"}} block color='success'>Reset Password</Button>
+                            <Input type="email" placeholder="eg: example@gmail.com" required/>
+                            <Button style={{marginTop:"50px"}} type="submit" block color='success'>Reset Password</Button>
                             </form>
                         </CardBody>
                     </Card>

@@ -73,7 +73,7 @@ const Logout=(e)=>{
     headers:{ 'Authorization':`Bearer ${merchandiser}`}
   })
   .then(res=>{
-    localStorage.removeItem("ShopData");
+    localStorage.removeItem("shop_access_token");
     history.push("/")
   })
   .catch(error=>{

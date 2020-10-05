@@ -54,16 +54,12 @@ const [modal, setModal] = React.useState(false);
 
 const toggle = () => setPopoverOpen(!popoverOpen);
 
-  let user =1;
-  let all_data = JSON.parse(localStorage.getItem('ShopData'));
-  if(all_data !== null){
-    user = all_data[0];
-  }
+let merchandiser = localStorage.getItem("shop_access_token")
 
   React.useEffect(()=>{
     setIsActive(true)
     axios.get("https://martek.herokuapp.com/api/merchandiser",{
-      headers:{ 'Authorization':`Bearer ${user}`}
+      headers:{ 'Authorization':`Bearer ${merchandiser}`}
 })
     .then(res=>{
       console.log(res.data)
@@ -111,16 +107,16 @@ const toggle = () => setPopoverOpen(!popoverOpen);
           setIsActive(false)
         }
     });
-  },[user])
+  },[merchandiser])
 
   const handleDelete=()=>{
     setIsActive(true)
     axios.delete("https://martek.herokuapp.com/api/merchandiser/delete",{
-        headers:{"Authorization":`Bearer ${user}`}
+        headers:{"Authorization":`Bearer ${merchandiser}`}
     })
     .then(res=>{
         history.push("/user/home");
-        localStorage.removeItem('ShopData');
+        localStorage.removeItem('shop_access_token');
         setIsActive(false)
     })
     .catch(error=>{
@@ -129,16 +125,11 @@ const toggle = () => setPopoverOpen(!popoverOpen);
 }
 
   const handleSubmit=(e)=>{
-    all_data = JSON.parse(localStorage.getItem('ShopData'));
-    if(all_data !== null){
-      user = all_data[0];
-    }
-    console.log(user)
     setIsActive(true);
     e.preventDefault();
 
     axios.patch("https://martek.herokuapp.com/api/merchandiser/"+id+"/update",{company_name,campus_id,company_description,phone,email},
-    { headers:{"Authorization":`Bearer ${user}`}})
+    { headers:{"Authorization":`Bearer ${merchandiser}`}})
     .then(res=>{
       console.log(res.data)
       if(res.data.status === "success"){

@@ -34,9 +34,9 @@ const Routes = () => {
             <Route path="/user" render={props => <UserLayout {...props} />} />
             <Route path="/shop" render={props => <ShopLayout {...props} />} />
             <Route path="/auth" render={props => <AuthLayout {...props} />} />
-            <Route path="/api/auth" render={props => <VerificationLayout {...props} />} />
+            <Route path="/api/auth" render={props => <VerificationLayout {...props} />} />{/* 
             <Route exact path="/payment/information" component={UserDetails} />
-            <Route exact path="/payment/account-details" component={AccountDetails} />
+            <Route exact path="/payment/account-details" component={AccountDetails} /> */}
             <Redirect from= "/" to="/user/home" />
             <Route exact path="*" component={ PageNotFound } />
               

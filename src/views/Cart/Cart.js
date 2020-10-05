@@ -3,8 +3,6 @@ import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
 
 // core components
-import IndexNavbar from "../../components/Navbars/IndexNavbar.js";
-import DemoFooter from "../../components/Footers/DemoFooter";
 import CartColumns from "./CartColumns.js";
 import EmptyCart from "./EmptyCart.js";
 import CartList from "./CartList";
@@ -26,7 +24,7 @@ class Cart extends React.Component{
    
     render(){
         return(
-            <div>
+            <>
                 <br/>
                 <br/>
                 <div className="main">
@@ -57,7 +55,7 @@ class Cart extends React.Component{
                         
                         </div>
                     </div>
-                </div>
+                </>
         );
     }
 }

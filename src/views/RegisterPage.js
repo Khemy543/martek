@@ -180,6 +180,7 @@ function RegisterPage() {
                 <div style={{textAlign:"center"}}>
                 <Button
                 style={{backgroundColor:"transparent", borderColor:"transparent", color:"#ff6a00"}}
+                onClick={()=>history.push('/auth/login-page')}
                 >LOGIN</Button>
                 </div>
             </Col>

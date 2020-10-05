@@ -138,7 +138,7 @@ export default function OwnShop(props){
     
     <div className="main">
                 <div className="section">
-        <Container component="main" maxWidth="sm" style={{marginTop:"80px"}}>
+        <Container component="main" maxWidth="sm" style={{marginTop:"60px"}}>
           <div className={classes.paper}>
         <Avatar className={classes.avatar}>
             {/* <LockOutlinedIcon /> */}
