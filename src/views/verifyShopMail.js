@@ -25,7 +25,7 @@ export default function VerifyShopEmail(props){
         const param = queryString.parse(props.location.search);
         console.log(param.token);
         let token = param.token;
-        axios.post(`${domain}/api/auth/email/verify`,{token:token})
+        axios.post(`${domain}/api/merchandiser/email/verify`,{token:token})
         .then(res=>{
             console.log(res.data);
             if(res.data.message === "verified"){

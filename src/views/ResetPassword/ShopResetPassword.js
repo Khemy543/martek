@@ -14,29 +14,61 @@ import{
 } from "reactstrap";
 
 var domain = "https://martek.herokuapp.com"
-export default function ResetPassword(props){
+export default function ShopResetPassword(props){
     const [message, setMessage] = React.useState("");
+    const [password,setPassword]=React.useState("");
+    const [confirmPassword, setConfirmPassword] = React.useState("");
     const [visible, setVisible] = React.useState(false);
+    const [color, setColor] = React.useState("");
     const [eye1 , setEye1]= React.useState(false);
     const [eye2 , setEye2]= React.useState(false);
 
     const toggle=()=>setVisible(!visible);
 
+    const handleSubmit=(e)=>{
+        if(password === confirmPassword){
+        e.preventDefault()
+        console.log(props.location);
+        const param = queryString.parse(props.location.search);
+        console.log(param.token);
+        let token = param.token;
+        axios.post(`${domain}/api/merchandiser/reset/password`,
+        {password,token})
+        .then(res=>{
+            console.log(res.data)
+            setColor("success")
+            setMessage(res.data.status);
+            setVisible(true);
+        })
+        .catch(error=>{
+            console.log(error.response.data)
+            setMessage(error.response.data.status)
+            setVisible(true)
+            setColor("danger")
+        })
+    }
+    else{
+        setMessage("Passwords Do Not Match!!")
+        setVisible(true)
+        setColor("danger")
+    }
+}
    
     return(
     
-            <div>
-            <div className="main">
-            <div className="section" style={{height:"100vh"}}>
+            <div
+            
+            className="page-header"
+            style={{height:"100vh"}}>
             
             <Container className="centered">
-            <Row>
+            <Row style={{marginTop:"150px"}}>
              <Col md="6" lg="6" sm="12" xs="12" style={{marginLeft:"50%", marginTop:"15%",transform:"translate(-50%,-50%)"}}>
-                   {/*  <div>
-                    <Alert isOpen={visible} toggle={toggle}  color="danger" fade={true} style={{fontWeight:500, textTransform:"capitalize"}}>
+                    <div>
+                    <Alert isOpen={visible} toggle={toggle}  color={`${color}`} fade={true} style={{fontWeight:500, textTransform:"capitalize"}}>
                         {message}
                     </Alert>
-                    </div> */}
+                    </div>
                     <h4 style={{fontSize:"14px", textAlign:"center", fontWeight:500, marginBottom:"10px"}}>Forgot your password?</h4>
                     <Card className="card-plain shadow" style={{backgroundColor:"white", borderRadius:"5px"}}>
                         <CardBody style={{margin:"15px"}}>
@@ -46,10 +78,10 @@ export default function ResetPassword(props){
                             </Col>
                         </Row>
                             <br/>
-                            <form>
+                            <form onSubmit={handleSubmit}>
                             <label style={{fontWeight:500}}>New Password</label>
                             <InputGroup>
-                            <Input type={!eye1?"password":"text"} placeholder="New Password" required/>
+                            <Input type={!eye1?"password":"text"} placeholder="New Password" required value={password} onChange={e=>setPassword(e.target.value)}/>
                             <InputGroupAddon addonType="append">
                             <InputGroupText>
                                 <i className={eye1?"fa fa-eye":"fa fa-eye-slash"}  onClick={()=>setEye1(!eye1)}/>
@@ -59,7 +91,7 @@ export default function ResetPassword(props){
                             <br/>
                             <label style={{fontWeight:500}}>ReType Password</label>
                             <InputGroup>
-                            <Input type={!eye2?"password":"text"} placeholder="ReType Password" required/>
+                            <Input type={!eye2?"password":"text"} placeholder="ReType Password" required value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)}/>
                                     <InputGroupAddon addonType="append">
                                 <InputGroupText>
                                     <i className={eye2?"fa fa-eye":"fa fa-eye-slash"}  onClick={()=>setEye2(!eye2)}/>
@@ -67,15 +99,13 @@ export default function ResetPassword(props){
                                 </InputGroupAddon>
                             </InputGroup>
                             <br/>
-                            <Button style={{marginTop:"50px"}} block color='success'>Submit</Button>
+                            <Button style={{marginTop:"50px"}} block color='success' type="submit" >Submit</Button>
                             </form>
                         </CardBody>
                     </Card>
                 </Col>    
                </Row>
                 </Container>
-                </div>
-                </div>
             </div>
         
     );

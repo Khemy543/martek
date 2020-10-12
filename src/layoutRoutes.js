@@ -38,11 +38,13 @@ import UserProductDetails from "views/UserProductDetails.js";
 import UserEditProduct from "views/UserEditProduct.js";
 import VerifyShopEmail from "views/verifyShopMail.js";
 import WaitShopVerification from "views/await-shopVerification.js";
-import ForgotPassword from "views/ForgotPassword.js";
-import ResetPassword from "views/ResetPassword.js";
+import ForgotPassword from "views/ForgetPassword/ForgotPassword.js";
+import ResetPassword from "views/ResetPassword/ResetPassword.js";
 import ContactUs from "views/ContactUs.js";
 import UserDetails from "views/Payment/UserDetails.js";
 import AccountDetails from "views/Payment/AccountDetails.js";
+import ShopForgetPassword from "views/ForgetPassword/ShopForgetPassword.js";
+import ShopResetPassword from "views/ResetPassword/ShopResetPassword.js";
 
 
 
@@ -233,8 +235,18 @@ var routes = [
         layout: "/auth"
       },
       {
+        path: "/shop-forgot-password",
+        component: ShopForgetPassword,
+        layout: "/auth"
+      },
+      {
         path: "/reset-password",
         component: ResetPassword,
+        layout: "/auth"
+      },
+      {
+        path: "/shop-reset-password",
+        component: ShopResetPassword,
         layout: "/auth"
       },
       {

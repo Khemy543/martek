@@ -31,7 +31,10 @@ function EditProfile(props){
   const [eye1, setEye1] = React.useState(false);
   const [eye2, setEye2] = React.useState(false);
   const [eye3, setEye3] = React.useState(false);
-
+  const [new_password, setNewPassword] = React.useState("");
+  const [password, setOldPassword] = React.useState("")
+  const [confirmPassword, setConfirmPassword] = React.useState("");
+  const [message, setMessage] = React.useState("")
     
   let user = localStorage.getItem('access_token')
   const toggle = tab => {
@@ -50,6 +53,7 @@ function EditProfile(props){
     if(res.data.status === "success"){
       setIsActive(false);
       setModal(true);
+      setMessage("UPDATED")
       setTimeout(
         function(){
             setModal(false);
@@ -98,6 +102,39 @@ function EditProfile(props){
   });
   },[user])
 
+  const changePassword=(e)=>{
+    e.preventDefault()
+    if(new_password === confirmPassword){
+    axios.post("https://martek.herokuapp.com/api/auth/change/password",
+    {password,new_password},{
+      headers:{ 'Authorization':`Bearer ${user}`}
+}).then(res=>{
+  console.log(res.data);
+  setModal(true);
+  setMessage(res.data.status)
+  setTimeout(
+    function(){
+        setModal(false);
+    },
+    1500
+)
+})
+.catch(error=>{
+  console.log(error)
+})
+
+  }
+  else{
+    setModal(true)
+    setMessage("Passwords Do Not Match")
+    setTimeout(
+      function(){
+          setModal(false);
+      },
+      1500
+  )
+  }
+}
 
 
     return(
@@ -228,13 +265,13 @@ function EditProfile(props){
                 <Container>
                 <Row>
                 <Col md="6" className="ml-auto mr-auto">
-                <Form>
+                <Form onSubmit={changePassword}>
                 <Row>
                   <Col>
                   <label>CURRENT PASSWORD</label>
                   <InputGroup>
                         
-                    <Input type={!eye1?"password":"text"} placeholder="Current Password"/>
+                    <Input type={!eye1?"password":"text"} required placeholder="Current Password" value={password} onChange={e=>setOldPassword(e.target.value)}/>
                     <InputGroupAddon addonType="append">
                           <InputGroupText>
                             <i className={eye1?"fa fa-eye":"fa fa-eye-slash"} onClick={()=>setEye1(!eye1)}/>
@@ -249,7 +286,7 @@ function EditProfile(props){
                   <label>NEW PASSWORD</label>
                   <InputGroup>
                         
-                    <Input type={!eye2?"password":"text"} placeholder="New Password"/>
+                    <Input type={!eye2?"password":"text"} required placeholder="New Password" value={new_password} onChange={e=>setNewPassword(e.target.value)}/>
                     <InputGroupAddon addonType="append">
                           <InputGroupText>
                             <i className={eye2?"fa fa-eye":"fa fa-eye-slash"} onClick={()=>setEye2(!eye2)}/>
@@ -263,7 +300,7 @@ function EditProfile(props){
                   <Col>
                   <label>RETYPE PASSWORD</label>
                   <InputGroup>
-                    <Input type={!eye3? "password":"text"} placeholder="Retype Password"/>
+                    <Input type={!eye3? "password":"text"} required placeholder="Retype Password" value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)}/>
                     <InputGroupAddon addonType="append">
                           <InputGroupText>
                             <i className={eye3?"fa fa-eye":"fa fa-eye-slash"}  onClick={()=>setEye3(!eye3)}/>
@@ -288,7 +325,7 @@ function EditProfile(props){
                 <Modal isOpen={modal} className="login-modal">
       
                 <ModalBody style={{color:"white", fontSize:"12px", fontWeight:500}} className="text-center">
-                  UPDATED!!
+                  {message}!!
                 </ModalBody>
                 
               </Modal>

@@ -194,7 +194,7 @@ export default function ShopLoginPage(props) {
             </Button>
             <Grid container>
               <Grid item xs>
-                <Link href="/auth/forgot-password" variant="body2">
+                <Link href="/auth/shop-forgot-password" variant="body2">
                   Forgot password?
                 </Link>
               </Grid>

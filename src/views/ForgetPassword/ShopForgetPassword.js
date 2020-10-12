@@ -14,30 +14,47 @@ import{
 } from "reactstrap";
 
 var domain = "https://martek.herokuapp.com"
-export default function ForgotPassword(props){
-    const [message, setMessage] = React.useState("");
+export default function ShopForgetPassword(props){
+    const [email, setEmail] = React.useState("");
     const [visible, setVisible] = React.useState(false);
+    const [message, setMessage]= React.useState("");
+    const [color, setColor] = React.useState("");
+    
 
     const toggle=()=>setVisible(!visible);
 
    const handleSubmit=(e)=>{
     e.preventDefault();
-    console.log("submitting")
+    console.log(email)
+    axios.post(`${domain}/api/merchandiser/request/password/reset`,
+    {email})
+    .then(res=>{
+        console.log(res.data)
+        setColor("success")
+        setMessage(res.data.status);
+        setVisible(true);
+    })
+    .catch(error=>{
+        console.log(error.response.data)
+        setMessage(error.response.data.status)
+        setVisible(true)
+        setColor("danger")
+    })
    }
     return(
     
-            <div>
-            <div className="main">
-            <div className="section" style={{height:"100vh"}}>
-            
+            <div 
+            className="page-header"
+            style={{height:"100vh"}}
+            >
             <Container className="centered">
             <Row style={{marginTop:"100px"}}>
              <Col md="6" lg="6" sm="12" xs="12" style={{marginLeft:"50%", marginTop:"20%",transform:"translate(-50%,-50%)"}}>
-                   {/*  <div>
-                    <Alert isOpen={visible} toggle={toggle}  color="danger" fade={true} style={{fontWeight:500, textTransform:"capitalize"}}>
+                    <div>
+                    <Alert isOpen={visible} toggle={toggle}  color={`${color}`} fade={true} style={{fontWeight:500, textTransform:"capitalize"}}>
                         {message}
                     </Alert>
-                    </div> */}
+                    </div>
                     <h4 style={{fontSize:"14px", textAlign:"center", fontWeight:500, marginBottom:"10px"}}>Forgot your password?</h4>
                     <Card className="card-plain shadow" style={{backgroundColor:"white", borderRadius:"5px"}}>
                         <CardBody style={{margin:"15px"}}>
@@ -50,7 +67,7 @@ export default function ForgotPassword(props){
                             <br/>
                             <form onSubmit={handleSubmit}>
                             <label style={{fontWeight:500}}>Email Address</label>
-                            <Input type="email" placeholder="eg: example@gmail.com" required/>
+                            <Input type="email" placeholder="eg: example@gmail.com" value={email} onChange={e=>setEmail(e.target.value)} required/>
                             <Button style={{marginTop:"50px"}} type="submit" block color='success'>Reset Password</Button>
                             </form>
                         </CardBody>
@@ -58,8 +75,6 @@ export default function ForgotPassword(props){
                 </Col>    
                </Row>
                 </Container>
-                </div>
-                </div>
             </div>
         
     );

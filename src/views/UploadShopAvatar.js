@@ -54,7 +54,7 @@ class UploadShopAvatar extends React.Component{
      bodyFormData.append('cover_photo',cover_photo_file,cover_photo_file.filename);
      bodyFormData.append('valid_id',valid_id_file,valid_id_file.filename);
     axios({method:"post",
-    url:"https://martek.herokuapp.com/api/merchandiser/"+this.state.store_id+"/store-photos",
+    url:`https://martek.herokuapp.com/api/merchandiser/${this.state.store_id}/store-photos`,
     data:bodyFormData,
     headers:{
       "Content-Type": "multipart/form-data",
@@ -71,6 +71,7 @@ class UploadShopAvatar extends React.Component{
         this.setState({percentage:100})
         this.props.history.push("/auth/wait-shop-verification",{store_id:this.state.store_id})
     }).catch(error=>{
+        console.log(error.response.data)
         this.setState(false)
     })
 }

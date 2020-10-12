@@ -24,7 +24,8 @@ import {
   Container,
   Row,
   Form,
-  InputGroup,InputGroupAddon,InputGroupText,Col,Popover,PopoverBody,PopoverHeader,Modal,ModalBody
+  InputGroup,InputGroupAddon,InputGroupText,Col,Popover,PopoverBody,PopoverHeader,Modal,ModalBody, TabPane, Nav,
+  NavLink, NavItem,TabContent
 } from "reactstrap";
 
 // core components
@@ -38,6 +39,7 @@ import history from "../history";
 
 
 function Settings() {
+  const [activeTab, setActiveTab] = React.useState("1");
 const [company_name, setCompany_name] = React.useState("");
 const [email, setEmail] = React.useState("");
 const [company_description, setCompany_description] = React.useState("");
@@ -51,10 +53,22 @@ const [phone, setPhone] = React.useState('');
 const [id, setId] = React.useState(null);
 const [popoverOpen, setPopoverOpen] = React.useState(false);
 const [modal, setModal] = React.useState(false);
+const [new_password, setNewPassword] = React.useState("");
+const [password, setOldPassword] = React.useState("")
+const [confirmPassword, setConfirmPassword] = React.useState("")
+const [eye1, setEye1] = React.useState(false);
+const [eye2, setEye2] = React.useState(false);
+const [eye3, setEye3] = React.useState(false);
+const [message, setMessage] = React.useState("")
 
 const toggle = () => setPopoverOpen(!popoverOpen);
 
 let merchandiser = localStorage.getItem("shop_access_token")
+const tabToggle = tab => {
+  if (activeTab !== tab) {
+    setActiveTab(tab);
+  }
+};
 
   React.useEffect(()=>{
     setIsActive(true)
@@ -110,6 +124,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
   },[merchandiser])
 
   const handleDelete=()=>{
+    console.log(merchandiser)
     setIsActive(true)
     axios.delete("https://martek.herokuapp.com/api/merchandiser/delete",{
         headers:{"Authorization":`Bearer ${merchandiser}`}
@@ -134,6 +149,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
       console.log(res.data)
       if(res.data.status === "success"){
         setModal(true);
+        setMessage("UPDATED")
         setIsActive(false);
         setTimeout(
           function(){
@@ -148,16 +164,78 @@ let merchandiser = localStorage.getItem("shop_access_token")
     
   }
 
+  const changePassword=(e)=>{
+    e.preventDefault()
+    if(new_password === confirmPassword){
+    axios.post("https://martek.herokuapp.com/api/merchandiser/change/password",
+    {password,new_password},{
+      headers:{ 'Authorization':`Bearer ${merchandiser}`}
+}).then(res=>{
+  console.log(res.data);
+  setModal(true);
+  setMessage("Password Changed")
+  setTimeout(
+    function(){
+        setModal(false);
+    },
+    1500
+)
+})
+.catch(error=>{
+  console.log(error)
+})
+
+  }
+  else{
+    setModal(true);
+    setMessage("Passwords Do Not Match") 
+    setTimeout(
+      function(){
+          setModal(false);
+      },
+      1500
+  )
+  }
+}
+
   return (
     <div>
-      <LoadingOverlay 
-      active = {isActive}
-      spinner={<BounceLoader color={'#4071e1'}/>}
-      >
       <div className="section">
           <br/>
           <br/>
           <br/>
+          <Container>
+          <div className="nav-tabs-navigation">
+                <div className="nav-tabs-wrapper">
+                  <Nav role="tablist" tabs>
+                    <NavItem>
+                      <NavLink
+                        className={activeTab === "1" ? "active" : ""}
+                        onClick={() => {
+                          tabToggle("1");
+                        }}
+                        style={{cursor:"pointer"}}
+                      >
+                        Edit Profile
+                      </NavLink>
+                    </NavItem>
+                    <NavItem>
+
+                    <NavLink  style={{cursor:"pointer"}}
+                      className={activeTab === "2" ? "active" : ""}
+                      onClick={() => {
+                        tabToggle("2");
+                      }}
+                    >
+                    Change Password
+                    </NavLink>
+                  </NavItem>
+                  </Nav>
+                </div>
+              </div>
+              {/* tabs */}
+          <TabContent className="" activeTab={activeTab}>
+          <TabPane tabId="1" id="follows">
           <Container>
           <Row>
           <Col md="3">
@@ -269,15 +347,70 @@ let merchandiser = localStorage.getItem("shop_access_token")
       
       </Row>
       
-      
-
             </Container>
-      </div>
-      </LoadingOverlay>
+            </TabPane>
+            <TabPane tabId="2" id="changepassword">
+            <Container>
+                <Row>
+                <Col md="6" className="ml-auto mr-auto">
+                <Form onSubmit={changePassword}>
+                <Row>
+                  <Col>
+                  <label>CURRENT PASSWORD</label>
+                  <InputGroup>
+                        
+                    <Input type={!eye1?"password":"text"} required placeholder="Current Password" value={password} onChange={e=>setOldPassword(e.target.value)}/>
+                    <InputGroupAddon addonType="append">
+                          <InputGroupText>
+                            <i className={eye1?"fa fa-eye":"fa fa-eye-slash"} onClick={()=>setEye1(!eye1)}/>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                    </InputGroup>
+                  </Col>
+                </Row>
+                  <br/>
+                <Row>
+                  <Col>
+                  <label>NEW PASSWORD</label>
+                  <InputGroup>
+                        
+                    <Input type={!eye2?"password":"text"} required placeholder="New Password" value={new_password} onChange={e=>setNewPassword(e.target.value)}/>
+                    <InputGroupAddon addonType="append">
+                          <InputGroupText>
+                            <i className={eye2?"fa fa-eye":"fa fa-eye-slash"} onClick={()=>setEye2(!eye2)}/>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                    </InputGroup>
+                  </Col>
+                </Row>
+                <br/>
+                <Row>
+                  <Col>
+                  <label>RETYPE PASSWORD</label>
+                  <InputGroup>
+                    <Input type={!eye3? "password":"text"} required placeholder="Retype Password" value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)}/>
+                    <InputGroupAddon addonType="append">
+                          <InputGroupText>
+                            <i className={eye3?"fa fa-eye":"fa fa-eye-slash"}  onClick={()=>setEye3(!eye3)}/>
+                          </InputGroupText>
+                        </InputGroupAddon>
+                    </InputGroup>
+                  </Col>
+                </Row>
+                  <br/>
+                  <Button type="submit" color="info" block>Submit</Button>
+                </Form>
+                </Col>
+                </Row>
+                </Container>
+            </TabPane>
+            </TabContent>
+            </Container>
+       </div>
       <Col className="ml-auto mr-auto" md="12">
-                <Modal isOpen={modal} style={{maxHeight:"40px", maxWidth:"300px"}} className="alert-modal">
+                <Modal isOpen={modal} style={{maxHeight:"40px", maxWidth:"500px"}} className="alert-modal">
                     <ModalBody>
-                    <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white"}}>UPDATED!!</h4>
+                    <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white"}}>{message}!!</h4>
                     </ModalBody>
                     
                     </Modal>

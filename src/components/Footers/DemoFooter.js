@@ -74,7 +74,7 @@ function DemoFooter() {
             MAKE MONEY ON MARTEK
             </NavLink>
             <a href="/user/add-product">Sell on Martek</a><br/>
-            <a href="/auth/shop-register">Own a shop on Martek</a><br/>
+            <a href="/auth/shop-register">Own a Shop on Martek</a><br/>
             <a>Service Charges</a>
           </NavItem>
         </Nav>
