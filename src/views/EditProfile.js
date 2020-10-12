@@ -115,6 +115,7 @@ function EditProfile(props){
   setTimeout(
     function(){
         setModal(false);
+        history.push("/user/profile");
     },
     1500
 )

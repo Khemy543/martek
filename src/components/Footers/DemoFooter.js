@@ -66,7 +66,7 @@ function DemoFooter() {
           </NavItem>
         </Nav>
         </Col>
-
+ 
         <Col xs="6" md="4">
         <Nav>
           <NavItem>
