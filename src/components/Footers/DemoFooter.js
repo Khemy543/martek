@@ -47,9 +47,9 @@ function DemoFooter() {
             <NavLink style={{paddingLeft:"0px"}}>
             LET US HELP YOU
             </NavLink>
-            <a>Help Center</a><br/>
+            <a href="/user/help-center">Help Center</a><br/>
             <a href="/user/contact-us">Contact Us</a><br/>
-            <a>How to buy on Martek</a>
+            <a href="/user/how-to-buy-on-martek">How to buy on Martek</a>
           </NavItem>
         </Nav>
         </Col>
@@ -73,9 +73,9 @@ function DemoFooter() {
             <NavLink style={{paddingLeft:"0px"}}>
             MAKE MONEY ON MARTEK
             </NavLink>
-            <a href="/user/add-product">Sell on Martek</a><br/>
-            <a href="/auth/shop-register">Own a Shop on Martek</a><br/>
-            <a>Service Charges</a>
+            <a href="/user/sell-on-martek">Sell on Martek</a><br/>
+            <a href="/user/own-shop-on-martek">Own a Shop on Martek</a><br/>
+            <a href="/user/service-charges">Service Charges</a>
           </NavItem>
         </Nav>
         </Col>

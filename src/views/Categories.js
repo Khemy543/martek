@@ -34,6 +34,7 @@ class Categories extends React.Component {
         this.setState({isActive:true});
         axios.get("https://martek.herokuapp.com/api/category/"+this.props.location.state.category_id+"/products?page="+pageNumber+"")
         .then(res=>{
+            console.log(res.data)
             this.setState({products:res.data});
             this.setState({isActive:false})
         })

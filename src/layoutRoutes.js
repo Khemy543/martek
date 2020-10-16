@@ -45,6 +45,11 @@ import UserDetails from "views/Payment/UserDetails.js";
 import AccountDetails from "views/Payment/AccountDetails.js";
 import ShopForgetPassword from "views/ForgetPassword/ShopForgetPassword.js";
 import ShopResetPassword from "views/ResetPassword/ShopResetPassword.js";
+import Charges from "views/Documents/Charges.js";
+import HelpCenter from "views/Documents/HelpCenter"
+import BuyOnMartek from "views/Documents/BuyOnMartek.js";
+import OwnShopMartek from "views/Documents/OwnShop.js";
+import SellOnMartek from "views/Documents/SellOnMartek.js";
 
 
 
@@ -170,6 +175,31 @@ var routes = [
         path: "/payment/account",
         protectedRoute:true,
         component: AccountDetails,
+        layout: "/user"
+      },
+      {
+        path: "/service-charges",
+        component: Charges,
+        layout: "/user"
+      },
+      {
+        path: "/help-center",
+        component: HelpCenter,
+        layout: "/user"
+      },
+      {
+        path: "/how-to-buy-on-martek",
+        component: BuyOnMartek,
+        layout: "/user"
+      },
+      {
+        path: "/own-shop-on-martek",
+        component: OwnShopMartek,
+        layout: "/user"
+      },
+      {
+        path: "/sell-on-martek",
+        component: SellOnMartek,
         layout: "/user"
       },
       {

@@ -154,6 +154,10 @@ const tabToggle = tab => {
         setTimeout(
           function(){
               setModal(false);
+              setNewPassword("");
+              setOldPassword("");
+              setConfirmPassword("");
+              setActiveTab("1")
           },
           1500
       )

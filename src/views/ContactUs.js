@@ -76,15 +76,19 @@ export default function ContactUs(){
                     <div className="section">
                     <Container>
                     <Row style={{marginTop:"350px"}}>
-                    <Col md="8" lg="8" sm="12" xs="12" style={{marginLeft:"50%",transform:"translate(-50%,-50%)"}}>
+                    <Col md="6" lg="6" sm="12" xs="12" style={{marginLeft:"50%",transform:"translate(-50%,-50%)"}}>
                             <div>
                             <Alert isOpen={visible} toggle={toggle}  color="success" fade={true} style={{fontWeight:500, textTransform:"capitalize"}}>
                                 Message Sent
                             </Alert>
                             </div>
                             <Card className="card-plain shadow" style={{backgroundColor:"white", borderRadius:"5px"}}>
+                            <CardHeader style={{backgroundColor:"white", textAlign:"center"}}>
+                            <h3>Contact Us</h3>
+                                <h4 style={{fontSize:"17px"}}>0558341865/0209357637</h4>
+                                <h5 style={{fontSize:"15px"}}>martekgh@gmail.com</h5>
+                            </CardHeader>
                                 <CardBody style={{margin:"15px"}}>
-                                <h3 style={{marginBottom:"20px"}}>Contact Us</h3>
                                 <Form onSubmit={handleSubmit}>
                                 <InputGroup
                                     className={
