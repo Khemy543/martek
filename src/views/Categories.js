@@ -105,7 +105,7 @@ class Categories extends React.Component {
                 <p style={{marginBottom:"10px", fontSize:"13px"}}><span style={{cursor:"pointer"}} onClick={()=>this.props.history.push("/user/home")}>Home</span><i className="fa fa-chevron-right"/> {this.props.location.state.category_name}</p>
                 
                 <div style={{textAlign:"center"}}>
-                <img src={require(`assets/img/categories/${this.props.location.state.image}`)} className="image"/>
+                <img src={require(`assets/img/categories/${this.props.location.state.image}`)} style={{width:"100%",height:"auto"}}/>
                 
                 </div>
                 {this.state.products !== null && this.state.products.data !== undefined && this.state.products.data[0].length <=0?

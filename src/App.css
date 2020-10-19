@@ -47,6 +47,9 @@
     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
 @media (max-width:800px){
+    /* .rwt__tabpanel{
+        margin-top: 100px;
+    }  */
     .category{
         font-size: 14px !important;
     }
@@ -299,7 +302,13 @@
       font-weight: 600 !important;
   }
 
-  .footer{
-      margin-top: 30px;
-      border-top: 0 2px 12px rgba(0,0,0,0.1);
-  }
+
+  /* .rwt__tabpanel{
+      margin-top: 100px;
+  }  */
+
+ /*  .left li a{
+      text-align:left;
+      text-decoration: none !important;
+      color: red;
+  } */

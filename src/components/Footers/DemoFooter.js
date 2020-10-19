@@ -27,7 +27,7 @@ import { Row, Container, Modal, ModalBody, ModalHeader,Col, Button, Form, Input,
 
 function DemoFooter() {
   return (
-    <footer className="footer footer-black">
+    <footer className="footer">
       <Container>
         <Row>
         <Col md="12">
@@ -41,47 +41,72 @@ function DemoFooter() {
         </Col>
         </Row>
         <Row>
-        <Col xs="6" md="4">
+        <Col xs="6" md="4" lg="4" xl="4" sm="6">
         <Nav>
           <NavItem>
-            <NavLink style={{paddingLeft:"0px"}}>
+            <NavLink>
             LET US HELP YOU
             </NavLink>
-            <a href="/user/help-center">Help Center</a><br/>
-            <a href="/user/contact-us">Contact Us</a><br/>
-            <a href="/user/how-to-buy-on-martek">How to buy on Martek</a>
+            <ul className="left">
+              <li>
+              <a href="/user/help-center">Help Center</a>
+              </li>
+              <li>
+              <a href="/user/contact-us">Contact Us</a>
+              </li>
+              <li>
+              <a href="/user/how-to-buy-on-martek">How to buy on Martek</a>
+              </li>
+            </ul> 
           </NavItem>
         </Nav>
         </Col>
 
-        <Col xs="6" md="4">
+        <Col xs="6" md="4" lg="4" xl="4" sm="6">
         <Nav>
           <NavItem>
-            <NavLink style={{paddingLeft:"0px"}}>
+            <NavLink>
             ABOUT MARTEK
             </NavLink>
-            <a>About Us</a><br/>
-            <a>Terms and Conditions</a><br/>
-            <a>Privacy Policy</a>
+            <ul>
+              <li>
+              <a>About Us</a>
+              </li>
+              <li>
+              <a>Terms and Conditions</a>
+              </li>
+              <li>
+              <a>Privacy Policy</a>
+              </li>
+            </ul>
           </NavItem>
         </Nav>
         </Col>
  
-        <Col xs="6" md="4">
+        <Col xs="6" md="4" lg="4" xl="4" sm="6">
         <Nav>
           <NavItem>
-            <NavLink style={{paddingLeft:"0px"}}>
+            <NavLink>
             MAKE MONEY ON MARTEK
             </NavLink>
-            <a href="/user/sell-on-martek">Sell on Martek</a><br/>
-            <a href="/user/own-shop-on-martek">Own a Shop on Martek</a><br/>
-            <a href="/user/service-charges">Service Charges</a>
+            <ul>
+              <li>
+              <a href="/user/sell-on-martek">Sell on Martek</a>
+              </li>
+              <li>
+                <a href="/user/own-shop-on-martek">Own a Shop on Martek</a>
+              </li>
+              <li>
+              <a href="/user/service-charges">Service Charges</a>
+              </li>
+            </ul>
+            
           </NavItem>
         </Nav>
         </Col>
         </Row>
         <Row>
-        <Col md="6" xs="8" sm="6" xl="6" lg="6" className="ml-auto mr-auto">
+        <Col md="5" xs="6" sm="6" xl="5" lg="5" className="ml-auto mr-auto">
         <Nav>
           <NavItem>
             <NavLink>
