@@ -50,6 +50,9 @@ import HelpCenter from "views/Documents/HelpCenter"
 import BuyOnMartek from "views/Documents/BuyOnMartek.js";
 import OwnShopMartek from "views/Documents/OwnShop.js";
 import SellOnMartek from "views/Documents/SellOnMartek.js";
+import TermsAndCondition from "views/Documents/TermsAndConditon.js";
+import PrivacyPolicy from "views/Documents/Privacy.js";
+import AboutUs from "views/Documents/AboutUs.js";
 
 
 
@@ -200,6 +203,21 @@ var routes = [
       {
         path: "/sell-on-martek",
         component: SellOnMartek,
+        layout: "/user"
+      },
+      {
+        path: "/terms-and-condition",
+        component: TermsAndCondition,
+        layout: "/user"
+      },
+      {
+        path: "/privacy-policy",
+        component: PrivacyPolicy,
+        layout: "/user"
+      },
+      {
+        path: "/about-us",
+        component: AboutUs,
         layout: "/user"
       },
       {

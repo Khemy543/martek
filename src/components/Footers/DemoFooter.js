@@ -70,13 +70,13 @@ function DemoFooter() {
             </NavLink>
             <ul>
               <li>
-              <a>About Us</a>
+              <a href="/user/about-us">About Us</a>
               </li>
               <li>
-              <a>Terms and Conditions</a>
+              <a href="/user/terms-and-condition">Terms and Conditions</a>
               </li>
               <li>
-              <a>Privacy Policy</a>
+              <a href="/user/privacy-policy">Privacy Policy</a>
               </li>
             </ul>
           </NavItem>
@@ -105,14 +105,14 @@ function DemoFooter() {
         </Nav>
         </Col>
         </Row>
-        <Row>
+        {/* <Row>
         <Col md="5" xs="6" sm="6" xl="5" lg="5" className="ml-auto mr-auto">
         <Nav>
           <NavItem>
             <NavLink>
             <div className="credits">
             <span className="copyright" style={{textAlign:"center"}}>
-              © {new Date().getFullYear()}, made with{" "}
+              © {new Date().getFullYear()}{" "}
               <i className="fa fa-heart heart" /> martek
             </span>
           </div>
@@ -120,7 +120,7 @@ function DemoFooter() {
           </NavItem>
         </Nav>
         </Col>
-        </Row>
+        </Row> */}
                 
       </Container>
     </footer>
