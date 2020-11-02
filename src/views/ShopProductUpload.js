@@ -44,7 +44,7 @@ class ShopUploadImages extends React.Component{
     axios({method:"post",
     url:"https://martek.herokuapp.com/api/e-trader/"+this.state.product_id+"/product-images",
     data:bodyFormData,
-    headers:{'Authorization':`Bearer ${merchandiser}`, "Content-Type":"mutipart/form-data"},
+    headers:{'Authorization':`Bearer ${merchandiser}`},
     onUploadProgress: (progressEvent) => {
         const {loaded , total} = progressEvent;
         let percentage = Math.floor(loaded * 100 / total);

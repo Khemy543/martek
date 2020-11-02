@@ -58,6 +58,7 @@ function IndexNavbar(props) {
   const [loggedin, setLoggedin] =React.useState(false);
   const [dropdownCampusOpen, setDropdowncampusOpen] =React.useState(false);
   const [searchShow, setSearchShow] = React.useState(false);
+  const [valid, setValid] = React.useState(false);
   
  
   
@@ -94,8 +95,10 @@ React.useEffect(()=>{
   }
   )
   .then(res=>{
+    console.log(res.data)
       if(res.data!== null){
         localStorage.setItem("user_id",res.data.id);
+        localStorage.setItem('validity',res.data.valid_id)
         setName(res.data.name);
       }
   }).catch(error=>{

@@ -4,17 +4,19 @@ import{
     Col,
     Row,
     Button,
-    Form,Progress
+    Form,Progress, ModalHeader, ModalFooter,Modal
 } from "reactstrap";
 import axios from "axios";
 import ImageUploader from 'react-images-upload';
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
+import history from '../history.js';
 // core components
 //import IndexNavbar from "../components/Navbars/IndexNavbar.js";
 //import DemoFooter from "../components/Footers/DemoFooter";
 
 let user = localStorage.getItem('access_token')
+
 
 class UploadValidID extends React.Component{
 
@@ -23,16 +25,26 @@ class UploadValidID extends React.Component{
          this.state = { 
               valid_id:[],
               percentage:0,
-              button:false
+              button:false,
+              modal:false
              };
          this.onDrop = this.onDrop.bind(this);
          
     }
+    
 
     onDrop(picture) {
         this.setState({
             valid_id:this.state.valid_id.concat(picture)
         });
+    }
+
+
+    componentDidMount(){
+        if(localStorage.getItem('validity') !== "null"){
+            console.log("ooohh why")
+           history.push('/user/add-product')
+          }
     }
     
 
@@ -50,17 +62,27 @@ class UploadValidID extends React.Component{
     },
     onUploadProgress: (progressEvent) => {
         const {loaded , total} = progressEvent;
-        let percentage = Math.floor(loaded * 100 / total);
-        console.log(percentage)
-        if(percentage<100){
-            this.setState({percentage:percentage});
+        let cpercentage = Math.floor(loaded * 100 / total);
+        console.log(cpercentage)
+        if(cpercentage<100){
+            this.setState({percentage:cpercentage});
+        }else{
+            this.setState({percentage:100})
         }
     }
     }).then(res=>{
         console.log(res.data)
-        this.props.push('/user/add-product')
+        this.setState({modal:true})
+        setTimeout(
+            function(){
+                this.setState({modal:false});
+                history.push('/user/add-product')
+            }
+            .bind(this),
+            1500
+        )
     }).catch(error=>{
-        console.log(error.response.data)
+        console.log(error)
         this.setState(false)
     })
 }
@@ -79,6 +101,7 @@ class UploadValidID extends React.Component{
         <p style={{marginBottom:"10px", fontSize:"13px"}}>Provide A Valid ID</p>
                
         <Form onSubmit={this.handleSubmit} style={{marginTop:"50px"}}>
+        
         <Row className="mt-auto mb-auto" style={{marginTop:"50px"}}> 
             <Col md="4" lg="4" className="ml-auto mr-auto">
                 <div>
@@ -92,16 +115,18 @@ class UploadValidID extends React.Component{
                     maxFileSize={5242880}
                 />
                     </div>
-            </Col>
-        </Row>
 
-        
-        {this.state.percentage === 0?<div></div>:
+                    {this.state.percentage === 0?<div></div>:
         <div>
         <div className="text-center">{this.state.percentage}%</div>
         <Progress value={this.state.percentage} />
         </div>
         }
+            </Col>
+        </Row>
+
+        
+        
 
         <Row style={{marginTop:"30px"}}>
             <Col md="4" style={{marginRight:"auto", marginLeft:"auto"}}>
@@ -118,6 +143,11 @@ class UploadValidID extends React.Component{
             
         </Form>
         </Container>
+        <Modal isOpen={this.state.modal}>
+            <ModalHeader>
+                Saved
+            </ModalHeader>
+        </Modal>
         </div>
         </div>
         </LoadingOverlay>

@@ -16,6 +16,7 @@ import{
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
 import history from "../history.js";
+import { conforms } from "lodash";
 //context
 //import { ProductConsumer } from "../context.js";
 
@@ -32,21 +33,17 @@ function AddProduct(props){
   const [isActive , setIsAcitve] = React.useState(false);
 
   let user = localStorage.getItem('access_token')
-
-
+  console.log("aahh",localStorage.getItem('validity'))
+  if(localStorage.getItem('validity') === "null"){
+    console.log("ooohh why")
+    window.location.pathname="/user/add-product-validation"
+  }
 
   React.useEffect(()=>{
-    axios.get("https://martek.herokuapp.com/api/auth/user",{
-      headers:{ 'Authorization':`Bearer ${user}`}
-    })
-    .then(res=>{
-    console.log(res.data);
-    if(res.data.valid_id === null){
-      props.history.push('/user/add-product-validation')
-    }
-    })
+      
       axios.get("https://martek.herokuapp.com/api/categories")
       .then(res=>{
+        console.log(res.data)
         const categories = res.data
         setCategoryList(categories);
       })
@@ -65,7 +62,7 @@ function AddProduct(props){
         history.push("/user/upload-images",{product_id})
       }else{
         if(res.data.status === "Valid ID required"){
-          props.history.push('/user/add-product-validation')
+          history.push('/user/add-product-validation')
         }
       }
      

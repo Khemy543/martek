@@ -67,7 +67,7 @@ export default function WaitVerification(props){
                                 <Button style={{marginTop:"50px"}} color='info' onClick={()=>handleResend()}>Resend Mail</Button>
                         </CardBody>
                     </Card>
-                    <a href="/user/home"
+                    <a href="/auth/login-page"
                     style={{float:"right", marginRight:"10px",fontWeight:600, color:"#da8451"}}
                     >skip <i className="fa fa-chevron-right"/></a>
                 </Col>    
