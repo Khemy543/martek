@@ -24,11 +24,14 @@ const [email, setEmail] = React.useState("");
 const [amount, setAmount] = React.useState("");
 
 
+console.log(props)
+console.log(history)
 const handleSubmit=(e)=>{
-    setIsActive(true)
+    console.log("....")
     e.preventDefault();
-    props.history.push("/payment/account", {firtsname:firtsname,lastname:lastname, email:email,amount:amount});
-    setIsActive(false)
+    if(true){
+    props.history.push("/user/payment/account", {firtsname:firtsname,lastname:lastname, email:email,amount:amount});
+    }
     
 }
 

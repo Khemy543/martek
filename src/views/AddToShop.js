@@ -112,7 +112,12 @@ function AddToShop(){
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input placeholder="Category" type="select" value={category} onChange={e => setCategory(e.target.value)}>
-                       {categoryList.map(value => <option key={value.id} value={value.id}>{value.category}</option>)}
+                       {categoryList.map(value => (
+                         value.category ==="Phones"?
+                         <option key={value.id} value={value.id}>Phones And Accessories</option>
+                         :
+                         <option key={value.id} value={value.id}>{value.category}</option>
+                         ))}
                         </Input>
                       </InputGroup>
                     </Col>

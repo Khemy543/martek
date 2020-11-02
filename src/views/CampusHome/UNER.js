@@ -27,6 +27,8 @@ import Pagination from "react-js-pagination";
 //context
 import { ProductConsumer } from "../../context";
 
+let user = localStorage.getItem('access_token')
+
 var settings = {
     dots: true,
     infinite: true,
@@ -74,7 +76,12 @@ class Uner extends React.Component{
           const categories = res.data
           this.setState({categoryList:categories})
         });
-
+        axios.get(`https://martek.herokuapp.com/api/get/campus/3/carousel`,{
+            headers:{ 'Authorization':`Bearer ${user}`}
+        })
+        .then(res=>{
+            console.log(res.data)
+        })
         axios.get("http://martek.herokuapp.com/api/get-campus/"+this.props.location.state.id+"/product")
         .then(res=>{
           console.log("produxts:", res.data);
@@ -83,6 +90,12 @@ class Uner extends React.Component{
             }else{
                 this.setState({electronics:[]})
             }
+
+            if(res.data.products[3] !== undefined){
+                this.setState({phone:res.data.products[3].Phones})         
+                }else{
+                    this.setState({phone:[]})
+                }
 
             if(res.data.products[2] !== undefined){
                 this.setState({fashion:res.data.products[2].Fashion})
@@ -478,9 +491,19 @@ class Uner extends React.Component{
 
                                     >
                                        <CardBody>
+                                       {value.category === "Phones"?
                                     <h4 
                                     style={{marginTop:"-7px"}}    
-                                    >{value.category}</h4>
+                                    >
+                                    Phones And Accessories
+                                    </h4>
+                                    :
+                                    <h4 
+                                    style={{marginTop:"-7px"}}    
+                                    >
+                                    {value.category}
+                                    </h4>
+                                    }
                                     </CardBody>
                                     </Card>
                                     </Col>

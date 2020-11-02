@@ -797,6 +797,7 @@ setProducts =() =>{
             function postcart() {
                 console.log('cart:',this.state.cart)
                 const cart = [this.state.cart, this.state.cartTotal];
+                console.log(cart)
                 axios.post("https://martek.herokuapp.com/api/user/"+user_id+"/add-cart", {cart}, {headers:{
                     "Authorization":`Bearer ${user}`,
                     "Content-Type":"application/json",

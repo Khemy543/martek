@@ -21,7 +21,7 @@ import history from "../history.js";
 
 
 
-function AddProduct(){
+function AddProduct(props){
   const [categoryList, setCategoryList]=React.useState([]);
   const [product_name, setProduct_name] = React.useState('');
   const [price, setPrice] = React.useState('');
@@ -36,7 +36,15 @@ function AddProduct(){
 
 
   React.useEffect(()=>{
-    
+    axios.get("https://martek.herokuapp.com/api/auth/user",{
+      headers:{ 'Authorization':`Bearer ${user}`}
+    })
+    .then(res=>{
+    console.log(res.data);
+    if(res.data.valid_id === null){
+      props.history.push('/user/add-product-validation')
+    }
+    })
       axios.get("https://martek.herokuapp.com/api/categories")
       .then(res=>{
         const categories = res.data
@@ -45,18 +53,24 @@ function AddProduct(){
     },[]);
     
     const handleSubmit = (e) =>{
+      console.log("....")
       e.preventDefault();
-       setIsAcitve(true)
     axios.post('https://martek.herokuapp.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
       headers:{'Authorization':`Bearer ${user}`}
     }).then(res => {
+      console.log(res.data)
       if(res.data.status === "success"){
         const product_id = res.data.product_id;
         setIsAcitve(false);
         history.push("/user/upload-images",{product_id})
+      }else{
+        if(res.data.status === "Valid ID required"){
+          props.history.push('/user/add-product-validation')
+        }
       }
      
     }).catch(error => {
+      console.log(error)
       setIsAcitve(false)
     })
   
@@ -112,7 +126,13 @@ function AddProduct(){
                           </InputGroupText>
                         </InputGroupAddon>
                         <Input placeholder="Category" type="select" value={category} onChange={e => setCategory(e.target.value)}>
-                       {categoryList.map(value => <option key={value.id} value={value.id}>{value.category}</option>)}
+                       {categoryList.map(value => (
+                         value.category === "Phones"?
+                         <option key={value.id} value={value.id}>Phones And Accessories</option>
+                         :
+                         <option key={value.id} value={value.id}>{value.category}</option>
+                         
+                         ))}
                         </Input>
                       </InputGroup>
                     </Col>
@@ -136,7 +156,7 @@ function AddProduct(){
                   </Row>
 
                   <Row>
-                    <Col className="ml-auto mr-auto" md="6">
+                    <Col className="ml-auto mr-auto" md="12">
                       <Button className="btn-fill" color="info" block type="submit">
                         Next
                       </Button>

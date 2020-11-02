@@ -18,6 +18,8 @@
 */
 import React from "react";
 import { Link, NavLink as Naver } from "react-router-dom";
+
+import StoreIcon from '@material-ui/icons/Store';
 // nodejs library that concatenates strings
 import classnames from "classnames";
 // reactstrap components
@@ -110,7 +112,7 @@ React.useEffect(()=>{
   return (
     <div className={classnames("fixed-top")}>
        
-    <Navbar expand="lg" color="info" className='nav'>
+    <Navbar expand="lg" color="info" className='nav' id="myhead">
     {navbarCollapse ? (
         <div
           id="bodyClick"
@@ -253,7 +255,7 @@ React.useEffect(()=>{
               to="/auth/shop-login"
               style={{fontSize:"11px"}}
                >
-              <i className = "fa fa-shopping-bag" style={{fontSize:"11px"}}/> | my shop
+              <StoreIcon style={{fontSize:"12px"}}/> | my shop
               </NavLink>
              
             </NavItem>
@@ -362,7 +364,7 @@ React.useEffect(()=>{
                 setNavbarCollapse(false);
               }}
               >
-              <i className="fa fa-shopping-bag mr-3"/> My Shop
+              <StoreIcon style={{marginRight:"3px"}}/> My Shop
               </NavLink>
             </NavItem>
 

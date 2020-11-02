@@ -42,6 +42,7 @@ function Profile(){
         headers:{"Authorization":`Bearer ${user}`}
     })
     .then(res=>{
+      console.log(res.data)
         localStorage.removeItem('access_token');
         window.location.reload("/");
         setIsActive(false)
@@ -55,9 +56,9 @@ function Profile(){
       setIsActive(true);
       axios.get("https://martek.herokuapp.com/api/auth/user",{
           headers:{ 'Authorization':`Bearer ${user}`}
-  }
-  )
+  })
   .then(res=>{
+    console.log(res.data)
       if(res.data!== null){
         setName(res.data.name);
         setEmail(res.data.email);

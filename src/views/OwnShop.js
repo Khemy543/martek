@@ -22,7 +22,12 @@ import FormControl from '@material-ui/core/FormControl';
 import clsx from 'clsx';
 import BounceLoader from "react-spinners/BounceLoader";
 import Container from '@material-ui/core/Container';
+import EmailIcon from '@material-ui/icons/Email';
+import PhoneIcon from '@material-ui/icons/Phone';
 import history from "../history.js";
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
+import IconButton from '@material-ui/core/IconButton';
 import {Alert} from "reactstrap";
  
 import axios from "axios";
@@ -40,10 +45,17 @@ const useStyles = makeStyles((theme) => ({
     width: '100%', // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
+  formControl: {
+    margin: theme.spacing(1),
+    width: '100%',
+  },
   avatar: {
     margin: theme.spacing(1),
     textAlign:"center",
     backgroundColor: theme.palette.secondary.main,
+  },
+  textField:{
+    width:"100%"
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
@@ -67,10 +79,15 @@ export default function OwnShop(props){
   const [errorMessage, setErrorMessage ] = React.useState("");
   const [confrimPassword, setConfirmPassword] = React.useState("");
   const [error, setError]= React.useState(false)
+  const [eye, setEye] = React.useState(false);
+  const [eye2, setEye2] = React.useState(false);
   
   //const [storeId, setStoreId]=React.useState(undefined);
   
   
+  const toggleEye =()=> setEye(!eye);
+  const toggleEye2 =()=> setEye2(!eye2);
+
   React.useEffect(()=>{
             setIsActive(true)
             axios.get("https://martek.herokuapp.com/api/campuses")
@@ -108,15 +125,12 @@ export default function OwnShop(props){
     {company_name, email,phone:`233${phone}`,password, campus_id,company_description,shop_type_id}
   ).then(res => {
     console.log(res.data)
-      if(res.data.merchandiser_id !== null){
-        const storeId=res.data.merchandiser_id;
         setTimeout(
           function(){
-            history.push("/auth/upload-avatar",{storeId});
+            history.push("/auth/upload-avatar",{id:res.data.merchandiser_id});
           },
           100
       )
-      }
     }).catch(error => {
       console.log("error",error);
       console.log(error.response.data)
@@ -134,8 +148,6 @@ export default function OwnShop(props){
 
   return (
     <div>
-    <IndexNavbar />
-    
     <div className="main">
                 <div className="section">
         <Container component="main" maxWidth="sm" style={{marginTop:"60px"}}>
@@ -155,6 +167,9 @@ export default function OwnShop(props){
                 </div>
                 }
           <form className={classes.form} onSubmit={handleSubmit}>
+          <Container>
+          <Grid container>
+          <Grid item xs={12} sm={12} md={12} lg={12} xl={12}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -167,10 +182,11 @@ export default function OwnShop(props){
               autoFocus
               type="text"
               value={company_name} onChange={e=>setCompany_name(e.target.value)}
-        
             />
+            </Grid>
+            </Grid> 
             <Grid container>
-              <Grid item xs={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
             <TextField
               variant="outlined"
               margin="normal"
@@ -185,7 +201,7 @@ export default function OwnShop(props){
               
             />
             </Grid>
-            <Grid item xs={6}>
+            <Grid item xs={12} sm={12} md={6} lg={6} xl={6}>
             <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined" required margin="normal">
             <InputLabel htmlFor="outlined-error-helper-text">Phone</InputLabel>
             <OutlinedInput
@@ -213,41 +229,32 @@ export default function OwnShop(props){
             </Grid>
             <br/>
             <Grid container>
-              <Grid item xs={5}>
-                <Grid container>
-                  <Grid item xs={6}>
-              <InputLabel id="demo-simple-select-label">Campus</InputLabel>
-              </Grid>
-              <Grid item xs={3}>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={campus_id}
-                    onChange={e => setCampus_id(e.target.value)}
-                >
+              <Grid item md={6} sm={12} xs={12} lg={6} xl={12}>
+              <FormControl variant="outlined" className={classes.formControl} >
+                <InputLabel id="demo-simple-select-outlined-label">Campus</InputLabel>
+                <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={campus_id}
+                onChange={e => setCampus_id(e.target.value)}
+                label="Campus">
                 {campusList.map(value => <MenuItem value={value.id} key={value.id}>{value.campus}</MenuItem>)}
                 </Select>
-                </Grid>
-                </Grid>
-
+              </FormControl>
               </Grid>
-              <Grid item xs={7}>
-                <Grid container>
-                  <Grid item xs={6}>
-              <InputLabel id="demo-simple-select-label">Shop Type</InputLabel>
-              </Grid>
-              <Grid item xs={3}>
-                  <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={shop_type_id} name="shop_type" onChange={e => setshop_type_id(e.target.value)}
-                >
+              <Grid item md={6} sm={12} xs={12} lg={6} xl={6}>
+                <FormControl variant="outlined" className={classes.formControl} >
+                <InputLabel id="demo-simple-select-outlined-label">Shop Type</InputLabel>
+                <Select
+                labelId="demo-simple-select-outlined-label"
+                id="demo-simple-select-outlined"
+                value={shop_type_id} name="shop_type" onChange={e => setshop_type_id(e.target.value)}
+                label="Shop Type">
                 {shop_type_list.map(value => <MenuItem value={value.id} key={value.id}>{value.shop_type}</MenuItem>)}
                 </Select>
+                </FormControl>
                 </Grid>
                 </Grid>
-            </Grid>
-            </Grid>
             <TextField
               variant="outlined"
               margin="normal"
@@ -267,10 +274,20 @@ export default function OwnShop(props){
               fullWidth
               name="password"
               label="Password"
-              type="password"
+              type={eye?"text":"password"}
               id="password"
               autoComplete="current-password"
               value={password} onChange={e=>setPassword(e.target.value)} 
+              InputProps={{
+                endAdornment:<InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={toggleEye}
+                >
+                  {eye ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }}
             />
             <TextField
               variant="outlined"
@@ -279,13 +296,23 @@ export default function OwnShop(props){
               fullWidth
               name="confirm-password"
               label="Confirm Password"
-              type="password"
+              type={eye2?"text":"password"}
               id="confirm-password"
               autoComplete="current-password"
               value={confrimPassword} onChange={e=>setConfirmPassword(e.target.value)} 
+              InputProps={{
+                endAdornment:<InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={toggleEye2}
+                >
+                  {eye2 ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            }}
             />
 
-            By clicking this you agree to our  <Link to="#" style={{color:"#0b7dda"}}>Terms</Link> & <Link to="#" style={{color:"#0b7dda"}}>Privacy Policy</Link> <Checkbox style={{float:"right" , marginRight:"20px"}} type="checkbox" value="1" required onChange={e=>setCheckbox(!checkbox)}/>
+            Agree to our  <Link to="#" style={{color:"#0b7dda"}}>Terms</Link> & <Link to="#" style={{color:"#0b7dda"}}>Privacy Policy</Link> <Checkbox style={{float:"right" , marginRight:"20px"}} type="checkbox" value="1" required onChange={e=>setCheckbox(!checkbox)}/>
           
             <Button
               type="submit"
@@ -298,13 +325,12 @@ export default function OwnShop(props){
             >
               Next
             </Button>
-            
+            </Container>
           </form>
           </div>
         </Container>
         </div>
         </div>
-        <DemoFooter />
     </div>
   );
 }

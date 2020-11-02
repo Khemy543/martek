@@ -10,23 +10,20 @@ import axios from "axios";
 import ImageUploader from 'react-images-upload';
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
-import IndexNavbar from "components/Navbars/IndexNavbar";
-import DemoFooter from "components/Footers/DemoFooter";
 // core components
 //import IndexNavbar from "../components/Navbars/IndexNavbar.js";
 //import DemoFooter from "../components/Footers/DemoFooter";
 
-class UploadShopAvatar extends React.Component{
+let user = localStorage.getItem('access_token')
+
+class UploadValidID extends React.Component{
 
     constructor(props) {
         super(props);
          this.state = { 
-             avatar: [],
-              cover:[],
-              valid_id:[],/* 
-             store_id:this.props.location.state.id,  */
-             isActive:false, activateButton:false, activateButton2:false, activateButton3:false,
-             percentage:0
+              valid_id:[],
+              percentage:0,
+              button:false
              };
          this.onDrop = this.onDrop.bind(this);
          
@@ -34,29 +31,21 @@ class UploadShopAvatar extends React.Component{
 
     onDrop(picture) {
         this.setState({
-            avatar: this.state.avatar.concat(picture),
-            cover:this.state.cover.concat(picture),
-            valid_id:this.state.valid_id.concat(picture),
-            activateButton:true,
-            activateButton2:true,
-            activateButton3:true
+            valid_id:this.state.valid_id.concat(picture)
         });
     }
     
-    
+
     handleSubmit=(e)=>{
     e.preventDefault();
-    const avatar_file = new Blob(this.state.avatar);
-    const cover_photo_file = new Blob(this.state.cover);
     const valid_id_file = new Blob(this.state.valid_id);
      const bodyFormData = new FormData();
-     bodyFormData.set('avatar',avatar_file, avatar_file.filename);
-     bodyFormData.append('cover_photo',cover_photo_file,cover_photo_file.filename);
      bodyFormData.append('valid_id',valid_id_file,valid_id_file.filename);
     axios({method:"post",
-    url:`https://martek.herokuapp.com/api/merchandiser/${this.props.location.state.id}/store-photos`,
+    url:`https://martek.herokuapp.com/api/auth/upload/valid-id`,
     data:bodyFormData,
     headers:{
+        "Authorization":`Bearer ${user}`,
       "Content-Type": "multipart/form-data",
     },
     onUploadProgress: (progressEvent) => {
@@ -68,8 +57,8 @@ class UploadShopAvatar extends React.Component{
         }
     }
     }).then(res=>{
-        this.setState({percentage:100})
-        this.props.history.push("/auth/wait-shop-verification",{store_id:this.state.store_id})
+        console.log(res.data)
+        this.props.push('/user/add-product')
     }).catch(error=>{
         console.log(error.response.data)
         this.setState(false)
@@ -82,44 +71,15 @@ class UploadShopAvatar extends React.Component{
             active = {this.state.isActive}
             spinner={<BounceLoader color={'#4071e1'}/>}
             >
-        <IndexNavbar/>
         
         <div className="main">
                 <div className="section">
                     <br/>
         <Container style={{marginTop:"50px"}}>
-        <p style={{marginBottom:"10px", fontSize:"13px"}}>Upload All Necessary Files For Your Shop</p>
+        <p style={{marginBottom:"10px", fontSize:"13px"}}>Provide A Valid ID</p>
                
         <Form onSubmit={this.handleSubmit} style={{marginTop:"50px"}}>
         <Row className="mt-auto mb-auto" style={{marginTop:"50px"}}> 
-            <Col md="4" lg="4"  className="ml-auto mr-auto">
-            <div>
-            <label>Shop Avatar</label>
-            <ImageUploader
-                withIcon={true}
-                withPreview={true}
-                buttonText='Shop Avatar'
-                onChange={this.onDrop}
-                imgExtension={['.jpg',  '.png','.jpeg']}
-                maxFileSize={5242880}
-                value={this.state.activateButton}
-            />
-                </div>
-            </Col>
-            <Col md="4" lg="4" className="ml-auto mr-auto">
-                <div>
-                <label>Cover Photo</label>
-                <ImageUploader
-                    withIcon={true}
-                    withPreview={true}
-                    buttonText='Cover Photo'
-                    onChange={this.onDrop}
-                    imgExtension={['.jpg','.png', '.jpeg']}
-                    maxFileSize={5242880}
-                    value={this.state.activateButton2}
-                />
-                    </div>
-            </Col>
             <Col md="4" lg="4" className="ml-auto mr-auto">
                 <div>
                 <label>Valid ID Card</label>
@@ -130,7 +90,6 @@ class UploadShopAvatar extends React.Component{
                     onChange={this.onDrop}
                     imgExtension={['.jpg','.png', '.jpeg']}
                     maxFileSize={5242880}
-                    value={this.state.activateButton2}
                 />
                     </div>
             </Col>
@@ -145,12 +104,12 @@ class UploadShopAvatar extends React.Component{
         }
 
         <Row style={{marginTop:"30px"}}>
-            <Col md="4">
+            <Col md="4" style={{marginRight:"auto", marginLeft:"auto"}}>
             <Button
                 block
                 color="info"
-                disabled={!this.state.activateButton || !this.state.activateButton2}
                 type="submit"
+                disabled={this.state.valid_id.length<=0}
                 >
                     upload
                 </Button>
@@ -162,13 +121,11 @@ class UploadShopAvatar extends React.Component{
         </div>
         </div>
         </LoadingOverlay>
-        
-        <DemoFooter />
         </div>
     )
 }
 }
-export default UploadShopAvatar;
+export default UploadValidID;
 
 
 

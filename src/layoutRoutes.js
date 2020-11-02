@@ -53,6 +53,7 @@ import SellOnMartek from "views/Documents/SellOnMartek.js";
 import TermsAndCondition from "views/Documents/TermsAndConditon.js";
 import PrivacyPolicy from "views/Documents/Privacy.js";
 import AboutUs from "views/Documents/AboutUs.js";
+import UploadValidID from "views/UploadFirstTimeID.js";
 
 
 
@@ -114,6 +115,12 @@ var routes = [
         layout: "/user"
       },
       {
+        path: "/add-product-validation",
+        protectedRoute:true,
+        component: UploadValidID,
+        layout: "/user"
+      },
+      {
         path: "/search-results",
         component: SearchResults,
         layout: "/user"
@@ -169,14 +176,12 @@ var routes = [
       
       {
         path: "/payment/information",
-        protectedRoute:true,
         component: UserDetails,
         layout: "/user"
       },
       
       {
         path: "/payment/account",
-        protectedRoute:true,
         component: AccountDetails,
         layout: "/user"
       },
@@ -257,7 +262,7 @@ var routes = [
         path: "/shop-register",
         protectedShopLogin:true,
         component: OwnShop,
-        layout: "/auth"
+        layout: "/user"
       },
       {
         path: "/login-page",

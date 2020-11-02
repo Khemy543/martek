@@ -5,6 +5,7 @@ import IndexNavbar from "../components/Navbars/IndexNavbar.js";
 import DemoFooter from "../components/Footers/DemoFooter.js";
 import ProtectedRoute from '../ProtectedRoutes.js';
 import ProtectedLoginRoute from '../ProtectedLoginRoutes.js';
+import ScrollToTop from "react-scroll-up";
 
 import routes from "../layoutRoutes.js";
 
@@ -43,6 +44,9 @@ class UserLayout extends React.Component{
             <Redirect from="*" to="/user/home" />
         </Switch>
         <DemoFooter />
+        <ScrollToTop showUnder={160}>
+          <span><i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true"></i></span>
+        </ScrollToTop>
         </div>
     );
 }

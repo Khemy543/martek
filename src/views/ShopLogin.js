@@ -199,7 +199,7 @@ export default function ShopLoginPage(props) {
                 </Link>
               </Grid>
               <Grid item>
-                <Link href="/auth/shop-register" variant="body2">
+                <Link href="/user/shop-register" variant="body2">
                   {"Don't own a shop? Register"}
                 </Link>
               </Grid>

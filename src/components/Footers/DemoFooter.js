@@ -18,12 +18,12 @@
 */
 /*eslint-disable*/
 import React,{useState} from "react";
-import { Link } from "react-router-dom";
 // reactstrap components
 import { Row, Container, Modal, ModalBody, ModalHeader,Col, Button, Form, Input, InputGroup,Alert,
   InputGroupAddon,InputGroupText, ModalFooter, Nav, NavLink, NavItem
 
 } from "reactstrap";
+
 
 function DemoFooter() {
   return (
@@ -105,6 +105,7 @@ function DemoFooter() {
         </Nav>
         </Col>
         </Row>
+        <br/>
         {/* <Row>
         <Col md="5" xs="6" sm="6" xl="5" lg="5" className="ml-auto mr-auto">
         <Nav>

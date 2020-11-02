@@ -24,7 +24,7 @@ class AccountDetails extends React.Component{
         mobile:false,
         po:false,
         email:"",
-        amount:"",
+        amount:this.props.location.state.amount,
         date:"",
         cardno:"",
         cvv:"",
@@ -117,7 +117,7 @@ handleMobileSubmit=(e)=>{
                     <img
                     alt="#"
                     src={require("../../assets/img/martlogo.png")}
-                    style={{width:"120px" ,height:"auto", marginTop:"10px"}}
+                    style={{width:"auto" ,height:"25px", marginTop:"10px"}}
                     />
                     </div>
                     </Col>
@@ -157,7 +157,7 @@ handleMobileSubmit=(e)=>{
                                     <Row>
                                         <Col style={{borderRight:"1px solid #0000001f"}}>
                                         <label style={{fontSize:"13px" , fontWeight:600,marginBottom:"0px"}}>VALID TILL</label>
-                                        <Input placeholder="mm/yy" value={this.state.date} onChange={e=>this.setState({date:e.target.value})}
+                                        <Input placeholder="mm / yy" value={this.state.date} onChange={e=>this.setState({date:e.target.value})}
                                          style={{border:"none",padding:"0px 0px",marginTop:"-5px"}} 
                                          
                                          required/>
@@ -211,10 +211,12 @@ handleMobileSubmit=(e)=>{
                                     </Input>
                                     <label style={{fontSize:"13px" , fontWeight:600,marginBottom:"0px"}}>MOBILE NUMBER</label>
                                     <Input placeholder="000-000000" style={{border:"none",padding:"0px 0px",marginTop:"-5px"}} required onChange={e=>this.setState({phonenumber:e.target.value})} />
-
-                                    <label style={{fontSize:"13px" , fontWeight:600,marginBottom:"0px"}}>VOUCHER (ONLY VODACASH)</label>
+                                    {this.state.network === "VODAFONE"?
+                                    <>
+                                    <label style={{fontSize:"13px" , fontWeight:600,marginBottom:"0px"}}>VOUCHER</label>
                                     <Input placeholder="000000000" style={{border:"none",padding:"0px 0px",marginTop:"-5px"}} required onChange={e=>this.setState({voucher:e.target.value})} />
-
+                                    </>
+                                    :<></>}
                                     <Row style={{marginTop:"25px"}}>
                                         <Col md="12">
                                             <Button block color="warning" type="Submit">Pay GHS {this.state.amount}</Button>

@@ -59,7 +59,11 @@ const [confirmPassword, setConfirmPassword] = React.useState("")
 const [eye1, setEye1] = React.useState(false);
 const [eye2, setEye2] = React.useState(false);
 const [eye3, setEye3] = React.useState(false);
-const [message, setMessage] = React.useState("")
+const [message, setMessage] = React.useState("");
+const [avatarImagePreview, setAvatarImage] = React.useState("");
+const [coverImagePreview, setCoverImage] = React.useState("");
+const [cover, setCover] = React.useState("");
+const [avatar, setAvatar] = React.useState("")
 
 const toggle = () => setPopoverOpen(!popoverOpen);
 
@@ -202,6 +206,34 @@ const tabToggle = tab => {
   }
 }
 
+function _handleAvatarChange(e) {
+  e.preventDefault();
+
+  let reader = new FileReader();
+  let file = e.target.files[0];
+
+  reader.onloadend = () => {
+    setAvatar(file);
+    setAvatarImage(reader.result)
+  }
+
+  reader.readAsDataURL(file)
+}
+
+function _handleCoverChange(e) {
+  e.preventDefault();
+
+  let reader = new FileReader();
+  let file = e.target.files[0];
+
+  reader.onloadend = () => {
+   setCover(file);
+   setCoverImage(reader.result)
+  }
+
+  reader.readAsDataURL(file)
+}
+
   return (
     <div>
       <div className="section">
@@ -242,8 +274,38 @@ const tabToggle = tab => {
           <TabPane tabId="1" id="follows">
           <Container>
           <Row>
-          <Col md="3">
-      </Col>
+          <Col md="6">
+          <Row> 
+                  <Col sm="12" xs="12" md="6">
+                      <small className=" d-block text-uppercase font-weight-bold mb-4">
+                        Shop Avatar
+                      </small>
+                      <img
+                        alt="..."
+                        className=" img-fluid rounded-circle shadow"
+                        src={avatarImagePreview}
+                        style={ {width: "150px",height:"150px",marginBottom:"20px"} }
+                      ></img>
+                      <br/>
+                  <Input type="file" 
+                               onChange={(e)=>_handleAvatarChange(e)}  />
+                    </Col>
+                    <Col sm="12" xs="12" md="6">
+                      <small className=" d-block text-uppercase font-weight-bold mb-4">
+                        Cover photo
+                      </small>
+                      <img
+                        alt="..."
+                        className=" img-fluid rounded-circle shadow"
+                        src={coverImagePreview}
+                        style={ {width: "150px",height:"150px",marginBottom:"20px"} }
+                      ></img>
+                      <br/>
+                  <Input type="file" 
+                                onChange={(e)=>_handleCoverChange(e)} />
+                    </Col>
+                      </Row>
+          </Col>
       
       <Col md="6">
       <Form onSubmit={handleSubmit}>

@@ -499,9 +499,19 @@ function Home({history}){
 
                                     >
                                        <CardBody>
+                                    {value.category === "Phones"?
                                     <h4 
                                     style={{marginTop:"-7px"}}    
-                                    >{value.category}</h4>
+                                    >
+                                    Phones And Accessories
+                                    </h4>
+                                    :
+                                    <h4 
+                                    style={{marginTop:"-7px"}}    
+                                    >
+                                    {value.category}
+                                    </h4>
+                                    }
                                     </CardBody>
                                     </Card>
                                     </Col>
