@@ -51,9 +51,14 @@ const CarouselView = (props) => {
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
         key={item.src}
+       
       >
-        <img src={item.src} alt={item.altText} />
-        <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
+      <div className="image-holder" style={{textAlign:"center"}}>
+        <img src={item.src} alt={item.altText} className="image"/>
+        
+      </div> 
+        
+        <CarouselCaption  captionHeader={item.caption} />
       </CarouselItem>
     );
   });
