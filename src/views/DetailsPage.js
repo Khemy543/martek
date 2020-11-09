@@ -234,7 +234,7 @@ class DetailsPage extends React.Component{
                                             <ModalBody>
                                                
                                                 <div>
-                                                    <h4 style={{fontWeight:500, marginBottom:"-12px"}}>{name}</h4>
+                                                    <h4 style={{fontWeight:500, marginBottom:"-12px"}}>{name || company_name}</h4>
                                                     <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{phone}</h4>
                                                     <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{email}</h4>
                                                     <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{campus}</h4>
