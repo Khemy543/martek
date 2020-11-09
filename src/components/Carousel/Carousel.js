@@ -51,14 +51,9 @@ const CarouselView = (props) => {
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
         key={item.src}
-       
       >
-      <div className="image-holder" style={{textAlign:"center"}}>
-        <img src={item.src} alt={item.altText} className="image"/>
-        
-      </div> 
-        
-        <CarouselCaption  captionHeader={item.caption} />
+        <img src={item.src} alt={item.altText} />
+        <CarouselCaption captionText={item.caption} captionHeader={item.caption} />
       </CarouselItem>
     );
   });
@@ -68,6 +63,8 @@ const CarouselView = (props) => {
       activeIndex={activeIndex}
       next={next}
       previous={previous}
+      enableTouch={true}
+      slide={true}
     >
       <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
       {slides}

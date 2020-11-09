@@ -15,8 +15,10 @@ import { ProductConsumer } from "../context";
 import history from "../history.js";
 
 class Product extends React.Component{
+
     render(){
-        const {id , product_name , /* product_image */ price } = this.props.product;
+        const {id , product_name , /* product_image */ price } = this.props.product;/* 
+        console.log(this.props.product) */
         return(
                 
                 <Col lg="3" md="4" sm="6" xs="6" style={{padding:"0px 0px 0px 0px"}}>

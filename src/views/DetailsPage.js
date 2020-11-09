@@ -38,6 +38,7 @@ class DetailsPage extends React.Component{
         reportmodal:false,
         average:0,
         message:"",
+        tipmodal:false
     }
     
      toggle = () => this.setState({modal:!this.state.modal});
@@ -222,7 +223,7 @@ class DetailsPage extends React.Component{
                                         <Button
                                         color="danger"
                                         block
-                                        onClick={()=>this.setState({modal:true})}
+                                        onClick={()=>this.setState({modal:true, tipmodal:true})}
                                         >
                                             buy now
                                         </Button>
@@ -233,10 +234,10 @@ class DetailsPage extends React.Component{
                                             <ModalBody>
                                                
                                                 <div>
-                                                    <h4 style={{fontWeight:500}}>{name}</h4>
-                                                    <h4 style={{fontSize:"14px"}}>{phone}</h4>
-                                                    <h4 style={{fontSize:"14px"}}>{email}</h4>
-                                                    <h4 style={{fontSize:"14px"}}>{campus}</h4>
+                                                    <h4 style={{fontWeight:500, marginBottom:"-12px"}}>{name}</h4>
+                                                    <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{phone}</h4>
+                                                    <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{email}</h4>
+                                                    <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{campus}</h4>
                                                 </div>
                                                 <br/>
                                                 <br/>
@@ -253,6 +254,20 @@ class DetailsPage extends React.Component{
                                                 </Row>
                                             </ModalBody>
                                             
+                                            </Modal>
+
+                                            <Modal isOpen={this.state.tipmodal}>
+                                                <ModalHeader>
+                                                    <h4 style={{fontWeight:500, fontSize:"17px"}}>Tips</h4>    
+                                                </ModalHeader>
+                                                <ModalBody style={{fontWeight:400}}>
+                                                    1. Ensure to meet a campus seller in person, check the item(s) and make sure you are satisfied with the product.<br/>
+                                                    2. Make payments only on delivery.<br/>
+                                                    3. Avoid deals that are too good to be true; unrealistically low prices inclusive.<br/>
+                                                    4. Never give out personal Information.<br/>
+                                                    (This includes bank details, and any other information which could be misused).<br/><br/>
+                                                    <Button color="danger" onClick={()=>this.setState({tipmodal:false})}>Close</Button>
+                                                </ModalBody>
                                             </Modal>
                                 </CardTitle>
                                         </Card>
