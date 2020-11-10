@@ -121,13 +121,27 @@ isTokenExpired() {
      try {
          const decoded = decode(authenticated);
          if (decoded.exp < (Date.now() / 1000)) { // Checking if token is expired.
-             localStorage.clear();
+             localStorage.removeItem('access_token');
              window.location.reload("/")
          }
      }
      catch (err) {
          return false;
      }
+ }
+
+ isShopTokenExpired(){
+     let authenticated = localStorage.getItem('shop_access_token');
+     try {
+        const decoded = decode(authenticated);
+        if (decoded.exp < (Date.now() / 1000)) { // Checking if token is expired.
+            localStorage.removeItem('shop_access_token');
+            window.location.reload("/")
+        }
+    }
+    catch (err) {
+        return false;
+    }
  }
 
     //get following shops

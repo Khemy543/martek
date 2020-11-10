@@ -15,6 +15,7 @@ import {
 import LoadingOverlay from "react-loading-overlay";
 import FadeLoader from "react-spinners/FadeLoader";
 import history from "../../history.js";
+import { Link } from "react-router-dom";
 
 function UserDetails(props) {
 const [isActive, setIsActive] = React.useState(false);
@@ -112,8 +113,11 @@ const handleSubmit=(e)=>{
                         
                     </Row>
                     <Row style={{marginTop:"30px"}}>
-                        <Col> 
+                        <Col md="6" sm="6" xs="6" lg="6" xl="6"> 
                             <Button color="primary" type="submit">Pay</Button>
+                        </Col>
+                        <Col md="6" sm="6" xs="6" lg="6" xl="6">
+                          <a href="/auth/shop-login"><h4 style={{fontSize:"14px", fontWeight:600, marginTop:"4px",color:"#6ec7e0"}}>Try Free Now ! <i className="fa fa-chevron-right"/></h4></a>
                         </Col>
                     </Row>
                     <p style={{textAlign:"center", marginTop:"15px", fontSize:"12px",fontWeight:600}}>Contact <a href="!#">martekgh@gmail.com</a> for any questions</p>

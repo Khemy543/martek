@@ -135,7 +135,7 @@ class DetailsPage extends React.Component{
 
         return(
             <div>
-                <div className="main">
+                <div>
                     <br/>
                     <br/>
                     <div className="section">
