@@ -85,23 +85,17 @@ class Uner extends React.Component{
         axios.get("http://martek.herokuapp.com/api/get-campus/"+this.props.location.state.id+"/product")
         .then(res=>{
           console.log("produxts:", res.data);
-          if(res.data.products[0] !== undefined){
-            this.setState({electronics:res.data.products[0].Electronics})         
-            }else{
-                this.setState({electronics:[]})
+          for(var i =0; i<res.data.products.length; i++){
+            if(res.data.products[i].Electronics !== undefined){
+                this.setState({electronics:res.data.products[i].Electronics})
             }
-
-            if(res.data.products[3] !== undefined){
-                this.setState({phone:res.data.products[3].Phones})         
-                }else{
-                    this.setState({phone:[]})
-                }
-
-            if(res.data.products[2] !== undefined){
-                this.setState({fashion:res.data.products[2].Fashion})
-            }else{
-                this.setState({fashion:[]})
+            else if(res.data.products[i].Phones !== undefined){
+                this.setState({phone:res.data.products[i].Phones})
             }
+            else if(res.data.products[i].Fashion !== undefined){
+                this.setState({fashion:res.data.products[i].Fashion})
+            }
+        }
         });
 
 

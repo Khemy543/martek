@@ -39,10 +39,7 @@ class App extends React.Component{
     return new Promise(resolve => setTimeout(resolve, 2000)) // 2 seconds
   }
 
-    /* constructor(props){
-        super(props);
-    } */
-    componentDidMount(){
+    /* componentDidMount(){
 
         this.authenticate().then(() => {
             const ele = document.getElementById('ipl-progress-indicator')
@@ -55,7 +52,7 @@ class App extends React.Component{
               }, 2000)
             }
           })
-    }
+    } */
     
     render(){
         return(

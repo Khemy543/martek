@@ -54,6 +54,7 @@ import TermsAndCondition from "views/Documents/TermsAndConditon.js";
 import PrivacyPolicy from "views/Documents/Privacy.js";
 import AboutUs from "views/Documents/AboutUs.js";
 import UploadValidID from "views/UploadFirstTimeID.js";
+import Example from "views/TestingCarousel.js";
 
 
 
@@ -332,6 +333,11 @@ var routes = [
         component: WaitShopVerification,
         layout: "/auth"
       },
+     /*  {
+        path: "/testing-carousel",
+        component: Example,
+        layout: "/user"
+      }, */
 
 ];
 export default routes;
