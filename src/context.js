@@ -83,6 +83,7 @@ class ProductProvider extends React.Component{
 
 
         this.isTokenExpired();
+        this.isShopTokenExpired();
         this.setProducts();
         this.getFollowingShops();
         //products
