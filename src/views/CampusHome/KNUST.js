@@ -59,7 +59,8 @@ class Knust extends React.Component{
         newid:"",
         electronics:[],
         phone:[],
-        fashion:[]
+        fashion:[],
+        newItems:[]
     }
     
      toggle = tab => {
@@ -82,6 +83,12 @@ class Knust extends React.Component{
         })
         .then(res=>{
             console.log(res.data)
+        })
+
+        axios.get(`https://martek.herokuapp.com/api/get/campus/${this.props.location.state.id}/new-this-week`)
+        .then(res=>{
+            console.log(res.data);
+            this.setState({newItems:res.data})
         })
 
         axios.get("http://martek.herokuapp.com/api/get-campus/"+this.props.location.state.id+"/product")
@@ -244,97 +251,24 @@ class Knust extends React.Component{
                                     <Container>
                                     <Row>
                                         <Col md="12" style={{padding:"0px 0px 0px 0px"}}>
-                                        <Slider {...settings}>
-                                            <div>
+                                        <Slider {...settings} infinite={this.state.newItems.length>3}>
+                                        {this.state.newItems.map((value,key)=>(
+                                            <div key={key}>
                                                 <Col>
-                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px"}}>
+                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px",cursor:"pointer"}}>
                                                 <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
-                                                LG TV 150 X 140 INCHES CURVE TV
+                                                {value.product_name}
                                                     </CardTitle>
                                                     <br/>
-                                                    <div style={{textAlign:"center"}}>
+                                                    <div style={{textAlign:"center"}} onClick={() => this.props.history.push("/user/product-details",{id:value.id})}>
                                                     <img alt="#" src={require("../../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
                                                     </div>
                                                     <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
+                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ {value.price}</CardBody>
                                                 </Card>
                                                 </Col>
                                             </div>
-                                            <div>
-                                            <Col>
-                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px"}}>
-                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
-                                                LG TV 150 X 140 INCHES CURVE TV
-                                                    </CardTitle>
-                                                    <br/>
-                                                    <div style={{textAlign:"center"}}>
-                                                    <img alt="#" src={require("../../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
-                                                    </div>
-                                                    <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
-                                                </Card>
-                                                </Col>
-                                            </div>
-                                            <div>
-                                                <Col>
-                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px"}}>
-                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
-                                                LG TV 150 X 140 INCHES CURVE TV
-                                                    </CardTitle>
-                                                    <br/>
-                                                    <div style={{textAlign:"center"}}>
-                                                    <img alt="#" src={require("../../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
-                                                    </div>
-                                                    <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
-                                                </Card>
-                                                </Col>
-                                            </div>
-                                            <div>
-                                            <Col>
-                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px"}}>
-                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
-                                                LG TV 150 X 140 INCHES CURVE TV
-                                                    </CardTitle>
-                                                    <br/>
-                                                    <div style={{textAlign:"center"}}>
-                                                    <img alt="#" src={require("../../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
-                                                    </div>
-                                                    <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
-                                                </Card>
-                                                </Col>
-                                            </div>
-                                            <div>
-                                            <Col>
-                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px"}}>
-                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
-                                                LG TV 150 X 140 INCHES CURVE TV
-                                                    </CardTitle>
-                                                    <br/>
-                                                    <div style={{textAlign:"center"}}>
-                                                    <img alt="#" src={require("../../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
-                                                    </div>
-                                                    <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
-                                                </Card>
-                                                </Col>
-                                            </div>
-                                            <div>
-                                            <Col>
-                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px"}}>
-                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
-                                                LG TV 150 X 140 INCHES CURVE TV
-                                                    </CardTitle>
-                                                    <br/>
-                                                    <div style={{textAlign:"center"}}>
-                                                    <img alt="#" src={require("../../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
-                                                    </div>
-                                                    <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ 1699.00</CardBody>
-                                                </Card>
-                                                </Col>
-                                            </div>
+                                            ))}
                                         </Slider>
                                         
                                         </Col>

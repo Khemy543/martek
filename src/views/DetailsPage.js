@@ -14,6 +14,7 @@ import{
 } from "reactstrap";
 import axios from "axios";
 import StarRatings from 'react-star-ratings';
+import Slider from "react-slick";
 
 
 import LoadingOverlay from "react-loading-overlay";
@@ -21,8 +22,25 @@ import BounceLoader from "react-spinners/BounceLoader";
 
 //context
 import { ProductConsumer } from "../context";
+var settings = {
+    dots: true,
+    speed: 500,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay:true,
+    responsive:[
+        {
+          breakpoint:450,
+          settings:{
+              centerMode:true,
+              slidesToShow:1
+          }
+        }
+      ]
+  };
+  
 
-let user = localStorage.getItem('access_token')
+let user = localStorage.getItem('access_token');
 
 class DetailsPage extends React.Component{
     state={
@@ -38,7 +56,8 @@ class DetailsPage extends React.Component{
         reportmodal:false,
         average:0,
         message:"",
-        tipmodal:false
+        tipmodal:false,
+        related:[]
     }
     
      toggle = () => this.setState({modal:!this.state.modal});
@@ -48,10 +67,11 @@ class DetailsPage extends React.Component{
             this.setState({isActive:true})
             axios.get("https://martek.herokuapp.com/api/product/"+this.props.location.state.id+"/details")
             .then(res=>{
-                console.log(res.data);
-                this.setState({product:res.data, owner:res.data.product_owner, campus_name:res.data.product_owner.campus,isActive:false})
+                console.log("details",res.data);
+                this.setState({product:res.data, owner:res.data.product_owner, campus_name:res.data.product_owner.campus,related:res.data.related_product,isActive:false})
             })
             .catch(error=>{
+                console.log(error.response.data)
             });
 
             axios.get("https://martek.herokuapp.com/api/product/"+this.props.location.state.id+"/reviews")
@@ -75,6 +95,8 @@ class DetailsPage extends React.Component{
             this.setState({loggedin:false});
         }
         }
+
+        
 
         postReview=()=>{
             if(this.state.reviewAdd !== "" || this.state.rating !== 0){
@@ -189,7 +211,7 @@ class DetailsPage extends React.Component{
                                             <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>¢ {price}</h4>
                                             </Col>
                                             <Col>
-                                            <h5 style={{fontSize:"13px", marginTop:"20px"}}>IN STOCK : {in_stock}</h5>
+                                            <h5 style={{fontSize:"13px", marginTop:"20px",fontWeight:"bold"}}>IN STOCK : {in_stock}</h5>
                                             </Col>
                                             <Col>
                                             {/* <div style={{marginTop:"20px"}}>
@@ -389,6 +411,50 @@ class DetailsPage extends React.Component{
                             </Row>
                             </Col>
                             </Row>
+                            
+
+                            <Row>
+                        <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
+                        <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
+                            <h3 style={{borderBottom:"1px solid #eaeaea", fontWeight:500}} className="category">
+                                <i className="fa fa-gg" style={{color:"#ff8d00"}}/> RELATED ITEMS
+                                
+                                </h3>
+                            </CardTitle>
+                    
+                                <CardBody>
+                                    <Container>
+                                    <Row>
+                                        <Col md="12" style={{padding:"0px 0px 0px 0px"}}>
+                                        <Slider {...settings} infinite={this.state.related.length>3}>
+                                        {this.state.related.map((value,key)=>(
+                                            <div>
+                                                <Col>
+                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px", cursor:"pointer"}}>
+                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
+                                                {value.product_name}
+                                                    </CardTitle>
+                                                    <br/>
+                                                    <div style={{textAlign:"center"}} onClick={() =>this.props.history.push("/user/product-details",{id:value.id})}>
+                                                    <img alt="#" src={require("../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
+                                                    </div>
+                                                    <br/>
+                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ {value.price}</CardBody>
+                                                </Card>
+                                                </Col>
+                                            </div>
+                                            ))}
+                                        </Slider>
+                                        
+                                        </Col>
+                                        </Row>
+                                        </Container>
+                                    </CardBody>
+    
+                            </Card>
+                            </Row>
+
+
 
                             <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px",marginTop:"35px"}}>
                             <Col md="10">
