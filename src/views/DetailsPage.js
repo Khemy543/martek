@@ -22,6 +22,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 
 //context
 import { ProductConsumer } from "../context";
+import { DesktopWindows } from "@material-ui/icons";
 var settings = {
     dots: true,
     speed: 500,
@@ -42,8 +43,8 @@ var settings = {
 
 let user = localStorage.getItem('access_token');
 
-class DetailsPage extends React.Component{
-    state={
+function DetailsPage(props){
+    /* state={
         modal:false,
         product:[],
         owner:"",
@@ -58,28 +59,48 @@ class DetailsPage extends React.Component{
         message:"",
         tipmodal:false,
         related:[]
-    }
-    
-     toggle = () => this.setState({modal:!this.state.modal});
+    } */
+
+    const [modal, setModal]= React.useState(false);
+    const [product, setProduct] = React.useState([]);
+    const [owner, setOwner] = React.useState("");
+    const [campus_name, setCampus_name] = React.useState("");
+    const [isActive, setisActive] = React.useState(false);
+    const [reviews, setReviews] = React.useState([]);
+    const [reviewAdd, setreviewAdd] = React.useState("");
+    const [loggedin, setLoggedin] = React.useState(false);
+    const [rating, setRating] = React.useState(0);
+    const [reportmodal, setReportmodal] = React.useState(false);
+    const [average, setAverage] = React.useState(0);
+    const [message, setMessage] = React.useState("");
+    const [tipmodal, setTipmodal] = React.useState(false);
+    const [related, setRelated] = React.useState([]);
+    const [productid, setProductId] = React.useState(props.location.state.id);
+   
+     const toggle = () => setModal(!modal);
       
-     toggleReportModal = ()=>this.setState({reportmodal:!this.state.reportmodal})
-        componentDidMount(){
-            this.setState({isActive:true})
-            axios.get("https://martek.herokuapp.com/api/product/"+this.props.location.state.id+"/details")
+     const toggleReportModal = ()=>setReportmodal(!reportmodal)
+        React.useEffect(()=>{
+            setisActive(true);
+            axios.get("https://martek.herokuapp.com/api/product/"+productid+"/details")
             .then(res=>{
                 console.log("details",res.data);
-                this.setState({product:res.data, owner:res.data.product_owner, campus_name:res.data.product_owner.campus,related:res.data.related_product,isActive:false})
+                setProduct(res.data);
+                setOwner(res.data.product_owner);
+                setCampus_name(res.data.product_owner.campus);
+                setRelated(res.data.related_product);
+                setisActive(false)
             })
             .catch(error=>{
-                console.log(error.response.data)
+                console.log(error)
             });
 
-            axios.get("https://martek.herokuapp.com/api/product/"+this.props.location.state.id+"/reviews")
+            axios.get("https://martek.herokuapp.com/api/product/"+productid+"/reviews")
             .then(res=>{
                 console.log(res.data);
-                this.setState({reviews:res.data.product_reviews});
+                setReviews(res.data.product_reviews);
                 if(res.data.average_rating !== null){
-                    this.setState({average:Math.round(res.data.average_rating)})
+                     setAverage(Math.round(res.data.average_rating))
                 }
 
             })
@@ -89,34 +110,37 @@ class DetailsPage extends React.Component{
 
         let authenticated = localStorage.getItem('access_token');
         if(authenticated !== null){
-         this.setState({loggedin:true});
+         setLoggedin(true)
         }
         else{
-            this.setState({loggedin:false});
+            setLoggedin(false)
         }
-        }
-
+        },[productid])
+            
         
 
-        postReview=()=>{
+        const postReview=()=>{
             if(this.state.reviewAdd !== "" || this.state.rating !== 0){
             this.setState({isActive:true})
             axios.post("https://martek.herokuapp.com/api/add-product/reviews",
             {
-                rating: this.state.rating,
+                rating: rating,
             
-                product_id: this.props.location.state.id,
+                product_id: props.location.state.id,
             
-                review : this.state.reviewAdd
+                review : reviewAdd
             },
             { headers:{"Authorization":`Bearer ${user}`}} 
             )
             .then(res=>{
                 console.log(res.data);
                 if(res.data.status === "saved"){
-                    let tempReview = this.state.reviews;
-                    tempReview.push({rating:this.state.rating, review:this.state.reviewAdd, user:{name:res.data.name}});
-                    this.setState({reviews:tempReview,reviewAdd:"", rating:0,isActive:false})
+                    let tempReview = [...reviewAdd];
+                    tempReview.push({rating:rating, review:reviewAdd, user:{name:res.data.name}});
+                    setReviews(tempReview);
+                    setreviewAdd("");
+                    setRating(0);
+                    setisActive(false)
                 }
             })
             .catch(error=>{
@@ -127,21 +151,19 @@ class DetailsPage extends React.Component{
         
         }
 
-        changeRating=( newRating )=> {
-            this.setState({
-              rating: newRating
-            });
+        const changeRating=( newRating )=> {
+            setRating(newRating)
           }
 
 
-        handlePostReport=()=>{
+        const handlePostReport=()=>{
             axios.post("https://martek.herokuapp.com/api/add-product/report",
-            {report:this.state.message, product_id:this.props.location.state.id},
+            {report:message, product_id:props.location.state.id},
             { headers:{"Authorization":`Bearer ${user}`}})
             .then(res=>{
                 console.log(res.data);
                 if(res.data.status == "saved"){
-                    this.setState({reportmodal:true})
+                    setReportmodal(true)
                 }
             })
             .catch(error=>{
@@ -149,11 +171,9 @@ class DetailsPage extends React.Component{
             })
         }
 
-        render(){
-
-       const {product_name, price,in_stock,description} = this.state.product;
-       const {name ,email,phone,company_name,merchandiser_id} = this.state.owner;
-       const {campus} = this.state.campus_name;
+       const {product_name, price,in_stock,description} = product;
+       const {name ,email,phone,company_name,merchandiser_id} = owner;
+       const {campus} = campus_name;
 
         return(
             <div>
@@ -189,14 +209,14 @@ class DetailsPage extends React.Component{
                                                 <Col md="6" sm="6" xs="6" lg="6">
                                                 <h4 style={{fontSize:"14px", marginLeft:"20px", marginTop:"3px",cursor:"pointer"}} onClick={()=>{
                                                 if(merchandiser_id){
-                                                    this.props.history.push("/user/shop-view",{id:merchandiser_id})
+                                                    props.history.push("/user/shop-view",{id:merchandiser_id})
                                                 }
                                                 }}>| {name}  {company_name}
                                             </h4>
                                                 </Col>
                                                 <Col  md="6" sm="6" xs="6" lg="6">
                                                 <StarRatings
-                                                rating={this.state.average}
+                                                rating={average}
                                                 starRatedColor="#CFB53B"
                                                 numberOfStars={5}
                                                 name='rating'
@@ -233,7 +253,7 @@ class DetailsPage extends React.Component{
                                             color="info"
                                             block
                                             
-                                            onClick={()=>{value.addToCart(this.props.location.state.id)}}
+                                            onClick={()=>{value.addToCart(props.location.state.id)}}
                                             >
                                            <div><i className="fa fa-cart-plus mr-2"/>Add to cart</div>
 
@@ -245,11 +265,13 @@ class DetailsPage extends React.Component{
                                         <Button
                                         color="danger"
                                         block
-                                        onClick={()=>this.setState({modal:true, tipmodal:true})}
-                                        >
+                                        onClick={()=>{
+                                            setModal(true);
+                                            setTipmodal(true);
+                                        }}>
                                             buy now
                                         </Button>
-                                            <Modal isOpen={this.state.modal} toggle={this.toggle}>
+                                            <Modal isOpen={modal} toggle={toggle}>
                                             <ModalHeader>
                                                     Seller's Information
                                                     </ModalHeader>
@@ -278,7 +300,7 @@ class DetailsPage extends React.Component{
                                             
                                             </Modal>
 
-                                            <Modal isOpen={this.state.tipmodal}>
+                                            <Modal isOpen={tipmodal}>
                                                 <ModalHeader>
                                                     <h4 style={{fontWeight:500, fontSize:"17px"}}>Tips</h4>    
                                                 </ModalHeader>
@@ -288,7 +310,7 @@ class DetailsPage extends React.Component{
                                                     3. Avoid deals that are too good to be true; unrealistically low prices inclusive.<br/>
                                                     4. Never give out personal Information.<br/>
                                                     (This includes bank details, and any other information which could be misused).<br/><br/>
-                                                    <Button color="danger" onClick={()=>this.setState({tipmodal:false})}>Close</Button>
+                                                    <Button color="danger" onClick={()=>setTipmodal(false)}>Close</Button>
                                                 </ModalBody>
                                             </Modal>
                                 </CardTitle>
@@ -344,7 +366,7 @@ class DetailsPage extends React.Component{
                             <Row style={{ marginTop:"5px"}}>
                             <h4 style={{marginBottom:"20px", marginLeft:"20px"}}>REVIEWS</h4>
                             <Col md="12">
-                            {this.state.reviews.length <=0 ?
+                            {reviews.length <=0 ?
                             <Row>
                                 <Col md="6" className="ml-auto mr-auto">
                                     <h4 style={{textAlign:"center",marginBottom:"10px"}}>No Reviews</h4>
@@ -353,7 +375,7 @@ class DetailsPage extends React.Component{
                             :
                             <Row>
                             <Col md="6" className="ml-auto mr-auto" style={{maxHeight:"50vh",overflowY:"scroll"}}>
-                            {this.state.reviews.map(value=>(
+                            {reviews.map(value=>(
                                 <Row style={{borderBottom:"1px solid #F1EAE0",marginBottom:"10px"}}>
                                 <Col md="3" sm="3" xs="3" lg="3" className="ml-auto mr-auto">
                                 <div className="avatar">
@@ -384,26 +406,27 @@ class DetailsPage extends React.Component{
                             </Row>
                             }
                             <Row>
-                            {this.state.loggedin?
+                            {loggedin?
                                 <Col md="6" className="mr-auto ml-auto">
-                                <InputGroup>
-                                <Input placeholder="Add your comment" type="textarea" value={this.state.reviewAdd} onChange={e=>this.setState({reviewAdd:e.target.value})} required/>
-                                <InputGroupAddon addonType="append">
-                                    <InputGroupText>
-                                    <i className="fa fa-paper-plane-o" onClick={()=>this.postReview()} style={{cursor:"pointer"}}/>
-                                    </InputGroupText>
-                                </InputGroupAddon>
-                                </InputGroup>
                                 <p style={{marginTop:"5px",marginBottom:"0px"}}>Rate this product</p>
                                 <StarRatings
-                                    rating={this.state.rating}
+                                    rating={rating}
                                     starRatedColor="#CFB53B"
-                                    changeRating={this.changeRating}
+                                    changeRating={changeRating}
                                     numberOfStars={5}
                                     name='rating'
                                     starDimension="20px"
                                     starSpacing="2px"
                                     />
+                                <InputGroup style={{marginTop:"10px"}}>
+                                <Input placeholder="Add your comment" type="textarea" value={reviewAdd} onChange={e=>setreviewAdd(e.target.value)} required/>
+                                <InputGroupAddon addonType="append">
+                                    <InputGroupText>
+                                    <i className="fa fa-paper-plane-o" onClick={()=>postReview()} style={{cursor:"pointer"}}/>
+                                    </InputGroupText>
+                                </InputGroupAddon>
+                                </InputGroup>
+                                
                                 </Col>
                             :
                             <div></div>}
@@ -413,7 +436,7 @@ class DetailsPage extends React.Component{
                             </Row>
                             
 
-                            <Row>
+                            <Row style={{marginTop:"20px"}}> 
                         <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                         <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
                             <h3 style={{borderBottom:"1px solid #eaeaea", fontWeight:500}} className="category">
@@ -426,8 +449,8 @@ class DetailsPage extends React.Component{
                                     <Container>
                                     <Row>
                                         <Col md="12" style={{padding:"0px 0px 0px 0px"}}>
-                                        <Slider {...settings} infinite={this.state.related.length>3}>
-                                        {this.state.related.map((value,key)=>(
+                                        <Slider {...settings} infinite={related.length>3}>
+                                        {related.map((value,key)=>(
                                             <div>
                                                 <Col>
                                             <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px", cursor:"pointer"}}>
@@ -435,7 +458,10 @@ class DetailsPage extends React.Component{
                                                 {value.product_name}
                                                     </CardTitle>
                                                     <br/>
-                                                    <div style={{textAlign:"center"}} onClick={() =>this.props.history.push("/user/product-details",{id:value.id})}>
+                                                    <div style={{textAlign:"center"}} onClick={() =>{
+                                                        props.history.push("/user/product-details",{id:value.id})
+                                                        window.location.reload("/")
+                                                        }}>
                                                     <img alt="#" src={require("../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
                                                     </div>
                                                     <br/>
@@ -455,26 +481,29 @@ class DetailsPage extends React.Component{
                             </Row>
 
 
-
+                            {loggedin?
                             <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px",marginTop:"35px"}}>
                             <Col md="10">
                                 <Card className="card-plain">
                                     <CardBody>
-                                    <Input type="textarea" placeholder="report product..." value={this.state.message} onChange={(e)=>this.setState({message:e.target.value})}/>
+                                    <Input type="textarea" placeholder="report product..." value={message} onChange={(e)=>setMessage(e.target.value)}/>
                                     </CardBody>
                                     </Card>
                             </Col>
 
                             <Col md="2">
-                            <Button style={{marginTop:"20px", backgroundColor:"transparent", color:"#17a2b8", borderColor:"transparent"}} color="info" onClick={()=>this.handlePostReport()}>Send Report</Button>
+                            <Button style={{marginTop:"20px", backgroundColor:"transparent", color:"#17a2b8", borderColor:"transparent"}} color="info" onClick={()=>handlePostReport()}>Send Report</Button>
                                     
                             </Col>
                             </Row>
+                            :
+                            <div></div>
+                            }
 
                         </Container>
                             )}
                         </ProductConsumer>
-                        <Modal isOpen={this.state.reportmodal} toggle={()=>this.toggleReportModal()}>
+                        <Modal isOpen={reportmodal} toggle={()=>toggleReportModal()}>
                             <div style={{textAlign:'center',marginTop:"10px",marginBottom:"10px"}}>
                             <p style={{fontWeight:"bold"}}><i className="fa fa-check mr-1" style={{color:"green", fontSize:"20px"}}/> sent!!</p>
                             <p>Thanks for the report!<br/>Action is being taken, Feedback will be sent soon</p>
@@ -485,6 +514,5 @@ class DetailsPage extends React.Component{
                 </div>
         );
     }
-}
 
 export default DetailsPage;

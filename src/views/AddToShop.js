@@ -146,7 +146,7 @@ function AddToShop(){
                     type="textarea"
                     rows="4"  
                     value={description} name="description" onChange={e => setDescription(e.target.value)}
-
+                    required
                   />
                   </Col>
                   </Row>

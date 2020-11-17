@@ -877,6 +877,7 @@ setProducts =() =>{
 }
 
     searchQuery=(item,newSearchValue)=>{
+        console.log("item",item)
         const{product_name,product_description} = item
 
         if((product_name.toLowerCase().includes(newSearchValue)) || (product_name.toUpperCase().includes(newSearchValue)) || (product_description.toLowerCase().includes(newSearchValue)) || (product_description.toUpperCase().includes(newSearchValue))){
