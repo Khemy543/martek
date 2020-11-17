@@ -120,8 +120,7 @@ function DetailsPage(props){
         
 
         const postReview=()=>{
-            if(this.state.reviewAdd !== "" || this.state.rating !== 0){
-            this.setState({isActive:true})
+            if(reviewAdd !== "" || rating !== 0){
             axios.post("https://martek.herokuapp.com/api/add-product/reviews",
             {
                 rating: rating,
@@ -135,8 +134,9 @@ function DetailsPage(props){
             .then(res=>{
                 console.log(res.data);
                 if(res.data.status === "saved"){
-                    let tempReview = [...reviewAdd];
-                    tempReview.push({rating:rating, review:reviewAdd, user:{name:res.data.name}});
+                    let tempReview = [...reviews];
+                    tempReview.push({rating:rating, review:reviewAdd, user:{name:res.data.name}, date:Date.now()});
+                    console.log(tempReview)
                     setReviews(tempReview);
                     setreviewAdd("");
                     setRating(0);
