@@ -135,7 +135,7 @@ function DetailsPage(props){
                 console.log(res.data);
                 if(res.data.status === "saved"){
                     let tempReview = [...reviews];
-                    tempReview.push({rating:rating, review:reviewAdd, user:{name:res.data.name}, date:Date.now()});
+                    tempReview.push({rating:rating, review:reviewAdd, user:{name:res.data.name}});
                     console.log(tempReview)
                     setReviews(tempReview);
                     setreviewAdd("");
