@@ -45,7 +45,7 @@ function EditProfile(props){
   const handleProfileUpdate=(e)=>{
     setIsActive(true);
     e.preventDefault();
-    axios.patch("https://martek.herokuapp.com/api/auth/update/"+userID+"/user",{name, email, phone, campus_id},
+    axios.patch("http://backend-api.martekgh.com/api/auth/update/"+userID+"/user",{name, email, phone, campus_id},
    {headers:{'Authorization':`Bearer ${user}`}}
   )
   .then(res=>{
@@ -75,7 +75,7 @@ function EditProfile(props){
 
   React.useEffect(()=>{
       setIsActive(true)
-      axios.get("https://martek.herokuapp.com/api/auth/user",{
+      axios.get("http://backend-api.martekgh.com/api/auth/user",{
           headers:{ 'Authorization':`Bearer ${user}`}
   }
   )
@@ -92,7 +92,7 @@ function EditProfile(props){
   })
 
 
-  axios.get("https://martek.herokuapp.com/api/campuses")
+  axios.get("http://backend-api.martekgh.com/api/campuses")
   .then(res=>{
       const campuses = res.data;
       if(res.status === 200){
@@ -105,7 +105,7 @@ function EditProfile(props){
   const changePassword=(e)=>{
     e.preventDefault()
     if(new_password === confirmPassword){
-    axios.post("https://martek.herokuapp.com/api/auth/change/password",
+    axios.post("http://backend-api.martekgh.com/api/auth/change/password",
     {password,new_password},{
       headers:{ 'Authorization':`Bearer ${user}`}
 }).then(res=>{

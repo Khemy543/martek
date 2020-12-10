@@ -23,7 +23,7 @@ function UserProducts(){
  
   let user = localStorage.getItem('access_token')
   React.useEffect(()=>{
-    axios.get("https://martek.herokuapp.com/api/e-trader/get-user-products",{
+    axios.get("http://backend-api.martekgh.com/api/e-trader/get-user-products",{
       headers:{"Authorization":`Bearer ${user}`}
   }).then(res=>{
           console.log(res.data)

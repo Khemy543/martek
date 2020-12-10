@@ -99,14 +99,43 @@
     .alert-modal{
         margin-left:14%;
     }
-   
-    
+    .cover-photo{
+        height: 25vh !important;
+    }
+    #img-circle{
+        margin-top: -200px !important;
+    }
+    #shop-circle{
+        margin-top: -140px !important;
+    }
+    .cardimage{
+        height: 150px;
+    }
+
+    #card-cover{
+        height: 120.91px !important;
+    }
 }
 
 
 @media(min-width:801px){
+    #card-cover{
+        height: 169.91px !important;
+    }
+    #shop-circle{
+        margin-top: -170px !important;
+    }
+    .cover-photo{
+        height: 40vh !important;
+    }
+    #img-circle{
+        margin-top: -230px !important;
+    }
     .category{
         font-size: 20px;
+    }
+    .cardimage{
+        height: 100px;
     }
 
     .credits{
@@ -302,6 +331,10 @@
       font-weight: 600 !important;
   }
 
+  .nav-tabs .nav-item .nav-link.active, .nav-tabs .nav-item .nav-link.active:hover, .nav-tabs .nav-item .nav-link.active:focus {
+    background-color: transparent;
+    color: #6ec7e0  !important;
+}
 
   /* .rwt__tabpanel{
       margin-top: 100px;
@@ -312,3 +345,45 @@
       text-decoration: none !important;
       color: red;
   } */
+
+  .phone-nav{
+      background-color: #ffff;
+  }
+  
+  .navbar .navbar-collapse:after {
+    background-color: #ffff !important;
+    background-image: none !important;
+}
+
+#top-right {
+    position: absolute;
+    top: 15px;
+    right: 16px;
+  }
+  .circular {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .circular img {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+  }
+
+  .phone-nav .nav-item .nav-link{
+      text-transform: capitalize !important;
+      font-size: 15px !important;
+      color:#4a4747 !important;
+  }

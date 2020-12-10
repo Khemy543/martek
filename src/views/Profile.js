@@ -38,7 +38,7 @@ function Profile(){
   const handleDelete=()=>{
     setPopoverOpen(false);
     setIsActive(true);
-    axios.delete("https://martek.herokuapp.com/api/auth/user/delete",{
+    axios.delete("http://backend-api.martekgh.com/api/auth/user/delete",{
         headers:{"Authorization":`Bearer ${user}`}
     })
     .then(res=>{
@@ -54,7 +54,7 @@ function Profile(){
 
   React.useEffect(()=>{
       setIsActive(true);
-      axios.get("https://martek.herokuapp.com/api/auth/user",{
+      axios.get("http://backend-api.martekgh.com/api/auth/user",{
           headers:{ 'Authorization':`Bearer ${user}`}
   })
   .then(res=>{

@@ -13,7 +13,7 @@ import{
     Button, Alert, Input
 } from "reactstrap";
 
-var domain = "https://martek.herokuapp.com"
+var domain = "http://backend-api.martekgh.com"
 export default function ForgotPassword(props){
     const [email, setEmail] = React.useState("");
     const [visible, setVisible] = React.useState(false);

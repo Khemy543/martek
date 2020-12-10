@@ -55,6 +55,9 @@ import PrivacyPolicy from "views/Documents/Privacy.js";
 import AboutUs from "views/Documents/AboutUs.js";
 import UploadValidID from "views/UploadFirstTimeID.js";
 import Example from "views/TestingCarousel.js";
+import ReportShop from "views/ReportShop.js";
+import UserPayment from "views/Payment/UserPayment.js";
+import UserAccountDetails from "views/Payment/UserAccountDetails.js";
 
 
 
@@ -333,11 +336,21 @@ var routes = [
         component: WaitShopVerification,
         layout: "/auth"
       },
-     /*  {
-        path: "/testing-carousel",
-        component: Example,
+      {
+        path: "/report-shop",
+        component: ReportShop,
         layout: "/user"
-      }, */
+      },
+      {
+        path: "/payment/user/information",
+        component: UserPayment,
+        layout: "/user"
+      },
+      {
+        path: "/payment/user/account",
+        component: UserAccountDetails,
+        layout: "/user"
+      },
 
 ];
 export default routes;

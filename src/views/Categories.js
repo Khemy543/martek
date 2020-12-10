@@ -32,7 +32,7 @@ class Categories extends React.Component {
 
     getProducts(pageNumber=1){
         this.setState({isActive:true});
-        axios.get("https://martek.herokuapp.com/api/category/"+this.props.location.state.category_id+"/products?page="+pageNumber+"")
+        axios.get("http://backend-api.martekgh.com/api/category/"+this.props.location.state.category_id+"/products?page="+pageNumber+"")
         .then(res=>{
             console.log(res.data)
             this.setState({products:res.data});
@@ -52,8 +52,8 @@ class Categories extends React.Component {
                             <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
                             <Row style={{borderBottom:"1px solid #eaeaea"}}>
                                 <Col sm="12" md="12" lg="12" xl="12" xs="12">
-                                <h3 style={{fontWeight:"bold"}} className="category">
-                                    <i className="fa fa-gg" style={{color:"#ff8d00"}}/> PHONES & ACCESSORIES
+                                <h3 style={{fontWeight:"bold", textTransform:"uppercase"}} className="category">
+                                    <i className="fa fa-gg" style={{color:"#ff8d00"}}/> {this.props.location.state.category_name}
                                     
                                 </h3>
                                 </Col>

@@ -42,7 +42,7 @@ class ShopUploadImages extends React.Component{
     bodyFormData.set('product_images',file, file.filename);
 
     axios({method:"post",
-    url:"https://martek.herokuapp.com/api/e-trader/"+this.state.product_id+"/product-images",
+    url:"http://backend-api.martekgh.com/api/e-trader/"+this.state.product_id+"/product-images",
     data:bodyFormData,
     headers:{'Authorization':`Bearer ${merchandiser}`},
     onUploadProgress: (progressEvent) => {
@@ -56,6 +56,7 @@ class ShopUploadImages extends React.Component{
     }).then(res=>{
         this.setState({modal:true, isActive:false, percentage:100})
     }).catch(error=>{
+        console.log(error.response.data)
     })
 } 
     

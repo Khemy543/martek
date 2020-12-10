@@ -48,7 +48,7 @@ function ExamplesNavbar() {
 
   React.useEffect(()=>{
     
-    axios.get("https://martek.herokuapp.com/api/merchandiser",{
+    axios.get("http://backend-api.martekgh.com/api/merchandiser",{
         headers:{ 'Authorization':`Bearer ${merchandiser}`}
 }
 )
@@ -69,7 +69,7 @@ const Logout=(e)=>{
   setDropdownOpen(false);
   setNavbarCollapse(false);
 
-  axios.post("https://martek.herokuapp.com/api/merchandiser/logout",null,{
+  axios.post("http://backend-api.martekgh.com/api/merchandiser/logout",null,{
     headers:{ 'Authorization':`Bearer ${merchandiser}`}
   })
   .then(res=>{

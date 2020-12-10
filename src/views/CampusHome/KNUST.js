@@ -72,26 +72,26 @@ class Knust extends React.Component{
      componentDidMount(){
          console.log(this.props.location)
          this.setState({isActive:true});
-        axios.get("https://martek.herokuapp.com/api/categories")
+        axios.get("http://backend-api.martekgh.com/api/categories")
         .then(res=>{
           const categories = res.data
           this.setState({categoryList:categories})
         });
 
-        axios.get(`https://martek.herokuapp.com/api/get/campus/1/carousel`,{
+        axios.get(`http://backend-api.martekgh.com/api/get/campus/1/carousel`,{
             headers:{ 'Authorization':`Bearer ${user}`}
         })
         .then(res=>{
             console.log(res.data)
         })
 
-        axios.get(`https://martek.herokuapp.com/api/get/campus/${this.props.location.state.id}/new-this-week`)
+        axios.get(`http://backend-api.martekgh.com/api/get/campus/${this.props.location.state.id}/new-this-week`)
         .then(res=>{
             console.log(res.data);
             this.setState({newItems:res.data})
         })
 
-        axios.get("http://martek.herokuapp.com/api/get-campus/"+this.props.location.state.id+"/product")
+        axios.get("http://backend-api.martekgh.com/api/get-campus/"+this.props.location.state.id+"/product")
         .then(res=>{
           console.log("produxts:", res.data.products);
             for(var i =0; i<res.data.products.length; i++){
@@ -114,7 +114,7 @@ class Knust extends React.Component{
       }
 
      getShops(pageNumber=1){
-        axios.get("http://martek.herokuapp.com/api/get-campus/"+this.props.location.state.id+"/shop?page="+pageNumber+"")
+        axios.get("http://backend-api.martekgh.com/api/get-campus/"+this.props.location.state.id+"/shop?page="+pageNumber+"")
         .then(res=>{
             console.log(res.data)
             this.setState({shops:res.data, isActive:false});

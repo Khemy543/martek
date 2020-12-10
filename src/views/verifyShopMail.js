@@ -13,7 +13,7 @@ import{
     Button, Alert
 } from "reactstrap";
 
-var domain = "https://martek.herokuapp.com"
+var domain = "http://backend-api.martekgh.com"
 export default function VerifyShopEmail(props){
     const [message, setMessage] = React.useState("");
     const [visible, setVisible] = React.useState(false);

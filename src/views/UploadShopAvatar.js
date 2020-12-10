@@ -23,22 +23,31 @@ class UploadShopAvatar extends React.Component{
          this.state = { 
              avatar: [],
               cover:[],
-              valid_id:[],/* 
-             store_id:this.props.location.state.id,  */
+              valid_id:[],
              isActive:false, activateButton:false, activateButton2:false, activateButton3:false,
              percentage:0
              };
-         this.onDrop = this.onDrop.bind(this);
+         this.onDropAvatar = this.onDropAvatar.bind(this);
+         this.onDropCover = this.onDropCover.bind(this);
+         this.onDropCard = this.onDropCard.bind(this);
          
     }
 
-    onDrop(picture) {
+    onDropAvatar(picture) {
         this.setState({
             avatar: this.state.avatar.concat(picture),
+            activateButton:true
+        });
+    }
+    onDropCover(picture) {
+        this.setState({
             cover:this.state.cover.concat(picture),
+            activateButton2:true
+        });
+    }
+    onDropCard(picture) {
+        this.setState({
             valid_id:this.state.valid_id.concat(picture),
-            activateButton:true,
-            activateButton2:true,
             activateButton3:true
         });
     }
@@ -46,15 +55,15 @@ class UploadShopAvatar extends React.Component{
     
     handleSubmit=(e)=>{
     e.preventDefault();
-    const avatar_file = new Blob(this.state.avatar);
-    const cover_photo_file = new Blob(this.state.cover);
-    const valid_id_file = new Blob(this.state.valid_id);
-     const bodyFormData = new FormData();
-     bodyFormData.set('avatar',avatar_file, avatar_file.filename);
-     bodyFormData.append('cover_photo',cover_photo_file,cover_photo_file.filename);
-     bodyFormData.append('valid_id',valid_id_file,valid_id_file.filename);
+    let avatar_file = this.state.avatar[0]
+    let cover_photo_file = this.state.cover[0]
+    let valid_id_file = this.state.valid_id[0]
+    let bodyFormData = new FormData();
+     bodyFormData.append('avatar',avatar_file);
+     bodyFormData.append('cover_photo',cover_photo_file);
+     bodyFormData.append('valid_id',valid_id_file);
     axios({method:"post",
-    url:`https://martek.herokuapp.com/api/merchandiser/${this.props.location.state.id}/store-photos`,
+    url:`http://backend-api.martekgh.com/api/merchandiser/${this.props.location.state.id}/store-photos`,
     data:bodyFormData,
     headers:{
       "Content-Type": "multipart/form-data",
@@ -99,10 +108,12 @@ class UploadShopAvatar extends React.Component{
                 withIcon={true}
                 withPreview={true}
                 buttonText='Shop Avatar'
-                onChange={this.onDrop}
+                onChange={this.onDropAvatar}
                 imgExtension={['.jpg',  '.png','.jpeg']}
                 maxFileSize={5242880}
                 value={this.state.activateButton}
+                singleImage={true}
+                fileSizeError="File Size Too Big"
             />
                 </div>
             </Col>
@@ -113,10 +124,12 @@ class UploadShopAvatar extends React.Component{
                     withIcon={true}
                     withPreview={true}
                     buttonText='Cover Photo'
-                    onChange={this.onDrop}
+                    onChange={this.onDropCover}
                     imgExtension={['.jpg','.png', '.jpeg']}
                     maxFileSize={5242880}
                     value={this.state.activateButton2}
+                    singleImage={true}
+                    fileSizeError="File Size Too Big"
                 />
                     </div>
             </Col>
@@ -127,10 +140,12 @@ class UploadShopAvatar extends React.Component{
                     withIcon={true}
                     withPreview={true}
                     buttonText='Valid ID Card'
-                    onChange={this.onDrop}
+                    onChange={this.onDropCard}
                     imgExtension={['.jpg','.png', '.jpeg']}
                     maxFileSize={5242880}
-                    value={this.state.activateButton2}
+                    value={this.state.activateButton3}
+                    singleImage={true}
+                    fileSizeError="File Size Too Big"
                 />
                     </div>
             </Col>

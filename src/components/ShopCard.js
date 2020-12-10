@@ -4,16 +4,17 @@ import{
     Card,
     CardBody,
     Row,
-    Button, Spinner
+    Button, Spinner, CardImg
 } from "reactstrap";
 import { ProductConsumer } from "../context";
 import history from "../history.js";
+import StarRatings from 'react-star-ratings';
 
 function ShopCard(props){
-        const [followloader, setfollowLoader] = React.useState(false)
-        const [followingloader, setfollowingLoader] = React.useState(false);
+        const [liked, setLiked] = React.useState(false)
+        const [unliked, setUnliked] = React.useState(false);
         const [loggedIn, setLoggedIn] = React.useState(false);
-        const {id , shop_id, company_name ,shop_name, company_description } = props.shop;
+        const {id , shop_id, company_name ,shop_name, company_description, campus, number_of_followers, avatar , cover_photo, avg_rating} = props.shop;
         React.useEffect(()=>{
             let authenticated = localStorage.getItem('access_token');
             if(authenticated !== null){
@@ -22,52 +23,92 @@ function ShopCard(props){
             else{
                 setLoggedIn(false);
             }
-        },[])
+        },[]);
+
+        const toggleLike=()=>{
+            setLiked(!liked)
+        }
+        const toggleUnlike=()=>{
+            setUnliked(!unliked)
+        }
     return(
-        <Col md="6">
-        <Card className="card-plain" style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}}>
-    <CardBody>
-    <Row>
-    <Col md="4" lg="3" sm="3" xs="3" onClick={()=>history.push("/user/shop-view", 
-        {id:id || shop_id}
-        )} className="mt-auto mb-auto">
-        <div className="avatar">
-              <img
-                alt="#"
-                className="img-circle img-no-padding img-responsive"
-                src={require("../assets/img/new_logo.png")}
-                style={{border:"1px solid #eaeaea"}}
-              />
+        <Col md="3" sm="6" xs="6" style={{padding:"0px 6px"}}>
+        <Card className="card-plain" style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}} >
+        <CardImg top id="card-cover" className="cardimage" style={{width:"96%", borderRadius:"5px", margin:"5px"}} src={`http://backend-api.martekgh.com/${cover_photo}`} alt="Card image cap" onClick={()=>history.push("/user/shop-view", 
+            {id:id || shop_id}
+            )}/>
+            {loggedIn?
+            <ProductConsumer>
+                {value=>(
+                    <div id="top-right" style={{backgroundColor:"white", borderRadius:"50%", height:"25px", width:"25px"}}>
+                    {value.followShops.some(item=>item.shop_id === id ||item.shop_id === shop_id)?
+                    <i onClick={()=>{value.unfollow(id || shop_id); toggleUnlike()}} className={!unliked?"fa fa-heart":"fa fa-heart-o"} style={{fontWeight:600, color:"red", textAlign:"center", marginTop:"5px"}} />
+                    :
+                    <i className={!liked?"fa fa-heart-o":"fa fa-heart"} onClick={()=>{value.follow(id || shop_id); toggleLike()}}  style={{color:"red",fontWeight:600, textAlign:"center", marginTop:"5px"}}/>}
+                    </div>
+                )}
+            </ProductConsumer>
+        :
+        <div></div>
+        }
+            
+        <CardBody onClick={()=>history.push("/user/shop-view", 
+            {id:id || shop_id}
+            )}>
+        <Row>
+        <Col md="5" lg="5" sm="6" xs="6" xl="5" onClick={()=>history.push("/user/shop-view", 
+            {id:id || shop_id}
+            )} className="mr-auto ml-auto">
+            <div className="circular" style={{marginTop:"-70px", width:"80px",height:"80px"}}>
+                <img
+                    alt="#"
+                    src={`http://backend-api.martekgh.com/${avatar}`}
+                    style={{border:"1px solid #eaeaea"}}
+                />
             </div>
-    </Col>
-    <Col lg="6" md="6" sm="4" xs="4" className="mt-auto mb-auto" style={{padding: "0px 0px 0px 0px"}}>
-    <Row>
-        
-    <Col md="12" className="mt-auto mb-auto" onClick={()=>history.push("/user/shop-view", 
-        {id:id || shop_id}
-        )}>
-    <h4 style={{textAlign:"left", fontWeight:500, marginTop:"-10px"}} className="truncate">{company_name || shop_name}</h4>
-    <p style={{textAlign:"left"}} className="truncate">{company_description}</p>
-    </Col>
-    </Row>
-    </Col>
-    <Col md="2" lg="2" xs="5" sm="5" className="mt-auto mb-auto">
-    {loggedIn?
-    <ProductConsumer>
-        {value=>(
-            <div>
-               
-    {value.followShops.find(item=>item.shop_id===id ||shop_id)?<Button style={{fontSize:"9px"}} className="btn-round" color="info" onClick={()=>{value.unfollow(id || shop_id); setfollowingLoader(true); setfollowLoader(false)}}>{followingloader?<Spinner animation="grow" size="sm"/>:<p style={{fontWeight:1000, fontSize:"10px"}}>following</p>}</Button>:<Button style={{fontSize:"9px"}} color='danger' className="btn-round" onClick={()=>{value.follow(id || shop_id); setfollowLoader(true); setfollowingLoader(false);}}>{followloader?<Spinner animation="grow" size="sm"/>:<p style={{fontWeight:1000, fontSize:"10px"}}>+follow</p>}</Button>}
-    
-    </div>
-        )}
-    </ProductConsumer>
-    :
-    <div></div>
-    }
-    </Col>
-    </Row>
-    </CardBody>
+        </Col>
+        </Row>
+        <Row>
+            <Col md="12" onClick={()=>history.push("/user/shop-view", 
+                {id:id || shop_id}
+                )}>
+            <h5 style={{textAlign:"left", fontWeight:600, marginTop:"6px"}} className="truncate">{company_name || shop_name}</h5>
+            </Col>
+        </Row>
+        <Row style={{marginTop:"-10px"}}>
+            <Col md="8" style={{display:"flex", justifyContent:"flex-start"}}>
+            <StarRatings
+                rating={Number(avg_rating)}
+                starRatedColor="#CFB53B"
+                numberOfStars={5}
+                name='rating'
+                starDimension="17px"
+                starSpacing="1px"
+                />
+                <p style={{fontWeight:600, marginLeft:"6px",marginTop:"2px"}}>{Number(avg_rating).toFixed(1)}</p>
+            </Col>
+        </Row>
+        <Row>
+            <Col md="12">
+                <h4 style={{textAlign:"left", fontWeight:500 , fontSize:"14px", marginTop:"5px"}}>{campus.campus}</h4>
+            </Col>
+        </Row>
+        <Row>
+            <Col md="12">
+                <h5 style={{textAlign:"left", marginTop:"5px", fontSize:"13px", fontWeight:500}} className="truncate">{company_description}</h5>
+            </Col>
+        </Row>
+        <Row>
+            <Col style={{textAlign:"left", color:"#212529"}}>
+                <i className="fa fa-shopping-bag"/> <i className="fa fa-shopping-cart"/> <i className="fa fa-money"/>
+            </Col>
+        </Row>
+        <Row style={{marginTop:"10px"}}>
+            <Col md="12" style={{textAlign:"left"}}>
+                <h5 style={{display:"inline", textAlign:"left", fontSize:"14px", fontWeight:"bold"}}>{number_of_followers} </h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
+            </Col>
+        </Row>
+        </CardBody>
     </Card>
     </Col>
     )

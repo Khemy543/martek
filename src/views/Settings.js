@@ -76,7 +76,7 @@ const tabToggle = tab => {
 
   React.useEffect(()=>{
     setIsActive(true)
-    axios.get("https://martek.herokuapp.com/api/merchandiser",{
+    axios.get("http://backend-api.martekgh.com/api/merchandiser",{
       headers:{ 'Authorization':`Bearer ${merchandiser}`}
 })
     .then(res=>{
@@ -105,7 +105,7 @@ const tabToggle = tab => {
     .catch(error=>{
     });
 
-    axios.get("https://martek.herokuapp.com/api/shop-types")
+    axios.get("http://backend-api.martekgh.com/api/shop-types")
     .then(res=>{
         const shop_type_data = res.data;
         
@@ -117,7 +117,7 @@ const tabToggle = tab => {
         
     });
 
-    axios.get("https://martek.herokuapp.com/api/campuses")
+    axios.get("http://backend-api.martekgh.com/api/campuses")
     .then(res=>{
         const campuses = res.data;
         if(res.status === 200){
@@ -130,7 +130,7 @@ const tabToggle = tab => {
   const handleDelete=()=>{
     console.log(merchandiser)
     setIsActive(true)
-    axios.delete("https://martek.herokuapp.com/api/merchandiser/delete",{
+    axios.delete("http://backend-api.martekgh.com/api/merchandiser/delete",{
         headers:{"Authorization":`Bearer ${merchandiser}`}
     })
     .then(res=>{
@@ -147,7 +147,7 @@ const tabToggle = tab => {
     setIsActive(true);
     e.preventDefault();
 
-    axios.patch("https://martek.herokuapp.com/api/merchandiser/"+id+"/update",{company_name,campus_id,company_description,phone,email},
+    axios.patch("http://backend-api.martekgh.com/api/merchandiser/"+id+"/update",{company_name,campus_id,company_description,phone,email},
     { headers:{"Authorization":`Bearer ${merchandiser}`}})
     .then(res=>{
       console.log(res.data)
@@ -175,7 +175,7 @@ const tabToggle = tab => {
   const changePassword=(e)=>{
     e.preventDefault()
     if(new_password === confirmPassword){
-    axios.post("https://martek.herokuapp.com/api/merchandiser/change/password",
+    axios.post("http://backend-api.martekgh.com/api/merchandiser/change/password",
     {password,new_password},{
       headers:{ 'Authorization':`Bearer ${merchandiser}`}
 }).then(res=>{

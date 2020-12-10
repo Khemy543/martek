@@ -47,11 +47,7 @@ function ShopView(props) {
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [name ,setName] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [campus, setCampus] = React.useState("");
   const [followers, setFollowers] = React.useState("");
-  const [email, setEmail] = React.useState('');
-  const [phone, setPhone]= React.useState('');
-  const [shopType, setShopType] = React.useState("");
   const [isActive, setIsActive] = React.useState(false);
   const [shopProducts, setShopProducts] = React.useState([]);
   const [followDisable, setFollowDisable] = React.useState(false);
@@ -61,8 +57,8 @@ function ShopView(props) {
   const [rating, setRating] = React.useState(0);
   const [average, setAverage] = React.useState(0);
   const [reportmodal, setReportmodal] = React.useState(false);
-  const[reportSent,setReportsent] = React.useState(false)
-  const [message, setMessage] = React.useState("");
+  const [avatar, setAvatar] = React.useState('');
+  const [cover, setCover] = React.useState('')
   
   let user = localStorage.getItem('access_token')
 
@@ -73,7 +69,7 @@ function ShopView(props) {
   };
   React.useEffect(()=>{
         setIsActive(true)
-        axios.get("https://martek.herokuapp.com/api/merchandiser/"+props.location.state.id+"/products"
+        axios.get("http://backend-api.martekgh.com/api/merchandiser/"+props.location.state.id+"/products"
       )
         .then(response=>{
             setShopProducts(response.data[0]);
@@ -89,16 +85,14 @@ function ShopView(props) {
             setLoggedIn(false);
         }
 
-        axios.get("https://martek.herokuapp.com/api/shop/"+props.location.state.id+"/details")
+        axios.get("http://backend-api.martekgh.com/api/shop/"+props.location.state.id+"/details")
         .then(res=>{
           console.log(res.data)
           setName(res.data.company_name);
           setDescription(res.data.company_description);
-          setCampus(res.data.campus)
           setFollowers(res.data.no_followers)
-          setEmail(res.data.email);
-          setPhone(res.data.phone);
-          setShopType(res.data.shop_type)
+          setAvatar(res.data.avatar)
+          setCover(res.data.cover_photo)
           setIsActive(false)
         })
         .catch(error=>{
@@ -107,7 +101,7 @@ function ShopView(props) {
         })
         
 
-        axios.get("https://martek.herokuapp.com/api/shop/"+props.location.state.id+"/reviews")
+        axios.get("http://backend-api.martekgh.com/api/shop/"+props.location.state.id+"/reviews")
         .then(res=>{
           console.log("reviews:",res.data);
           setReviews(res.data.product_reviews);
@@ -122,7 +116,7 @@ function ShopView(props) {
 const postReview=()=>{
   if(reviewAdd !== "" || rating !== 0){
   setIsActive(true)
-  axios.post("https://martek.herokuapp.com/api/add-shop/reviews",
+  axios.post("http://backend-api.martekgh.com/api/add-shop/reviews",
     {
       rating: rating,
   
@@ -150,27 +144,9 @@ const postReview=()=>{
 }
 
 
-const handlePostReport=()=>{
-  axios.post("https://martek.herokuapp.com/api/add-shop/report",
-  {report:message, shop_report:1,merchandiser_id:props.location.state.id},
-  { headers:{"Authorization":`Bearer ${user}`}})
-  .then(res=>{
-    console.log(res.data)
-    if(res.data.status === "saved"){
-      setReportsent(true)
-    }
-  })
-  .catch(error=>{
-    console.log(error.response.data)
-  })
-}
 
 const changeRating=( newRating )=> {
  setRating(newRating)
-}
-
-const toggleReportModal=()=>{
-  setReportmodal(!reportmodal)
 }
 
   document.documentElement.classList.remove("nav-open");
@@ -188,7 +164,7 @@ const toggleReportModal=()=>{
         >
       
       <div className="section profile-content text-center">
-      <img alt="#" src={require("../assets/img/header.jpg")} style={{width:"95%", height:"40vh"}}/>
+      <img alt="#" src={`http://backend-api.martekgh.com/${cover}`} style={{width:"95%", marginTop:'10px'}} className="cover-photo"/>
       
         <Container>
         <br/>
@@ -196,55 +172,51 @@ const toggleReportModal=()=>{
         <br/>
         <br/>
         <Container>
-        <Row>
-            <Col md="4" className="ml-auto mr-auto">
-            <div className="avatar">
-              <img
-                alt="..."
-                className="img-circle img-no-padding img-responsive"
-                width="150px"
-                style={{border:"1px solid #eaeaea" , marginTop:"-330px"}}
-                src={require("../assets/img/new_logo.png")}
-              />
-            </div>
-            </Col>
+          <Row>
+              <Col md="5" sm="5" xs="5" xl="5" lg="5" className="ml-auto mr-auto">
+              <div className="avatar">
+                <img
+                  alt="..."
+                  id="img-circle"
+                  className="img-circle img-no-padding img-responsive"
+                  style={{border:"1px solid #eaeaea", width:"120px", height:"120px"}}
+                  src={`http://backend-api.martekgh.com/${avatar}`}
+                />
+              </div>
+              </Col>
             </Row>
             <Row style={{marginTop:"-70px"}}>
-              <Col md="4">
+              <Col md="5" sm="5" xs="5" xl="5" lg="5">
               <div>
               <h4 style={{fontSize:"20px", marginTop:"0px",fontWeight:"bold"}}>
                 {name}
               </h4>
               
-              <p>{description}</p>
               <StarRatings
                 rating={average}
                 starRatedColor="#CFB53B"
                 numberOfStars={5}
                 name='rating'
-                starDimension="20px"
-                starSpacing="2px"
+                starDimension="17px"
+                starSpacing="1px"
                 />
              
               </div>
               </Col>
-              <Col md="4">
-              {/* <p>{email}</p>
-              <p>{phone}</p>
-              <p>{shopType}</p>
-              <p>{campus}</p> */}
+              <Col md="3" sm="3" xs="3" xl="3" lg="3">
+                <br/>
               </Col> 
-              <Col md="4">
+              <Col md="4" sm="4" xs="4" xl="4" lg="4">
               <div>
                 <h5 style={{display:"inline", fontSize:"14px", fontWeight:"bold", marginTop:"-15px"}}>{followers} </h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
-                <h5 style={{display:"inline", fontSize:"14px", fontWeight:"bold", marginLeft:"20px"}}> {shopProducts.length}</h5><h4 style={{display:"inline",fontSize:"14px"}}> | Products</h4>
-                <br/>
+                {/* <h5 style={{display:"inline", fontSize:"14px", fontWeight:"bold", marginLeft:"20px"}}> {shopProducts.length}</h5><h4 style={{display:"inline",fontSize:"14px"}}> | Products</h4>
+                */} <br/>
                 <br/>
                 {loggedIn?
                 <ProductConsumer>
               {value=>(
                 <div>
-                {value.followShops.find(item=>item.shop_id===props.location.state.id)?<Button style={{fontSize:"10px"}} className="btn-round" disabled={followDisable} color="info" onClick={()=>{value.unfollow(props.location.state.id);setfollowingLoader(true); setfollowLoader(false);setFollowers(followers-1); setFollowDisable(true);setUnfollowDisable(false)}}>{followingloader?<Spinner animation="grow" size="sm"/>:<p style={{fontWeight:1000, fontSize:"10px"}}>following</p>}</Button>:<Button disabled={unfollowDisable} color='danger' style={{fontSize:"10px"}} className="btn-round" onClick={()=>{value.follow(props.location.state.id); setUnfollowDisable(true);setFollowDisable(false); setfollowingLoader(false);setFollowers(followers+1); setfollowLoader(true)}}>{followloader?<Spinner animation="grow" size="sm"/>:<p style={{fontWeight:1000, fontSize:"10px"}}>+follow</p>}</Button>}
+                {value.followShops.find(item=>item.shop_id===props.location.state.id)?<Button size="sm" style={{fontSize:"9px"}} className="btn-round" disabled={followDisable} color="info" onClick={()=>{value.unfollow(props.location.state.id);setfollowingLoader(true); setfollowLoader(false);setFollowers(followers-1); setFollowDisable(true);setUnfollowDisable(false)}}>{followingloader?<Spinner animation="grow" size="sm"/>:<p style={{fontWeight:1000, fontSize:"9px"}}>following</p>}</Button>:<Button size="sm" disabled={unfollowDisable} color='danger' style={{fontSize:"9px"}} className="btn-round" onClick={()=>{value.follow(props.location.state.id); setUnfollowDisable(true);setFollowDisable(false); setfollowingLoader(false);setFollowers(followers+1); setfollowLoader(true)}}>{followloader?<Spinner animation="grow" size="sm"/>:<p style={{fontWeight:1000, fontSize:"9px"}}>+follow</p>}</Button>}
                 </div>
             )}
               </ProductConsumer>
@@ -252,11 +224,14 @@ const toggleReportModal=()=>{
               <div></div> 
                }
                </div>
-               <br/>
-               <span style={{color:"red", fontSize:"12px", fontWeight:600, cursor:"pointer"}} onClick={()=>setReportmodal(true)}>REPORT</span>
               </Col>
 
             </Row> 
+            <Row style={{marginTop:"10px"}}>
+              <Col md="7" sm="12" xs="12" lg="7" xl="7" className="mr-auto ml-auto">
+              <p>{description}</p>
+              </Col>
+            </Row>
           </Container>
         
           <br />
@@ -396,8 +371,8 @@ const toggleReportModal=()=>{
             
           </TabContent>
         </Container>
-      </div>
-      <Modal isOpen={reportmodal} toggle={()=>toggleReportModal()}>
+       </div>
+     {/*  <Modal isOpen={reportmodal} toggle={()=>toggleReportModal()}>
             <ModalHeader>
                 <h4 style={{fontWeight:"bold",fontSize:"17px", marginTop:"0px"}}>Report Shop</h4>
             </ModalHeader>
@@ -424,7 +399,7 @@ const toggleReportModal=()=>{
             </div>
             </>
             }
-        </Modal>
+        </Modal> */}
       </LoadingOverlay>
     </div>
   );

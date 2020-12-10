@@ -90,7 +90,7 @@ export default function OwnShop(props){
 
   React.useEffect(()=>{
             setIsActive(true)
-            axios.get("https://martek.herokuapp.com/api/campuses")
+            axios.get("http://backend-api.martekgh.com/api/campuses")
             .then(res=>{
                 const campuses = res.data;
                 if(res.status === 200){
@@ -99,7 +99,7 @@ export default function OwnShop(props){
                 
             });
   
-            axios.get("https://martek.herokuapp.com/api/shop-types")
+            axios.get("http://backend-api.martekgh.com/api/shop-types")
             .then(res=>{
                 const shop_type_data = res.data;
                 
@@ -121,7 +121,7 @@ export default function OwnShop(props){
       if(phone.length === 9){
 
       setIsActive(true);
-    axios.post('https://martek.herokuapp.com/api/register-merchandiser',
+    axios.post('http://backend-api.martekgh.com/api/register-merchandiser',
     {company_name, email,phone:`233${phone}`,password, campus_id,company_description,shop_type_id}
   ).then(res => {
     console.log(res.data)
@@ -149,7 +149,7 @@ export default function OwnShop(props){
   return (
     <div>
     <div className="main">
-                <div className="section">
+      <div className="section">
         <Container component="main" maxWidth="sm" style={{marginTop:"60px"}}>
           <div className={classes.paper}>
         <Avatar className={classes.avatar}>
@@ -229,7 +229,7 @@ export default function OwnShop(props){
             </Grid>
             <br/>
             <Grid container>
-              <Grid item md={6} sm={12} xs={12} lg={6} xl={12}>
+              <Grid item md={6} sm={12} xs={12} lg={6} xl={12} style={{marginLeft:"-5px"}}>
               <FormControl variant="outlined" className={classes.formControl} >
                 <InputLabel id="demo-simple-select-outlined-label">Campus</InputLabel>
                 <Select
@@ -250,7 +250,17 @@ export default function OwnShop(props){
                 id="demo-simple-select-outlined"
                 value={shop_type_id} name="shop_type" onChange={e => setshop_type_id(e.target.value)}
                 label="Shop Type">
-                {shop_type_list.map(value => <MenuItem value={value.id} key={value.id}>{value.shop_type}</MenuItem>)}
+                {shop_type_list.map(value => <MenuItem value={value.id} key={value.id}>
+                {value.id === 1?
+                <>Mini Shop (Gh¢ 20/Mo)</>:
+                <>
+                {value.id === 2?
+                <>Max Shop (Gh¢ 40/Mo)</>:
+                <>Non Student Shop (Gh¢ 80/Mo)</>
+                }
+                </>
+                }
+                </MenuItem>)}
                 </Select>
                 </FormControl>
                 </Grid>

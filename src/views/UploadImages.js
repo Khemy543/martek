@@ -7,20 +7,19 @@ import{
     Form, Modal, ModalBody,Progress
 } from "reactstrap";
 import axios from "axios";
-// core components
-import IndexNavbar from "../components/Navbars/IndexNavbar.js";
-import DemoFooter from "../components/Footers/DemoFooter";
 //import { Link } from "react-router-dom";
 import ImageUploader from 'react-images-upload';
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
 
 
+let user = localStorage.getItem('access_token')  
 class UploadImages extends React.Component {
     
     constructor(props) {
         super(props);
-         this.state = { pictures: [], 
+         this.state = { 
+            pictures: [], 
             product_id:this.props.location.state.product_id, 
             isActive:false, 
             modal:false, 
@@ -32,40 +31,34 @@ class UploadImages extends React.Component {
          
     }
 
-    componentDidMount(){
-        let user = localStorage.getItem('access_token')
-    }
-
     onDrop(picture) {
         this.setState({
-            pictures: this.state.pictures.concat(picture), activateButton:true,number:this.state.pictures.length
+            pictures: this.state.pictures.concat(picture),
+            activateButton:true,
+            number:this.state.pictures.length
         });
-
-        console.log(this.state.number)
     }
     
 
     handleSubmit=(e)=>{
-        let user = localStorage.getItem('access_token')      
+        console.log(".....uploading....")    
         console.log(user)
         e.preventDefault();
-        console.log(this.state.pictures.length);
-        const file = new Blob(this.state.pictures);
-        const bodyFormData = new FormData();
-        bodyFormData.set('product_images',file, file.filename);
-
-        const options = {
-            
+        const file = this.state.pictures;
+        console.log("file",file);
+        let name = ['name','game','john']
+        let bodyFormData = new FormData();
+        bodyFormData.append('product_images',file);
+        for (var pair of bodyFormData.entries()) {
+            console.log(pair[0]+ ', ' + pair[1]); 
         }
-
     axios({
             method:'post',
             headers:{
-                "Authorization":`Bearer ${user}`,
-                "Content-Type":"mutipart/form-data"
+                "Authorization":`Bearer ${user}`
             },
             data:bodyFormData,
-            url:"https://martek.herokuapp.com/api/e-trader/"+this.state.product_id+"/product-images",
+            url:"http://backend-api.martekgh.com/api/e-trader/"+this.state.product_id+"/product-images",
             onUploadProgress: (progressEvent) => {
                 const {loaded , total} = progressEvent;
                 let percentage = Math.floor(loaded * 100 / total);
@@ -75,10 +68,27 @@ class UploadImages extends React.Component {
                 }
             }
     }).then(res=>{
-        console.log(res.data)
-        this.setState({isActive:false, modal:true, percentage:100});
+        console.log(res);
+        this.setState({isActive:false, modal:true,percentage:100})
+        setTimeout(
+            function(){
+                this.setState({modal:false});
+                console.log(this.props)
+            }
+            .bind(this),
+            1500
+        )
     }).catch(error=>{
         console.log(error.response.data)
+        this.setState({isActive:false, modal:true,percentage:100})
+        setTimeout(
+            function(){
+                this.setState({modal:false});
+                this.props.history.push('/user/payment/user/information')
+            }
+            .bind(this),
+            1500
+        )
     })
 }
     render(){
@@ -106,7 +116,7 @@ class UploadImages extends React.Component {
                             buttonText='Choose images'
                             onChange={this.onDrop}
                             label="Max file size:5mb accept:jpg,png"
-                            imgExtension={['.jpg','.png']}
+                            imgExtension={['.jpg','.png', '.jpeg']}
                             fileSizeError="file size is too big"
                             fileTypeError="is not supported"
                             maxFileSize={5242880}
@@ -139,13 +149,10 @@ class UploadImages extends React.Component {
                     </div>
                 </div>
                 </LoadingOverlay>
-                <Modal isOpen={this.state.modal} className="login-modal">
-      
-                <ModalBody style={{color:"white", fontSize:"12px", fontWeight:500}}>
-                    PRODUCT SAVED
-                    <a href="/user/home" style={{float:"right"}}><Button color="primary">OK</Button></a>{' '}
-                </ModalBody>
-                
+                <Modal isOpen={this.state.modal} className="alert-modal">
+                    <ModalBody>
+                        <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white"}}>PRODUCT SAVED!!</h4>
+                    </ModalBody>
                 </Modal>
             </div>
     )

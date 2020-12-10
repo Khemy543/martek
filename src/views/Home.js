@@ -7,6 +7,7 @@ import{
     Card,
     CardTitle,
     CardBody,
+    CardImg,
     Col,
     TabContent,
     TabPane,
@@ -59,7 +60,7 @@ function Home({history}){
 
       React.useEffect(()=>{
         setIsActive(true);
-        axios.get("https://martek.herokuapp.com/api/categories")
+        axios.get("http://backend-api.martekgh.com/api/categories")
         .then(res=>{
           const categories = res.data;
           console.log(categories)
@@ -72,15 +73,16 @@ function Home({history}){
       },[])
       function getShops(pageNumber=1){
           setIsActive(true);
-        axios.get("http://martek.herokuapp.com/api/all-shops?page="+pageNumber+"")
+        axios.get("http://backend-api.martekgh.com/api/all-shops?page="+pageNumber+"")
         .then(res=>{
+            console.log(res.data)
             setShops(res.data);
             setIsActive(false)
         })
         .catch(error=>{
         });
 
-        axios.get('http://martek.herokuapp.com/api/fetch/new-this-week')
+        axios.get('http://backend-api.martekgh.com/api/fetch/new-this-week')
         .then(res=>{
             console.log(res.data);
             setNewItems(res.data)
@@ -333,7 +335,7 @@ function Home({history}){
 
 
                     
-                        <Row>
+                        {/* <Row>
                         <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                             <CardTitle style={{borderBottom:"1px solid #eaeaea", fontWeight:500, marginLeft:"15px", marginRight:"15px", fontSize:"20px"}}>
                             <i className="fa fa-gg" style={{color:"#ff8d00"}}/>  FEATURED CATEGORY
@@ -406,7 +408,7 @@ function Home({history}){
                                     </CardBody>
     
                             </Card>
-                            </Row>
+                            </Row> */}
                     
                             </Container>
                             </TabPane>
@@ -426,27 +428,31 @@ function Home({history}){
                             <TabPane className="text-center" tabId="3" id="categories">
                                 <Row>
                                 {categoryList.map((value,index)=>(
-                                    <Col md="6" className="mt-auto mb-auto">
-                                    <Card className="card-plain" style={{backgroundColor:"white",cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} 
-                                    onClick = {()=>history.push("/user/categories",{category_id:value.id, category_name:value.category, image:`${value.id}.jpg`})}
+                                    <Col md="4" className="mt-auto mb-auto">
+                                    <img src={require(`assets/img/categories/${value.id}.png`)} 
+                                        style={{width:"100%",height:"105px", borderRadius:"10px", marginBottom:"20px", cursor:"pointer"}}
+                                        onClick = {()=>history.push("/user/categories",{category_id:value.id, category_name:value.category, image:`${value.id}.png`})}
+                                    />
+                                    {/* <Card className="card-plain" style={{backgroundColor:"white",cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} 
+                                    onClick = {()=>history.push("/user/categories",{category_id:value.id, category_name:value.category, image:`${value.id}.png`})}
 
                                     >
-                                       <CardBody>
-                                    {value.category === "Phones"?
-                                    <h4 
-                                    style={{marginTop:"-7px"}}    
-                                    >
-                                    Phones And Accessories
-                                    </h4>
-                                    :
-                                    <h4 
-                                    style={{marginTop:"-7px"}}    
-                                    >
-                                    {value.category}
-                                    </h4>
-                                    }
-                                    </CardBody>
-                                    </Card>
+                                        <CardBody>
+                                        {value.category === "Phones"?
+                                        <h4 
+                                        style={{marginTop:"-7px"}}    
+                                        >
+                                        Phones And Accessories
+                                        </h4>
+                                        :
+                                        <h4 
+                                        style={{marginTop:"-7px"}}    
+                                        >
+                                        {value.category}
+                                        </h4>
+                                        }
+                                        </CardBody>
+                                    </Card> */}
                                     </Col>
                                 ))}
                                 </Row>

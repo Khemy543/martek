@@ -43,7 +43,7 @@ class UserLayout extends React.Component{
             {this.getRoutes(routes)}
             <Redirect from="*" to="/user/home" />
         </Switch>
-        <DemoFooter />
+        <DemoFooter prop = {this.props}/>
         <ScrollToTop showUnder={160}>
           <span><i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true"></i></span>
         </ScrollToTop>

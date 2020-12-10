@@ -46,7 +46,7 @@ class ShopLayout extends React.Component{
             {this.getRoutes(routes)}
             <Redirect from="*" to="/shop/shop-page" />
         </Switch>
-        <DemoFooter />
+        <DemoFooter prop={this.props}/>
         </div>
     );
 }

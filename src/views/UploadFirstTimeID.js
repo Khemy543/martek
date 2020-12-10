@@ -54,7 +54,7 @@ class UploadValidID extends React.Component{
      const bodyFormData = new FormData();
      bodyFormData.append('valid_id',valid_id_file,valid_id_file.filename);
     axios({method:"post",
-    url:`https://martek.herokuapp.com/api/auth/upload/valid-id`,
+    url:`http://backend-api.martekgh.com/api/auth/upload/valid-id`,
     data:bodyFormData,
     headers:{
         "Authorization":`Bearer ${user}`,

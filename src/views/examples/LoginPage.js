@@ -57,7 +57,7 @@ function LoginPage(props){
   const handleSubmit = (e) =>{
     e.preventDefault();
      setIsActive(true)
-  axios.post('https://martek.herokuapp.com/api/auth/login', {
+  axios.post('http://backend-api.martekgh.com/api/auth/login', {
     config, email, password
   }).then(res => {
     if(res.data.statusCode === 200){

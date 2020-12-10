@@ -41,7 +41,7 @@ function AddProduct(props){
 
   React.useEffect(()=>{
       
-      axios.get("https://martek.herokuapp.com/api/categories")
+      axios.get("http://backend-api.martekgh.com/api/categories")
       .then(res=>{
         console.log(res.data)
         const categories = res.data
@@ -52,7 +52,7 @@ function AddProduct(props){
     const handleSubmit = (e) =>{
       console.log("....")
       e.preventDefault();
-    axios.post('https://martek.herokuapp.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
+    axios.post('http://backend-api.martekgh.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
       headers:{'Authorization':`Bearer ${user}`}
     }).then(res => {
       console.log(res.data)

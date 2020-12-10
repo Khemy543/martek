@@ -58,7 +58,7 @@ function IndexNavbar(props) {
   const [loggedin, setLoggedin] =React.useState(false);
   const [dropdownCampusOpen, setDropdowncampusOpen] =React.useState(false);
   const [searchShow, setSearchShow] = React.useState(false);
-  const [valid, setValid] = React.useState(false);
+  const [campusName, setCampusName] = React.useState('Campus');
   
  
   
@@ -83,6 +83,8 @@ function IndexNavbar(props) {
   
 
 React.useEffect(()=>{
+
+
  let user = localStorage.getItem('access_token');
 
   if(localStorage.getItem('access_token') !== null){
@@ -90,7 +92,7 @@ React.useEffect(()=>{
   }else{
     setLoggedin(false);
   }
-      axios.get("https://martek.herokuapp.com/api/auth/user",{
+      axios.get("http://backend-api.martekgh.com/api/auth/user",{
           headers:{ 'Authorization':`Bearer ${user}`}
   }
   )
@@ -104,7 +106,7 @@ React.useEffect(()=>{
   }).catch(error=>{
   });
 
-  axios.get("https://martek.herokuapp.com/api/campuses")
+  axios.get("http://backend-api.martekgh.com/api/campuses")
   .then(res=>{
       const campuses = res.data;
       if(res.status === 200){
@@ -232,7 +234,7 @@ React.useEffect(()=>{
                 <i className = "fa fa-chevron-down" style={{fontSize:"10px"}}/>
                 :
                 <i className = "fa fa-chevron-up" style={{fontSize:"10px"}}/>
-              } | Campus
+              } | {campusName}
                 </NavLink>
               
               <UncontrolledPopover placement="bottom" isOpen={dropdownCampusOpen} toggle={toggleCampus} target="campusPopOver" trigger="legacy">
@@ -241,7 +243,7 @@ React.useEffect(()=>{
                     <ListGroup>
                   {campusList.map((value,index)=>(
                      <ListGroupItem style={{border:"none", marginTop:"-10px", textAlign:"left"}} className="campuspop"
-                     onClick={()=>{history.push(`/user/campus-home/${value.campus}`,{id:value.id});setDropdowncampusOpen(false);console.log("clicked")}}
+                     onClick={()=>{history.push(`/user/campus-home/${value.campus}`,{id:value.id});setDropdowncampusOpen(false);setCampusName(`${value.campus}`)}}
                      ><i className="fa fa-graduation-cap mr-3"/>{value.campus}</ListGroupItem>
                   ))}
                   </ListGroup>
@@ -280,7 +282,7 @@ React.useEffect(()=>{
               style={{fontSize:"11px"}}
               >
               <i className = "fa fa-cart-plus"style={{fontSize:"11px"}}/> | Cart
-              <Badge color="danger" style={{marginLeft:"2px"}}>{value.cart.length}</Badge>
+              <Badge color="info" style={{marginLeft:"2px"}}>{value.cart.length}</Badge>
               </NavLink>
             </NavItem>
           )}
@@ -352,9 +354,11 @@ React.useEffect(()=>{
           className="phone-nav"
           
           >
-            <NavItem style={{borderBottom:"1px solid  #eaeaea", borderTop:"1px solid #eaeaea"}}>
+            <NavItem style={{borderBottom:"1px solid  #eaeaea"}}>
               <NavLink>
-              MARTEK
+              <img alt="#" src= {require("../../assets/img/martlogo.png")}
+                style={{maxWidth:"100px", height:"auto",marginRight:"8px"}}
+                />
               </NavLink>
             </NavItem>
 
@@ -367,7 +371,7 @@ React.useEffect(()=>{
                 setNavbarCollapse(false);
               }}
               >
-              <StoreIcon style={{marginRight:"3px"}}/> My Shop
+              <StoreIcon style={{marginLeft:'-9px', marginRight:"3px"}}/> My Shop
               </NavLink>
             </NavItem>
 
@@ -393,7 +397,7 @@ React.useEffect(()=>{
                 setNavbarCollapse(false);
               }}
               >
-              <i className="fa fa-cart-plus mr-3"/> cart <Badge color="danger">{value.cart.length}</Badge>
+              <i className="fa fa-cart-plus mr-3"/> cart <Badge color="info">{value.cart.length}</Badge>
               </NavLink>
             </NavItem>
 
@@ -433,7 +437,7 @@ React.useEffect(()=>{
                 document.documentElement.classList.toggle("nav-open");
                 setNavbarCollapse(false);
               }}
-              color="danger"
+              color="info"
               >
 
                 Sign in
@@ -449,8 +453,21 @@ React.useEffect(()=>{
                 document.documentElement.classList.toggle("nav-open");
                 setNavbarCollapse(false);
               }}
+              style={{color:"black"}}
               >
               <i className="fa fa-user-o mr-3"/> {name}
+              </NavLink>
+            </NavItem>
+            <NavItem>
+              <NavLink
+              tag={Naver}
+              to="/user/user-products"
+              onClick={() => {
+                document.documentElement.classList.toggle("nav-open");
+                setNavbarCollapse(false);
+              }}
+              >
+              <i className="fa fa-tablet mr-3"/> My Products <Badge color="info">{value.followShops.length}</Badge>
               </NavLink>
             </NavItem>
             <NavItem>
@@ -462,7 +479,7 @@ React.useEffect(()=>{
                 setNavbarCollapse(false);
               }}
               >
-              <i className="fa fa-users mr-3"/> Following <Badge color="danger">{value.followShops.length}</Badge>
+              <i className="fa fa-users mr-3"/> Following <Badge color="info">{value.followShops.length}</Badge>
               </NavLink>
             </NavItem>
             <NavItem>

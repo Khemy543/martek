@@ -35,7 +35,7 @@ function UserProductDetails(props){
     React.useEffect(()=>{
         console.log(props)
           setIsActive(true);
-          axios.get("https://martek.herokuapp.com/api/product/"+props.location.state.id+"/details")
+          axios.get("http://backend-api.martekgh.com/api/product/"+props.location.state.id+"/details")
           .then(res=>{
               console.log(res.data);
               setProduct(res.data);
@@ -46,7 +46,7 @@ function UserProductDetails(props){
           });
 
 
-          axios.get("https://martek.herokuapp.com/api/product/"+props.location.state.id+"/reviews")
+          axios.get("http://backend-api.martekgh.com/api/product/"+props.location.state.id+"/reviews")
             .then(res=>{
                 console.log(res.data);
                 setReviews(res.data.product_reviews);
@@ -63,7 +63,7 @@ function UserProductDetails(props){
 
     const handleDelete=()=>{
         setIsActive(true)
-        axios.delete("https://martek.herokuapp.com/api/e-trader/product/"+props.location.state.id+"/delete",{
+        axios.delete("http://backend-api.martekgh.com/api/e-trader/product/"+props.location.state.id+"/delete",{
             headers:{"Authorization":`Bearer ${user}`}
         })
         .then(res=>{

@@ -39,7 +39,7 @@ export default function HelpCenter(){
             setIsMobile(window.innerWidth < 800);
         }, false);
 
-        axios.get("https://martek.herokuapp.com/api/auth/user",{
+        axios.get("http://backend-api.martekgh.com/api/auth/user",{
         headers:{ 'Authorization':`Bearer ${user}`}
     }
     )
@@ -60,7 +60,7 @@ export default function HelpCenter(){
         console.log(e);
         setIsActive(true);
          
-      axios.post('https://martek.herokuapp.com/api/make-enquiries', {
+      axios.post('http://backend-api.martekgh.com/api/make-enquiries', {
         name, email, message,phone
       }).then(res => {
         console.log(res.data.status);

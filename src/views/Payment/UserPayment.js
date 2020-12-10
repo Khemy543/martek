@@ -17,7 +17,7 @@ import FadeLoader from "react-spinners/FadeLoader";
 import history from "../../history.js";
 import { Link } from "react-router-dom";
 
-function UserDetails(props) {
+function UserPayment(props) {
 const [isActive, setIsActive] = React.useState(false);
 const [firtsname, setFirstname] = React.useState("");
 const [lastname, setLastname] = React.useState("");
@@ -31,7 +31,7 @@ const handleSubmit=(e)=>{
     console.log("....")
     e.preventDefault();
     if(true){
-    props.history.push("/user/payment/account", {firtsname:firtsname,lastname:lastname, email:email,amount:amount});
+    props.history.push("/user/payment/user/account", {firtsname:firtsname,lastname:lastname, email:email,amount:amount});
     }
     
 }
@@ -57,7 +57,7 @@ const handleSubmit=(e)=>{
                 <img
                   alt="#"
                   src={require("../../assets/img/martlogo.png")}
-                  style={{width:"70px" ,height:"auto", marginTop:"20px"}}
+                  style={{width:"120px" ,height:"auto", marginTop:"20px"}}
                 />
                 </div>
                 </Col>
@@ -117,7 +117,7 @@ const handleSubmit=(e)=>{
                             <Button color="primary" type="submit">Pay</Button>
                         </Col>
                         <Col md="6" sm="6" xs="6" lg="6" xl="6">
-                          <a href="/auth/shop-login"><h4 style={{fontSize:"14px", fontWeight:600, marginTop:"4px",color:"#6ec7e0"}}>Try Free Now ! <i className="fa fa-chevron-right"/></h4></a>
+                          <Link to="/user/home"><h4 style={{fontSize:"14px", fontWeight:600, marginTop:"4px",color:"#6ec7e0"}}>Try Free Now ! <i className="fa fa-chevron-right"/></h4></Link>
                         </Col>
                     </Row>
                     <p style={{textAlign:"center", marginTop:"15px", fontSize:"12px",fontWeight:600}}>Contact <a href="!#">martekgh@gmail.com</a> for any questions</p>
@@ -141,4 +141,4 @@ const handleSubmit=(e)=>{
 }
 
 
-export default UserDetails;
+export default UserPayment;

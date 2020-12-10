@@ -19,13 +19,14 @@
 /*eslint-disable*/
 import React,{useState} from "react";
 // reactstrap components
-import { Row, Container, Modal, ModalBody, ModalHeader,Col, Button, Form, Input, InputGroup,Alert,
-  InputGroupAddon,InputGroupText, ModalFooter, Nav, NavLink, NavItem
+import { Row, Container,Nav, NavLink, NavItem,Col
 
 } from "reactstrap";
 
 
-function DemoFooter() {
+function DemoFooter(props) {/* 
+  console.log(props.prop.location.pathname) */
+
   return (
     <footer className="footer">
       <Container>
@@ -57,6 +58,13 @@ function DemoFooter() {
               <li>
               <a href="/user/how-to-buy-on-martek">How to buy on Martek</a>
               </li>
+              {props.prop.location.pathname === "/user/shop-view"?
+              <li>
+              <a style={{cursor:"pointer"}} onClick={()=>props.prop.history.push("/user/report-shop",{id:props.prop.location.state.id})}>Report This Shop</a>
+              </li>
+              :
+              <></>
+              }
             </ul> 
           </NavItem>
         </Nav>

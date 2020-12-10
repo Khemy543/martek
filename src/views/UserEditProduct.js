@@ -34,7 +34,7 @@ function UserEditProduct(props) {
 
   React.useEffect(()=>{
 
-      axios.get("https://martek.herokuapp.com/api/categories")
+      axios.get("http://backend-api.martekgh.com/api/categories")
       .then(res=>{
         const categories = res.data
         setCategoryList(categories);
@@ -42,7 +42,7 @@ function UserEditProduct(props) {
       .catch(error=>{
       });
 
-      axios.get("https://martek.herokuapp.com/api/product/"+props.location.state.id+"/details")
+      axios.get("http://backend-api.martekgh.com/api/product/"+props.location.state.id+"/details")
       .then(res=>{
         console.log(res.data)
         setProduct_name(res.data.product_name);
@@ -58,7 +58,7 @@ function UserEditProduct(props) {
     const handleSubmit = (e) =>{
       e.preventDefault();
        setIsActive(true);
-    axios.post('https://martek.herokuapp.com/api/e-trader/product/'+props.location.state.id+'/update',
+    axios.post('http://backend-api.martekgh.com/api/e-trader/product/'+props.location.state.id+'/update',
     {product_name, in_stock, price, description,category}, {
       headers:{'Authorization':`Bearer ${user}`}
     }).then(res => {

@@ -82,7 +82,7 @@ function DetailsPage(props){
      const toggleReportModal = ()=>setReportmodal(!reportmodal)
         React.useEffect(()=>{
             setisActive(true);
-            axios.get("https://martek.herokuapp.com/api/product/"+productid+"/details")
+            axios.get("http://backend-api.martekgh.com/api/product/"+productid+"/details")
             .then(res=>{
                 console.log("details",res.data);
                 setProduct(res.data);
@@ -95,7 +95,7 @@ function DetailsPage(props){
                 console.log(error)
             });
 
-            axios.get("https://martek.herokuapp.com/api/product/"+productid+"/reviews")
+            axios.get("http://backend-api.martekgh.com/api/product/"+productid+"/reviews")
             .then(res=>{
                 console.log(res.data);
                 setReviews(res.data.product_reviews);
@@ -121,7 +121,7 @@ function DetailsPage(props){
 
         const postReview=()=>{
             if(reviewAdd !== "" || rating !== 0){
-            axios.post("https://martek.herokuapp.com/api/add-product/reviews",
+            axios.post("http://backend-api.martekgh.com/api/add-product/reviews",
             {
                 rating: rating,
             
@@ -157,7 +157,7 @@ function DetailsPage(props){
 
 
         const handlePostReport=()=>{
-            axios.post("https://martek.herokuapp.com/api/add-product/report",
+            axios.post("http://backend-api.martekgh.com/api/add-product/report",
             {report:message, product_id:props.location.state.id},
             { headers:{"Authorization":`Bearer ${user}`}})
             .then(res=>{
