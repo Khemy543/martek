@@ -39,16 +39,19 @@ class UploadImages extends React.Component {
         });
     }
     
-
+    /* componentDidMount(){
+        console.log(this.props.location.state.product_id)
+    }
+     */
     handleSubmit=(e)=>{
         console.log(".....uploading....")    
         console.log(user)
         e.preventDefault();
-        const file = this.state.pictures;
-        console.log("file",file);
-        let name = ['name','game','john']
         let bodyFormData = new FormData();
-        bodyFormData.append('product_images',file);
+        this.state.pictures.forEach((file) => {
+            bodyFormData.append('product_images[]', file);
+        });
+
         for (var pair of bodyFormData.entries()) {
             console.log(pair[0]+ ', ' + pair[1]); 
         }
@@ -58,12 +61,20 @@ class UploadImages extends React.Component {
                 "Authorization":`Bearer ${user}`
             },
             data:bodyFormData,
-            url:"http://backend-api.martekgh.com/api/e-trader/"+this.state.product_id+"/product-images",
+            url:"https://backend-api.martekgh.com/api/e-trader/"+this.state.product_id+"/product-images",
             onUploadProgress: (progressEvent) => {
                 const {loaded , total} = progressEvent;
                 let percentage = Math.floor(loaded * 100 / total);
                 console.log(percentage)
                 if(percentage<100){
+                    setTimeout(
+                    function(){
+                        this.setState({modal:false});
+                        this.props.history.push('/user/payment/user/information')
+                    }
+                    .bind(this),
+                    1500
+                )
                     this.setState({percentage:percentage});
                 }
             }
@@ -79,16 +90,7 @@ class UploadImages extends React.Component {
             1500
         )
     }).catch(error=>{
-        console.log(error.response.data)
-        this.setState({isActive:false, modal:true,percentage:100})
-        setTimeout(
-            function(){
-                this.setState({modal:false});
-                this.props.history.push('/user/payment/user/information')
-            }
-            .bind(this),
-            1500
-        )
+        console.log(error)
     })
 }
     render(){
@@ -115,13 +117,12 @@ class UploadImages extends React.Component {
                             withPreview={true}
                             buttonText='Choose images'
                             onChange={this.onDrop}
-                            label="Max file size:5mb accept:jpg,png"
+                            label="Max file size:5mb accept:jpg,png,jpeg"
                             imgExtension={['.jpg','.png', '.jpeg']}
                             fileSizeError="file size is too big"
                             fileTypeError="is not supported"
                             maxFileSize={5242880}
                             value={this.state.activateButton}
-                            disabled={true}
                             
                         />
                             </div>
@@ -151,7 +152,7 @@ class UploadImages extends React.Component {
                 </LoadingOverlay>
                 <Modal isOpen={this.state.modal} className="alert-modal">
                     <ModalBody>
-                        <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white"}}>PRODUCT SAVED!!</h4>
+                        <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white",fontSize:"15px"}}>PRODUCT SAVED!!</h4>
                     </ModalBody>
                 </Modal>
             </div>

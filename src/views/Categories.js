@@ -32,7 +32,7 @@ class Categories extends React.Component {
 
     getProducts(pageNumber=1){
         this.setState({isActive:true});
-        axios.get("http://backend-api.martekgh.com/api/category/"+this.props.location.state.category_id+"/products?page="+pageNumber+"")
+        axios.get("https://backend-api.martekgh.com/api/category/"+this.props.location.state.category_id+"/products?page="+pageNumber+"")
         .then(res=>{
             console.log(res.data)
             this.setState({products:res.data});

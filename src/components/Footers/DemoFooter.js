@@ -18,6 +18,7 @@
 */
 /*eslint-disable*/
 import React,{useState} from "react";
+import { Link } from "react-router-dom";
 // reactstrap components
 import { Row, Container,Nav, NavLink, NavItem,Col
 
@@ -41,7 +42,7 @@ function DemoFooter(props) {/*
         </Nav>
         </Col>
         </Row>
-        <Row>
+        <Row style={{marginTop:"-30px"}}>
         <Col xs="6" md="4" lg="4" xl="4" sm="6">
         <Nav>
           <NavItem>
@@ -50,13 +51,13 @@ function DemoFooter(props) {/*
             </NavLink>
             <ul className="left">
               <li>
-              <a href="/user/help-center">Help Center</a>
+              <Link to="/user/help-center">Help Center</Link>
               </li>
               <li>
-              <a href="/user/contact-us">Contact Us</a>
+              <Link to="/user/contact-us">Contact Us</Link>
               </li>
               <li>
-              <a href="/user/how-to-buy-on-martek">How to buy on Martek</a>
+              <Link to="/user/how-to-buy-on-martek">How to buy on Martek</Link>
               </li>
               {props.prop.location.pathname === "/user/shop-view"?
               <li>
@@ -78,13 +79,13 @@ function DemoFooter(props) {/*
             </NavLink>
             <ul>
               <li>
-              <a href="/user/about-us">About Us</a>
+              <Link to="/user/about-us">About Us</Link>
               </li>
               <li>
-              <a href="/user/terms-and-condition">Terms and Conditions</a>
+              <Link to="/user/terms-and-condition">Terms and Conditions</Link>
               </li>
               <li>
-              <a href="/user/privacy-policy">Privacy Policy</a>
+              <Link to="/user/privacy-policy">Privacy Policy</Link>
               </li>
             </ul>
           </NavItem>
@@ -99,13 +100,13 @@ function DemoFooter(props) {/*
             </NavLink>
             <ul>
               <li>
-              <a href="/user/sell-on-martek">Sell on Martek</a>
+              <Link to="/user/sell-on-martek">Sell on Martek</Link>
               </li>
               <li>
-                <a href="/user/own-shop-on-martek">Own a Shop on Martek</a>
+                <Link to="/user/own-shop-on-martek">Own a Shop on Martek</Link>
               </li>
               <li>
-              <a href="/user/service-charges">Service Charges</a>
+              <Link to="/user/service-charges">Service Charges</Link>
               </li>
             </ul>
             

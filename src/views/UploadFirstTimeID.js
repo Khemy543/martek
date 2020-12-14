@@ -54,7 +54,7 @@ class UploadValidID extends React.Component{
      const bodyFormData = new FormData();
      bodyFormData.append('valid_id',valid_id_file,valid_id_file.filename);
     axios({method:"post",
-    url:`http://backend-api.martekgh.com/api/auth/upload/valid-id`,
+    url:`https://backend-api.martekgh.com/api/auth/upload/valid-id`,
     data:bodyFormData,
     headers:{
         "Authorization":`Bearer ${user}`,
@@ -111,7 +111,10 @@ class UploadValidID extends React.Component{
                     withPreview={true}
                     buttonText='Valid ID Card'
                     onChange={this.onDrop}
+                    label="Max file size:5mb accept:jpg,png,jpeg"
                     imgExtension={['.jpg','.png', '.jpeg']}
+                    fileSizeError="file size is too big"
+                    fileTypeError="is not supported"
                     maxFileSize={5242880}
                 />
                     </div>

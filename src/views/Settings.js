@@ -76,7 +76,7 @@ const tabToggle = tab => {
 
   React.useEffect(()=>{
     setIsActive(true)
-    axios.get("http://backend-api.martekgh.com/api/merchandiser",{
+    axios.get("https://backend-api.martekgh.com/api/merchandiser",{
       headers:{ 'Authorization':`Bearer ${merchandiser}`}
 })
     .then(res=>{
@@ -85,7 +85,9 @@ const tabToggle = tab => {
       setCompany_description(res.data.company_description);
       setShopType(res.data.shop_type);
       setPhone(res.data.phone);
-      setEmail(res.data.email)
+      setEmail(res.data.email);
+      setCoverImage(`https://backend-api.martekgh.com/${res.data.cover_photo}`);
+      setAvatarImage(`https://backend-api.martekgh.com/${res.data.avatar}`)
       setIsActive(false);
       setId(res.data.id);
       if(res.data.campus === "KNUST"){
@@ -105,19 +107,15 @@ const tabToggle = tab => {
     .catch(error=>{
     });
 
-    axios.get("http://backend-api.martekgh.com/api/shop-types")
+    axios.get("https://backend-api.martekgh.com/api/shop-types")
     .then(res=>{
         const shop_type_data = res.data;
         
          setShop_type_list(shop_type_data)
          setIsActive(false)
-        
-        
-        //return setCampusList(campuses)
-        
     });
 
-    axios.get("http://backend-api.martekgh.com/api/campuses")
+    axios.get("https://backend-api.martekgh.com/api/campuses")
     .then(res=>{
         const campuses = res.data;
         if(res.status === 200){
@@ -130,7 +128,7 @@ const tabToggle = tab => {
   const handleDelete=()=>{
     console.log(merchandiser)
     setIsActive(true)
-    axios.delete("http://backend-api.martekgh.com/api/merchandiser/delete",{
+    axios.delete("https://backend-api.martekgh.com/api/merchandiser/delete",{
         headers:{"Authorization":`Bearer ${merchandiser}`}
     })
     .then(res=>{
@@ -147,7 +145,7 @@ const tabToggle = tab => {
     setIsActive(true);
     e.preventDefault();
 
-    axios.patch("http://backend-api.martekgh.com/api/merchandiser/"+id+"/update",{company_name,campus_id,company_description,phone,email},
+    axios.patch("https://backend-api.martekgh.com/api/merchandiser/"+id+"/update",{company_name,campus_id,company_description,phone,email},
     { headers:{"Authorization":`Bearer ${merchandiser}`}})
     .then(res=>{
       console.log(res.data)
@@ -175,7 +173,7 @@ const tabToggle = tab => {
   const changePassword=(e)=>{
     e.preventDefault()
     if(new_password === confirmPassword){
-    axios.post("http://backend-api.martekgh.com/api/merchandiser/change/password",
+    axios.post("https://backend-api.martekgh.com/api/merchandiser/change/password",
     {password,new_password},{
       headers:{ 'Authorization':`Bearer ${merchandiser}`}
 }).then(res=>{

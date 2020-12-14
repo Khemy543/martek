@@ -92,7 +92,7 @@ React.useEffect(()=>{
   }else{
     setLoggedin(false);
   }
-      axios.get("http://backend-api.martekgh.com/api/auth/user",{
+      axios.get("https://backend-api.martekgh.com/api/auth/user",{
           headers:{ 'Authorization':`Bearer ${user}`}
   }
   )
@@ -106,7 +106,7 @@ React.useEffect(()=>{
   }).catch(error=>{
   });
 
-  axios.get("http://backend-api.martekgh.com/api/campuses")
+  axios.get("https://backend-api.martekgh.com/api/campuses")
   .then(res=>{
       const campuses = res.data;
       if(res.status === 200){
@@ -132,7 +132,7 @@ React.useEffect(()=>{
             data-placement="bottom"
             title="Martek gh online"
           >
-          <a href="/user/home" style={{textDecoration:'none', color:"white", fontWeight:"bold"}}>
+          <Link to="/user/home" style={{textDecoration:'none', color:"white", fontWeight:"bold"}}>
           <img alt="#" src= {require("../../assets/img/martlogo.png")}
             style={{maxWidth:"80px", height:"auto",marginRight:"8px"}}
             className="top"
@@ -142,7 +142,7 @@ React.useEffect(()=>{
             className="bottom"
             />
             
-            </a>
+            </Link>
           </NavbarBrand>
 
           <ProductConsumer> 
@@ -282,7 +282,7 @@ React.useEffect(()=>{
               style={{fontSize:"11px"}}
               >
               <i className = "fa fa-cart-plus"style={{fontSize:"11px"}}/> | Cart
-              <Badge color="info" style={{marginLeft:"2px"}}>{value.cart.length}</Badge>
+              <Badge color="danger" style={{marginLeft:"2px"}}>{value.cart.length}</Badge>
               </NavLink>
             </NavItem>
           )}

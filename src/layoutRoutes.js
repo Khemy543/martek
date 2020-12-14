@@ -58,13 +58,26 @@ import Example from "views/TestingCarousel.js";
 import ReportShop from "views/ReportShop.js";
 import UserPayment from "views/Payment/UserPayment.js";
 import UserAccountDetails from "views/Payment/UserAccountDetails.js";
+import All from "views/Home/All.js";
+import Shops from "views/Home/Shops.js";
+import AllCategories from "views/Home/Category.js";
 
 
 
 var routes = [
     {
       path: "/home",
-      component: Home,
+      component: All,
+      layout: "/user"
+    },
+    {
+      path: "/shops",
+      component: Shops,
+      layout: "/user"
+    },
+    {
+      path: "/all-categories",
+      component: AllCategories,
       layout: "/user"
     },
     {

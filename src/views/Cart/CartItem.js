@@ -1,7 +1,9 @@
 import React from "react";
 import history from "../../history.js";
 export default function CartItem({items, value}){
-const {id, product_name, img, price, total, quantity} = items;
+
+console.log("value", items)
+const {id, product_name, product_images, price, total, quantity} = items;
 const {increment, decrement, removeItem } = value;
     return(
     
@@ -12,7 +14,7 @@ const {increment, decrement, removeItem } = value;
                 <img
                 className="image-fluid"
                 alt="#"
-                src={require("../../assets/img/phone.png")}
+                src={`https://backend-api.martekgh.com/${product_images[0].path}`}
                 style={{height:"4.5rem", width:'4.5rem'}}
                 
                 />

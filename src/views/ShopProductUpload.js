@@ -37,12 +37,12 @@ class ShopUploadImages extends React.Component{
 
  handleSubmit=(e)=>{
     e.preventDefault();
-    const file = new Blob(this.state.pictures);
-    const bodyFormData = new FormData();
-    bodyFormData.set('product_images',file, file.filename);
-
+    let bodyFormData = new FormData();
+    this.state.pictures.forEach((file) => {
+        bodyFormData.append('product_images[]', file);
+    });
     axios({method:"post",
-    url:"http://backend-api.martekgh.com/api/e-trader/"+this.state.product_id+"/product-images",
+    url:"https://backend-api.martekgh.com/api/e-trader/"+this.state.product_id+"/product-images",
     data:bodyFormData,
     headers:{'Authorization':`Bearer ${merchandiser}`},
     onUploadProgress: (progressEvent) => {
@@ -82,8 +82,11 @@ render(){
                             withIcon={true}
                             withPreview={true}
                             buttonText='Choose images'
+                            label="Max file size:5mb accept:jpg,png,jpeg"
                             onChange={this.onDrop}
                             imgExtension={['.jpg','.png','.jpeg']}
+                            fileSizeError="file size is too big"
+                            fileTypeError="is not supported"
                             maxFileSize={5242880}
                             value={this.state.activateButton}
                         />
@@ -112,7 +115,7 @@ render(){
                 </LoadingOverlay>
                 <Modal isOpen={this.state.modal} className="login-modal">
       
-                <ModalBody style={{color:"white", fontSize:"12px", fontWeight:500}}>
+                <ModalBody style={{color:"white", fontSize:"14px", fontWeight:500}}>
                     PRODUCT SAVED
                     <a href="/shop/shop-page" style={{float:"right"}}><Button color="primary">OK</Button></a>{' '}
                 </ModalBody>

@@ -13,7 +13,7 @@ import{
     Button, Alert, Input, InputGroup, InputGroupAddon, InputGroupText
 } from "reactstrap";
 
-var domain = "http://backend-api.martekgh.com"
+var domain = "https://backend-api.martekgh.com"
 export default function ShopResetPassword(props){
     const [message, setMessage] = React.useState("");
     const [password,setPassword]=React.useState("");

@@ -90,7 +90,7 @@ export default function OwnShop(props){
 
   React.useEffect(()=>{
             setIsActive(true)
-            axios.get("http://backend-api.martekgh.com/api/campuses")
+            axios.get("https://backend-api.martekgh.com/api/campuses")
             .then(res=>{
                 const campuses = res.data;
                 if(res.status === 200){
@@ -99,7 +99,7 @@ export default function OwnShop(props){
                 
             });
   
-            axios.get("http://backend-api.martekgh.com/api/shop-types")
+            axios.get("https://backend-api.martekgh.com/api/shop-types")
             .then(res=>{
                 const shop_type_data = res.data;
                 
@@ -121,7 +121,7 @@ export default function OwnShop(props){
       if(phone.length === 9){
 
       setIsActive(true);
-    axios.post('http://backend-api.martekgh.com/api/register-merchandiser',
+    axios.post('https://backend-api.martekgh.com/api/register-merchandiser',
     {company_name, email,phone:`233${phone}`,password, campus_id,company_description,shop_type_id}
   ).then(res => {
     console.log(res.data)

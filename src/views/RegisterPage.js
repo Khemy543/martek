@@ -60,7 +60,7 @@ function RegisterPage() {
 
   React.useEffect(()=>{
       setIsActive(true);
-          axios.get("http://backend-api.martekgh.com/api/campuses")
+          axios.get("https://backend-api.martekgh.com/api/campuses")
           .then(res=>{
             console.log(res.data)
               if(res.status === 200){
@@ -81,7 +81,7 @@ function RegisterPage() {
       setAlert(true);
       
     }else{
-  axios.post('http://backend-api.martekgh.com/api/register-user', {
+  axios.post('https://backend-api.martekgh.com/api/register-user', {
     config, name, email, phone:`233${phone}`, password,campus_id
   }).then(res => {
     console.log(res.data)

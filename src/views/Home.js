@@ -60,7 +60,7 @@ function Home({history}){
 
       React.useEffect(()=>{
         setIsActive(true);
-        axios.get("http://backend-api.martekgh.com/api/categories")
+        axios.get("https://backend-api.martekgh.com/api/categories")
         .then(res=>{
           const categories = res.data;
           console.log(categories)
@@ -73,7 +73,7 @@ function Home({history}){
       },[])
       function getShops(pageNumber=1){
           setIsActive(true);
-        axios.get("http://backend-api.martekgh.com/api/all-shops?page="+pageNumber+"")
+        axios.get("https://backend-api.martekgh.com/api/all-shops?page="+pageNumber+"")
         .then(res=>{
             console.log(res.data)
             setShops(res.data);
@@ -82,7 +82,7 @@ function Home({history}){
         .catch(error=>{
         });
 
-        axios.get('http://backend-api.martekgh.com/api/fetch/new-this-week')
+        axios.get('https://backend-api.martekgh.com/api/fetch/new-this-week')
         .then(res=>{
             console.log(res.data);
             setNewItems(res.data)

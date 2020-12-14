@@ -23,7 +23,7 @@ function UserProducts(){
  
   let user = localStorage.getItem('access_token')
   React.useEffect(()=>{
-    axios.get("http://backend-api.martekgh.com/api/e-trader/get-user-products",{
+    axios.get("https://backend-api.martekgh.com/api/e-trader/get-user-products",{
       headers:{"Authorization":`Bearer ${user}`}
   }).then(res=>{
           console.log(res.data)
@@ -60,7 +60,7 @@ function UserProducts(){
                         <br/>
                         
                         <div style={{textAlign:"center"}} onClick={()=>history.push("/user/user-product-details",{id:value.id})}>
-                        <img alt="#" src={require("../assets/img/iphone.png")} style={{ maxHeight:"185.13px",maxWidth:"100px"}}/>
+                        <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{ maxHeight:"185.13px",maxWidth:"100px"}}/>
                         </div>
                         
                         <br/>

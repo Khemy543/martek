@@ -103,7 +103,7 @@ class ProductProvider extends React.Component{
 
         /* localStorage.clear(); */
 
-        axios.get("http://backend-api.martekgh.com/api/user-cart",{headers:{'Authorization':`Bearer ${user}`}})
+        axios.get("https://backend-api.martekgh.com/api/user-cart",{headers:{'Authorization':`Bearer ${user}`}})
         .then(res=>{
             if(res.data !== null){
                 this.setState({cart:res.data.cart[0], cartTotal:res.data.cart[1], spinner:false});
@@ -149,7 +149,7 @@ isTokenExpired() {
 
     getFollowingShops(){
         this.setState({spinner:true})
-        axios.get("http://backend-api.martekgh.com/api/following-shops",{headers:{'Authorization':`Bearer ${user}`}})
+        axios.get("https://backend-api.martekgh.com/api/following-shops",{headers:{'Authorization':`Bearer ${user}`}})
         .then(res=>{
             return(this.setState({followShops:res.data, spinner:false}))
             
@@ -164,7 +164,7 @@ isTokenExpired() {
     //get Electronics
     /* getElectronics=()=>{
         let last_page = null;
-        axios.get("http://backend-api.martekgh.com/api/category/1/products")
+        axios.get("https://backend-api.martekgh.com/api/category/1/products")
         .then(res=>{
            last_page = res.data.meta.last_page;
         
@@ -172,7 +172,7 @@ isTokenExpired() {
         var pageNumber = 1;
         let product = [];
         for(pageNumber = 1; pageNumber<=last_page; pageNumber++){
-        axios.get("http://backend-api.martekgh.com/api/category/1/products?page="+pageNumber+"")
+        axios.get("https://backend-api.martekgh.com/api/category/1/products?page="+pageNumber+"")
         .then(res=>{
             
             product.push(...res.data.data[0]);
@@ -193,7 +193,7 @@ isTokenExpired() {
 //get Phones
 getPhones=()=>{
     let last_page = null;
-    axios.get("http://backend-api.martekgh.com/api/category/2/products")
+    axios.get("https://backend-api.martekgh.com/api/category/2/products")
     .then(res=>{
        last_page = res.data.meta.last_page;
     
@@ -201,7 +201,7 @@ getPhones=()=>{
     var pageNumber = 1;
     let product = [];
     for(pageNumber = 1; pageNumber<=last_page; pageNumber++){
-    axios.get("http://backend-api.martekgh.com/api/category/2/products?page="+pageNumber+"")
+    axios.get("https://backend-api.martekgh.com/api/category/2/products?page="+pageNumber+"")
     .then(res=>{
         
         product.push(...res.data.data[0]);
@@ -222,7 +222,7 @@ this.setState(()=>{
 //get Fashion
 getFashion=()=>{
     let last_page = null;
-    axios.get("http://backend-api.martekgh.com/api/category/3/products")
+    axios.get("https://backend-api.martekgh.com/api/category/3/products")
     .then(res=>{
        last_page = res.data.meta.last_page;
     
@@ -230,7 +230,7 @@ getFashion=()=>{
     var pageNumber = 1;
     let product = [];
     for(pageNumber = 1; pageNumber<=last_page; pageNumber++){
-    axios.get("http://backend-api.martekgh.com/api/category/3/products?page="+pageNumber+"")
+    axios.get("https://backend-api.martekgh.com/api/category/3/products?page="+pageNumber+"")
     .then(res=>{
         
         product.push(...res.data.data[0]);
@@ -250,7 +250,7 @@ this.setState(()=>{
 //get Home
 getHome=()=>{
     let last_page = null;
-    axios.get("http://backend-api.martekgh.com/api/category/4/products")
+    axios.get("https://backend-api.martekgh.com/api/category/4/products")
     .then(res=>{
        last_page = res.data.meta.last_page;
     
@@ -258,7 +258,7 @@ getHome=()=>{
     var pageNumber = 1;
     let product = [];
     for(pageNumber = 1; pageNumber<=last_page; pageNumber++){
-    axios.get("http://backend-api.martekgh.com/api/category/4/products?page="+pageNumber+"")
+    axios.get("https://backend-api.martekgh.com/api/category/4/products?page="+pageNumber+"")
     .then(res=>{
         
         product.push(...res.data.data[0]);
@@ -278,7 +278,7 @@ this.setState(()=>{
 //get Beauty
 getBeauty=()=>{
     let last_page = null;
-    axios.get("http://backend-api.martekgh.com/api/category/5/products")
+    axios.get("https://backend-api.martekgh.com/api/category/5/products")
     .then(res=>{
        last_page = res.data.meta.last_page;
     
@@ -286,7 +286,7 @@ getBeauty=()=>{
     var pageNumber = 1;
     let product = [];
     for(pageNumber = 1; pageNumber<=last_page; pageNumber++){
-    axios.get("http://backend-api.martekgh.com/api/category/5/products?page="+pageNumber+"")
+    axios.get("https://backend-api.martekgh.com/api/category/5/products?page="+pageNumber+"")
     .then(res=>{
         
         product.push(...res.data.data[0]);
@@ -306,7 +306,7 @@ this.setState(()=>{
 //get Food
 getFood=()=>{
     let last_page = null;
-    axios.get("http://backend-api.martekgh.com/api/category/6/products")
+    axios.get("https://backend-api.martekgh.com/api/category/6/products")
     .then(res=>{
        last_page = res.data.meta.last_page;
     
@@ -314,7 +314,7 @@ getFood=()=>{
     var pageNumber = 1;
     let product = [];
     for(pageNumber = 1; pageNumber<=last_page; pageNumber++){
-    axios.get("http://backend-api.martekgh.com/api/category/6/products?page="+pageNumber+"")
+    axios.get("https://backend-api.martekgh.com/api/category/6/products?page="+pageNumber+"")
     .then(res=>{
         
         product.push(...res.data.data[0]);
@@ -335,7 +335,7 @@ this.setState(()=>{
 //get Games
 getGames=()=>{
     let last_page = null;
-    axios.get("http://backend-api.martekgh.com/api/category/7/products")
+    axios.get("https://backend-api.martekgh.com/api/category/7/products")
     .then(res=>{
        last_page = res.data.meta.last_page;
     
@@ -343,7 +343,7 @@ getGames=()=>{
     var pageNumber = 1;
     let product = [];
     for(pageNumber = 1; pageNumber<=last_page; pageNumber++){
-    axios.get("http://backend-api.martekgh.com/api/category/7/products?page="+pageNumber+"")
+    axios.get("https://backend-api.martekgh.com/api/category/7/products?page="+pageNumber+"")
     .then(res=>{
         
         product.push(...res.data.data[0]);
@@ -363,7 +363,7 @@ this.setState(()=>{
 //get skills
 getSkills=()=>{
     let last_page = null;
-    axios.get("http://backend-api.martekgh.com/api/category/8/products")
+    axios.get("https://backend-api.martekgh.com/api/category/8/products")
     .then(res=>{
        last_page = res.data.meta.last_page;
     
@@ -371,7 +371,7 @@ getSkills=()=>{
     var pageNumber = 1;
     let product = [];
     for(pageNumber = 1; pageNumber<=last_page; pageNumber++){
-    axios.get("http://backend-api.martekgh.com/api/category/8/products?page="+pageNumber+"")
+    axios.get("https://backend-api.martekgh.com/api/category/8/products?page="+pageNumber+"")
     .then(res=>{
         
         product.push(...res.data.data[0]);
@@ -391,7 +391,7 @@ this.setState(()=>{
 //get Entertainment
 getEntertainment=()=>{
     let last_page = null;
-    axios.get("http://backend-api.martekgh.com/api/category/9/products")
+    axios.get("https://backend-api.martekgh.com/api/category/9/products")
     .then(res=>{
        last_page = res.data.meta.last_page;
     
@@ -399,7 +399,7 @@ getEntertainment=()=>{
     var pageNumber = 1;
     let product = [];
     for(pageNumber = 1; pageNumber<=last_page; pageNumber++){
-    axios.get("http://backend-api.martekgh.com/api/category/9/products?page="+pageNumber+"")
+    axios.get("https://backend-api.martekgh.com/api/category/9/products?page="+pageNumber+"")
     .then(res=>{
         
         product.push(...res.data.data[0]);
@@ -419,7 +419,7 @@ this.setState(()=>{
 //get Others
 getOthers=()=>{
     let last_page = null;
-    axios.get("http://backend-api.martekgh.com/api/category/10/products")
+    axios.get("https://backend-api.martekgh.com/api/category/10/products")
     .then(res=>{
        last_page = res.data.meta.last_page;
     
@@ -427,7 +427,7 @@ getOthers=()=>{
     var pageNumber = 1;
     let product = [];
     for(pageNumber = 1; pageNumber<=last_page; pageNumber++){
-    axios.get("http://backend-api.martekgh.com/api/category/10/products?page="+pageNumber+"")
+    axios.get("https://backend-api.martekgh.com/api/category/10/products?page="+pageNumber+"")
     .then(res=>{
         
         product.push(...res.data.data[0]);
@@ -447,7 +447,7 @@ this.setState(()=>{
 //get Shops
 getShops=()=>{
     let last_page = null;
-    axios.get("http://backend-api.martekgh.com/api/all-shops")
+    axios.get("https://backend-api.martekgh.com/api/all-shops")
     .then(res=>{
        last_page = res.data.meta.last_page;
     
@@ -455,7 +455,7 @@ getShops=()=>{
     var pageNumber = 1;
     let shops = [];
     for(pageNumber = 1; pageNumber<=last_page; pageNumber++){
-    axios.get("http://backend-api.martekgh.com/api/all-shops?page="+pageNumber+"")
+    axios.get("https://backend-api.martekgh.com/api/all-shops?page="+pageNumber+"")
     .then(res=>{
         shops.push(...res.data.data);
     })
@@ -476,7 +476,7 @@ this.setState(()=>{
     //copies of products
     setProducts =() =>{
        // localStorage.clear();
-        axios.get("http://backend-api.martekgh.com/api/2/product-index")
+        axios.get("https://backend-api.martekgh.com/api/2/product-index")
         .then(res=>{
             const categories = res.data[0];
             let tempProducts = [];
@@ -489,7 +489,7 @@ this.setState(()=>{
             });
         })
 
-        axios.get("http://backend-api.martekgh.com/api/3/product-index")
+        axios.get("https://backend-api.martekgh.com/api/3/product-index")
         .then(res=>{
             const categories = res.data[0];
             let tempProducts = [];
@@ -502,7 +502,7 @@ this.setState(()=>{
             });
         })
 
-        axios.get("http://backend-api.martekgh.com/api/1/product-index")
+        axios.get("https://backend-api.martekgh.com/api/1/product-index")
         .then(res=>{
             const nextProducts = res.data[0];
             let tempNextProducts = [];
@@ -521,11 +521,11 @@ this.setState(()=>{
     follow = (id)=>{
         user = localStorage.getItem('access_token')
     
-           axios.post("http://backend-api.martekgh.com/api/follow/"+id+"/shop",null,{headers:{
+           axios.post("https://backend-api.martekgh.com/api/follow/"+id+"/shop",null,{headers:{
             "Authorization":`Bearer ${user}`}})
             .then(res=>{
                 
-                axios.get("http://backend-api.martekgh.com/api/following-shops",{headers:{'Authorization':`Bearer ${user}`}})
+                axios.get("https://backend-api.martekgh.com/api/following-shops",{headers:{'Authorization':`Bearer ${user}`}})
                 .then(res=>{
                     console.log(res.data)
                     return(this.setState({followShops:res.data}))
@@ -542,11 +542,11 @@ this.setState(()=>{
     unfollow=(id)=>{
         user = localStorage.getItem('access_token')
         this.setState({loader:true})
-        axios.post("http://backend-api.martekgh.com/api/unfollow/"+id+"/shop",null,{headers:{
+        axios.post("https://backend-api.martekgh.com/api/unfollow/"+id+"/shop",null,{headers:{
             "Authorization":`Bearer ${user}`}})
             .then(res=>{
                 
-                axios.get("http://backend-api.martekgh.com/api/following-shops",{headers:{'Authorization':`Bearer ${user}`}})
+                axios.get("https://backend-api.martekgh.com/api/following-shops",{headers:{'Authorization':`Bearer ${user}`}})
                 .then(res=>{
                     console.log(res.data)
                     return(this.setState({followShops:res.data, loader:false}))
@@ -573,7 +573,7 @@ this.setState(()=>{
 logout = ()=>{
     user = localStorage.getItem('access_token')
     this.setState({spinner:true});
-    axios.post("http://backend-api.martekgh.com/api/auth/logout", null, {
+    axios.post("https://backend-api.martekgh.com/api/auth/logout", null, {
         headers:{'Authorization':`Bearer ${user}`}
       })
       .then(res=>{
@@ -624,7 +624,7 @@ setProducts =() =>{
         }, 
         function postcart() {
             const cart = [this.state.cart, this.state.cartTotal];
-            axios.post("http://backend-api.martekgh.com/api/user/"+user_id+"/add-cart", {cart}, {headers:{
+            axios.post("https://backend-api.martekgh.com/api/user/"+user_id+"/add-cart", {cart}, {headers:{
                 "Authorization":`Bearer ${user}`,
                 "Content-Type":"application/json",
                 "Accept":"application/json"
@@ -664,7 +664,7 @@ setProducts =() =>{
             },
             function postcart() {
                 const cart = [this.state.cart, this.state.cartTotal];
-                axios.post("http://backend-api.martekgh.com/api/user/"+user_id+"/add-cart", {cart}, {headers:{
+                axios.post("https://backend-api.martekgh.com/api/user/"+user_id+"/add-cart", {cart}, {headers:{
                     "Authorization":`Bearer ${user}`,
                     "Content-Type":"application/json",
                     "Accept":"application/json"
@@ -700,7 +700,7 @@ setProducts =() =>{
             return{cart:[...newCart], cartTotal:total}
         },function postcart() {
             const cart = [this.state.cart, this.state.cartTotal];
-            axios.post("http://backend-api.martekgh.com/api/user/"+user_id+"/add-cart", {cart}, {headers:{
+            axios.post("https://backend-api.martekgh.com/api/user/"+user_id+"/add-cart", {cart}, {headers:{
                 "Authorization":`Bearer ${user}`,
                 "Content-Type":"application/json",
                 "Accept":"application/json"
@@ -728,7 +728,7 @@ setProducts =() =>{
         },
         function postcart() {
             const cart = [this.state.cart, this.state.cartTotal];
-            axios.post("http://backend-api.martekgh.com/api/user/"+user_id+"/add-cart", {cart}, {headers:{
+            axios.post("https://backend-api.martekgh.com/api/user/"+user_id+"/add-cart", {cart}, {headers:{
                 "Authorization":`Bearer ${user}`,
                 "Content-Type":"application/json",
                 "Accept":"application/json"
@@ -777,7 +777,7 @@ setProducts =() =>{
 
     //handle details
     handleDetail =(id) =>{
-        axios.get("http://backend-api.martekgh.com/api/product/"+id+"/details")
+        axios.get("https://backend-api.martekgh.com/api/product/"+id+"/details")
             .then(res=>{
                 this.setState(()=>{
                     return {detailProduct:res.data}
@@ -789,14 +789,11 @@ setProducts =() =>{
 
     
     //handle inCart
-    addToCart =(id) =>{
+    addToCart =(product) =>{
         this.setState({spinner:true})
-        let tempProducts = [...this.state.setElectronics, ...this.state.setFoods,...this.state.setPhones,...this.state.setBeauty,...this.state.setEntertianment, ...this.state.setFashion,...this.state.setGames,...this.state.setHome,...this.state.setOthers,...this.state.setSkills];
         let tempCarts = [...this.state.cart];
-        const cart_index = tempCarts.indexOf(this.getCartItem(id));
+        const cart_index = tempCarts.indexOf(this.getCartItem(product.id));
         if(cart_index === -1){
-            const index = tempProducts.indexOf(this.getItems(id));
-            const product = tempProducts[index];
             //product.in_cart=true;
             product.quantity=1;
             const price=product.price;
@@ -813,7 +810,7 @@ setProducts =() =>{
                 console.log('cart:',this.state.cart)
                 const cart = [this.state.cart, this.state.cartTotal];
                 console.log(cart)
-                axios.post("http://backend-api.martekgh.com/api/user/"+user_id+"/add-cart", {cart}, {headers:{
+                axios.post("https://backend-api.martekgh.com/api/user/"+user_id+"/add-cart", {cart}, {headers:{
                     "Authorization":`Bearer ${user}`,
                     "Content-Type":"application/json",
                     "Accept":"application/json"
@@ -986,7 +983,7 @@ searchShopPrediction=(searchValue)=>{
                 <Col className="ml-auto mr-auto" md="12">
                     <Modal isOpen={this.state.modal} toggle={this.toggle} style={{maxHeight:"40px", maxWidth:"300px"}} className="alert-modal">
                         <ModalBody>
-                            <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white"}}>{this.state.modalInfo}!!</h4>
+                            <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white", fontSize:"15px"}}>{this.state.modalInfo}!!</h4>
                         </ModalBody>
                     </Modal>
                 </Col>

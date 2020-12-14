@@ -28,6 +28,8 @@ function UserProductDetails(props){
     const [isActive, setIsActive] = React.useState(false);
     const [reviews,setReviews] = React.useState([]);
     const [average,setAverage] = React.useState(0);
+    const [images, setImages] = React.useState([]);
+    const [first, setFirst] = React.useState(null)
     
     
     let user = localStorage.getItem("access_token")
@@ -35,18 +37,20 @@ function UserProductDetails(props){
     React.useEffect(()=>{
         console.log(props)
           setIsActive(true);
-          axios.get("http://backend-api.martekgh.com/api/product/"+props.location.state.id+"/details")
+          axios.get("https://backend-api.martekgh.com/api/product/"+props.location.state.id+"/details")
           .then(res=>{
               console.log(res.data);
               setProduct(res.data);
               setOwner(res.data.product_owner);
+              setImages(res.data.product_images);
+              setFirst(res.data.product_images[0].path)
               setIsActive(false)
           })
           .catch(error=>{
           });
 
 
-          axios.get("http://backend-api.martekgh.com/api/product/"+props.location.state.id+"/reviews")
+          axios.get("https://backend-api.martekgh.com/api/product/"+props.location.state.id+"/reviews")
             .then(res=>{
                 console.log(res.data);
                 setReviews(res.data.product_reviews);
@@ -63,7 +67,7 @@ function UserProductDetails(props){
 
     const handleDelete=()=>{
         setIsActive(true)
-        axios.delete("http://backend-api.martekgh.com/api/e-trader/product/"+props.location.state.id+"/delete",{
+        axios.delete("https://backend-api.martekgh.com/api/e-trader/product/"+props.location.state.id+"/delete",{
             headers:{"Authorization":`Bearer ${user}`}
         })
         .then(res=>{
@@ -100,7 +104,7 @@ function UserProductDetails(props){
                                         <Col md="7">
                                         <Card className="card-plain" style={{borderRight:"1px solid #eaeaea"}}>
                                         <div style={{textAlign:"center"}}>
-                                            <img alt= "#" src={require("../assets/img/iphone.png")} 
+                                            <img alt= "#" src={`https://backend-api.martekgh.com/${first}`} 
                                             style={{maxWidth:"180px", height:"185.13px"}}
                                             />
                                         </div>
@@ -187,12 +191,13 @@ function UserProductDetails(props){
                             <Col md="12">
                                 <Card className="card-plain">
                                     <CardBody>
-                                    <div style={{textAlign:"center"}}>
-                                        <img src={require("../assets/img/iphone.png")} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
-                                        <img src={require("../assets/img/iphone.png")} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
-                                        <img src={require("../assets/img/iphone.png")} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
-                                        <img src={require("../assets/img/iphone.png")} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
-                                    </div>
+                                    <Row>
+                                        {images.map((value,key)=>(
+                                        <Col lg="3" md="4" sm="6" xs="6">
+                                        <img src={`https://backend-api.martekgh.com/${value.path}`} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
+                                        </Col>
+                                        ))}
+                                    </Row>
                                     </CardBody>
                                     </Card>
                             </Col>

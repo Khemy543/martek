@@ -40,7 +40,7 @@ export default function ShopLoginPage(props) {
   const handleSubmit = (e) =>{
     e.preventDefault();
     setIsActive(true)
-  axios.post('http://backend-api.martekgh.com/api/merchandiser/login', {
+  axios.post('https://backend-api.martekgh.com/api/merchandiser/login', {
     config, email, password
   }).then(res => {
     console.log(res.data)

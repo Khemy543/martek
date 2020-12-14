@@ -1,5 +1,22 @@
 {
-  "name": "paper-kit-react",
+  "name": "martekgh",
+  "description": "E-commerce for campus in Ghana",
+  "keywords": [
+    "react",
+    "reactjs",
+    "martek",
+    "martekgh",
+    "martekgh.com",
+    "e-commerce",
+    "shop",
+    "shopping"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Khemy543/martek-react.git"
+  },
+  "author": "Gideon Assafuah",
+  "license": "MIT",
   "version": "1.0.0",
   "private": true,
   "dependencies": {

@@ -44,22 +44,6 @@ var settings = {
 let user = localStorage.getItem('access_token');
 
 function DetailsPage(props){
-    /* state={
-        modal:false,
-        product:[],
-        owner:"",
-        campus_name:"",
-        isActive:false,
-        reviews:[],
-        reviewAdd:"",
-        loggedin:false,
-        rating:0,
-        reportmodal:false,
-        average:0,
-        message:"",
-        tipmodal:false,
-        related:[]
-    } */
 
     const [modal, setModal]= React.useState(false);
     const [product, setProduct] = React.useState([]);
@@ -75,6 +59,8 @@ function DetailsPage(props){
     const [message, setMessage] = React.useState("");
     const [tipmodal, setTipmodal] = React.useState(false);
     const [related, setRelated] = React.useState([]);
+    const [images, setImages] = React.useState([]);
+    const [first, setFirst] = React.useState(null)
     const [productid, setProductId] = React.useState(props.location.state.id);
    
      const toggle = () => setModal(!modal);
@@ -82,20 +68,22 @@ function DetailsPage(props){
      const toggleReportModal = ()=>setReportmodal(!reportmodal)
         React.useEffect(()=>{
             setisActive(true);
-            axios.get("http://backend-api.martekgh.com/api/product/"+productid+"/details")
+            axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/details")
             .then(res=>{
                 console.log("details",res.data);
                 setProduct(res.data);
                 setOwner(res.data.product_owner);
                 setCampus_name(res.data.product_owner.campus);
                 setRelated(res.data.related_product);
-                setisActive(false)
+                setisActive(false);
+                setImages(res.data.product_images);
+                setFirst(res.data.product_images[0].path)
             })
             .catch(error=>{
                 console.log(error)
             });
 
-            axios.get("http://backend-api.martekgh.com/api/product/"+productid+"/reviews")
+            axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/reviews")
             .then(res=>{
                 console.log(res.data);
                 setReviews(res.data.product_reviews);
@@ -121,7 +109,7 @@ function DetailsPage(props){
 
         const postReview=()=>{
             if(reviewAdd !== "" || rating !== 0){
-            axios.post("http://backend-api.martekgh.com/api/add-product/reviews",
+            axios.post("https://backend-api.martekgh.com/api/add-product/reviews",
             {
                 rating: rating,
             
@@ -157,7 +145,7 @@ function DetailsPage(props){
 
 
         const handlePostReport=()=>{
-            axios.post("http://backend-api.martekgh.com/api/add-product/report",
+            axios.post("https://backend-api.martekgh.com/api/add-product/report",
             {report:message, product_id:props.location.state.id},
             { headers:{"Authorization":`Bearer ${user}`}})
             .then(res=>{
@@ -171,7 +159,7 @@ function DetailsPage(props){
             })
         }
 
-       const {product_name, price,in_stock,description} = product;
+       const {product_name, price,in_stock,description, product_images} = product;
        const {name ,email,phone,company_name,merchandiser_id} = owner;
        const {campus} = campus_name;
 
@@ -191,8 +179,9 @@ function DetailsPage(props){
                                     <Row>
                                         <Col md="7">
                                         <Card className="card-plain" style={{borderRight:"1px solid #eaeaea"}}>
+                                        {console.log(product_images && product_images[0] && product_images[0].path)}
                                         <div style={{textAlign:"center"}}>
-                                            <img alt= "#" src={require("../assets/img/iphone.png")} 
+                                            <img alt= "#" src={`https://backend-api.martekgh.com/${first}`} 
                                             style={{maxWidth:"180px", height:"185.13px"}}
                                             />
                                         </div>
@@ -253,7 +242,7 @@ function DetailsPage(props){
                                             color="info"
                                             block
                                             
-                                            onClick={()=>{value.addToCart(props.location.state.id)}}
+                                            onClick={()=>{value.addToCart(product)}}
                                             >
                                            <div><i className="fa fa-cart-plus mr-2"/>Add to cart</div>
 
@@ -344,18 +333,11 @@ function DetailsPage(props){
                                     <CardBody>
                                         <Container>
                                     <Row>
+                                        {images.map((value,key)=>(
                                         <Col lg="3" md="4" sm="6" xs="6">
-                                        <img src={require("../assets/img/iphone.png")} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
+                                        <img src={`https://backend-api.martekgh.com/${value.path}`} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
                                         </Col>
-                                        <Col lg="3" md="4" sm="6" xs="6">
-                                        <img src={require("../assets/img/iphone.png")} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
-                                        </Col>
-                                        <Col lg="3" md="4" sm="6" xs="6">
-                                        <img src={require("../assets/img/iphone.png")} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
-                                        </Col>
-                                        <Col lg="3" md="4" sm="6" xs="6">
-                                        <img src={require("../assets/img/iphone.png")} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
-                                        </Col>
+                                        ))}
                                     </Row>
                                     </Container>
                                     </CardBody>
@@ -462,7 +444,7 @@ function DetailsPage(props){
                                                         props.history.push("/user/product-details",{id:value.id})
                                                         window.location.reload("/")
                                                         }}>
-                                                    <img alt="#" src={require("../assets/img/iphone.png")} style={{height:"185.13px", width:"180px"}}/>
+                                                    <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"185.13px", width:"180px"}}/>
                                                     </div>
                                                     <br/>
                                                     <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ {value.price}</CardBody>

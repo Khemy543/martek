@@ -63,7 +63,7 @@ class UploadShopAvatar extends React.Component{
      bodyFormData.append('cover_photo',cover_photo_file);
      bodyFormData.append('valid_id',valid_id_file);
     axios({method:"post",
-    url:`http://backend-api.martekgh.com/api/merchandiser/${this.props.location.state.id}/store-photos`,
+    url:`https://backend-api.martekgh.com/api/merchandiser/${this.props.location.state.id}/store-photos`,
     data:bodyFormData,
     headers:{
       "Content-Type": "multipart/form-data",
@@ -141,8 +141,10 @@ class UploadShopAvatar extends React.Component{
                     withPreview={true}
                     buttonText='Valid ID Card'
                     onChange={this.onDropCard}
+                    label="Max file size:5mb accept:jpg,png,jpeg"
                     imgExtension={['.jpg','.png', '.jpeg']}
-                    maxFileSize={5242880}
+                    fileSizeError="file size is too big"
+                    fileTypeError="is not supported"
                     value={this.state.activateButton3}
                     singleImage={true}
                     fileSizeError="File Size Too Big"
@@ -178,7 +180,7 @@ class UploadShopAvatar extends React.Component{
         </div>
         </LoadingOverlay>
         
-        <DemoFooter />
+        <DemoFooter prop={this.props}/>
         </div>
     )
 }

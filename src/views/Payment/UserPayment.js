@@ -45,14 +45,14 @@ const handleSubmit=(e)=>{
       <div
         className="page-header"
         style={{
-          backgroundColor:"white"
+          backgroundColor:"#f7f7f7"
         }}
       >
-        <Container style={{marginTop:"30px"}}>
+        <Container style={{marginTop:"40px"}}>
           <Row>
-            <Col md="5" className="ml-auto mr-auto">
+            <Col md="5" sm="12" xs="12" className="ml-auto mr-auto">
             <Row>
-                <Col md ="4">
+            <Col md ="4" sm="4" lg="4" className="mr-auto ml-auto">
                 <div style={{textAlign:"center"}}>
                 <img
                   alt="#"
@@ -60,11 +60,11 @@ const handleSubmit=(e)=>{
                   style={{width:"120px" ,height:"auto", marginTop:"20px"}}
                 />
                 </div>
+                <hr className="my-4" />
                 </Col>
+            </Row>
+            <Row>
                 <Col md="4">
-                    <h3>Martek</h3>
-                    <p style={{fontSize:"11px", fontWeight:600}}>BY MARTEK</p>
-                    <hr className="my-4" />
                     <p style={{fontSize:"12px", fontWeight:600}}>MARTEK GH</p>
 
                 </Col>
@@ -125,10 +125,12 @@ const handleSubmit=(e)=>{
                 </CardBody>
               </Card>
               <Row style={{marginTop:"20px"}}>
-                  <Col md="6" className="ml-auto mr-auto">
+                  <Col md="6" sm="12" xs="12" className="ml-auto mr-auto">
+                    <div style={{textAlign:"center"}}>
                       <img src={require("../../assets/img/mastercard.png")} alt="#" style={{width:"60px", height:"auto"}}/>
                       <img src={require("../../assets/img/visa.png")} alt="#" style={{width:"60px", height:"auto"}}/>
                       <img src={require("../../assets/img/mobilemoney.png")} alt="#" style={{width:"80px", height:"auto"}}/>
+                      </div>
                   </Col>
               </Row>
             </Col>

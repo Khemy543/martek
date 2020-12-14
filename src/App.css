@@ -336,16 +336,9 @@
     color: #6ec7e0  !important;
 }
 
-  /* .rwt__tabpanel{
-      margin-top: 100px;
-  }  */
-
- /*  .left li a{
-      text-align:left;
-      text-decoration: none !important;
-      color: red;
-  } */
-
+.nav-tabs .nav-item .nav-link{
+    font-weight: 500;
+}
   .phone-nav{
       background-color: #ffff;
   }
@@ -382,8 +375,8 @@
     transform: translate(-50%, -50%);
   }
 
-  .phone-nav .nav-item .nav-link{
+  /* .phone-nav .nav-item .nav-link{
       text-transform: capitalize !important;
       font-size: 15px !important;
       color:#4a4747 !important;
-  }
+  } */

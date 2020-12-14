@@ -34,7 +34,7 @@ function ShopCard(props){
     return(
         <Col md="3" sm="6" xs="6" style={{padding:"0px 6px"}}>
         <Card className="card-plain" style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}} >
-        <CardImg top id="card-cover" className="cardimage" style={{width:"96%", borderRadius:"5px", margin:"5px"}} src={`http://backend-api.martekgh.com/${cover_photo}`} alt="Card image cap" onClick={()=>history.push("/user/shop-view", 
+        <CardImg top id="card-cover" className="cardimage" style={{width:"96%", borderRadius:"5px", margin:"5px"}} src={`https://backend-api.martekgh.com/${cover_photo}`} alt="Card image cap" onClick={()=>history.push("/user/shop-view", 
             {id:id || shop_id}
             )}/>
             {loggedIn?
@@ -62,7 +62,7 @@ function ShopCard(props){
             <div className="circular" style={{marginTop:"-70px", width:"80px",height:"80px"}}>
                 <img
                     alt="#"
-                    src={`http://backend-api.martekgh.com/${avatar}`}
+                    src={`https://backend-api.martekgh.com/${avatar}`}
                     style={{border:"1px solid #eaeaea"}}
                 />
             </div>
@@ -95,16 +95,16 @@ function ShopCard(props){
         </Row>
         <Row>
             <Col md="12">
-                <h5 style={{textAlign:"left", marginTop:"5px", fontSize:"13px", fontWeight:500}} className="truncate">{company_description}</h5>
+                <h5 style={{textAlign:"left", marginTop:"5px", fontSize:"12px", fontWeight:500, color:"#676464"}} className="truncate">{company_description}</h5>
             </Col>
         </Row>
         <Row>
-            <Col style={{textAlign:"left", color:"#212529"}}>
+            <Col style={{textAlign:"left", color:"#676464"}}>
                 <i className="fa fa-shopping-bag"/> <i className="fa fa-shopping-cart"/> <i className="fa fa-money"/>
             </Col>
         </Row>
         <Row style={{marginTop:"10px"}}>
-            <Col md="12" style={{textAlign:"left"}}>
+            <Col md="12" style={{textAlign:"left",color:"#676464"}}>
                 <h5 style={{display:"inline", textAlign:"left", fontSize:"14px", fontWeight:"bold"}}>{number_of_followers} </h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
             </Col>
         </Row>

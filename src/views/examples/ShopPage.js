@@ -61,7 +61,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
   
   React.useEffect(()=>{
     setIsActive(true);
-      axios.get("http://backend-api.martekgh.com/api/merchandiser",{
+      axios.get("https://backend-api.martekgh.com/api/merchandiser",{
           headers:{ 'Authorization':`Bearer ${merchandiser}`}
   }
   )
@@ -76,9 +76,10 @@ let merchandiser = localStorage.getItem("shop_access_token")
         setCover(res.data.cover_photo);
         setAverage(res.data.avg_rating)
 
-        axios.get("http://backend-api.martekgh.com/api/merchandiser/"+res.data.id+"/products"
+        axios.get("https://backend-api.martekgh.com/api/merchandiser/"+res.data.id+"/products"
       )
         .then(response=>{
+          console.log(response.data)
             setShopProducts(response.data[0]);
             setIsActive(false)
         })
@@ -107,7 +108,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
     >
       
       <div className="section profile-content text-center">
-      <img alt="#" src={`http://backend-api.martekgh.com/${cover}`} style={{width:"95%", marginTop:"10px"}} className="cover-photo"/>
+      <img alt="#" src={`https://backend-api.martekgh.com/${cover}`} style={{width:"95%", marginTop:"10px"}} className="cover-photo"/>
       
         <Container>
         <br/>
@@ -122,7 +123,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
                   className="img-circle img-no-padding img-responsive"
                   width="150px"
                   style={{border:"1px solid #eaeaea", marginTop:"200px"}}
-                  src={`http://backend-api.martekgh.com/${avatar}`}
+                  src={`https://backend-api.martekgh.com/${avatar}`}
               />
             </div>
             </Col>
@@ -149,8 +150,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
                 <h5 style={{display:"inline", fontSize:"14px", fontWeight:"bold"}}>{noFollowing}</h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
                 
               <h4 style={{ fontSize:"14px", marginTop:"5px"}}>{campus}</h4>
-              {/*   <h5 style={{display:"inline", fontSize:"14px", fontWeight:"bold", marginLeft:"20px"}}> {shopProducts.length}</h5><h4 style={{display:"inline",fontSize:"14px"}}> | Products</h4>
-              */} </div>
+              </div>
               </Col>
 
             </Row>  
@@ -215,7 +215,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
                     <br/>
                     
                     <div style={{textAlign:"center",cursor:"pointer"}} onClick={()=>history.push("/shop/shop-product-details",{id:products.id})}>
-                    <img alt="#" src={require("../../assets/img/iphone.png")} style={{ maxHeight:"185.13px",maxWidth:"100px"}}/>
+                    <img alt="#" src={`https://backend-api.martekgh.com/${products.product_image[0].path}`} style={{ maxHeight:"185.13px",maxWidth:"100px"}}/>
                     </div>
                     <br/>
                     <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ {products.price}</CardBody>

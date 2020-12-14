@@ -69,7 +69,7 @@ function ShopView(props) {
   };
   React.useEffect(()=>{
         setIsActive(true)
-        axios.get("http://backend-api.martekgh.com/api/merchandiser/"+props.location.state.id+"/products"
+        axios.get("https://backend-api.martekgh.com/api/merchandiser/"+props.location.state.id+"/products"
       )
         .then(response=>{
             setShopProducts(response.data[0]);
@@ -85,7 +85,7 @@ function ShopView(props) {
             setLoggedIn(false);
         }
 
-        axios.get("http://backend-api.martekgh.com/api/shop/"+props.location.state.id+"/details")
+        axios.get("https://backend-api.martekgh.com/api/shop/"+props.location.state.id+"/details")
         .then(res=>{
           console.log(res.data)
           setName(res.data.company_name);
@@ -101,7 +101,7 @@ function ShopView(props) {
         })
         
 
-        axios.get("http://backend-api.martekgh.com/api/shop/"+props.location.state.id+"/reviews")
+        axios.get("https://backend-api.martekgh.com/api/shop/"+props.location.state.id+"/reviews")
         .then(res=>{
           console.log("reviews:",res.data);
           setReviews(res.data.product_reviews);
@@ -116,7 +116,7 @@ function ShopView(props) {
 const postReview=()=>{
   if(reviewAdd !== "" || rating !== 0){
   setIsActive(true)
-  axios.post("http://backend-api.martekgh.com/api/add-shop/reviews",
+  axios.post("https://backend-api.martekgh.com/api/add-shop/reviews",
     {
       rating: rating,
   
@@ -164,7 +164,7 @@ const changeRating=( newRating )=> {
         >
       
       <div className="section profile-content text-center">
-      <img alt="#" src={`http://backend-api.martekgh.com/${cover}`} style={{width:"95%", marginTop:'10px'}} className="cover-photo"/>
+      <img alt="#" src={`https://backend-api.martekgh.com/${cover}`} style={{width:"95%", marginTop:'10px'}} className="cover-photo"/>
       
         <Container>
         <br/>
@@ -173,14 +173,14 @@ const changeRating=( newRating )=> {
         <br/>
         <Container>
           <Row>
-              <Col md="5" sm="5" xs="5" xl="5" lg="5" className="ml-auto mr-auto">
+              <Col md="5" sm="6" xs="6" xl="5" lg="5" className="ml-auto mr-auto">
               <div className="avatar">
                 <img
                   alt="..."
                   id="img-circle"
                   className="img-circle img-no-padding img-responsive"
                   style={{border:"1px solid #eaeaea", width:"120px", height:"120px"}}
-                  src={`http://backend-api.martekgh.com/${avatar}`}
+                  src={`https://backend-api.martekgh.com/${avatar}`}
                 />
               </div>
               </Col>
@@ -216,7 +216,7 @@ const changeRating=( newRating )=> {
                 <ProductConsumer>
               {value=>(
                 <div>
-                {value.followShops.find(item=>item.shop_id===props.location.state.id)?<Button size="sm" style={{fontSize:"9px"}} className="btn-round" disabled={followDisable} color="info" onClick={()=>{value.unfollow(props.location.state.id);setfollowingLoader(true); setfollowLoader(false);setFollowers(followers-1); setFollowDisable(true);setUnfollowDisable(false)}}>{followingloader?<Spinner animation="grow" size="sm"/>:<p style={{fontWeight:1000, fontSize:"9px"}}>following</p>}</Button>:<Button size="sm" disabled={unfollowDisable} color='danger' style={{fontSize:"9px"}} className="btn-round" onClick={()=>{value.follow(props.location.state.id); setUnfollowDisable(true);setFollowDisable(false); setfollowingLoader(false);setFollowers(followers+1); setfollowLoader(true)}}>{followloader?<Spinner animation="grow" size="sm"/>:<p style={{fontWeight:1000, fontSize:"9px"}}>+follow</p>}</Button>}
+                {value.followShops.find(item=>item.shop_id===props.location.state.id)?<Button size="sm" style={{fontSize:"9px"}} className="btn-round" disabled={followDisable} color="info" onClick={()=>{value.unfollow(props.location.state.id);setfollowingLoader(true); setfollowLoader(false);setFollowers(followers-1); setFollowDisable(true);setUnfollowDisable(false)}}>{followingloader?<Spinner animation="grow" size="sm"/>:<p style={{fontWeight:1000, fontSize:"9px"}}>following</p>}</Button>:<Button size="sm" disabled={unfollowDisable} color='info' style={{fontSize:"9px"}} className="btn-round" onClick={()=>{value.follow(props.location.state.id); setUnfollowDisable(true);setFollowDisable(false); setfollowingLoader(false);setFollowers(followers+1); setfollowLoader(true)}}>{followloader?<Spinner animation="grow" size="sm"/>:<p style={{fontWeight:1000, fontSize:"9px"}}>+follow</p>}</Button>}
                 </div>
             )}
               </ProductConsumer>
@@ -279,7 +279,7 @@ const changeRating=( newRating )=> {
                     <br/>
                     
                     <div style={{textAlign:"center"}} onClick={()=>props.history.push("/user/product-details",{id:products.id})}>
-                    <img alt="#" src={require("../assets/img/iphone.png")} style={{ maxHeight:"185.13px",maxWidth:"100px"}}/>
+                    <img alt="#" src={`https://backend-api.martekgh.com/${products.product_image[0].path}`} style={{ maxHeight:"185.13px",maxWidth:"100px"}}/>
                     </div>
                     
                     <br/>
@@ -372,34 +372,6 @@ const changeRating=( newRating )=> {
           </TabContent>
         </Container>
        </div>
-     {/*  <Modal isOpen={reportmodal} toggle={()=>toggleReportModal()}>
-            <ModalHeader>
-                <h4 style={{fontWeight:"bold",fontSize:"17px", marginTop:"0px"}}>Report Shop</h4>
-            </ModalHeader>
-            {!reportSent?
-            <>
-            <ModalBody>
-            <Row>
-                <Col md="12">
-                <Input type="textarea" placeholder="report message..." value={message} onChange={(e)=>setMessage(e.target.value)}/>
-
-                </Col>
-            </Row>
-            </ModalBody>
-            <ModalFooter style={{border:"none",marginBottom:"20px", marginRight:"15px"}}>
-                <Button color="info" onClick={()=>handlePostReport()}>Report</Button>
-                <Button color="danger" onClick={()=>setReportmodal(false)}>Close</Button>
-            </ModalFooter>
-            </>
-            :
-            <>
-            <div style={{textAlign:'center',marginTop:"10px",marginBottom:"10px"}}>
-            <p style={{fontWeight:"bold"}}><i className="fa fa-check mr-1" style={{color:"green", fontSize:"20px"}}/> sent!!</p>
-              <p>Thanks for the report!<br/>Action is being taken, Feedback will be sent soon</p>
-            </div>
-            </>
-            }
-        </Modal> */}
       </LoadingOverlay>
     </div>
   );

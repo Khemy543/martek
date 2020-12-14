@@ -34,7 +34,7 @@ function AddToShop(){
   let merchandiser = localStorage.getItem("shop_access_token")
   React.useEffect(()=>{
 
-      axios.get("http://backend-api.martekgh.com/api/categories")
+      axios.get("https://backend-api.martekgh.com/api/categories")
       .then(res=>{
         const categories = res.data
         setCategoryList(categories);
@@ -44,9 +44,10 @@ function AddToShop(){
     const handleSubmit = (e) =>{
       e.preventDefault();
        setIsActive(true);
-    axios.post('http://backend-api.martekgh.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
+    axios.post('https://backend-api.martekgh.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
       headers:{'Authorization':`Bearer ${merchandiser}`}
     }).then(res => {
+      console.log(res.data)
       if(res.data.status === "success"){
         const product_id = res.data.product_id;
         setIsActive(false)

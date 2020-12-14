@@ -15,7 +15,7 @@ import{
     Button
 } from "reactstrap";
 
-var domain ="http://backend-api.martekgh.com"
+var domain ="https://backend-api.martekgh.com"
 export default function WaitShopVerification(props){
     const [message, setMessage] = React.useState("");
     const [visible, setVisible] = React.useState(false);

@@ -48,7 +48,7 @@ function ExamplesNavbar() {
 
   React.useEffect(()=>{
     
-    axios.get("http://backend-api.martekgh.com/api/merchandiser",{
+    axios.get("https://backend-api.martekgh.com/api/merchandiser",{
         headers:{ 'Authorization':`Bearer ${merchandiser}`}
 }
 )
@@ -69,7 +69,7 @@ const Logout=(e)=>{
   setDropdownOpen(false);
   setNavbarCollapse(false);
 
-  axios.post("http://backend-api.martekgh.com/api/merchandiser/logout",null,{
+  axios.post("https://backend-api.martekgh.com/api/merchandiser/logout",null,{
     headers:{ 'Authorization':`Bearer ${merchandiser}`}
   })
   .then(res=>{
@@ -102,7 +102,7 @@ const Logout=(e)=>{
           <NavbarBrand
             data-placement="bottom"
           >
-          <a href="/shop/shop-page" style={{textDecoration:'none', color:"white", fontWeight:"bold"}}>
+          <Link to="/shop/shop-page" style={{textDecoration:'none', color:"white", fontWeight:"bold"}}>
           <img alt="#" src= {require("../../assets/img/martlogo.png")}
           style={{maxWidth:"100px", height:"auto", marginTop:"-5px",marginRight:"8px"}}
           className="top"
@@ -112,7 +112,7 @@ const Logout=(e)=>{
           className="bottom"
           />
             
-            </a>
+            </Link>
           </NavbarBrand>
           <button
           aria-expanded={navbarCollapse}

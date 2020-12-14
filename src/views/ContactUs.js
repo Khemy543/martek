@@ -39,7 +39,7 @@ export default function ContactUs(){
             setIsMobile(window.innerWidth < 800);
         }, false);
 
-        axios.get("http://backend-api.martekgh.com/api/auth/user",{
+        axios.get("https://backend-api.martekgh.com/api/auth/user",{
         headers:{ 'Authorization':`Bearer ${user}`}
     }
     )
@@ -60,7 +60,7 @@ export default function ContactUs(){
         console.log(e);
         setIsActive(true);
          
-      axios.post('http://backend-api.martekgh.com/api/make-enquiries', {
+      axios.post('https://backend-api.martekgh.com/api/make-enquiries', {
         name, email, message,phone
       }).then(res => {
         console.log(res.data.status);
