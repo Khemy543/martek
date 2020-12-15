@@ -4,7 +4,7 @@ import{
     Col,
     Row,
     Button,
-    Form,Progress, ModalHeader, ModalFooter,Modal
+    Form,Progress, ModalHeader, ModalBody,Modal, Spinner
 } from "reactstrap";
 import axios from "axios";
 import ImageUploader from 'react-images-upload';
@@ -26,7 +26,8 @@ class UploadValidID extends React.Component{
               valid_id:[],
               percentage:0,
               button:false,
-              modal:false
+              modal:false,
+              isActive:false
              };
          this.onDrop = this.onDrop.bind(this);
          
@@ -41,8 +42,8 @@ class UploadValidID extends React.Component{
 
 
     componentDidMount(){
-        if(localStorage.getItem('validity') !== "null"){
-            console.log("ooohh why")
+        console.log(this.props)
+        if(localStorage.getItem('validity') === "true"){
            history.push('/user/add-product')
           }
     }
@@ -50,6 +51,7 @@ class UploadValidID extends React.Component{
 
     handleSubmit=(e)=>{
     e.preventDefault();
+    this.setState({isActive:true})
     const valid_id_file = new Blob(this.state.valid_id);
      const bodyFormData = new FormData();
      bodyFormData.append('valid_id',valid_id_file,valid_id_file.filename);
@@ -75,8 +77,8 @@ class UploadValidID extends React.Component{
         this.setState({modal:true})
         setTimeout(
             function(){
-                this.setState({modal:false});
-                history.push('/user/add-product')
+                localStorage.setItem('validity',true)
+                history.push('/user/add-product');
             }
             .bind(this),
             1500
@@ -89,10 +91,6 @@ class UploadValidID extends React.Component{
     render(){
     return(
         <div>
-            <LoadingOverlay 
-            active = {this.state.isActive}
-            spinner={<BounceLoader color={'#4071e1'}/>}
-            >
         
         <div className="main">
                 <div className="section">
@@ -133,6 +131,15 @@ class UploadValidID extends React.Component{
 
         <Row style={{marginTop:"30px"}}>
             <Col md="4" style={{marginRight:"auto", marginLeft:"auto"}}>
+            {this.state.isActive?
+                <Button
+                block
+                color="info"
+                disabled={true}
+                >
+                    <Spinner size="sm"/>
+                </Button>
+                :
             <Button
                 block
                 color="info"
@@ -141,19 +148,21 @@ class UploadValidID extends React.Component{
                 >
                     upload
                 </Button>
+            }
             </Col>
             </Row>
             
         </Form>
         </Container>
-        <Modal isOpen={this.state.modal}>
-            <ModalHeader>
-                Saved
-            </ModalHeader>
-        </Modal>
+        <Modal isOpen={this.state.modal} className="login-modal">
+      
+      <ModalBody style={{color:"white", fontSize:"12px", fontWeight:500}} className="text-center">
+        ID SAVED
+      </ModalBody>
+      
+    </Modal>
         </div>
         </div>
-        </LoadingOverlay>
         </div>
     )
 }

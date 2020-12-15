@@ -4,7 +4,7 @@ import{
     Col,
     Row,
     Button,
-    Form, Modal, ModalBody,Progress
+    Form, Modal, ModalBody,Progress, Spinner
 } from "reactstrap";
 import axios from "axios";
 //import { Link } from "react-router-dom";
@@ -69,8 +69,8 @@ class UploadImages extends React.Component {
                 if(percentage<100){
                     setTimeout(
                     function(){
-                        this.setState({modal:false});
-                        this.props.history.push('/user/payment/user/information')
+                            this.setState({modal:false});
+                            this.props.history.push('/user/payment/user/information')
                     }
                     .bind(this),
                     1500
@@ -134,6 +134,16 @@ class UploadImages extends React.Component {
                             <Progress value={this.state.percentage} />
                             </div>
                             }
+                            {this.state.isActive?
+                                <Button
+                                color="info"
+                                block
+                                style={{marginTop:"20px"}}
+                                disabled={true}
+                                >
+                                <Spinner size="sm" />
+                                </Button>
+                                :
                                 <Button
                                 color="info"
                                 block
@@ -141,7 +151,8 @@ class UploadImages extends React.Component {
                                 style={{marginTop:"20px"}}
                                 disabled={!this.state.activateButton}
                                 >upload
-                                    </Button>
+                                </Button>
+                            }
                             </Col>
                             
                         </Row>
@@ -152,7 +163,7 @@ class UploadImages extends React.Component {
                 </LoadingOverlay>
                 <Modal isOpen={this.state.modal} className="alert-modal">
                     <ModalBody>
-                        <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white",fontSize:"15px"}}>PRODUCT SAVED!!</h4>
+                        <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white"}}>PRODUCT SAVED!!</h4>
                     </ModalBody>
                 </Modal>
             </div>

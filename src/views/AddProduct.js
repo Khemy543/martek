@@ -11,7 +11,7 @@ import{
     Row,
     Col,
     Form,  Label, Input,
-    Button, InputGroup, InputGroupAddon, InputGroupText
+    Button, InputGroup, InputGroupAddon, InputGroupText, Spinner
 } from "reactstrap";
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
@@ -34,13 +34,12 @@ function AddProduct(props){
 
   let user = localStorage.getItem('access_token')
   console.log("aahh",localStorage.getItem('validity'))
-  if(localStorage.getItem('validity') === "null"){
-    console.log("ooohh why")
+  let valid = localStorage.getItem('validity');
+  if(valid === "false"){
     window.location.pathname="/user/add-product-validation"
   }
 
   React.useEffect(()=>{
-      
       axios.get("https://backend-api.martekgh.com/api/categories")
       .then(res=>{
         console.log(res.data)
@@ -52,6 +51,7 @@ function AddProduct(props){
     const handleSubmit = (e) =>{
       console.log("....")
       e.preventDefault();
+      setIsAcitve(true)
     axios.post('https://backend-api.martekgh.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
       headers:{'Authorization':`Bearer ${user}`}
     }).then(res => {
@@ -154,9 +154,15 @@ function AddProduct(props){
 
                   <Row>
                     <Col className="ml-auto mr-auto" md="12">
+                    {isActive?
+                      <Button className="btn-fill" color="info" block disabled>
+                        <Spinner size="sm"/>
+                      </Button>
+                      :
                       <Button className="btn-fill" color="info" block type="submit">
                         Next
                       </Button>
+                    }
                     </Col>
                   </Row>
                 </Form>

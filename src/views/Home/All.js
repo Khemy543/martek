@@ -27,7 +27,7 @@ import { Link } from "react-router-dom";
 var settings = {
     dots: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 5,
     slidesToScroll: 1,
     autoplay:true,
     responsive:[
@@ -43,16 +43,45 @@ var settings = {
 function All({history}){
     const [activeTab, setActiveTab] = React.useState("1");
     const [isActive, setIsActive] = React.useState(false);
-    const [newItems,setNewItems] = React.useState([])
+    const [newItems,setNewItems] = React.useState([]);
+    const [electronics,setElectronics] = React.useState([]);
+    const [fashion, setFashion] = React.useState([]);
+    const [phones,setPhones] = React.useState([])
     
 
       React.useEffect(()=>{
         axios.get('https://backend-api.martekgh.com/api/fetch/new-this-week')
         .then(res=>{
             console.log(res.data);
-            setNewItems(res.data)
+            setNewItems(res.data);
         })
+        setProducts();
       },[])
+
+      const setProducts =() =>{
+        // localStorage.clear();
+         axios.get("https://backend-api.martekgh.com/api/2/product-index")
+         .then(res=>{
+             console.log(res.data)
+             const categories = res.data[0];
+             setPhones(categories)
+         })
+ 
+         axios.get("https://backend-api.martekgh.com/api/3/product-index")
+         .then(res=>{
+             console.log(res.data)
+             const categories = res.data[0];
+             setFashion(categories)
+         })
+ 
+         axios.get("https://backend-api.martekgh.com/api/1/product-index")
+         .then(res=>{
+             const nextProducts = res.data[0];
+             setElectronics(nextProducts)
+         })
+         
+     };
+ 
 
 
         return(
@@ -130,20 +159,13 @@ function All({history}){
                             </Row>
                                 </CardTitle>
                                 <CardBody>
-                                <Container>
-                                    <Row>
-                                    <ProductConsumer>
-                                        {
-                                            value => {
-                                                return value.products.map(product => {
-                                                    return <Product key={product.id} product={product}/>;
-                                                })
-                                            }
-                                        }
-    
-                                        </ProductConsumer>
+                                    <Container>
+                                        <Row>
+                                        {newItems.slice(0,6).map((product)=>(
+                                            <Product key={product.id} product={product}/>
+                                        ))}
                                         </Row>
-                                        </Container>
+                                    </Container>
                                     </CardBody>
     
                             </Card>
@@ -162,21 +184,19 @@ function All({history}){
                                     <Container>
                                     <Row>
                                         <Col md="12" style={{padding:"0px 0px 0px 0px"}}>
-                                        <Slider {...settings} infinite={newItems.length>3}>
+                                        <Slider {...settings} infinite={newItems.length>5}>
                                         {newItems.map((value,key)=>(
                                             <div key={key}>
-                                                <Col>
-                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px", cursor:"pointer"}}>
-                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
-                                                {value.product_name}
-                                                    </CardTitle>
-                                                    <br/>
+                                                <Col style={{padding:"0px 3px 0px 3px"}}>
+                                                <div style={{textAlign:"center"}}>
                                                     <div style={{textAlign:"center"}} onClick={() => history.push("/user/product-details",{id:value.id})}>
-                                                    <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"185.13px", width:"180px"}}/>
+                                                    <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"185.13px", width:"180px", borderRadius:'5px'}}/>
                                                     </div>
-                                                    <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ {value.price}</CardBody>
-                                                </Card>
+                                                    <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>
+                                                    {value.product_name}
+                                                    </h3>
+                                                    <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:600, textAlign:"left", marginTop:"3px"}}>GH¢ {value.price}</h3>
+                                                </div>
                                                 </Col>
                                             </div>
                                             ))}
@@ -209,18 +229,11 @@ function All({history}){
                                 </CardTitle>
                             <CardBody>
                             <Container>
-                                <Row>
-                                <ProductConsumer>
-                                    {
-                                        value => {
-                                            return value.indexFashion.map(product => {
-                                                return <Product key={product.id} product={product}/>;
-                                            })
-                                        }
-                                    }
-
-                                </ProductConsumer>
-                                    </Row>
+                                        <Row>
+                                        {fashion.map((product)=>(
+                                             <Product key={product.id} product={product}/>
+                                        ))}
+                                        </Row>
                                     </Container>
                                 </CardBody>
 
@@ -249,18 +262,11 @@ function All({history}){
                                 </CardTitle>
                             <CardBody>
                             <Container>
-                                <Row>
-                                <ProductConsumer>
-                                    {
-                                        value => {
-                                            return value.nextProducts.map(product => {
-                                                return <Product key={product.id} product={product}/>;
-                                            })
-                                        }
-                                    }
-
-                                </ProductConsumer>
-                                    </Row>
+                                        <Row>
+                                        {electronics.map((product)=>(
+                                             <Product key={product.id} product={product}/>
+                                        ))}
+                                        </Row>
                                     </Container>
                                 </CardBody>
 

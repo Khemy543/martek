@@ -11,7 +11,7 @@ import{
     Row,
     Col,
     Form,  Label, Input,
-    Button, InputGroup, InputGroupAddon, InputGroupText
+    Button, InputGroup, InputGroupAddon, InputGroupText, Spinner
 } from "reactstrap";
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
@@ -62,12 +62,6 @@ function AddToShop(){
   
         return(
             <div>
-              <LoadingOverlay 
-                active = {isActive}
-                spinner={<BounceLoader color={'#4071e1'}/>}
-                >
-                
-                
                 <div className="main">
                 <div className="section">
                 <br/>
@@ -154,9 +148,15 @@ function AddToShop(){
 
                   <Row>
                     <Col className="ml-auto mr-auto" md="6">
+                    {isActive?
+                      <Button className="btn-fill" color="info" block disabled>
+                        <Spinner size="sm" />
+                      </Button>
+                      :
                       <Button className="btn-fill" color="info" block type="submit">
                         Next
                       </Button>
+                    }
                     </Col>
                   </Row>
                 </Form>
@@ -165,7 +165,6 @@ function AddToShop(){
           </Container>
                 </div>
                 </div>
-                </LoadingOverlay>
             </div>
         );
     }

@@ -15,18 +15,15 @@ import{
 import axios from "axios";
 import StarRatings from 'react-star-ratings';
 import Slider from "react-slick";
-
-
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
-
-//context
 import { ProductConsumer } from "../context";
-import { DesktopWindows } from "@material-ui/icons";
+import Gallery from 'react-grid-gallery';
+let user = localStorage.getItem('access_token');
+
+
 var settings = {
     dots: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: 5,
     slidesToScroll: 1,
     autoplay:true,
     responsive:[
@@ -39,9 +36,6 @@ var settings = {
         }
       ]
   };
-  
-
-let user = localStorage.getItem('access_token');
 
 function DetailsPage(props){
 
@@ -64,10 +58,12 @@ function DetailsPage(props){
     const [productid, setProductId] = React.useState(props.location.state.id);
    
      const toggle = () => setModal(!modal);
-      
+
+
      const toggleReportModal = ()=>setReportmodal(!reportmodal)
         React.useEffect(()=>{
             setisActive(true);
+            let newImageArray = []
             axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/details")
             .then(res=>{
                 console.log("details",res.data);
@@ -76,8 +72,17 @@ function DetailsPage(props){
                 setCampus_name(res.data.product_owner.campus);
                 setRelated(res.data.related_product);
                 setisActive(false);
-                setImages(res.data.product_images);
-                setFirst(res.data.product_images[0].path)
+                setFirst(res.data.product_images[0].path);
+                let images = res.data.product_images;
+                for(var i=1; i<images.length;i++){
+                    newImageArray.push({
+                        src: `https://backend-api.martekgh.com/${images[i].path}`,
+                        thumbnail: `https://backend-api.martekgh.com/${images[i].path}`,
+                        thumbnailWidth: 180,
+                        thumbnailHeight: 180,
+                    })
+                }
+                setImages(newImageArray)
             })
             .catch(error=>{
                 console.log(error)
@@ -104,10 +109,9 @@ function DetailsPage(props){
             setLoggedin(false)
         }
         },[productid])
-            
-        
-
-        const postReview=()=>{
+       
+        const postReview=(e)=>{
+            e.preventDefault()
             if(reviewAdd !== "" || rating !== 0){
             axios.post("https://backend-api.martekgh.com/api/add-product/reviews",
             {
@@ -121,9 +125,14 @@ function DetailsPage(props){
             )
             .then(res=>{
                 console.log(res.data);
+                var today = new Date();
+                var dd = String(today.getDate()).padStart(2, '0');
+                var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+                var yyyy = today.getFullYear();
+                var date = yyyy + '-' + mm + '-' + dd;
                 if(res.data.status === "saved"){
                     let tempReview = [...reviews];
-                    tempReview.push({rating:rating, review:reviewAdd, user:{name:res.data.name}});
+                    tempReview.push({rating:rating, date:date, review:reviewAdd, user:{name:res.data.name}});
                     console.log(tempReview)
                     setReviews(tempReview);
                     setreviewAdd("");
@@ -162,7 +171,7 @@ function DetailsPage(props){
        const {product_name, price,in_stock,description, product_images} = product;
        const {name ,email,phone,company_name,merchandiser_id} = owner;
        const {campus} = campus_name;
-
+      
         return(
             <div>
                 <div>
@@ -177,17 +186,14 @@ function DetailsPage(props){
                             
                                 <CardBody>
                                     <Row>
-                                        <Col md="7">
-                                        <Card className="card-plain" style={{borderRight:"1px solid #eaeaea"}}>
-                                        {console.log(product_images && product_images[0] && product_images[0].path)}
-                                        <div style={{textAlign:"center"}}>
+                                        <Col md="4">
+                                        <div style={{textAlign:"center", marginTop:"30px"}} >
                                             <img alt= "#" src={`https://backend-api.martekgh.com/${first}`} 
-                                            style={{maxWidth:"180px", height:"185.13px"}}
+                                            style={{width:"200px", height:"200px"}}
                                             />
                                         </div>
-                                        </Card>
                                         </Col>
-                                        <Col md="5">
+                                        <Col md="4">
                                         <Card className="card-plain" style={{borderRight:"1px solid #eaeaea"}}>
                                         <CardTitle style={{padding:"15px 0px 0px 0px", margin:"10px 15px 15px 15px"}}>
 
@@ -221,12 +227,6 @@ function DetailsPage(props){
                                             </Col>
                                             <Col>
                                             <h5 style={{fontSize:"13px", marginTop:"20px",fontWeight:"bold"}}>IN STOCK : {in_stock}</h5>
-                                            </Col>
-                                            <Col>
-                                            {/* <div style={{marginTop:"20px"}}>
-                                            <i className="fa fa-heart-o mr-2" style={{fontWeight:"bold", color:"red"}}/>
-                                            <i className="fa fa-share-alt" style={{fontWeight:"bold", color:"blue"}}/>
-                                            </div> */}
                                             </Col>
                                             </Row>
                                             {in_stock==0?
@@ -302,8 +302,23 @@ function DetailsPage(props){
                                                     <Button color="danger" onClick={()=>setTipmodal(false)}>Close</Button>
                                                 </ModalBody>
                                             </Modal>
-                                </CardTitle>
+                                        </CardTitle>
                                         </Card>
+                                        </Col>
+                                        <Col md="4">
+                                            <Card className="card-plain">
+                                            <CardTitle style={{padding:"0px 0px 0px 0px", margin:"0px 15px 15px 15px"}}>
+                                                <h4 style={{fontSize:"18px", fontWeight:500, }}>SELLER INFORMATION</h4>
+                                                </CardTitle>
+                                            <CardBody>
+                                            <div style={{ margin:"10px"}}>
+                                                <h4 style={{fontWeight:500, fontSize:"16px", margin:"10px 0px"}}>{name || company_name}</h4>
+                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{phone}</h4>
+                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{email}</h4>
+                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{campus}</h4>
+                                            </div>
+                                            </CardBody>
+                                            </Card>
                                         </Col>
 
                                         </Row>
@@ -312,54 +327,49 @@ function DetailsPage(props){
                                
                             </Card>
                         </Row>
-                        <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px", marginTop:"-15px"}}>
-                            <Col md="12">
-                                <Card className="card-plain">
-                                    <CardTitle>
-                                        <h4 style={{fontSize:"18px"}}>DESCRIPTION</h4>
+                        
+                        {/* discription, review, images */}
+                        <Row style={{ marginTop:"-15px"}}>
+                            {/* discription and review */}
+                            <Col md="8" style={{padding:"0px 3px 0px 0px"}}>
+                            <Row>
+                                <Col md="12">
+                                <Card className="card-plain" style={{backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
+                                    <CardTitle style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
+                                        <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>DESCRIPTION</h4>
                                         </CardTitle>
                                     <CardBody>
-                                        <p> 
+                                        <p style={{fontWeight:500, fontSize:"14px", margin:"10px"}}> 
                                         {description}
                                         </p>
                                         </CardBody>
                                     </Card>
-                            </Col>
-                            </Row>
-                            <br/>
-                            <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px", marginTop:"-15px"}}>
-                            <Col md="12">
-                                <Card className="card-plain">
-                                    <CardBody>
-                                        <Container>
-                                    <Row>
-                                        {images.map((value,key)=>(
-                                        <Col lg="3" md="4" sm="6" xs="6">
-                                        <img src={`https://backend-api.martekgh.com/${value.path}`} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
-                                        </Col>
-                                        ))}
-                                    </Row>
-                                    </Container>
-                                    </CardBody>
-                                    </Card>
-                            </Col>
-                            </Row>
-                            
-                            <Row style={{ marginTop:"5px"}}>
-                            <h4 style={{marginBottom:"20px", marginLeft:"20px"}}>REVIEWS</h4>
+
+                                </Col>
+                                {/* reviews start */}
+                                <Col md="12">
+                                <Row style={{marginTop:"-15px"}}>
+                                    <Col md="12">
+                                    <Card className="card-plain" style={{backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
+                                        <CardTitle style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
+                                    <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>CUSTOMER FEEDBACK</h4>   
+                                </CardTitle>
+                                <CardBody>
+                                    
+                                        
                             <Col md="12">
                             {reviews.length <=0 ?
                             <Row>
-                                <Col md="6" className="ml-auto mr-auto">
+                                <Col md="10" className="ml-auto mr-auto">
                                     <h4 style={{textAlign:"center",marginBottom:"10px"}}>No Reviews</h4>
                                 </Col>
                             </Row>
                             :
                             <Row>
-                            <Col md="6" className="ml-auto mr-auto" style={{maxHeight:"50vh",overflowY:"scroll"}}>
+                            <Col md="12" className="ml-auto mr-auto" style={{maxHeight:"35vh", overflowY:"scroll", borderBottom:"1px solid #F1EAE0"}}>
                             {reviews.map(value=>(
-                                <Row style={{borderBottom:"1px solid #F1EAE0",marginBottom:"10px"}}>
-                                <Col md="3" sm="3" xs="3" lg="3" className="ml-auto mr-auto">
+                                <Row style={{marginBottom:"10px"}}>
+                                {/* <Col md="3" sm="3" xs="3" lg="3" className="ml-auto mr-auto">
                                 <div className="avatar">
                                 <img
                                     alt="#"
@@ -368,9 +378,9 @@ function DetailsPage(props){
                                     style={{border:"1px solid #eaeaea"}}
                                 />
                                 </div>
-                                </Col>
-                                <Col md="9" sm="9" xs="9" lg="9" style={{textAlign:"left"}}>
-                                <h5 style={{marginTop:"0px", fontWeight:"bold", marginBottom:"-4px"}}>{value.user.name}</h5>
+                                </Col> */}
+                                <Col md="12" sm="12" xs="12" lg="12" style={{textAlign:"left"}}>
+                                <h5 style={{marginTop:"0px", fontWeight:500, marginBottom:"-4px"}}>{value.user.name}</h5>
                                 <StarRatings
                                     rating={value.rating}
                                     starRatedColor="#D4AF37"
@@ -380,17 +390,18 @@ function DetailsPage(props){
                                     starSpacing="2px"
                                     />
                                 <p style={{fontSize:"10px"}}>{value.date}</p>
-                                <p style={{fontWeight:400}}>{value.review}</p>
+                                <p style={{fontWeight:500}}>{value.review}</p>
                                 </Col>
                                 </Row>
                             ))}
                             </Col>
                             </Row>
                             }
-                            <Row>
+                            <Row style={{marginTop:"10px"}}>
                             {loggedin?
-                                <Col md="6" className="mr-auto ml-auto">
-                                <p style={{marginTop:"5px",marginBottom:"0px"}}>Rate this product</p>
+                                <Col md="12" className="mr-auto ml-auto">
+                                <form  onSubmit={postReview}>
+                                <p style={{marginTop:"5px",marginBottom:"0px", fontWeight:500}}>Rate this product</p>
                                 <StarRatings
                                     rating={rating}
                                     starRatedColor="#CFB53B"
@@ -404,10 +415,11 @@ function DetailsPage(props){
                                 <Input placeholder="Add your comment" type="textarea" value={reviewAdd} onChange={e=>setreviewAdd(e.target.value)} required/>
                                 <InputGroupAddon addonType="append">
                                     <InputGroupText>
-                                    <i className="fa fa-paper-plane-o" onClick={()=>postReview()} style={{cursor:"pointer"}}/>
+                                        <Button type="submit"><i className="fa fa-paper-plane-o" style={{cursor:"pointer"}}/></Button>
                                     </InputGroupText>
                                 </InputGroupAddon>
                                 </InputGroup>
+                                </form>
                                 
                                 </Col>
                             :
@@ -415,40 +427,52 @@ function DetailsPage(props){
                                 
                             </Row>
                             </Col>
+                                </CardBody>
+                            </Card>
+                            </Col>
                             </Row>
+                                </Col>
+                            </Row>
+                            </Col>
+                            {/* images */}
+                            <Col md="4" style={{padding:"0px 0px 0px 3px"}}>
+                                <Card className="card-plain" style={{backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
+                                    <CardTitle style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
+                                        <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>IMAGES</h4>
+                                        </CardTitle>
+                                    <CardBody>
+                                    <Gallery images={images}/>
+                                    </CardBody>
+                                    </Card>
+                            </Col>
                             
+                            </Row>
 
-                            <Row style={{marginTop:"20px"}}> 
+                            {/* related items */}
+                            <Row style={{marginTop:"-15px"}}> 
                         <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
-                        <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
-                            <h3 style={{borderBottom:"1px solid #eaeaea", fontWeight:500}} className="category">
-                                <i className="fa fa-gg" style={{color:"#ff8d00"}}/> RELATED ITEMS
-                                
-                                </h3>
+                        <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px", borderBottom:"1px solid #eaeaea"}}>
+                            <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}} >
+                                RELATED ITEMS
+                                </h4>
                             </CardTitle>
-                    
-                                <CardBody>
+                            <CardBody>
                                     <Container>
                                     <Row>
                                         <Col md="12" style={{padding:"0px 0px 0px 0px"}}>
-                                        <Slider {...settings} infinite={related.length>3}>
+                                        <Slider {...settings} infinite={related.length>5}>
                                         {related.map((value,key)=>(
-                                            <div>
-                                                <Col>
-                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px", cursor:"pointer"}}>
-                                                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
-                                                {value.product_name}
-                                                    </CardTitle>
-                                                    <br/>
-                                                    <div style={{textAlign:"center"}} onClick={() =>{
-                                                        props.history.push("/user/product-details",{id:value.id})
-                                                        window.location.reload("/")
-                                                        }}>
-                                                    <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"185.13px", width:"180px"}}/>
+                                            <div key={key}>
+                                                <Col style={{padding:"0px 3px 0px 3px"}}>
+                                                <div style={{textAlign:"center"}}>
+                                                    <div style={{textAlign:"center"}} onClick={() => this.props.history.push("/user/product-details",{id:value.id})}>
+                                                    <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"185.13px", width:"180px", borderRadius:'5px'}}/>
                                                     </div>
-                                                    <br/>
-                                                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ {value.price}</CardBody>
-                                                </Card>
+                                                    <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>
+                                                    {value.product_name}
+                                                    </h3>
+                                                    <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:600, textAlign:"left", marginTop:"3px"}}>GH¢ {value.price}</h3>
+                                                </div>
                                                 </Col>
                                             </div>
                                             ))}
@@ -463,7 +487,7 @@ function DetailsPage(props){
                             </Row>
 
 
-                            {loggedin?
+                            {/* {loggedin?
                             <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px",marginTop:"35px"}}>
                             <Col md="10">
                                 <Card className="card-plain">
@@ -480,7 +504,7 @@ function DetailsPage(props){
                             </Row>
                             :
                             <div></div>
-                            }
+                            } */}
 
                         </Container>
                             )}

@@ -98,11 +98,11 @@ React.useEffect(()=>{
   )
   .then(res=>{
     console.log(res.data)
-      if(res.data!== null){
         localStorage.setItem("user_id",res.data.id);
-        localStorage.setItem('validity',res.data.valid_id)
         setName(res.data.name);
-      }
+        if(res.data.valid_id === null){
+          localStorage.setItem('validity',false)
+        }
   }).catch(error=>{
   });
 

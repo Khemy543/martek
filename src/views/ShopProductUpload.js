@@ -4,7 +4,7 @@ import{
     Col,
     Row,
     Button,
-    Form, Modal, ModalBody,Progress
+    Form, Modal, ModalBody,Progress, Spinner
 } from "reactstrap";
 import axios from "axios";
 // core components
@@ -37,6 +37,7 @@ class ShopUploadImages extends React.Component{
 
  handleSubmit=(e)=>{
     e.preventDefault();
+    this.setState({isActive:true})
     let bodyFormData = new FormData();
     this.state.pictures.forEach((file) => {
         bodyFormData.append('product_images[]', file);
@@ -54,19 +55,16 @@ class ShopUploadImages extends React.Component{
         }
     }
     }).then(res=>{
-        this.setState({modal:true, isActive:false, percentage:100})
+        this.setState({modal:true, percentage:100})
     }).catch(error=>{
-        console.log(error.response.data)
+        console.log(error);
+        this.setState({isActive:false})
     })
 } 
     
 render(){
     return(
         <div>
-             <LoadingOverlay 
-                active = {this.state.isActive}
-                spinner={<BounceLoader color={'#4071e1'}/>}
-                >
             <div className="main">
                 <div className="section">
                     <br/>
@@ -98,6 +96,16 @@ render(){
                             <Progress value={this.state.percentage} />
                             </div>
                             }
+                            {this.state.isActive?
+                                <Button
+                                color="info"
+                                block
+                                style={{marginTop:"20px"}}
+                                disabled={true}
+                                >
+                                <Spinner size="sm" />
+                                </Button>
+                                :
                                 <Button
                                 color="info"
                                 block
@@ -105,14 +113,14 @@ render(){
                                 disabled={!this.state.activateButton}
                                 type="submit"
                                 >upload
-                                    </Button>
+                                </Button>
+                            }
                         </Form>
                         </Col>
                         </Row>
                         </Container>
                     </div>
                 </div>
-                </LoadingOverlay>
                 <Modal isOpen={this.state.modal} className="login-modal">
       
                 <ModalBody style={{color:"white", fontSize:"14px", fontWeight:500}}>

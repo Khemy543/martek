@@ -19,33 +19,19 @@ class Product extends React.Component{
     render(){
         const {id , product_name , product_image, price }= this.props.product;
                 return(
-                <Col lg="3" md="4" sm="6" xs="6" style={{padding:"0px 0px 0px 0px"}}>
-                    <Card style={{margin:"0px 0px 0px 0px", padding:"0px 20px 0px 20px", transition:"all 1s linear", background:'white'}} className="card-plain" id="product-card">
-                        <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px", overflow:"hidden", height:"20px"}}>
-                            {product_name}
-                        </CardTitle>
-                        <br/>
-                        <ProductConsumer>
-                            {(value=>(
-                                <div>
-                                <div style={{textAlign:"center"}} className="first-img" onClick={() => history.push("/user/product-details",{id:id})}>
-                                <img alt="#" src={`https://backend-api.martekgh.com/${product_image[0].path}`} style={{maxHeight:"185.13px", maxWidth:"100px"}}/>  
-                                </div>
-                                
-                        <br/>
-                        
-                        <CardBody style={{padding:"0px 0px 0px 0px"}}>
-                            <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", marginRight:"30px"}}> ¢ {price}</h3>
+                <Col lg="2" md="2" sm="6" xs="6" style={{padding:"0px 3px 0px 3px"}}>
+                        <div style={{textAlign:"center", cursor:"pointer"}}>
+                        <div>
+                            <div onClick={() => history.push("/user/product-details",{id:id})}>
+                            <img alt="#" src={`https://backend-api.martekgh.com/${product_image[0].path}`} style={{width:"180px", height:"180px", borderRadius:"5px"}}/>  
+                            </div>
                             
-                            
-                                                                
-                            </CardBody>
-                                </div>
-                            ))}
-                        </ProductConsumer>
-                        
-                        
-                        </Card>
+                                <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left", overflow:"hidden",  height:"20px"}}>
+                                    {product_name}
+                                </h3>
+                                <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:600, marginRight:"30px", textAlign:"left", marginTop:"3px"}}>GH¢ {price}</h3>   
+                        </div>
+                        </div>
                 </Col>
                 
         );
