@@ -1,4 +1,5 @@
 import React from "react";
+import { Container } from "reactstrap";
 import CartItem from "./CartItem";
 
 
@@ -7,12 +8,12 @@ export default function CartList({value}){
     return(
     
             <div>
-            <div className="container-fluid">
-                {cart.map(items=>{
-                    return <CartItem key={items.id} items={items} value={value}/>
-                })}
-               
-                </div>
+                <Container>
+                    {cart.map(items=>{
+                        return <CartItem key={items.id} items={items} value={value}/>
+                    })}
+                    
+                </Container>
             </div>
         
     );

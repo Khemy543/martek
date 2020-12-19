@@ -35,19 +35,19 @@ class UploadShopAvatar extends React.Component{
 
     onDropAvatar(picture) {
         this.setState({
-            avatar: this.state.avatar.concat(picture),
+            avatar:picture,
             activateButton:true
         });
     }
     onDropCover(picture) {
         this.setState({
-            cover:this.state.cover.concat(picture),
+            cover:picture,
             activateButton2:true
         });
     }
     onDropCard(picture) {
         this.setState({
-            valid_id:this.state.valid_id.concat(picture),
+            valid_id:picture,
             activateButton3:true
         });
     }
@@ -109,7 +109,7 @@ class UploadShopAvatar extends React.Component{
                 withPreview={true}
                 buttonText='Shop Avatar'
                 onChange={this.onDropAvatar}
-                imgExtension={['.jpg',  '.png','.jpeg']}
+                imgExtension={['.jpg', '.png','.jpeg', '.jfif', '.heic']}
                 maxFileSize={5242880}
                 value={this.state.activateButton}
                 singleImage={true}
@@ -125,7 +125,7 @@ class UploadShopAvatar extends React.Component{
                     withPreview={true}
                     buttonText='Cover Photo'
                     onChange={this.onDropCover}
-                    imgExtension={['.jpg','.png', '.jpeg']}
+                    imgExtension={['.jpg','.png','.jpeg', '.jfif', '.heic']}
                     maxFileSize={5242880}
                     value={this.state.activateButton2}
                     singleImage={true}
@@ -142,7 +142,7 @@ class UploadShopAvatar extends React.Component{
                     buttonText='Valid ID Card'
                     onChange={this.onDropCard}
                     label="Max file size:5mb accept:jpg,png,jpeg"
-                    imgExtension={['.jpg','.png', '.jpeg']}
+                    imgExtension={['.jpg','.png', '.jpeg', '.jfif', '.heic']}
                     fileSizeError="file size is too big"
                     fileTypeError="is not supported"
                     value={this.state.activateButton3}

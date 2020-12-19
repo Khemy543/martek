@@ -397,3 +397,7 @@
  .scroll::-webkit-scrollbar-thumb {
      border-radius: 10px;
  } */
+
+ .card-plain .img{
+     object-fit: cover;
+ }

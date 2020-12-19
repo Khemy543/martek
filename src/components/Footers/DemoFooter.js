@@ -42,7 +42,7 @@ function DemoFooter(props) {/*
         </Nav>
         </Col>
         </Row>
-        <Row style={{marginTop:"-30px"}}>
+        <Row style={{marginTop:"-20px"}}>
         <Col xs="6" md="4" lg="4" xl="4" sm="6">
         <Nav>
           <NavItem>
@@ -62,6 +62,11 @@ function DemoFooter(props) {/*
               {props.prop.location.pathname === "/user/shop-view"?
               <li>
               <a style={{cursor:"pointer"}} onClick={()=>props.prop.history.push("/user/report-shop",{id:props.prop.location.state.id})}>Report This Shop</a>
+              </li>
+              :
+              props.prop.location.pathname === '/user/product-details'?
+              <li>
+              <a style={{cursor:"pointer"}} onClick={()=>props.prop.history.push("/user/report-product",{id:props.prop.location.state.id})}>Report This Product</a>
               </li>
               :
               <></>

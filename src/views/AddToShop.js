@@ -81,7 +81,7 @@ function AddToShop(){
                             <i className="nc-icon nc-layout-11" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Item Name" type="text" name="product_name" value={product_name} onChange={e => setProduct_name(e.target.value)}/>
+                        <Input placeholder="Item Name" type="text" name="product_name" value={product_name} onChange={e => setProduct_name(e.target.value)} required/>
                       </InputGroup>
                     </Col>
                     <Col md="6">
@@ -92,7 +92,7 @@ function AddToShop(){
                             <i className="nc-icon nc-money-coins" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Price" type="number" name="price" value={price} onChange={e => setPrice(e.target.value)}/>
+                        <Input placeholder="Price" type="number" name="price" value={price} onChange={e => setPrice(e.target.value)} required/>
                       </InputGroup>
                     </Col>
                   </Row>
@@ -124,7 +124,7 @@ function AddToShop(){
                             <i className="nc-icon nc-cart-simple" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Quantity" type="number" name="in_stock" value={in_stock} onChange={e => setIn_stock(e.target.value)}/>
+                        <Input placeholder="Quantity" type="number" name="in_stock" value={in_stock} onChange={e => setIn_stock(e.target.value)} required/>
                       </InputGroup>
                      
                       </Col>

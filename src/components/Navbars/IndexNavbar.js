@@ -48,7 +48,6 @@ import history from "../../history.js";
 
 
 function IndexNavbar(props) {
-  //const [navbarColor, setNavbarColor] = React.useState("");
   const [navbarCollapse, setNavbarCollapse] = React.useState(false);
   const [campusCollapse, setCampusCollapse] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
@@ -467,7 +466,7 @@ React.useEffect(()=>{
                 setNavbarCollapse(false);
               }}
               >
-              <i className="fa fa-tablet mr-3"/> My Products <Badge color="info">{value.followShops.length}</Badge>
+              <i className="fa fa-tablet mr-3"/> My Products
               </NavLink>
             </NavItem>
             <NavItem>

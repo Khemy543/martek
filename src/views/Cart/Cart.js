@@ -10,6 +10,7 @@ import CartTotal from "./CartTotal";
 
 //context
 import { ProductConsumer } from "../../context.js";
+import { Container } from "reactstrap";
 
 class Cart extends React.Component{
     state={
@@ -43,10 +44,13 @@ class Cart extends React.Component{
                                 return(
                                     
                                     <React.Fragment>
+                                        <Container>
+                                        <h5 style={{marginBottom:"10px", fontSize:"14px", fontWeight:500}}>MY CART ({value.cart.length} ITEMS)</h5>
+                                        </Container>
                                         <CartColumns />
                                         <CartList value={value}/>
                                         <CartTotal value={value}/>
-                                        </React.Fragment>
+                                    </React.Fragment>
                                 )
                                 
                                     }}}

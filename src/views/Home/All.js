@@ -94,9 +94,7 @@ function All({history}){
                 <br/>
                 <div style={{marginTop:"-15px", background:"#f7f7f7"}}>
                 <div className="section" style={{marginTop:"-90px"}}>
-                <CarouselView />
-                
-                    
+                    <CarouselView />
                     <Container>
                         
                         <div className="nav-tabs-navigation" style={{marginTop:"10px", marginBottom:"-4px"}}>
@@ -142,21 +140,21 @@ function All({history}){
                             <TabPane tabId="1" id="home">
                             <Container>
                             <Row>
-                        <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
+                            <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                             <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
                             <Row style={{borderBottom:"1px solid #eaeaea"}}>
                                 <Col sm="9" md="9" lg="9" xl="9" xs="9">
                                 <h3 style={{fontWeight:500}} className="category">
-                                    <i className="fa fa-gg" style={{color:"#ff8d00"}}/> PHONES & ACCESSORIES
+                                    <i className="fa fa-gg mr-1" style={{color:"#ff8d00"}}/> Phones & Accessories
                                     
                                 </h3>
                                 </Col>
                                 <Col sm="3" md="3" lg="3" xl="3" xs="3">
                                 <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}} 
                                 onClick = {()=>history.push("/user/categories",{category_id:2, category_name:"Phones and Accessories", image:"2.jpeg"})}
-                                >ALL <i className="fa fa-chevron-right"/></p>
+                                >See All <i className="fa fa-chevron-right"/></p>
                                 </Col>
-                            </Row>
+                                </Row>
                                 </CardTitle>
                                 <CardBody>
                                     <Container>
@@ -165,8 +163,8 @@ function All({history}){
                                             <Product key={product.id} product={product}/>
                                         ))}
                                         </Row>
-                                    </Container>
-                                    </CardBody>
+                                </Container>
+                                </CardBody>
     
                             </Card>
                             </Row>
@@ -175,7 +173,7 @@ function All({history}){
                         <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                         <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
                             <h3 style={{borderBottom:"1px solid #eaeaea", fontWeight:500}} className="category">
-                                <i className="fa fa-gg" style={{color:"#ff8d00"}}/> NEW THIS WEEK
+                                <i className="fa fa-gg mr-1" style={{color:"#ff8d00"}}/> New This Week
                                 
                                 </h3>
                             </CardTitle>
@@ -216,14 +214,14 @@ function All({history}){
                             <Row style={{borderBottom:"1px solid #eaeaea"}}>
                                 <Col sm="9" md="9" lg="9" xl="9" xs="9">
                                 <h3 style={{fontWeight:500}} className="category">
-                                    <i className="fa fa-gg" style={{color:"#ff8d00"}}/> FASHION
+                                    <i className="fa fa-gg mr-1" style={{color:"#ff8d00"}}/> Fashion
                                     
                                 </h3>
                                 </Col>
                                 <Col sm="3" md="3" lg="3" xl="3" xs="3">
                                 <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}}
                                 onClick = {()=>history.push("/user/categories",{category_id:3, category_name:"Fashion", image:"3.jpeg"})}
-                                >ALL <i className="fa fa-chevron-right"/></p>
+                                >See All <i className="fa fa-chevron-right"/></p>
                                 </Col>
                             </Row>
                                 </CardTitle>
@@ -249,14 +247,14 @@ function All({history}){
                             <Row style={{borderBottom:"1px solid #eaeaea"}}>
                                 <Col sm="9" md="9" lg="9" xl="9" xs="9">
                                 <h3 style={{fontWeight:500}} className="category">
-                                    <i className="fa fa-gg" style={{color:"#ff8d00"}}/> ELECTRONICS & APPLIANCES
+                                    <i className="fa fa-gg" style={{color:"#ff8d00"}}/> Electronics & Appliances
                                     
                                 </h3>
                                 </Col>
                                 <Col sm="3" md="3" lg="3" xl="3" xs="3">
                                 <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}}
                                 onClick = {()=>history.push("/user/categories",{category_id:1, category_name:"Electronics", image:"1.jpeg"})}
-                                >ALL <i className="fa fa-chevron-right"/></p>
+                                >See All <i className="fa fa-chevron-right"/></p>
                                 </Col>
                             </Row>
                                 </CardTitle>

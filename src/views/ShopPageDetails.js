@@ -14,56 +14,71 @@ import{
 // core components
 import axios from 'axios';
 //import history from "../history.js";
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
+import Gallery from 'react-grid-gallery';
 import StarRatings from 'react-star-ratings';
 
 //context
 import { ProductConsumer } from "../context";
 
-function ShopDetailsPage(props){
+function ShopPageDetails(props){
     const [popoverOpen, setPopoverOpen] = React.useState(false);
+    const [campus_name, setCampus_name] = React.useState("");
     const [product, setProduct] = React.useState([]);
     const [owner ,setOwner] = React.useState([]);
     const [isActive, setIsActive] = React.useState(false);
     const [reviews,setReviews] = React.useState([]);
     const [average,setAverage] = React.useState(0);
-    const [images,setImages] = React.useState([]);
-    const [first, setFirseImage] = React.useState(null);
+    const [images, setImages] = React.useState([]);
+    const [first, setFirst] = React.useState(null)
+    const [productid, setProductId] = React.useState(props.location.state.id);
+   
     
-    
-    let merchandiser = localStorage.getItem("shop_access_token")
+let merchandiser = localStorage.getItem("shop_access_token")
 
     React.useEffect(()=>{
-          setIsActive(true);
-          axios.get("https://backend-api.martekgh.com/api/product/"+props.location.state.id+"/details")
-          .then(res=>{
-              console.log(res.data);
-              setProduct(res.data);
-              setOwner(res.data.product_owner);
-              setImages(res.data.product_images);
-              setFirseImage(res.data.product_images[0].path)
-              setIsActive(false)
-          })
-          .catch(error=>{
-          });
+        setIsActive(true);
+            let newImageArray = []
+            axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/details")
+            .then(res=>{
+                console.log("details",res.data);
+                setProduct(res.data);
+                setOwner(res.data.product_owner);
+                setCampus_name(res.data.product_owner.campus);
+                setIsActive(false);
+                setFirst(res.data.product_images[0].path);
+                let images = res.data.product_images;
+                for(var i=1; i<images.length;i++){
+                    newImageArray.push({
+                        src: `https://backend-api.martekgh.com/${images[i].path}`,
+                        thumbnail: `https://backend-api.martekgh.com/${images[i].path}`,
+                        thumbnailWidth: 180,
+                        thumbnailHeight: 180,
+                    })
+                }
+                setImages(newImageArray)
+            })
+            .catch(error=>{
+                console.log(error)
+            });
 
-
-          axios.get("https://backend-api.martekgh.com/api/product/"+props.location.state.id+"/reviews")
+            axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/reviews")
             .then(res=>{
                 console.log(res.data);
                 setReviews(res.data.product_reviews);
-                setAverage(Math.round(res.data.average_rating))
+                if(res.data.average_rating !== null){
+                     setAverage(Math.round(res.data.average_rating))
+                }
 
             })
             .catch(error=>{
                 console.log(error)
             })
         
-        },[props.location.state.id]);
+        },[]);
 
     const toggle = () => setPopoverOpen(!popoverOpen);
 
+    
     const handleDelete=()=>{
         setIsActive(true)
         axios.delete("https://backend-api.martekgh.com/api/e-trader/product/"+props.location.state.id+"/delete",{
@@ -78,18 +93,13 @@ function ShopDetailsPage(props){
         })
     }
 
-
-
     const {product_name, price, in_stock,description} = product;
-    const {company_name} = owner;
+    const {name ,email,phone,company_name,merchandiser_id} = owner;
+    const {campus} = campus_name;
     
 
         return(
             <div>
-                 <LoadingOverlay 
-                        active = {isActive}
-                        spinner={<BounceLoader color={'#4071e1'}/>}
-                        >
                 <div className="main">
                     <br/>
                     <br/>
@@ -100,36 +110,34 @@ function ShopDetailsPage(props){
                             {value =>(
                                     <Container>
                                     <Row>
-                        <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
+                                <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                             
                                 <CardBody>
                                     <Row>
-                                        <Col md="7">
-                                        <Card className="card-plain" style={{borderRight:"1px solid #eaeaea"}}>
-                                        <div style={{textAlign:"center"}}>
+                                        <Col md="4">
+                                        <div style={{textAlign:"center", marginTop:"30px"}} >
                                             <img alt= "#" src={`https://backend-api.martekgh.com/${first}`} 
-                                            style={{maxWidth:"180px", height:"185.13px"}}
+                                            style={{width:"200px", height:"200px"}}
                                             />
                                         </div>
-                                        </Card>
                                         </Col>
-                                        <Col md="5">
+                                        <Col md="4">
                                         <Card className="card-plain" style={{borderRight:"1px solid #eaeaea"}}>
                                         <CardTitle style={{padding:"15px 0px 0px 0px", margin:"10px 15px 15px 15px"}}>
-                                            <Row>
-                                                <Col>
-                                                <h3 className="category" style={{marginTop:"5px", marginLeft:"20px"}}>
-                                                    {product_name}
-                                                    </h3>
-                                                    <h4 style={{fontSize:"14px", marginLeft:"20px", marginTop:"3px"}}>{company_name} | share</h4>
-                                                    <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>¢ {price}</h4>
-                                                    <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>in stock : {in_stock}</h4>
-                                                    {/* <div style={{float:'right', marginTop:"-15px", marginRight:"40%"}}>
-                                                    <i className="fa fa-heart-o mr-2" style={{fontWeight:"bold", color:"red"}}/>
-                                                    <i className="fa fa-share-alt" style={{fontWeight:"bold", color:"blue"}}/>
-                                                    </div> */}
-                                                </Col>
-                                                <Col  md="6" sm="6" xs="6" lg="6">
+                                        <h3 className="category" style={{marginTop:"5px", marginLeft:"20px"}}>
+                                            {product_name}
+                                        </h3>
+                                        <Row>
+                                            <Col>
+                                            <h4 style={{fontSize:"14px", marginLeft:"20px", marginTop:"3px"}}>{company_name} | share</h4>
+                                            <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>¢ {price}</h4>
+                                            <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>in stock : {in_stock}</h4>
+                                            {/* <div style={{float:'right', marginTop:"-15px", marginRight:"40%"}}>
+                                            <i className="fa fa-heart-o mr-2" style={{fontWeight:"bold", color:"red"}}/>
+                                            <i className="fa fa-share-alt" style={{fontWeight:"bold", color:"blue"}}/>
+                                            </div> */}
+                                            </Col>
+                                            <Col  md="6" sm="6" xs="6" lg="6" className="mt-5">
                                                 <StarRatings
                                                 rating={average}
                                                 starRatedColor="#CFB53B"
@@ -139,8 +147,7 @@ function ShopDetailsPage(props){
                                                 starSpacing="2px"
                                                 />
                                                 </Col>
-                                            </Row>
-                                           
+                                        </Row>
                                            
                                             <Button
                                             style={{ marginRight:"30px", marginTop:"20px"}}
@@ -168,6 +175,21 @@ function ShopDetailsPage(props){
                                         </Popover>
                                 </CardTitle>
                                         </Card>
+                                        </Col> 
+                                        <Col md="4">
+                                            <Card className="card-plain">
+                                            <CardTitle style={{padding:"0px 0px 0px 0px", margin:"0px 15px 15px 15px"}}>
+                                                <h4 style={{fontSize:"18px", fontWeight:500, }}>SELLER INFORMATION</h4>
+                                                </CardTitle>
+                                            <CardBody>
+                                            <div style={{ margin:"10px"}}>
+                                                <h4 style={{fontWeight:500, fontSize:"16px", margin:"10px 0px"}}>{name || company_name}</h4>
+                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{phone}</h4>
+                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{email}</h4>
+                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{campus}</h4>
+                                            </div>
+                                            </CardBody>
+                                            </Card>
                                         </Col>
 
                                         </Row>
@@ -176,63 +198,50 @@ function ShopDetailsPage(props){
                                
                             </Card>
                         </Row>
-                        <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
-                            <Col md="12">
-                                <Card className="card-plain">
-                                    <CardTitle>
-                                        <h4 style={{fontSize:"18px"}}>DESCRIPTION</h4>
+                            
+                        {/* discription, review, images */}
+                        <Row style={{ marginTop:"-15px"}}>
+                            {/* discription and review */}
+                            <Col md="8" style={{padding:"0px 3px 0px 0px"}}>
+                            <Row>
+                                <Col md="12">
+                                <Card className="card-plain" style={{backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
+                                    <CardTitle style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
+                                        <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>DESCRIPTION</h4>
                                         </CardTitle>
                                     <CardBody>
-                                        <p> 
-                                            {description}
+                                        <p style={{fontWeight:500, fontSize:"14px", margin:"10px"}}> 
+                                        {description}
                                         </p>
                                         </CardBody>
                                     </Card>
-                            </Col>
-                            </Row>
-                            <br/>
-                            <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
-                            <Col md="12">
-                                <Card className="card-plain">
-                                    <CardBody>
-                                    <Row>
-                                        {images.map((value,key)=>(
-                                        <Col lg="3" md="4" sm="6" xs="6">
-                                        <img src={`https://backend-api.martekgh.com/${value.path}`} alt="#" style={{maxWidth:"180px", maxHeight:"185.13px"}}/>
-                                        </Col>
-                                        ))}
-                                    </Row>
-                                    </CardBody>
-                                    </Card>
-                            </Col>
-                            </Row>
 
-                            <Row style={{ marginTop:"20px"}}>
-                            <h4 style={{marginBottom:"20px", marginLeft:"20px"}}>REVIEWS</h4>
+                                </Col>
+                                {/* reviews start */}
+                                <Col md="12">
+                                <Row style={{marginTop:"-15px"}}>
+                                    <Col md="12">
+                                    <Card className="card-plain" style={{backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
+                                        <CardTitle style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
+                                    <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>CUSTOMER FEEDBACK</h4>   
+                                </CardTitle>
+                                <CardBody>
+                                    
+                                        
                             <Col md="12">
                             {reviews.length <=0 ?
                             <Row>
-                                <Col md="6" className="ml-auto mr-auto">
+                                <Col md="10" className="ml-auto mr-auto">
                                     <h4 style={{textAlign:"center",marginBottom:"10px"}}>No Reviews</h4>
                                 </Col>
                             </Row>
                             :
                             <Row>
-                            <Col md="6" className="ml-auto mr-auto" style={{maxHeight:"50vh",overflowY:"scroll"}}>
+                            <Col md="12" className="ml-auto mr-auto" style={{maxHeight:"35vh", overflowY:"scroll", borderBottom:"1px solid #F1EAE0"}}>
                             {reviews.map(value=>(
-                                <Row style={{borderBottom:"1px solid #F1EAE0",marginBottom:"10px"}}>
-                                <Col md="3" sm="3" xs="3" lg="3" className="ml-auto mr-auto">
-                                <div className="avatar">
-                                <img
-                                    alt="#"
-                                    className="img-circle img-no-padding img-responsive"
-                                    src={require("../assets/img/new_logo.png")}
-                                    style={{border:"1px solid #eaeaea"}}
-                                />
-                                </div>
-                                </Col>
-                                <Col md="9" sm="9" xs="9" lg="9" style={{textAlign:"left"}}>
-                                <h5 style={{marginTop:"0px", fontWeight:"bold", marginBottom:"-4px"}}>{value.user.name}</h5>
+                                <Row style={{marginBottom:"10px"}}>
+                                <Col md="12" sm="12" xs="12" lg="12" style={{textAlign:"left"}}>
+                                <h5 style={{marginTop:"0px", fontSize:"16px", fontWeight:500, marginBottom:"-4px"}}>{value.review}</h5>
                                 <StarRatings
                                     rating={value.rating}
                                     starRatedColor="#D4AF37"
@@ -241,8 +250,7 @@ function ShopDetailsPage(props){
                                     starDimension="15px"
                                     starSpacing="2px"
                                     />
-                                <p style={{fontSize:"10px"}}>08/15/2020</p>
-                                <p style={{fontWeight:400}}>{value.review}</p>
+                                <p style={{fontSize:"11px",fontWeight:400}}>{value.date} by {value.user.name}</p>
                                 </Col>
                                 </Row>
                             ))}
@@ -250,8 +258,26 @@ function ShopDetailsPage(props){
                             </Row>
                             }
                             </Col>
+                                </CardBody>
+                            </Card>
+                            </Col>
                             </Row>
+                                </Col>
+                            </Row>
+                            </Col>
+                            {/* images */}
+                            <Col md="4" style={{padding:"0px 0px 0px 3px"}}>
+                                <Card className="card-plain" style={{backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
+                                    <CardTitle style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
+                                        <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>IMAGES</h4>
+                                        </CardTitle>
+                                    <CardBody>
+                                    <Gallery images={images}/>
+                                    </CardBody>
+                                    </Card>
+                            </Col>
                             
+                            </Row>
                             </Container>
 
                                 )}
@@ -260,9 +286,8 @@ function ShopDetailsPage(props){
                         
                         </div>
                     </div>
-                    </LoadingOverlay>
                 </div>
         );
     
 }
-export default ShopDetailsPage;
+export default ShopPageDetails;

@@ -137,6 +137,7 @@ isTokenExpired() {
         this.setState({spinner:true})
         axios.get("https://backend-api.martekgh.com/api/following-shops",{headers:{'Authorization':`Bearer ${user}`}})
         .then(res=>{
+            console.log(res.data)
             return(this.setState({followShops:res.data, spinner:false}))
             
         })
@@ -377,21 +378,6 @@ setProducts =() =>{
     ()=>{this.setProducts();}
     );
     }
-    //addTotals
-    /* addTotal = (id)=>{
-        let SubTotal=0;
-        this.state.cart.map(item=>(SubTotal += item.total))
-        const tempTax = SubTotal * 0.1;
-        const Tax = parseFloat(tempTax.toFixed(2));
-        const total = SubTotal + Tax;
-        this.setState(()=>{
-            return{
-                cartSubTotal: SubTotal,
-                cartTax:Tax,
-                cartTotal:total
-            }
-        })
-    } */
     //get Items
     getItems = id =>{
         const AllProducts = [...this.state.setElectronics, ...this.state.setFoods,...this.state.setPhones,...this.state.setBeauty,...this.state.setEntertianment, ...this.state.setFashion,...this.state.setGames,...this.state.setHome,...this.state.setOthers,...this.state.setSkills];

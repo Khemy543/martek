@@ -1,16 +1,15 @@
 import React from "react";
+import {
+    Container
+} from 'reactstrap'
 
 export default function CartColumns(){
     return(
         <div >
-            <div className="contianer-fluid text-center d-none d-lg-block">
+            <Container className="d-none d-lg-block">
                 <div className="row" style={{marginBottom:"15px"}}>
-                    <div className="col-10 mx-auto col-lg-2">
-                    <p className="text-uppercase" style={{fontWeight:"bold"}}>Products</p>
-                    </div>
-
-                    <div className="col-10 mx-auto col-lg-2">
-                    <p className="text-uppercase"style={{fontWeight:"bold"}}>name of Product</p>
+                    <div className="col-10 mx-auto col-lg-6">
+                    <p className="text-uppercase" style={{fontWeight:"bold"}}>Item</p>
                     </div>
 
                     <div className="col-10 mx-auto col-lg-2">
@@ -22,15 +21,12 @@ export default function CartColumns(){
                     </div>
 
                     <div className="col-10 mx-auto col-lg-2">
-                    <p className="text-uppercase"style={{fontWeight:"bold"}}>remove</p>
-                    </div>
-                    <div className="col-10 mx-auto col-lg-2">
-                    <p className="text-uppercase"style={{fontWeight:"bold"}}>total</p>
+                    <p className="text-uppercase"style={{fontWeight:"bold"}}>subtotal</p>
                     </div>
 
                     
                 </div>
-                </div>
+                </Container>
         </div>
     );
 }

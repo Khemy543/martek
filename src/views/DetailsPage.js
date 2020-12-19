@@ -36,7 +36,7 @@ var settings = {
         }
       ]
   };
-
+  
 function DetailsPage(props){
 
     const [modal, setModal]= React.useState(false);
@@ -48,9 +48,7 @@ function DetailsPage(props){
     const [reviewAdd, setreviewAdd] = React.useState("");
     const [loggedin, setLoggedin] = React.useState(false);
     const [rating, setRating] = React.useState(0);
-    const [reportmodal, setReportmodal] = React.useState(false);
     const [average, setAverage] = React.useState(0);
-    const [message, setMessage] = React.useState("");
     const [tipmodal, setTipmodal] = React.useState(false);
     const [related, setRelated] = React.useState([]);
     const [images, setImages] = React.useState([]);
@@ -59,8 +57,14 @@ function DetailsPage(props){
    
      const toggle = () => setModal(!modal);
 
+     const styleSmall=()=>{
+        return ({
+           height:"170px",
+           width:"170px",
+           cursor:"zoom-in"
+        });
+     }
 
-     const toggleReportModal = ()=>setReportmodal(!reportmodal)
         React.useEffect(()=>{
             setisActive(true);
             let newImageArray = []
@@ -78,8 +82,6 @@ function DetailsPage(props){
                     newImageArray.push({
                         src: `https://backend-api.martekgh.com/${images[i].path}`,
                         thumbnail: `https://backend-api.martekgh.com/${images[i].path}`,
-                        thumbnailWidth: 180,
-                        thumbnailHeight: 180,
                     })
                 }
                 setImages(newImageArray)
@@ -152,20 +154,9 @@ function DetailsPage(props){
             setRating(newRating)
           }
 
-
-        const handlePostReport=()=>{
-            axios.post("https://backend-api.martekgh.com/api/add-product/report",
-            {report:message, product_id:props.location.state.id},
-            { headers:{"Authorization":`Bearer ${user}`}})
-            .then(res=>{
-                console.log(res.data);
-                if(res.data.status == "saved"){
-                    setReportmodal(true)
-                }
-            })
-            .catch(error=>{
-                console.log(error)
-            })
+        const Reload=(id)=>{
+            props.history.push("/user/product-details",{id:id});
+            window.location.reload('/')
         }
 
        const {product_name, price,in_stock,description, product_images} = product;
@@ -380,7 +371,7 @@ function DetailsPage(props){
                                 </div>
                                 </Col> */}
                                 <Col md="12" sm="12" xs="12" lg="12" style={{textAlign:"left"}}>
-                                <h5 style={{marginTop:"0px", fontWeight:500, marginBottom:"-4px"}}>{value.user.name}</h5>
+                                <h5 style={{marginTop:"0px", fontSize:"16px", fontWeight:500, marginBottom:"-4px"}}>{value.review}</h5>
                                 <StarRatings
                                     rating={value.rating}
                                     starRatedColor="#D4AF37"
@@ -389,8 +380,7 @@ function DetailsPage(props){
                                     starDimension="15px"
                                     starSpacing="2px"
                                     />
-                                <p style={{fontSize:"10px"}}>{value.date}</p>
-                                <p style={{fontWeight:500}}>{value.review}</p>
+                                <p style={{fontSize:"11px",fontWeight:400}}>{value.date} by {value.user.name}</p>
                                 </Col>
                                 </Row>
                             ))}
@@ -440,8 +430,18 @@ function DetailsPage(props){
                                     <CardTitle style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
                                         <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>IMAGES</h4>
                                         </CardTitle>
-                                    <CardBody>
-                                    <Gallery images={images}/>
+                                    <CardBody style={{
+                                        margin:"auto",
+                                        width:"99%",
+                                        padding:"10px"
+                                    }}>
+                                    <Gallery 
+                                        images={images}
+                                        backdropClosesModal={true}
+                                        enableImageSelection={false}
+                                        thumbnailStyle={styleSmall}
+                                        rowHeight={170}
+                                    />
                                     </CardBody>
                                     </Card>
                             </Col>
@@ -463,9 +463,9 @@ function DetailsPage(props){
                                         <Slider {...settings} infinite={related.length>5}>
                                         {related.map((value,key)=>(
                                             <div key={key}>
-                                                <Col style={{padding:"0px 3px 0px 3px"}}>
+                                                <Col style={{padding:"0px 3px 0px 3px", cursor:"pointer"}}>
                                                 <div style={{textAlign:"center"}}>
-                                                    <div style={{textAlign:"center"}} onClick={() => this.props.history.push("/user/product-details",{id:value.id})}>
+                                                    <div style={{textAlign:"center"}} onClick={() => Reload(value.id)}>
                                                     <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"185.13px", width:"180px", borderRadius:'5px'}}/>
                                                     </div>
                                                     <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>
@@ -486,35 +486,9 @@ function DetailsPage(props){
                             </Card>
                             </Row>
 
-
-                            {/* {loggedin?
-                            <Row style={{backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px",marginTop:"35px"}}>
-                            <Col md="10">
-                                <Card className="card-plain">
-                                    <CardBody>
-                                    <Input type="textarea" placeholder="report product..." value={message} onChange={(e)=>setMessage(e.target.value)}/>
-                                    </CardBody>
-                                    </Card>
-                            </Col>
-
-                            <Col md="2">
-                            <Button style={{marginTop:"20px", backgroundColor:"transparent", color:"#17a2b8", borderColor:"transparent"}} color="info" onClick={()=>handlePostReport()}>Send Report</Button>
-                                    
-                            </Col>
-                            </Row>
-                            :
-                            <div></div>
-                            } */}
-
                         </Container>
                             )}
                         </ProductConsumer>
-                        <Modal isOpen={reportmodal} toggle={()=>toggleReportModal()}>
-                            <div style={{textAlign:'center',marginTop:"10px",marginBottom:"10px"}}>
-                            <p style={{fontWeight:"bold"}}><i className="fa fa-check mr-1" style={{color:"green", fontSize:"20px"}}/> sent!!</p>
-                            <p>Thanks for the report!<br/>Action is being taken, Feedback will be sent soon</p>
-                            </div>
-                        </Modal>
                         </div>
                     </div>
                 </div>

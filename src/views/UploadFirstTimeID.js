@@ -36,7 +36,7 @@ class UploadValidID extends React.Component{
 
     onDrop(picture) {
         this.setState({
-            valid_id:this.state.valid_id.concat(picture)
+            valid_id:picture
         });
     }
 
@@ -110,7 +110,7 @@ class UploadValidID extends React.Component{
                     buttonText='Valid ID Card'
                     onChange={this.onDrop}
                     label="Max file size:5mb accept:jpg,png,jpeg"
-                    imgExtension={['.jpg','.png', '.jpeg']}
+                    imgExtension={['.jpg','.png', '.jpeg', '.jfif', '.heic']}
                     fileSizeError="file size is too big"
                     fileTypeError="is not supported"
                     maxFileSize={5242880}

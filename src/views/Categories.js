@@ -52,7 +52,7 @@ class Categories extends React.Component {
                             <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
                             <Row style={{borderBottom:"1px solid #eaeaea"}}>
                                 <Col sm="12" md="12" lg="12" xl="12" xs="12">
-                                <h3 style={{fontWeight:"bold", textTransform:"uppercase"}} className="category">
+                                <h3 style={{fontWeight:500}} className="category">
                                     <i className="fa fa-gg" style={{color:"#ff8d00"}}/> {this.props.location.state.category_name}
                                     
                                 </h3>

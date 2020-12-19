@@ -1,9 +1,5 @@
 import React from "react";
 import axios from "axios";
-// core components
-import IndexNavbar from "../components/Navbars/IndexNavbar.js";
-import DemoFooter from "../components/Footers/DemoFooter";
-import { Link } from "react-router-dom";
 
 //react strap
 import{
@@ -16,6 +12,7 @@ import{
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
 import history from "../history.js";
+import UserProduct from "components/UserProduct.js";
 
 function UserProducts(){
   const [isActive, setIsActive] = React.useState(false);
@@ -50,24 +47,24 @@ function UserProducts(){
                 <Container style={{marginTop:"20px"}}>
                 <p style={{marginBottom:"10px", fontSize:"13px"}}><span style={{cursor:"pointer"}} onClick={()=>this.props.history.push("/user/home")}>Home</span><i className="fa fa-chevron-right"/> user products</p>
                   <Row style={{marginTop:"50px"}}>
-                  
-                  {products.map((value,key)=>(
-                  <Col lg="3" md="4" sm="6" xs="6">
-                  <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"10px 0px 0px 0px", padding:"0px 0px 0px 0px",cursor:"pointer"}}>
-                    <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
-                        {value.product_name}
-                        </CardTitle>
-                        <br/>
-                        
-                        <div style={{textAlign:"center"}} onClick={()=>history.push("/user/user-product-details",{id:value.id})}>
-                        <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{ maxHeight:"185.13px",maxWidth:"100px"}}/>
-                        </div>
-                        
-                        <br/>
-                        <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ {value.price}</CardBody>
-                    </Card>
-                    </Col>
-                    ))}
+                  <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
+                            <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px", borderBottom:"1px solid #eaeaea"}}>
+                                <h3 style={{fontWeight:500}} className="category">
+                                    <i className="fa fa-gg" style={{color:"#ff8d00"}}/> PRODUCTS
+                                    
+                                </h3>
+                                </CardTitle>
+                                <CardBody>
+                                    <Container>
+                                        <Row>
+                                        {products.map((product)=>(
+                                            <UserProduct key={product.id} product={product}/>
+                                        ))}
+                                        </Row>
+                                </Container>
+                                </CardBody>
+    
+                            </Card>
                   </Row>
                 </Container>
                     </div>

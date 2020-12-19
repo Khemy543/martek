@@ -1,8 +1,6 @@
 import React from "react";
 //import axios from "axios";
 // core components
-import IndexNavbar from "../components/Navbars/IndexNavbar.js";
-import DemoFooter from "../components/Footers/DemoFooter";
 import history from "../history.js";
 //import { Link } from "react-router-dom";
 

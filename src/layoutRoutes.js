@@ -54,13 +54,14 @@ import TermsAndCondition from "views/Documents/TermsAndConditon.js";
 import PrivacyPolicy from "views/Documents/Privacy.js";
 import AboutUs from "views/Documents/AboutUs.js";
 import UploadValidID from "views/UploadFirstTimeID.js";
-import Example from "views/TestingCarousel.js";
 import ReportShop from "views/ReportShop.js";
 import UserPayment from "views/Payment/UserPayment.js";
 import UserAccountDetails from "views/Payment/UserAccountDetails.js";
 import All from "views/Home/All.js";
 import Shops from "views/Home/Shops.js";
 import AllCategories from "views/Home/Category.js";
+import ReportProduct from "views/ReportProduct.js";
+import DeleteShop from 'views/Delete/DeleteShop.js';
 
 
 
@@ -355,6 +356,11 @@ var routes = [
         layout: "/user"
       },
       {
+        path: "/report-product",
+        component: ReportProduct,
+        layout: "/user"
+      },
+      {
         path: "/payment/user/information",
         component: UserPayment,
         layout: "/user"
@@ -363,6 +369,11 @@ var routes = [
         path: "/payment/user/account",
         component: UserAccountDetails,
         layout: "/user"
+      },
+      {
+        path: "/delete-shop",
+        component: DeleteShop,
+        layout: "/shop"
       },
 
 ];

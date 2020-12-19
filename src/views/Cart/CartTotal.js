@@ -18,6 +18,12 @@ export default function CartTotal({value}){
             <Container>
                 <Row style={{float:"right", marginTop:"30px"}}>
                     <Col>
+                        <h5>
+                            <span className="text-title" style={{fontSize:"14px"}}>
+                                Total :
+                            </span>
+                             <strong style={{fontSize:"17px", fontWeight:600, marginLeft:"20px"}}>¢ {cartTotal}</strong>
+                        </h5>
                         <Link to="#">
                         <Button onClick={()=>clearCart()}
                         color="danger"
@@ -40,13 +46,6 @@ export default function CartTotal({value}){
                             </span>
                         <strong>¢ {cartTax}</strong>
                         </h5> */}
-
-                        <h5>
-                            <span className="text-title">
-                                Total :
-                            </span>
-                        <strong>¢ {cartTotal}</strong>
-                        </h5>
                     </Col>
 
                 </Row>

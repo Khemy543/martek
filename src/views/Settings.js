@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Kit React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-kit-react
-
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 // reactstrap components
 import {
@@ -125,21 +107,6 @@ const tabToggle = tab => {
     });
   },[merchandiser])
 
-  const handleDelete=()=>{
-    console.log(merchandiser)
-    setIsActive(true)
-    axios.delete("https://backend-api.martekgh.com/api/merchandiser/delete",{
-        headers:{"Authorization":`Bearer ${merchandiser}`}
-    })
-    .then(res=>{
-        history.push("/user/home");
-        localStorage.removeItem('shop_access_token');
-        setIsActive(false)
-    })
-    .catch(error=>{
-        setIsActive(false)
-    })
-}
 
   const handleSubmit=(e)=>{
     setIsActive(true);
@@ -393,15 +360,15 @@ function _handleCoverChange(e) {
        block
        type="button"
        color="danger"
-       id="Popover1"
+       onClick={()=>history.push('/shop/delete-shop')}
        >
        Delete Shop
          </Button>
-         <Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>
+         {/* <Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>
             <PopoverHeader>Do you want to delete?</PopoverHeader>
             <br/>
             <PopoverBody><Button color="danger" onClick={handleDelete}>yes</Button> <Button color="info" onClick={toggle} style={{marginLeft:"15px"}}>no</Button></PopoverBody>
-        </Popover>
+        </Popover> */}
        </Col>
        </Row>
           </Form>  
@@ -471,7 +438,7 @@ function _handleCoverChange(e) {
             </TabContent>
             </Container>
        </div>
-      <Col className="ml-auto mr-auto" md="12">
+                <Col className="ml-auto mr-auto" md="12">
                 <Modal isOpen={modal} style={{maxHeight:"40px", maxWidth:"500px"}} className="alert-modal">
                     <ModalBody>
                     <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white"}}>{message}!!</h4>

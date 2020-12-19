@@ -8,12 +8,8 @@ import{
 } from "reactstrap";
 import axios from "axios";
 // core components
-import ExamplesNavbar from "../components/Navbars/ExamplesNavbar.js";
-import DemoFooter from "../components/Footers/DemoFooter";
 //import { Link } from "react-router-dom";
 import ImageUploader from 'react-images-upload';
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
 
 
 
@@ -30,13 +26,14 @@ class ShopUploadImages extends React.Component{
 
     onDrop(picture) {
         this.setState({
-            pictures: this.state.pictures.concat(picture),
+            pictures: picture,
             activateButton:true
         });
     }
 
  handleSubmit=(e)=>{
     e.preventDefault();
+    console.log(this.state.pictures)
     this.setState({isActive:true})
     let bodyFormData = new FormData();
     this.state.pictures.forEach((file) => {

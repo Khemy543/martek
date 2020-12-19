@@ -53,9 +53,8 @@ const CarouselView = (props) => {
         key={item.src}
        
       >
-      <div className="image-holder" style={{textAlign:"center"}}>
+      <div className="box" style={{textAlign:"center"}}>
         <img src={item.src} alt={item.altText} className="image"/>
-        
       </div> 
         
         <CarouselCaption  captionHeader={item.caption} />

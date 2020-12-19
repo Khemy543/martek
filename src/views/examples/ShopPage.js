@@ -35,8 +35,9 @@ import {ProductConsumer } from "../../context.js";
 // core components
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
-import history from "../../history.js";
+import Product from "components/Product.js"
 import StarRatings from 'react-star-ratings';
+import ShopProduct from "components/ShopProduct.js";
 
 
 function ShopPage(props) {
@@ -184,50 +185,44 @@ let merchandiser = localStorage.getItem("shop_access_token")
           <TabContent className="" activeTab={activeTab}>
             <TabPane tabId="1" id="follows">
               <Container>
-              <Row>
-                {shopProducts.length<20?
-                <Col lg="3" md="4" sm="6" xs="6">
-                <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"10px 0px 0px 0px", padding:"0px 0px 0px 0px"}}>
-                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
-                    Add New Product
-                    </CardTitle>
-                    <br/>
-                    <Link to="/shop/add-to-shop">
-                    <div style={{textAlign:"center"}}>
-                    <img alt="#" src={require("../../assets/img/addproduct.png")} style={{ maxHeight:"170.13px",maxWidth:"100px"}}/>
-                    </div>
-                    </Link>
-                    <br/>
-                  
-                  </Card>
-                </Col>
-                :
-                <></>
-                }
-                <ProductConsumer>
-                  {(value=>(
-                shopProducts.map(products=>(
-                  <Col lg="3" md="4" sm="6" xs="6">
-              <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"10px 0px 0px 0px", padding:"0px 0px 0px 0px"}}>
-                <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
-                {products.product_name}
-                    </CardTitle>
-                    <br/>
-                    
-                    <div style={{textAlign:"center",cursor:"pointer"}} onClick={()=>history.push("/shop/shop-product-details",{id:products.id})}>
-                    <img alt="#" src={`https://backend-api.martekgh.com/${products.product_image[0].path}`} style={{ maxHeight:"185.13px",maxWidth:"100px"}}/>
-                    </div>
-                    <br/>
-                    <CardBody style={{color:"#5588b7", fontSize:"14px", fontWeight:"500",padding:"0px 0px 0px 0px"}}>¢ {products.price}</CardBody>
-                </Card>
-                </Col>
-                
-                ))
-              ))}
-                </ProductConsumer>
-                
-              </Row>
+                <Row>
+                <Card style={{ width: "100%", border: "1px solid #eaeaea", borderRadius: "5px", backgroundColor: "white", boxShadow: "0 2px 12px rgba(0,0,0,0.1)" }} className="card-plain">
+                  <CardTitle style={{ padding: "5px 0px 0px 0px", margin: "0px 15px 0px 15px", borderBottom: "1px solid #eaeaea" }}>
+                        <h3 style={{ fontWeight: 500, fontSize:"16px", textAlign:"left"}}>
+                          <i className="fa fa-gg" style={{ color: "#ff8d00" }} /> PRODUCTS
+                        </h3>
+                  </CardTitle>
+                  <CardBody>
+                    <Container>
+                      <Row>
+                      {shopProducts.length<20?
+                          <Col lg="2" md="2" sm="6" xs="6" xl="2">
+                          <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"10px 0px 0px 0px", padding:"0px 0px 0px 0px"}}>
+                              <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
+                              Add New Product
+                              </CardTitle>
+                              <br/>
+                              <Link to="/shop/add-to-shop">
+                              <div style={{textAlign:"center"}}>
+                              <img alt="#" src={require("../../assets/img/addproduct.png")} style={{ maxHeight:"170.13px",maxWidth:"100px"}}/>
+                              </div>
+                              </Link>
+                              <br/>
+                            
+                            </Card>
+                          </Col>
+                          :
+                          <></>
+                          }
+                        {shopProducts.map((product) => (
+                          <ShopProduct key={product.id} product={product} />
+                        ))}
+                      </Row>
+                    </Container>
+                  </CardBody>
 
+                </Card>
+              </Row>
               </Container>
             </TabPane>
           </TabContent>

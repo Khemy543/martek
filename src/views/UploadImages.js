@@ -33,7 +33,7 @@ class UploadImages extends React.Component {
 
     onDrop(picture) {
         this.setState({
-            pictures: this.state.pictures.concat(picture),
+            pictures: picture,
             activateButton:true,
             number:this.state.pictures.length
         });
@@ -45,6 +45,7 @@ class UploadImages extends React.Component {
      */
     handleSubmit=(e)=>{
         console.log(".....uploading....")    
+        this.setState({isActive:true})
         console.log(user)
         e.preventDefault();
         let bodyFormData = new FormData();
@@ -118,7 +119,7 @@ class UploadImages extends React.Component {
                             buttonText='Choose images'
                             onChange={this.onDrop}
                             label="Max file size:5mb accept:jpg,png,jpeg"
-                            imgExtension={['.jpg','.png', '.jpeg']}
+                            imgExtension={['.jpg','.png', '.jpeg', '.jfif', '.heic']}
                             fileSizeError="file size is too big"
                             fileTypeError="is not supported"
                             maxFileSize={5242880}

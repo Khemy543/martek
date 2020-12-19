@@ -72,7 +72,7 @@ function ShopCard(props){
             <Col md="12" onClick={()=>history.push("/user/shop-view", 
                 {id:id || shop_id}
                 )}>
-            <h5 style={{textAlign:"left", fontWeight:600, marginTop:"6px"}} className="truncate">{company_name || shop_name}</h5>
+            <h5 style={{textAlign:"left", fontWeight:500, marginTop:"6px"}} className="truncate">{company_name || shop_name}</h5>
             </Col>
         </Row>
         <Row style={{marginTop:"-10px"}}>
@@ -85,7 +85,7 @@ function ShopCard(props){
                 starDimension="17px"
                 starSpacing="1px"
                 />
-                <p style={{fontWeight:600, marginLeft:"6px",marginTop:"2px"}}>{Number(avg_rating).toFixed(1)}</p>
+                <p style={{fontWeight:500, marginLeft:"6px",marginTop:"2px",fontSize:"13px"}}>{Number(avg_rating).toFixed(1)}</p>
             </Col>
         </Row>
         <Row>
@@ -103,7 +103,7 @@ function ShopCard(props){
                 <i className="fa fa-shopping-bag"/> <i className="fa fa-shopping-cart"/> <i className="fa fa-money"/>
             </Col>
         </Row>
-        <Row style={{marginTop:"10px"}}>
+        <Row style={{marginTop:"0px"}}>
             <Col md="12" style={{textAlign:"left",color:"#676464"}}>
                 <h5 style={{display:"inline", textAlign:"left", fontSize:"14px", fontWeight:"bold"}}>{number_of_followers} </h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
             </Col>
