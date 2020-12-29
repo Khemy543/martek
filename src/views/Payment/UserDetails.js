@@ -12,18 +12,14 @@ import {
   InputGroup, InputGroupAddon, InputGroupText
 } from "reactstrap";
 // core components
-import LoadingOverlay from "react-loading-overlay";
-import FadeLoader from "react-spinners/FadeLoader";
 import history from "../../history.js";
-import { Link } from "react-router-dom";
 
 function UserDetails(props) {
-const [isActive, setIsActive] = React.useState(false);
 const [firtsname, setFirstname] = React.useState("");
 const [lastname, setLastname] = React.useState("");
 const [email, setEmail] = React.useState("");
-const [amount, setAmount] = React.useState("");
-
+const [amount, setAmount] = React.useState((Math.round(props.location.state.amount * 100) / 100).toFixed(2))
+const [phone, setPhoneNumber] = React.useState('');
 
 console.log(props)
 console.log(history)
@@ -31,24 +27,24 @@ const handleSubmit=(e)=>{
     console.log("....")
     e.preventDefault();
     if(true){
-    props.history.push("/user/payment/account", {firtsname:firtsname,lastname:lastname, email:email,amount:amount});
+    props.history.push("/user/payment/account", {
+      firstname:firtsname,
+      lastname:lastname, 
+      email:email,
+      phonenumber:phone,
+      product_id:props.location.state.product_id,
+      amount:amount
+    });
     }
     
 }
 
   return (
     <>
-      <LoadingOverlay
-        active={isActive}
-        spinner={<FadeLoader color={'#4071e1'} />}
-      >
       <div
-        className="page-header"
-        style={{
-          backgroundColor:"white"
-        }}
+        className="section"
       >
-        <Container style={{marginTop:"30px"}}>
+        <Container style={{marginTop:"70px"}}>
           <Row>
             <Col md="5" className="ml-auto mr-auto">
             <Row>
@@ -65,7 +61,6 @@ const handleSubmit=(e)=>{
                     <h3>Martek</h3>
                     <p style={{fontSize:"11px", fontWeight:600}}>BY MARTEK</p>
                     <hr className="my-4" />
-                    <p style={{fontSize:"12px", fontWeight:600}}>MARTEK GH</p>
 
                 </Col>
                 <Col md="4">
@@ -74,7 +69,7 @@ const handleSubmit=(e)=>{
             </Row>
                 
                 
-              <Card style={{borderRadius:"0px"}} className="card-plain">
+              <Card style={{borderRadius:"0px", marginTop:"-25px"}} className="card-plain">
                 <CardBody>
                   <Form onSubmit={handleSubmit}>
                     <Row>
@@ -97,6 +92,12 @@ const handleSubmit=(e)=>{
                     </Row>
                     <Row style={{marginTop:"20px"}}>
                         <Col>
+                        <label style={{fontSize:"13px" , fontWeight:600}}>Phone Number</label>
+                        <Input type="text" value={phone} required onChange={e=>setPhoneNumber(e.target.value)} placeholder="Phone Number"/>
+                        </Col>
+                    </Row>
+                    <Row style={{marginTop:"20px"}}>
+                        <Col>
                         <label style={{fontSize:"13px" , fontWeight:600}}>Amount</label>
                         <InputGroup>
                             <InputGroupAddon addonType="prepend" style={{borderRadius:"0px"}}>
@@ -107,7 +108,7 @@ const handleSubmit=(e)=>{
                             <InputGroupText>
                             </InputGroupText>
                             </InputGroupAddon>
-                            <Input  type="number" value={amount} name="amount" onChange={e=>setAmount(e.target.value)} required placeholder="Amount"/>
+                            <Input disabled type="number" value={amount} name="amount" onChange={e=>setAmount(e.target.value)} required placeholder="Amount"/>
                         </InputGroup>
                         </Col>
                         
@@ -120,7 +121,7 @@ const handleSubmit=(e)=>{
                           <a href="/auth/shop-login"><h4 style={{fontSize:"14px", fontWeight:600, marginTop:"4px",color:"#6ec7e0"}}>Try Free Now ! <i className="fa fa-chevron-right"/></h4></a>
                         </Col>
                     </Row>
-                    <p style={{textAlign:"center", marginTop:"15px", fontSize:"12px",fontWeight:600}}>Contact <a href="!#">martekgh@gmail.com</a> for any questions</p>
+                    <p style={{textAlign:"center", marginTop:"15px", fontSize:"12px",fontWeight:600}}>Contact <a style={{color:"blue"}} href="mailto://martekgh@gmail.com">martekgh@gmail.com</a> for any questions</p>
                   </Form>
                 </CardBody>
               </Card>
@@ -135,7 +136,6 @@ const handleSubmit=(e)=>{
           </Row>
         </Container>
         </div>
-      </LoadingOverlay>
     </>
   );
 }

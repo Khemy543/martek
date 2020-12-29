@@ -81,9 +81,16 @@ return (
           <Col className="ml-auto mr-auto" lg="4">
           
             <Card className="card-register ml-auto mr-auto" color="info">
-              <div style={{textAlign:"center"}}> 
-              <img src={require("../assets/img/martlogo.png")} style={{maxWidth:"130px", height:"auto", marginBottom:"10px"}}/>
-              </div>
+              <Row>
+                <Col>
+                <div style={{textAlign:"center"}}> 
+                 <img src={require("../assets/img/martlogo.png")} style={{maxWidth:"130px", height:"auto", marginBottom:"10px"}}/>
+                </div>
+                </Col>
+                <Col style={{borderLeft:"1px solid #695b5b"}}>
+                  <h4 style={{fontWeight:500, margin:"10px 0px 0px",color:"#695b5b",fontSize:"18px"}}>Shop Login</h4>
+                </Col>
+              </Row>
               {alert?
                 <Alert color="warning" fade={true} style={{textAlign:"center"}}>
                 Incorrect Credentials
@@ -110,6 +117,14 @@ return (
                 </Button>
               </Form>
               <div className="forgot">
+                <Button
+                  className="btn-link"
+                  color="warning"
+                  tag={Link}
+                  to="/user/shop-register"
+                >
+                  Own a shop!!
+                </Button>
 
                 <Button
                   className="btn-link"
@@ -118,14 +133,7 @@ return (
                 >
                   Forgot password?
                 </Button> 
-                <Button
-                  className="btn-link"
-                  color="danger"
-                  tag={Link}
-                  to="/user/shop-register"
-                >
-                  Sign up !!
-                </Button>
+                
               </div>
             </Card>
           </Col>

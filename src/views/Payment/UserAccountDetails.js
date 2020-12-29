@@ -9,32 +9,29 @@ import {
   Input,
   Button,
   Form,Modal,
-  Col, CardFooter,ListGroup, ListGroupItem, ModalBody 
+  Col, CardFooter,ListGroup, ListGroupItem, Spinner 
 } from "reactstrap";
 // core components
-import LoadingOverlay from "react-loading-overlay";
-import FadeLoader from "react-spinners/FadeLoader";
 import axios from "axios";
 
 let user =localStorage.getItem('access_token');
 class UserAccountDetails extends React.Component{
     state={
         isActive:false,
-        card:true,
-        mobile:false,
-        po:false,
-        email:"",
-        amount:this.props.location.state.amount,
+        card:false,
+        mobile:true,
         date:"",
         cardno:"",
         cvv:"",
-        firstname:"",
-        lastname:"",
         authurl:"",
         modalOpen:false,
         phonenumber:"",
         network:"MTN",
-        voucher:""
+        voucher:"",
+        amount:this.props.location.state.amount,
+        billingaddress:"",
+        billingstate:"",
+        billingcity:""
     }
 
     componentDidMount(){
@@ -48,25 +45,30 @@ handleCardSubmit=(e)=>{
     let splitArray = tempDate.split("/");
     console.log(splitArray[0], splitArray[1])
 
-    axios.post("https://kokrokooad.herokuapp.com/api/make-card-payment",
+    axios.post("https://backend-api.martekgh.com/api/user/product/payment",
     {
         cardno: this.state.cardno,
+        product_id:this.props.location.state.product_id,
         cvv: this.state.cvv,
         expirymonth: splitArray[0],
         expiryyear: splitArray[1],
-        phonenumber:this.state.phonenumber,
-        currency: "GHS",
-        country: "GH",
-        amount: this.state.amount,
-        firstname: this.state.firstname,
-        lastname: this.state.lastname,
+        phonenumber:this.props.location.state.phonenumber,
+        firstname: this.props.location.state.firstname,
+        lastname: this.props.location.state.lastname, 
+        email:this.props.location.state.email,
+        billingzip:"233",
+        billingcity:this.state.billingcity,
+        billingaddress:this.state.billingaddress,
+        billingstate:this.state.billingstate,
+        payment_method:'card_payment'
     },{headers:{ 'Authorization':`Bearer ${user}`}})
     .then(res=>{
         console.log(res.data);
-        this.setState({authurl:res.data.authurl,modalOpen:true, isActive:false})
+        window.location=`${res.data.authurl}`
     })
     .catch(error=>{
-        console.log(error);
+        console.log(error.response.data);
+        this.setState({isActive:false})
     })
 }
 
@@ -74,117 +76,126 @@ handleCardSubmit=(e)=>{
 handleMobileSubmit=(e)=>{
     this.setState({isActive:true})
     e.preventDefault();
-
-    axios.post("https://kokrokooad.herokuapp.com/api/make-momo-payment",
+    if(this.state.network === 'VODAFONE'){
+        axios.post("https://backend-api.martekgh.com/api/user/product/payment",
     {
         phonenumber:this.state.phonenumber,
-        currency: "GHS",
-        country: "GH",
-        amount: this.state.amount,
-        firstname: this.state.firstname,
-        lastname: this.state.lastname,
-        network:this.state.network
+        product_id:this.props.location.state.product_id,
+        firstname: this.props.location.state.firstname,
+        lastname: this.props.location.state.lastname,
+        email:this.props.location.state.email,
+        vendor:this.state.network,
+        voucher:this.state.voucher,
+        payment_method:'momo'
     },{headers:{ 'Authorization':`Bearer ${user}`}})
     .then(res=>{
         console.log(res.data);
-        this.setState({authurl:res.data.authurl,modalOpen:true,isActive:false})
+        window.location=`${res.data.data.link}`
     })
     .catch(error=>{
-        console.log(error);
+        console.log(error.response.data);
+        this.setState({isActive:false})
     })
+    }
+    else{
+    axios.post("https://backend-api.martekgh.com/api/user/product/payment",
+    {
+        phonenumber:this.state.phonenumber,
+        product_id:this.props.location.state.product_id,
+        firstname: this.props.location.state.firstname,
+        lastname: this.props.location.state.lastname,
+        email:this.props.location.state.email,
+        vendor:this.state.network,
+        payment_method:'momo'
+    },{headers:{ 'Authorization':`Bearer ${user}`}})
+    .then(res=>{
+        console.log(res.data);
+        window.location=`${res.data.data.link}`
+    })
+    .catch(error=>{
+        console.log(error.response.data);
+        this.setState({isActive:false})
+    })
+}
 }
     render(){
     return (
         <>
-        <LoadingOverlay
-            active={this.state.isActive}
-            spinner={<FadeLoader color={'#4071e1'} />}
-        >
-          <div
-            className="page-header"
-            style={{
-            backgroundColor:"white"
-            }}
-        >
-        <Container style={{marginTop:"30px"}}>
+        <div className="section">
+        <Container style={{marginTop:"70px"}}>
             <Row>
-                <Col md="3" className="ml-auto mr-auto">
+                <Col md="5" className="ml-auto mr-auto">
                 <Card className="card-plain" style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}}>
-                <CardHeader>
-                <Row>
-                    <Col md ="4">
-                    <div style={{textAlign:"center"}}>
-                    <img
-                    alt="#"
-                    src={require("../../assets/img/martlogo.png")}
-                    style={{width:"auto" ,height:"25px", marginTop:"10px"}}
-                    />
-                    </div>
-                    </Col>
-                    <Col md="3">
-                    
-                    </Col>
-                    <Col md="5">
-                    </Col>
-                </Row>
-                    
-                </CardHeader>
-                
                     <CardBody style={{backgroundColor:"beige"}}>
                     {this.state.card?
                     <Form onSubmit={this.handleCardSubmit}>
                         <Row>
                             <Col md="12">
-                        <h5>GHS {this.state.amount}.00</h5>
-                        <p style={{fontSize:"12px", fontWeight:600,marginTop:"-5px"}}>{this.state.email}</p>
+                        <h5 style={{fontWeight:500}}>GHS {this.state.amount}</h5>
+                        <p style={{fontSize:"12px", fontWeight:500,marginTop:"-5px"}}>{this.props.location.state.email}</p>
                             </Col>
                         </Row>
                         <br/>
                         <Row>
                             <Col md="12" className="mr-auto ml-auto">
-                            <Card className="card-plain" style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}}>
-                                <CardBody style={{pading:"0px 0px"}}>
+                                <CardBody style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}}>
                                     <Row>
                                         <Col>
-                                            <label style={{fontSize:"13px" , fontWeight:600,marginBottom:"0px"}}>CARD NUMBER</label>
+                                            <label style={{fontSize:"13px" , fontWeight:500}}>CARD NUMBER</label>
                                             <Input placeholder="0000 0000 0000 0000" value={this.state.cardno} onChange={e=>this.setState({cardno:e.target.value})}
-                                             style={{border:"none",padding:"0px 0px",marginTop:"-5px"}} 
-                                             
+                                             type="tel" pattern="\d*" maxlength="19"
                                              required/>
                                         </Col>
                                     </Row>
                                     <br/>
                                     <Row>
-                                        <Col style={{borderRight:"1px solid #0000001f"}}>
-                                        <label style={{fontSize:"13px" , fontWeight:600,marginBottom:"0px"}}>VALID TILL</label>
+                                        <Col>
+                                        <label style={{fontSize:"13px" , fontWeight:500}}>VALID TILL</label>
                                         <Input placeholder="mm / yy" value={this.state.date} onChange={e=>this.setState({date:e.target.value})}
-                                         style={{border:"none",padding:"0px 0px",marginTop:"-5px"}} 
-                                         
+                                        
                                          required/>
                                         </Col>
                                         <Col>
-                                            <label style={{fontSize:"13px" , fontWeight:600,marginBottom:"0px"}}>CVV</label>
+                                            <label style={{fontSize:"13px" , fontWeight:500}}>CVV</label>
                                             <Input placeholder="123" value={this.state.cvv} type="number" min="1" max="999"
                                             onChange={e=>this.setState({cvv:e.target.value})}
-                                             style={{border:"none",padding:"0px 0px",marginTop:"-5px"}} required/>
+                                            required/>
                                         </Col>
                                     </Row>
-                                    {/* <br/>
+                                    <br/>
                                     <Row>
                                         <Col>
-                                            <label style={{fontSize:"13px" , fontWeight:600,marginBottom:"0px"}}>PHONE NUMBER</label>
-                                            <Input placeholder="000-000000" value={this.state.phonenumber} onChange={e=>this.setState({phonenumber:e.target.value})}
-                                             style={{border:"none",padding:"0px 0px",marginTop:"-5px"}} 
+                                            <label style={{fontSize:"13px" , fontWeight:500}}>ADDRESS</label>
+                                            <Input placeholder="Address" value={this.state.billingaddress} onChange={e=>this.setState({billingaddress:e.target.value})}
+                                            
                                              required/>
                                         </Col>
-                                    </Row> */}
+                                    </Row>
+                                    <br/>
+                                    <Row>
+                                        <Col>
+                                            <label style={{fontSize:"13px" , fontWeight:500}}>REGION</label>
+                                            <Input placeholder="Region" value={this.state.billingstate} onChange={e=>this.setState({billingstate:e.target.value})}
+                                            
+                                             required/>
+                                        </Col>
+                                        <Col>
+                                            <label style={{fontSize:"13px" , fontWeight:500}}>CITY</label>
+                                            <Input placeholder="City" value={this.state.billingcity} onChange={e=>this.setState({billingcity:e.target.value})}
+                                            
+                                             required/>
+                                        </Col>
+                                    </Row>
                                     <Row style={{marginTop:"25px"}}>
                                         <Col md="12">
-                                            <Button block color="warning" type="submit">Pay GHS {this.state.amount}</Button>
+                                        {!this.state.isActive?
+                                            <Button block color="info" type="submit">Pay GHS {this.state.amount}</Button>
+                                            :
+                                            <Button color="info" block><Spinner size="sm"  /></Button>
+                                        }
                                         </Col>
                                     </Row>
                                 </CardBody>
-                            </Card>
                             </Col>
                         </Row>
                     </Form>
@@ -194,32 +205,45 @@ handleMobileSubmit=(e)=>{
                     <Form onSubmit={this.handleMobileSubmit}>
                         <Row>
                             <Col md="12">
-                        <h5>GHS {this.state.amount}.00</h5>
-                        <p style={{fontSize:"12px", fontWeight:600,marginTop:"-5px"}}>{this.state.email}</p>
+                        <h5 style={{fontWeight:500}}>GHS {this.state.amount}.00</h5>
+                        <p style={{fontSize:"12px", fontWeight:500,marginTop:"-5px"}}>{this.props.location.state.email}</p>
                             </Col>
                         </Row>
                         <br/>
                         <Row>
                             <Col md="12" className="mr-auto ml-auto">
                             <Card className="card-plain" style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}}>
-                                <CardBody style={{pading:"0px 0px"}}>
-                                    <label style={{fontSize:"13px" , fontWeight:600,marginBottom:"0px"}}>CHOOSE NETWORK</label>
-                                    <Input type="select" style={{border:"none",padding:"0px 0px",marginTop:"-5px"}} value={this.state.network} onChange={e=>this.setState({network:e.target.value})}>
-                                        <option>MTN</option>
-                                        <option>AIRTEL-TIGO</option>
-                                        <option>VODAFONE</option>
+                                <CardBody>
+                                    <Row>
+                                    <Col>
+                                    <label style={{fontSize:"13px" , fontWeight:500}}>CHOOSE NETWORK</label>
+                                    <Input type="select" value={this.state.network} onChange={e=>this.setState({network:e.target.value})}>
+                                        <option value="MTN">MTN</option>
+                                        <option value="TIGO">AIRTEL-TIGO</option>
+                                        <option value="VODAFONE">VODAFONE</option>
                                     </Input>
-                                    <label style={{fontSize:"13px" , fontWeight:600,marginBottom:"0px"}}>MOBILE NUMBER</label>
-                                    <Input placeholder="000-000000" style={{border:"none",padding:"0px 0px",marginTop:"-5px"}} required onChange={e=>this.setState({phonenumber:e.target.value})} />
+                                    </Col>
+                                    </Row>
+                                    <br/>
+                                    <Row>
+                                        <Col>
+                                        <label style={{fontSize:"13px" , fontWeight:500}}>MOBILE NUMBER</label>
+                                    <Input placeholder="000-000000" required onChange={e=>this.setState({phonenumber:e.target.value})} />
                                     {this.state.network === "VODAFONE"?
                                     <>
-                                    <label style={{fontSize:"13px" , fontWeight:600,marginBottom:"0px"}}>VOUCHER</label>
-                                    <Input placeholder="000000000" style={{border:"none",padding:"0px 0px",marginTop:"-5px"}} required onChange={e=>this.setState({voucher:e.target.value})} />
+                                    <label style={{fontSize:"13px" , fontWeight:500}}>VOUCHER</label>
+                                    <Input placeholder="000000000"  required onChange={e=>this.setState({voucher:e.target.value})} />
                                     </>
                                     :<></>}
+                                        </Col>
+                                    </Row>
                                     <Row style={{marginTop:"25px"}}>
                                         <Col md="12">
-                                            <Button block color="warning" type="Submit">Pay GHS {this.state.amount}</Button>
+                                        {!this.state.isActive?
+                                            <Button block color="info" type="Submit">Pay GHS {this.state.amount}</Button>
+                                            :
+                                            <Button block color="info"><Spinner size="sm" /></Button>
+                                        }
                                         </Col>
                                     </Row>
                                 </CardBody>
@@ -229,7 +253,7 @@ handleMobileSubmit=(e)=>{
                     </Form>
                     :<div></div>}
                     </CardBody>
-                    <CardFooter style={{padding:"0px 0px 0px 0px"}}>
+                    <CardFooter>
                     <ListGroup>
                         {!this.state.card?
                         <ListGroupItem style={{fontSize:"13px",fontWeight:600,cursor:"pointer",borderRadius:"0px", backgroundColor:"#f2f2f2"}}
@@ -246,22 +270,15 @@ handleMobileSubmit=(e)=>{
                 </Card>
                 <Row style={{marginTop:"20px"}}>
                   <Col md="6" className="ml-auto mr-auto">
-                      <img src={require("../../assets/img/mastercard.png")} alt="#" style={{width:"30px", height:"auto"}}/>
-                      <img src={require("../../assets/img/visa.png")} alt="#" style={{width:"30px", height:"auto"}}/>
-                      <img src={require("../../assets/img/mobilemoney.png")} alt="#" style={{width:"50px", height:"auto"}}/>
+                      <img src={require("../../assets/img/mastercard.png")} alt="#" style={{width:"50px", height:"auto", marginRight:"10px"}}/>
+                      <img src={require("../../assets/img/visa.png")} alt="#" style={{width:"50px", height:"auto", marginRight:"10px"}}/>
+                      <img src={require("../../assets/img/mobilemoney.png")} alt="#" style={{width:"70px", height:"auto"}}/>
                   </Col>
               </Row>
                 </Col>
             </Row>
-            <Modal  isOpen={this.state.modalOpen}>
-                <ModalBody style={{height:"550px"}}>
-                    <iframe src={this.state.authurl} title="payment" style={{width:"100%", height:"100%"}}></iframe>
-
-                </ModalBody>
-            </Modal>
             </Container>
             </div>
-        </LoadingOverlay>
         </>
     );
 }

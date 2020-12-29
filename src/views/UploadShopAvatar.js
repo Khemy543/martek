@@ -4,7 +4,7 @@ import{
     Col,
     Row,
     Button,
-    Form,Progress
+    Form,Progress, Spinner
 } from "reactstrap";
 import axios from "axios";
 import ImageUploader from 'react-images-upload';
@@ -54,6 +54,7 @@ class UploadShopAvatar extends React.Component{
     
     
     handleSubmit=(e)=>{
+        this.setState({isActive:true})
     e.preventDefault();
     let avatar_file = this.state.avatar[0]
     let cover_photo_file = this.state.cover[0]
@@ -87,10 +88,6 @@ class UploadShopAvatar extends React.Component{
     render(){
     return(
         <div>
-            <LoadingOverlay 
-            active = {this.state.isActive}
-            spinner={<BounceLoader color={'#4071e1'}/>}
-            >
         <IndexNavbar/>
         
         <div className="main">
@@ -163,7 +160,8 @@ class UploadShopAvatar extends React.Component{
 
         <Row style={{marginTop:"30px"}}>
             <Col md="4">
-            <Button
+            {!this.state.isActive?
+                <Button
                 block
                 color="info"
                 disabled={!this.state.activateButton || !this.state.activateButton2}
@@ -171,6 +169,15 @@ class UploadShopAvatar extends React.Component{
                 >
                     upload
                 </Button>
+                :
+                <Button
+                    block
+                    color="info"
+                    disabled
+                >
+                    <Spinner size="sm" color="info"/>
+                </Button>
+            }
             </Col>
             </Row>
             
@@ -178,7 +185,6 @@ class UploadShopAvatar extends React.Component{
         </Container>
         </div>
         </div>
-        </LoadingOverlay>
         
         <DemoFooter prop={this.props}/>
         </div>

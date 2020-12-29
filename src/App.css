@@ -115,10 +115,26 @@
     #card-cover{
         height: 120.91px !important;
     }
+    .descrip{
+        width: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .price{
+        margin-top: 0px;
+        text-align: left;
+    }
 }
 
 
 @media(min-width:801px){
+    .product-button{
+        margin-top: 30%;
+    }
+    .price{
+        text-align: right;
+    }
     #card-cover{
         height: 169.91px !important;
     }
@@ -375,29 +391,21 @@
     transform: translate(-50%, -50%);
   }
 
-  /* .phone-nav .nav-item .nav-link{
-      text-transform: capitalize !important;
-      font-size: 15px !important;
-      color:#4a4747 !important;
-  } */
-/* 
-  .scroll {
-    max-height: 35vh;
-    overflow: scroll;
- }
- .scroll::-webkit-scrollbar {
-     width: 5px;
- }
- 
- .scroll::-webkit-scrollbar-track {
-     border-radius: 10px;
-     background-color: yellow;
- }
- 
- .scroll::-webkit-scrollbar-thumb {
-     border-radius: 10px;
- } */
 
  .card-plain .img{
      object-fit: cover;
+ }
+
+ .search-product:hover{
+     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+     cursor: pointer;
+     margin: 1px;
+ }
+ .search-product{
+     padding: 10px;
+ }
+
+ tbody tr td{
+     font-size: 13px;
+     font-weight: 500;
  }

@@ -5,7 +5,9 @@ import{
     Col,
     Card,
     CardTitle,
-    CardBody
+    CardBody,
+    Button,
+    Row
 } from "reactstrap";
 
 // core components
@@ -16,39 +18,50 @@ import { ProductConsumer } from "../context";
 
 class SearchResultsProducts extends React.Component{
     render(){
-        const {id , product_name , img ,price } = this.props.product;
+        const {id , product_name , image ,price, description } = this.props.product;
         return(
-                
-                <Col lg="3" md="4" sm="6" xs="6" style={{padding:"0px 0px 0px 0px"}}>
-                    <Card style={{borderRight:"1px solid #eaeaea", margin:"20px 0px 0px 10px", padding:"10px 20px 15px 10px",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", transition:"all 1s linear", background:'white'}} className="card-plain" id="product-card">
-                        <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px", height:"20px", overflow:"hidden"}}>
-                            {product_name}
-                        </CardTitle>
-                        <br/>
-                        <ProductConsumer>
-                            {(value=>(
+            <ProductConsumer>
+                {value=>(
+                <Col lg="12" md="12" sm="6" xs="6" className="search-product">
+                    <Row>
+                        <Col md="3" lg="3" xl="3" sm="12" xs="12"  onClick={() => history.push("/user/product-details",{id:id})}>
+                            <div style={{textAlign:"center", cursor:"pointer"}}>
                                 <div>
-                                <div style={{textAlign:"center"}} className="first-img" onClick={() => history.push("/user/product-details",{id:id})}>
-                        <img alt="#" src={require("../assets/img/iphone.png")} style={{maxHeight:"185.13px", maxWidth:"100px"}} className="to-go"/>
-                        <img alt="#" src={require("../assets/img/flatscreen.png")} style={{maxHeight:"185.13px", maxWidth:"100px"}} className="img-top"/>
-                         
-                        </div>
-                        
-                        <br/>
-                        
-                        <CardBody style={{padding:"0px 0px 0px 0px"}}>
-                            <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", marginRight:"30px"}}> ¢ {price}</h3>
-                            
-                            
-                                                                
-                            </CardBody>
+                                <img alt="#" src={`https://backend-api.martekgh.com/${image[0].path}`} style={{width:"140px", height:"140px", borderRadius:"5px", marginTop:"10px"}}/>  
                                 </div>
-                            ))}
-                        </ProductConsumer>
-                        
-                        
-                        </Card>
+                            </div>
+                        </Col>
+                        <Col md="6" sm="12" xl="6" xs="12" onClick={() => history.push("/user/product-details",{id:id})} >
+                            <h3 style={{color:"#5588b7", fontSize:"18px", fontWeight:"500", textAlign:"left", overflow:"hidden"}}>
+                                {product_name}
+                            </h3>
+                            <div className="descrip">
+                            <p style={{fontWeight:500}}>{description}</p>
+                            </div>
+                        </Col>
+                        <Col md="3" lg="3" xl="3" sm="12" xs="12">
+                            <Row>
+                                <Col md="12" xs="12" sm="12">
+                                <h3 className="price" style={{color:"#5588b7", fontSize:"18px", fontWeight:500}}>GH¢ {price}</h3>                          
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col md="12" xs="12" sm="12">
+                                    <Button
+                                        className="product-button"
+                                        color="info"
+                                        block
+                                        onClick={()=>{value.addToCart(this.props.product)}}
+                                    >
+                                    <div><i className="fa fa-cart-plus mr-2"/>Add to cart</div>
+                                    </Button>
+                                </Col>
+                            </Row>
+                        </Col>
+                    </Row>
                 </Col>
+                )}
+            </ProductConsumer>
                 
         );
     }

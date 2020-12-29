@@ -35,14 +35,11 @@ class Cart extends React.Component{
                                 if(value.cart.length <= 0){
                                     return(
                                         <EmptyCart/>
-                                        
                                     );
-                                    
                                 }
                                 else{
                                 
                                 return(
-                                    
                                     <React.Fragment>
                                         <Container>
                                         <h5 style={{marginBottom:"10px", fontSize:"14px", fontWeight:500}}>MY CART ({value.cart.length} ITEMS)</h5>
@@ -51,9 +48,7 @@ class Cart extends React.Component{
                                         <CartList value={value}/>
                                         <CartTotal value={value}/>
                                     </React.Fragment>
-                                )
-                                
-                                    }}}
+                                )}}}
                         </ProductConsumer>
                         
                         

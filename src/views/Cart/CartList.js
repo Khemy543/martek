@@ -12,7 +12,6 @@ export default function CartList({value}){
                     {cart.map(items=>{
                         return <CartItem key={items.id} items={items} value={value}/>
                     })}
-                    
                 </Container>
             </div>
         

@@ -42,7 +42,7 @@ import ForgotPassword from "views/ForgetPassword/ForgotPassword.js";
 import ResetPassword from "views/ResetPassword/ResetPassword.js";
 import ContactUs from "views/ContactUs.js";
 import UserDetails from "views/Payment/UserDetails.js";
-import AccountDetails from "views/Payment/AccountDetails.js";
+import UserAccountDetails from "views/Payment/UserAccountDetails.js";
 import ShopForgetPassword from "views/ForgetPassword/ShopForgetPassword.js";
 import ShopResetPassword from "views/ResetPassword/ShopResetPassword.js";
 import Charges from "views/Documents/Charges.js";
@@ -55,13 +55,17 @@ import PrivacyPolicy from "views/Documents/Privacy.js";
 import AboutUs from "views/Documents/AboutUs.js";
 import UploadValidID from "views/UploadFirstTimeID.js";
 import ReportShop from "views/ReportShop.js";
-import UserPayment from "views/Payment/UserPayment.js";
-import UserAccountDetails from "views/Payment/UserAccountDetails.js";
 import All from "views/Home/All.js";
 import Shops from "views/Home/Shops.js";
 import AllCategories from "views/Home/Category.js";
 import ReportProduct from "views/ReportProduct.js";
 import DeleteShop from 'views/Delete/DeleteShop.js';
+import ShopAccountDetails from "views/Payment/ShopAccountDetails.js";
+import ShopDetails from "views/Payment/ShopDetails.js";
+import ProductPaymentVerification from "views/Payment/productPaymentVerificaton.js";
+import ShopPaymentVerification from "views/Payment/shopPaymentVerification.js";
+import UserTransactions from "views/Transactions/UserTransactions.js";
+import ShopTransactions from "views/Transactions/ShopTransactions.js";
 
 
 
@@ -197,11 +201,40 @@ var routes = [
         component: UserDetails,
         layout: "/user"
       },
-      
       {
         path: "/payment/account",
-        component: AccountDetails,
+        component: UserAccountDetails,
         layout: "/user"
+      },
+      {
+        path: "/payment/verification",
+        component: ProductPaymentVerification,
+        layout: "/user"
+      },
+      {
+        path: "/payment/information",
+        component: ShopDetails,
+        layout: "/shop"
+      },
+      {
+        path: "/payment/account",
+        component: ShopAccountDetails,
+        layout: "/shop"
+      },
+      {
+        path: "/payment/verification",
+        component: ShopPaymentVerification,
+        layout: "/shop"
+      },
+      {
+        path: "/transactions",
+        component: UserTransactions,
+        layout: "/user"
+      },
+      {
+        path: "/transactions",
+        component: ShopTransactions,
+        layout: "/shop"
       },
       {
         path: "/service-charges",
@@ -358,16 +391,6 @@ var routes = [
       {
         path: "/report-product",
         component: ReportProduct,
-        layout: "/user"
-      },
-      {
-        path: "/payment/user/information",
-        component: UserPayment,
-        layout: "/user"
-      },
-      {
-        path: "/payment/user/account",
-        component: UserAccountDetails,
         layout: "/user"
       },
       {

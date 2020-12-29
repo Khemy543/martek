@@ -30,8 +30,7 @@ import {
   NavItem,
   NavLink,
   Nav,
-  Container, Dropdown, DropdownItem,DropdownMenu, DropdownToggle,
-  Button,UncontrolledPopover,PopoverBody,PopoverHeader,ListGroup,ListGroupItem
+  Container,UncontrolledPopover,PopoverBody,PopoverHeader,ListGroup,ListGroupItem
 } from "reactstrap";
 import axios from "axios";
 
@@ -172,11 +171,20 @@ const Logout=(e)=>{
             <PopoverHeader>ACCOUNT</PopoverHeader>
             <PopoverBody style={{paddingLeft:"0px",paddingRight:"0px"}}>
              <ListGroup >  
-              <ListGroupItem style={{border:"none", textAlign:"left"}} className="userdrop"onClick={() => {
+              <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop"onClick={() => {
                 document.documentElement.classList.toggle("nav-open");
                 setDropdownOpen(false);
-              }}><i className="fa fa-user"/> <Link to="/shop/settings">{company_name}</Link></ListGroupItem>
-            <ListGroupItem style={{border:"none", textAlign:"left"}} className="userdrop" onClick={Logout}><i className="fa fa-sign-out"/> <a href="#">SIGN OUT</a></ListGroupItem>
+                history.push('/shop/settings')
+              }}><i className="fa fa-user mr-1"/>{company_name}
+              </ListGroupItem>
+
+              <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop"onClick={() => {
+                document.documentElement.classList.toggle("nav-open");
+                setDropdownOpen(false);
+                history.push('/shop/transactions')
+              }}><i className="fa fa-credit-card mr-1"/>Transactions
+              </ListGroupItem>
+            <ListGroupItem style={{border:"none", textAlign:"left", cursor:"pointer"}} className="userdrop" onClick={Logout}><i className="fa fa-sign-out"/> Sign Out</ListGroupItem>
             </ListGroup>
             </PopoverBody>
             </UncontrolledPopover>
@@ -220,6 +228,19 @@ const Logout=(e)=>{
               }}
               >
               <i className="fa fa-cog mr-3"/> settings
+              </NavLink>
+            </NavItem>
+
+            <NavItem>
+              <NavLink
+              tag={Naver}
+              to="/shop/transactions"
+              onClick={() => {
+                document.documentElement.classList.toggle("nav-open");
+                setNavbarCollapse(false);
+              }}
+              >
+              <i className="fa fa-credit-card mr-3"/> Transactions
               </NavLink>
             </NavItem>
 

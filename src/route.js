@@ -24,10 +24,9 @@ const Routes = () => {
             <Router history={history}>
             <SrollToTop/>
             <Switch>
-
-            <Route path="/user" render={props => <UserLayout {...props} />} />
-            <Route path="/shop" render={props => <ShopLayout {...props} />} />
-            <Route path="/auth" render={props => <AuthLayout {...props} />} />
+            <Route path="/user" component={props => <UserLayout {...props} />} />
+            <Route path="/shop" component={props => <ShopLayout {...props} />} />
+            <Route path="/auth" component={props => <AuthLayout {...props} />} />
             <Route path="/api/auth" render={props => <VerificationLayout {...props} />} />
             <Redirect from= "/" to="/user/home" />
             <Route exact path="*" component={ PageNotFound } />

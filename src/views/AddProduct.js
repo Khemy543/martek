@@ -36,7 +36,7 @@ function AddProduct(props){
   console.log("aahh",localStorage.getItem('validity'))
   let valid = localStorage.getItem('validity');
   if(valid === "false"){
-    window.location.pathname="/user/add-product-validation"
+    history.push("/user/add-product-validation")
   }
 
   React.useEffect(()=>{
@@ -51,7 +51,21 @@ function AddProduct(props){
     const handleSubmit = (e) =>{
       console.log("....")
       e.preventDefault();
-      setIsAcitve(true)
+      setIsAcitve(true);
+      let amount = 0;
+      if(1000 < price && price <= 3000){
+        amount = 12;
+      }
+      else
+      if(price > 3000){
+        amount = 15;
+      }else 
+      if(price <= 20){
+        amount = 0;
+      }else
+      if(20 > price && price <=1000){
+        amount = price*0.01;
+      }
     axios.post('https://backend-api.martekgh.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
       headers:{'Authorization':`Bearer ${user}`}
     }).then(res => {
@@ -59,7 +73,9 @@ function AddProduct(props){
       if(res.data.status === "success"){
         const product_id = res.data.product_id;
         setIsAcitve(false);
-        history.push("/user/upload-images",{product_id})
+        history.push("/user/upload-images",{
+          product_id, amount
+        })
       }else{
         if(res.data.status === "Valid ID required"){
           history.push('/user/add-product-validation')

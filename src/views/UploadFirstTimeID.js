@@ -96,14 +96,14 @@ class UploadValidID extends React.Component{
                 <div className="section">
                     <br/>
         <Container style={{marginTop:"50px"}}>
-        <p style={{marginBottom:"10px", fontSize:"13px"}}>Provide A Valid ID</p>
                
         <Form onSubmit={this.handleSubmit} style={{marginTop:"50px"}}>
         
         <Row className="mt-auto mb-auto" style={{marginTop:"50px"}}> 
             <Col md="4" lg="4" className="ml-auto mr-auto">
                 <div>
-                <label>Valid ID Card</label>
+                <label style={{fontWeight:500}}>VALID ID CARD</label>
+                <p style={{marginBottom:"10px", fontSize:"13px"}}>Provide A Valid ID</p>
                 <ImageUploader
                     withIcon={true}
                     withPreview={true}

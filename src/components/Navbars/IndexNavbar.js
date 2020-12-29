@@ -17,7 +17,7 @@
 
 */
 import React from "react";
-import { Link, NavLink as Naver } from "react-router-dom";
+import { Link, NavLink as Naver, Redirect } from "react-router-dom";
 
 import StoreIcon from '@material-ui/icons/Store';
 // nodejs library that concatenates strings
@@ -56,8 +56,8 @@ function IndexNavbar(props) {
   const [campusList , setCampusList] = React.useState([]);
   const [loggedin, setLoggedin] =React.useState(false);
   const [dropdownCampusOpen, setDropdowncampusOpen] =React.useState(false);
-  const [searchShow, setSearchShow] = React.useState(false);
   const [campusName, setCampusName] = React.useState('Campus');
+
   
  
   
@@ -82,10 +82,7 @@ function IndexNavbar(props) {
   
 
 React.useEffect(()=>{
-
-
  let user = localStorage.getItem('access_token');
-
   if(localStorage.getItem('access_token') !== null){
     setLoggedin(true);
   }else{
@@ -112,7 +109,27 @@ React.useEffect(()=>{
         setCampusList(campuses)
       }
   });
-  },[])
+  },[]);
+
+  const search=(e)=>{
+    e.preventDefault();
+    let query = searchValue;
+    axios.get('https://backend-api.martekgh.com/api/search/item',
+    {params:{search:searchValue}})
+    .then(res=>{
+      console.log(res.data);
+      let products = res.data.filter(item=>item.type === 'products');
+      let shops = res.data.filter(item=>item.type === "merchandisers")
+      history.push({
+        pathname:'/user/search-results',  
+        state: { results: res.data, shops:shops, products:products, searchValue:searchValue },
+        search:'?search='+query})
+    })
+    .catch(error=>{
+      console.log(error.response.data);
+    })
+  }
+
   return (
     <div className={classnames("fixed-top")}>
        
@@ -144,25 +161,15 @@ React.useEffect(()=>{
             </Link>
           </NavbarBrand>
 
-          <ProductConsumer> 
-            {
-              value=>(
           <Row>
           <Col md="12">      
-         <Form inline >
+         <Form inline onSubmit={search}>
          <FormGroup className="mb-2 ml-sm--6 mb-sm-0">
           <Input type="search" placeholder="Search..." name="search" className="searchbar" style={{borderRadius:3,height:"35px"}} value={searchValue}
-          onChange = {
-           e=>{
-             setSearchValue(e.target.value);
-             setSearchShow(true);
-             value.searchPrediction(e.target.value);
-             value.searchShopPrediction(e.target.value)
-           }
-           }
-           require
+            onChange = {e=>setSearchValue(e.target.value)}
+           required
           />
-          {searchShow?
+         {/*  {searchShow?
           <div className="autocomplete-items">
           {value.prediction.map((searchValue,index)=>(
           <Link to="/user/search-results" style={{color:"black", fontWeight:500}}>
@@ -183,26 +190,14 @@ React.useEffect(()=>{
           }  
         </div>:
         <div>
-        </div> }
+        </div> } */}
           </FormGroup>
-          <Link to="/user/search-results"><Button type="submit" color="info" className="search-button"
-          style={{height:"35px", borderRadius:5,fontSize:"11px", }}          
-          onClick={(e) => {
-          value.search(searchValue);
-          value.searchShop(searchValue);
-          setSearchShow(false);
-             
-            }
-             }><i className="fa fa-search" style={{marginRight:"-15px", marginLeft:"-15px"}}/></Button></Link>
-             
-             
+          <Button type="submit" color="info" className="search-button" style={{height:"35px", borderRadius:5,fontSize:"11px" }}>          
+              <i className="fa fa-search" style={{marginRight:"-15px", marginLeft:"-15px"}}/>
+          </Button>
         </Form>
-         
         </Col>
         </Row>
-        )
-            }
-          </ProductConsumer>
          
             
           
@@ -309,24 +304,38 @@ React.useEffect(()=>{
                   <i className="fa fa-user-o" style={{fontSize:"11px"}}/> | user
                   </NavLink>
                 <UncontrolledPopover trigger="legacy" isOpen={dropdownOpen} placement="bottom" toggle={toggle} target="Popover2">
-                  <PopoverHeader>ACCOUNT</PopoverHeader>
+                 {/*  <PopoverHeader>ACCOUNT</PopoverHeader> */}
                   <PopoverBody style={{paddingLeft:"0px",paddingRight:"0px"}}>
                    <ListGroup >  
-                    <ListGroupItem style={{border:"none", textAlign:"left"}} className="userdrop" onClick={() => {
-                document.documentElement.classList.toggle("nav-open");
-                setDropdownOpen(false);
-              }}><i className="fa fa-user"/> <Link to="/user/profile">{name}</Link></ListGroupItem>
-                  <ListGroupItem style={{border:"none", textAlign:"left"}} className="userdrop" onClick={() => {
-                document.documentElement.classList.toggle("nav-open");
-                setDropdownOpen(false);
-              }}><i className="fa fa-tablet"/> <Link to="/user/user-products">My Products</Link></ListGroupItem>
+                    <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop" onClick={() => {
+                      document.documentElement.classList.toggle("nav-open");
+                      setDropdownOpen(false);
+                      history.push('/user/profile')
+                      }}><i className="fa fa-user mr-1"/>{name}
+                      </ListGroupItem>
 
-              <ListGroupItem style={{border:"none", textAlign:"left"}} className="userdrop" onClick={() => {
-                document.documentElement.classList.toggle("nav-open");
-                setDropdownOpen(false);
-              }}><i className="fa fa-users"/> <Link to="/user/following">Following <Badge color="danger">{value.followShops.length}</Badge></Link></ListGroupItem>
+                    <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop" onClick={() => {
+                      document.documentElement.classList.toggle("nav-open");
+                      setDropdownOpen(false);
+                      history.push('/user/user-products')
+                     }}><i className="fa fa-tablet mr-1"/>My Products
+                     </ListGroupItem>
+
+                     <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop" onClick={() => {
+                      document.documentElement.classList.toggle("nav-open");
+                      setDropdownOpen(false);
+                      history.push('/user/transactions')
+                     }}><i className="fa fa-credit-card mr-1"/>Transactions
+                     </ListGroupItem>
+
+                    <ListGroupItem style={{border:"none", textAlign:"left", cursor:"pointer"}} className="userdrop" onClick={() => {
+                      document.documentElement.classList.toggle("nav-open");
+                      setDropdownOpen(false);
+                      history.push('/user/following')
+                    }}><i className="fa fa-users mr-1"/>Following 
+                    </ListGroupItem>
                   <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop" onClick={()=>{value.logout(); document.documentElement.classList.toggle("nav-open");
-                setDropdownOpen(false); }}><i className="fa fa-sign-out"/> SIGN OUT</ListGroupItem>
+                setDropdownOpen(false); }}><i className="fa fa-sign-out"/> Sign Out</ListGroupItem>
                   </ListGroup>
                   </PopoverBody>
                   </UncontrolledPopover>
@@ -364,19 +373,6 @@ React.useEffect(()=>{
             <NavItem>
               <NavLink
               tag={Naver}
-              to="/auth/shop-login"
-              onClick={() => {
-                document.documentElement.classList.toggle("nav-open");
-                setNavbarCollapse(false);
-              }}
-              >
-              <StoreIcon style={{marginLeft:'-9px', marginRight:"3px"}}/> My Shop
-              </NavLink>
-            </NavItem>
-
-            <NavItem>
-              <NavLink
-              tag={Naver}
               to="/user/add-product"
               onClick={() => {
                 document.documentElement.classList.toggle("nav-open");
@@ -397,6 +393,19 @@ React.useEffect(()=>{
               }}
               >
               <i className="fa fa-cart-plus mr-3"/> cart <Badge color="info">{value.cart.length}</Badge>
+              </NavLink>
+            </NavItem>
+            
+            <NavItem>
+              <NavLink
+              tag={Naver}
+              to="/auth/shop-login"
+              onClick={() => {
+                document.documentElement.classList.toggle("nav-open");
+                setNavbarCollapse(false);
+              }}
+              >
+              <StoreIcon style={{marginLeft:'-9px', marginRight:"3px"}}/> My Shop
               </NavLink>
             </NavItem>
 
@@ -469,6 +478,20 @@ React.useEffect(()=>{
               <i className="fa fa-tablet mr-3"/> My Products
               </NavLink>
             </NavItem>
+
+            <NavItem>
+              <NavLink
+              tag={Naver}
+              to="/user/transactions"
+              onClick={() => {
+                document.documentElement.classList.toggle("nav-open");
+                setNavbarCollapse(false);
+              }}
+              >
+              <i className="fa fa-credit-card mr-3"/> Transactions
+              </NavLink>
+            </NavItem>
+
             <NavItem>
               <NavLink
               tag={Naver}

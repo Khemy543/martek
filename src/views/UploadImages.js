@@ -68,14 +68,6 @@ class UploadImages extends React.Component {
                 let percentage = Math.floor(loaded * 100 / total);
                 console.log(percentage)
                 if(percentage<100){
-                    setTimeout(
-                    function(){
-                            this.setState({modal:false});
-                            this.props.history.push('/user/payment/user/information')
-                    }
-                    .bind(this),
-                    1500
-                )
                     this.setState({percentage:percentage});
                 }
             }
@@ -84,8 +76,11 @@ class UploadImages extends React.Component {
         this.setState({isActive:false, modal:true,percentage:100})
         setTimeout(
             function(){
-                this.setState({modal:false});
-                console.log(this.props)
+                    this.setState({modal:false});
+                    this.props.history.push('/user/payment/information',{
+                        product_id:this.state.product_id,
+                        amount:this.props.location.state.amount
+                    })
             }
             .bind(this),
             1500
@@ -162,10 +157,12 @@ class UploadImages extends React.Component {
                     </div>
                 </div>
                 </LoadingOverlay>
-                <Modal isOpen={this.state.modal} className="alert-modal">
-                    <ModalBody>
-                        <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white"}}>PRODUCT SAVED!!</h4>
-                    </ModalBody>
+                <Modal isOpen={this.state.modal} className="login-modal">
+      
+                <ModalBody style={{color:"white", fontSize:"12px", fontWeight:500}} className="text-center">
+                    IMAGES SAVED
+                </ModalBody>
+      
                 </Modal>
             </div>
     )

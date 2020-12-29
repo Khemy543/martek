@@ -27,7 +27,7 @@ import {
   TabPane,
   Container,
   Row,
-  Col, Card, CardBody,CardTitle
+  Col, Card, CardBody,CardTitle, Spinner
 } from "reactstrap";
 
 import axios from "axios";
@@ -38,6 +38,7 @@ import BounceLoader from "react-spinners/BounceLoader";
 import Product from "components/Product.js"
 import StarRatings from 'react-star-ratings';
 import ShopProduct from "components/ShopProduct.js";
+import history from '../../history.js';
 
 
 function ShopPage(props) {
@@ -61,14 +62,17 @@ function ShopPage(props) {
 let merchandiser = localStorage.getItem("shop_access_token")
   
   React.useEffect(()=>{
+    console.log(history)
     setIsActive(true);
       axios.get("https://backend-api.martekgh.com/api/merchandiser",{
           headers:{ 'Authorization':`Bearer ${merchandiser}`}
   }
   )
   .then(res=>{
-      console.log(res.data)
-      if(res.data.id !== null){
+        console.log(res.data);
+        if(res.data.payment_status === "Payment_required"){
+          history.push('/shop/payment/information',{shopType:res.data.shop_type})
+        }else{
         setAvatar(res.data.avatar);
         setCompany_name(res.data.company_name);
         setCompany_description(res.data.company_description);
@@ -76,7 +80,6 @@ let merchandiser = localStorage.getItem("shop_access_token")
         setNumberFollowing(res.data.no_followers);
         setCover(res.data.cover_photo);
         setAverage(res.data.avg_rating)
-
         axios.get("https://backend-api.martekgh.com/api/merchandiser/"+res.data.id+"/products"
       )
         .then(response=>{
@@ -87,8 +90,6 @@ let merchandiser = localStorage.getItem("shop_access_token")
         .catch(error=>{
         })
       }
-
-      
   })
  
 },[merchandiser])
@@ -103,12 +104,19 @@ let merchandiser = localStorage.getItem("shop_access_token")
   });
   return (
     <div>
-       <LoadingOverlay 
-    active = {isActive}
-    spinner={<BounceLoader color={'#4071e1'}/>}
-    >
-      
       <div className="section profile-content text-center">
+      {isActive?
+      <Container>
+      <br/>
+      <br/>
+        <Row>
+          <Col className="mr-auto ml-auto">
+            <Spinner size="sm" color="info"/> Please Wait
+          </Col>
+        </Row>
+      </Container>
+      :
+      <>
       <img alt="#" src={`https://backend-api.martekgh.com/${cover}`} style={{width:"95%", marginTop:"10px"}} className="cover-photo"/>
       
         <Container>
@@ -227,8 +235,9 @@ let merchandiser = localStorage.getItem("shop_access_token")
             </TabPane>
           </TabContent>
         </Container>
+        </>
+      }
       </div>
-      </LoadingOverlay>
     </div>
   );
 }

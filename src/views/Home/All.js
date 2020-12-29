@@ -20,8 +20,6 @@ import Slider from "react-slick";
 import Product from "../../components/Product.js";
 import CarouselView from "../../components/Carousel/Carousel.js";
 import axios from "axios";
-//context
-import { ProductConsumer } from "../../context";
 import { Link } from "react-router-dom";
 
 var settings = {
@@ -55,6 +53,9 @@ function All({history}){
             console.log(res.data);
             setNewItems(res.data);
         })
+        .catch(error=>{
+            console.log(error.response.data)
+        })
         setProducts();
       },[])
 
@@ -66,6 +67,9 @@ function All({history}){
              const categories = res.data[0];
              setPhones(categories)
          })
+         .catch(error=>{
+             console.log(error.response.data)
+         })
  
          axios.get("https://backend-api.martekgh.com/api/3/product-index")
          .then(res=>{
@@ -76,6 +80,7 @@ function All({history}){
  
          axios.get("https://backend-api.martekgh.com/api/1/product-index")
          .then(res=>{
+             console.log(res.data)
              const nextProducts = res.data[0];
              setElectronics(nextProducts)
          })
@@ -143,23 +148,23 @@ function All({history}){
                             <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                             <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
                             <Row style={{borderBottom:"1px solid #eaeaea"}}>
-                                <Col sm="9" md="9" lg="9" xl="9" xs="9">
+                                <Col sm="8" md="9" lg="9" xl="9" xs="8">
                                 <h3 style={{fontWeight:500}} className="category">
                                     <i className="fa fa-gg mr-1" style={{color:"#ff8d00"}}/> Phones & Accessories
                                     
                                 </h3>
                                 </Col>
-                                <Col sm="3" md="3" lg="3" xl="3" xs="3">
+                                <Col sm="4" md="3" lg="3" xl="3" xs="4">
                                 <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}} 
                                 onClick = {()=>history.push("/user/categories",{category_id:2, category_name:"Phones and Accessories", image:"2.jpeg"})}
-                                >See All <i className="fa fa-chevron-right"/></p>
+                                >See All<i className="fa fa-chevron-right"/></p>
                                 </Col>
                                 </Row>
                                 </CardTitle>
                                 <CardBody>
                                     <Container>
                                         <Row>
-                                        {newItems.slice(0,6).map((product)=>(
+                                        {phones.map((product)=>(
                                             <Product key={product.id} product={product}/>
                                         ))}
                                         </Row>
@@ -212,13 +217,13 @@ function All({history}){
                     <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                     <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
                             <Row style={{borderBottom:"1px solid #eaeaea"}}>
-                                <Col sm="9" md="9" lg="9" xl="9" xs="9">
+                                <Col sm="8" md="9" lg="9" xl="9" xs="8">
                                 <h3 style={{fontWeight:500}} className="category">
                                     <i className="fa fa-gg mr-1" style={{color:"#ff8d00"}}/> Fashion
                                     
                                 </h3>
                                 </Col>
-                                <Col sm="3" md="3" lg="3" xl="3" xs="3">
+                                <Col sm="4" md="3" lg="3" xl="3" xs="4">
                                 <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}}
                                 onClick = {()=>history.push("/user/categories",{category_id:3, category_name:"Fashion", image:"3.jpeg"})}
                                 >See All <i className="fa fa-chevron-right"/></p>
@@ -245,13 +250,13 @@ function All({history}){
                     <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                     <CardTitle style={{padding:"5px 0px 0px 0px", margin:"0px 15px 0px 15px"}}>
                             <Row style={{borderBottom:"1px solid #eaeaea"}}>
-                                <Col sm="9" md="9" lg="9" xl="9" xs="9">
+                                <Col sm="8" md="9" lg="9" xl="9" xs="8">
                                 <h3 style={{fontWeight:500}} className="category">
                                     <i className="fa fa-gg" style={{color:"#ff8d00"}}/> Electronics & Appliances
                                     
                                 </h3>
                                 </Col>
-                                <Col sm="3" md="3" lg="3" xl="3" xs="3">
+                                <Col sm="4" md="3" lg="3" xl="3" xs="4">
                                 <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}}
                                 onClick = {()=>history.push("/user/categories",{category_id:1, category_name:"Electronics", image:"1.jpeg"})}
                                 >See All <i className="fa fa-chevron-right"/></p>

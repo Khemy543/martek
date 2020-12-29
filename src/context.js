@@ -20,27 +20,12 @@ let user_id=null;
 class ProductProvider extends React.Component{
     
     state={
-        setElectronics:[],
-        setFoods:[],
-        setPhones:[],
-        setFashion:[],
-        setHome:[],
-        setBeauty:[],
-        setGames:[],
-        setSkills:[],
-        setEntertianment:[],
-        setOthers:[],
-        allProducts:[],
-        products: [],
-        nextProducts:[],
-        detailProduct : [],
         cart:[],
         cartSubTotal:0,
         cartTax:0,
         cartTotal:0,
         searchResults:[],
-        searchShopResults:[],
-        allCategories:[],
+        searchValue:"",
         Token:"",
         spinner:false,
         modal:false,
@@ -49,11 +34,7 @@ class ProductProvider extends React.Component{
         followShops:[],
         followLoader:false,
         followingLoader:false,
-        indexFashion:[],
-        prediction:[],
-        shopPredicition:[],
-        id:"",
-        searchValue:""
+        id:""
     }
 
     toggle=()=>{
@@ -84,7 +65,6 @@ class ProductProvider extends React.Component{
 
         this.isTokenExpired();
         this.isShopTokenExpired();
-        this.getFollowingShops();
 
 
         /* localStorage.clear(); */
@@ -131,22 +111,7 @@ isTokenExpired() {
     }
  }
 
-    //get following shops
-
-    getFollowingShops(){
-        this.setState({spinner:true})
-        axios.get("https://backend-api.martekgh.com/api/following-shops",{headers:{'Authorization':`Bearer ${user}`}})
-        .then(res=>{
-            console.log(res.data)
-            return(this.setState({followShops:res.data, spinner:false}))
-            
-        })
-        .catch(error=>{
-            
-            this.setState({spinner:false})
-        })
-    }
-    
+   
 
     follow = (id)=>{
         user = localStorage.getItem('access_token')
@@ -216,21 +181,7 @@ logout = ()=>{
         this.setState({spinner:false})
       })
 }
-    //copies of nextProducts
-    
-/*
-//copies of SliderProducts
-setProducts =() =>{
-    let tempSliderProducts = [];
-    data.slice(6,9).forEach(item =>{
-        const singleItem = {...item};
-    tempSliderProducts=[...tempSliderProducts, singleItem];
-    });
-    this.setState(()=>{
-        return{sliderProducts:tempSliderProducts};
-    });
-}; */
-
+   
     //incrementaion
     increment = (id) =>{
         let tempCart =[...this.state.cart];
@@ -318,7 +269,6 @@ setProducts =() =>{
 
     // remove item
     removeItem = (id) =>{
-        //let tempProducts = [...this.state.products, ...this.state.nextProducts, ...this.state.setElectronics];
         let tempCart = [...this.state.cart];
         let newCart = tempCart.filter(item => item.id !==id);
         const selectedProduct = tempCart.find(item=>item.id===id);
@@ -409,7 +359,6 @@ setProducts =() =>{
         let tempCarts = [...this.state.cart];
         const cart_index = tempCarts.indexOf(this.getCartItem(product.id));
         if(cart_index === -1){
-            //product.in_cart=true;
             product.quantity=1;
             const price=product.price;
             product.total=price;
@@ -447,7 +396,6 @@ setProducts =() =>{
             }).catch(error=>{
                 
                 this.setState({spinner:false})
-                //this.setState({modal:true, modalInfo:"PLEASE SIGN IN", spinner:false})
             })
             })
         }
@@ -467,68 +415,24 @@ setProducts =() =>{
         
 }
     
-    //search
+//search
+
     search=(searchValue)=>{
-        if(searchValue === ""){
-            this.setState(()=>{
-                return{searchResults:[]}
-            })
-        }else{
-        let newSearchValue = searchValue.toLowerCase();
-        let tempProducts = [...this.state.setElectronics, ...this.state.setFoods,...this.state.setPhones,...this.state.setBeauty,...this.state.setEntertianment, ...this.state.setFashion,...this.state.setGames,...this.state.setHome,...this.state.setOthers,...this.state.setSkills];
-        
-        const search = _.filter(tempProducts, (item)=>{
-            return this.searchQuery(item, newSearchValue)
-        });
-        
-        this.setState(()=>{
-            return{searchResults:search, searchValue:searchValue};
-        })
-        
-    }
-}
+    axios.get('https://backend-api.martekgh.com/api/search/item',
+    {params:{search:searchValue}})
+    .then(res=>{
+      console.log(res.data);
+      this.setState({
+        searchResults:res.data,
+        searchValue:searchValue,
+      })
+    })
+    .catch(error=>{
+      console.log(error.response.data);
+    })
+  }
 
-    searchQuery=(item,newSearchValue)=>{
-        console.log("item",item)
-        const{product_name,product_description} = item
-
-        if((product_name.toLowerCase().includes(newSearchValue)) || (product_name.toUpperCase().includes(newSearchValue)) || (product_description.toLowerCase().includes(newSearchValue)) || (product_description.toUpperCase().includes(newSearchValue))){
-            return true;
-        }
-        return false;
-    }
-
-
-    //search shops
-    searchShop=(searchValue)=>{
-        if(searchValue === ""){
-            this.setState(()=>{
-                return{searchShopResults:[]}
-            })
-        }else{
-        let newSearchValue = searchValue.toLowerCase();
-        let tempShops = [...this.state.setShops];
-        const search = _.filter(tempShops, (item)=>{
-            return this.searchShopsQuery(item, newSearchValue)
-        });
-        
-        this.setState(()=>{
-            return{searchShopResults:search,searchValue:searchValue};
-        })
-        
-    }
-}
-
-    searchShopsQuery=(item,newSearchValue)=>{
-        const{company_name,company_description} = item
-
-        if((company_name.toLowerCase().includes(newSearchValue)) || (company_name.toUpperCase().includes(newSearchValue)) || (company_description.toLowerCase().includes(newSearchValue)) || (company_description.toUpperCase().includes(newSearchValue))){
-            return true;
-        }
-        return false;
-    }
-
-    seacrhPrediction=(searchValue) =>{
+  /*   seacrhPrediction=(searchValue) =>{
         if(searchValue === ""){
             this.setState(()=>{
                 return{prediction:[]}
@@ -564,10 +468,7 @@ searchShopPrediction=(searchValue)=>{
     
 }
 }
-
-
-
-
+ */
     
     
     render(){
@@ -575,21 +476,15 @@ searchShopPrediction=(searchValue)=>{
         return(
             <ProductContext.Provider value={{
                 ...this.state,
-                handleDetail:this.handleDetail,
                 addToCart:this.addToCart,
                 increment:this.increment,
                 decrement:this.decrement,
                 removeItem:this.removeItem,
                 clearCart:this.clearCart,
                 search:this.search,
-                searchShop:this.searchShop,
                 logout:this.logout,
                 follow:this.follow,
-                unfollow:this.unfollow,
-                searchPrediction:this.seacrhPrediction,
-                searchShopPrediction:this.searchShopPrediction,
-                handleSubmit:this.handleSubmit
-                
+                unfollow:this.unfollow
             }}>
                
 
