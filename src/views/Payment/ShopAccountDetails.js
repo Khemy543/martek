@@ -75,6 +75,7 @@ handleCardSubmit=(e)=>{
     })
     .catch(error=>{
         console.log(error.response.data);
+        this.setState({isActive:false})
     })
 }
 
@@ -118,6 +119,7 @@ handleMobileSubmit=(e)=>{
     })
     .catch(error=>{
         console.log(error.response.data);
+        this.setState({isActive:false})
         this.setState({isActive:false})
     })
 }
@@ -196,7 +198,7 @@ handleMobileSubmit=(e)=>{
                                         {!this.state.isActive?
                                             <Button block color="info" type="Submit">Pay GHS {this.state.amount}</Button>
                                             :
-                                            <Button block color="info"><Spinner size="sm" /></Button>
+                                            <Button block color="info" disabled><Spinner size="sm" /></Button>
                                         }
                                         </Col>
                                     </Row>
@@ -247,7 +249,7 @@ handleMobileSubmit=(e)=>{
                                         {!this.state.isActive?
                                             <Button block color="info" type="Submit">Pay GHS {this.state.amount}</Button>
                                             :
-                                            <Button block color="info"><Spinner size="sm" /></Button>
+                                            <Button block color="info" disabled><Spinner size="sm" /></Button>
                                         }
                                         </Col>
                                     </Row>

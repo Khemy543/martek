@@ -39,6 +39,13 @@ React.useEffect(()=>{
     <>
     <div className="section">
         <Container style={{marginTop:"40px"}}>
+        {transaction.length <=0?
+        <Row>
+          <Col md="6" sm="12" xs="12" lg="6" xl="6" className="ml-auto mr-auto">
+            <h4 className="text-center">No Transactions Made</h4>
+          </Col>
+        </Row>
+        :
           <Row>
             <Col md="12" sm="12" xs="12" className="ml-auto mr-auto">
                     <Card className="card-plain" style={{backgroundColor:"white", borderRadius:"5px"}}>
@@ -86,6 +93,7 @@ React.useEffect(()=>{
                     </Card>
             </Col>
           </Row>
+        }
         </Container>
     </div>
     </>

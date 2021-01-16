@@ -11,16 +11,15 @@ import {
 // core components
 import axios from 'axios';
 import queryString from 'query-string'
+import { Redirect } from "react-router-dom";
 
 const user = localStorage.getItem('access_token')
 
 function ShopPaymentVerification(props) {
-const [isActive, setIsActive] = React.useState(false);
-const [firtsname, setFirstname] = React.useState("");
-const [lastname, setLastname] = React.useState("");
+  const [count, setCount] = React.useState(4);
 
 React.useEffect(()=>{
-        console.log(props.location);
+       /*  console.log(props.location);
         const param = queryString.parse(props.location.search);
         var response = param.response || param.resp
         console.log(response);
@@ -33,8 +32,24 @@ React.useEffect(()=>{
         })
         .catch(error=>{
             console.log(error.response.data)
-        })
-},[])
+        }) */
+setInterval(function(){ countdown(); },1000);
+},[]);
+
+function countdown() {
+  var counter = count;
+  console.log(counter)
+  if (counter <= 0) {
+     /*  <Redirect to={'/user/home'}/> */
+     window.location.pathname='/user/home'
+  }
+  else{
+    counter = counter-1;
+    setCount(counter)
+  }
+}
+
+
   return (
     <>
       <div
@@ -57,6 +72,11 @@ React.useEffect(()=>{
                             </p>
                         </CardBody>
                     </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="ml-auto mr-ato" md="6" xs="12" sm="12" lg="6" xl="6">
+                <h1>{count}</h1>
             </Col>
           </Row>
         </Container>

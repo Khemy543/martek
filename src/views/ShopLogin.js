@@ -1,7 +1,7 @@
 import React from "react";
 import { Link} from "react-router-dom";
 // reactstrap components
-import { Button, Card, Form, Input, Container, Row, Col, Alert,InputGroup,InputGroupAddon,InputGroupText } from "reactstrap";
+import { Button, Card, Form, Input, Container, Row, Col, Alert,InputGroup,InputGroupAddon,InputGroupText, Spinner } from "reactstrap";
 import history from "../history.js";
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
@@ -45,7 +45,6 @@ export default function ShopLoginPage(props) {
   }).then(res => {
     console.log(res.data)
         localStorage.setItem('shop_access_token', res.data.access_token)
-        setIsActive(false)
         history.push("/shop/shop-page")
     
   }).catch(error => {
@@ -65,10 +64,6 @@ React.useEffect(() => {
 });
 return (
   <div>
-    <LoadingOverlay 
-    active = {isActive}
-    spinner={<BounceLoader color={'#4071e1'}/>}
-    >
     <div
       className="page-header"
       style={{
@@ -112,16 +107,22 @@ return (
                   </InputGroupText>
                 </InputGroupAddon>
                 </InputGroup>
+                {!isActive?
                 <Button block className="btn-round" color="info">
                   Login
                 </Button>
+                :
+                <Button block className="btn-round" color="info" disabled>
+                  <Spinner size="sm" />
+                </Button>
+                }
               </Form>
               <div className="forgot">
                 <Button
                   className="btn-link"
                   color="warning"
                   tag={Link}
-                  to="/user/shop-register"
+                  to="/user/shop/free-trial"
                 >
                   Own a shop!!
                 </Button>
@@ -130,6 +131,7 @@ return (
                   className="btn-link"
                   tag={Link}
                   to="/auth/forgot-password"
+                  style={{marginTop:"-10px"}}
                 >
                   Forgot password?
                 </Button> 
@@ -146,7 +148,6 @@ return (
         </h6>
       </div>
     </div>
-    </LoadingOverlay>
   </div>
 );
 }

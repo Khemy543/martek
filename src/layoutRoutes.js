@@ -66,6 +66,8 @@ import ProductPaymentVerification from "views/Payment/productPaymentVerificaton.
 import ShopPaymentVerification from "views/Payment/shopPaymentVerification.js";
 import UserTransactions from "views/Transactions/UserTransactions.js";
 import ShopTransactions from "views/Transactions/ShopTransactions.js";
+import FreeConditions from "views/Payment/freeCondtions.js";
+import ProductFreeTrial from "views/Payment/ProductFreeTrial.js";
 
 
 
@@ -325,7 +327,7 @@ var routes = [
         path: "/register",
         protectedLogin:true,
         component: RegisterPage,
-        layout: "/auth"
+        layout: "/user"
       },
       {
         path: "/shop-login",
@@ -397,6 +399,16 @@ var routes = [
         path: "/delete-shop",
         component: DeleteShop,
         layout: "/shop"
+      },
+      {
+        path: "/shop/free-trial",
+        component: FreeConditions,
+        layout: "/user"
+      },
+      {
+        path: "/product/free-trial",
+        component: ProductFreeTrial,
+        layout: "/user"
       },
 
 ];

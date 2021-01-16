@@ -70,7 +70,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
   )
   .then(res=>{
         console.log(res.data);
-        if(res.data.payment_status === "Payment_required"){
+        if(res.data.payment_status === "payment required"){
           history.push('/shop/payment/information',{shopType:res.data.shop_type})
         }else{
         setAvatar(res.data.avatar);

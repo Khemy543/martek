@@ -13,7 +13,6 @@ import ImageUploader from 'react-images-upload';
 
 
 
-let merchandiser = localStorage.getItem("shop_access_token")
 
 class ShopUploadImages extends React.Component{
 
@@ -32,6 +31,7 @@ class ShopUploadImages extends React.Component{
     }
 
  handleSubmit=(e)=>{
+    let merchandiser = localStorage.getItem("shop_access_token")
     e.preventDefault();
     console.log(this.state.pictures)
     this.setState({isActive:true})
@@ -52,7 +52,14 @@ class ShopUploadImages extends React.Component{
         }
     }
     }).then(res=>{
-        this.setState({modal:true, percentage:100})
+        this.setState({modal:true, percentage:100});
+        setTimeout(
+            function(){
+                    this.props.history.push('/shop/shop-page')
+            }
+            .bind(this),
+            1500
+        )
     }).catch(error=>{
         console.log(error);
         this.setState({isActive:false})
@@ -120,9 +127,8 @@ render(){
                 </div>
                 <Modal isOpen={this.state.modal} className="login-modal">
       
-                <ModalBody style={{color:"white", fontSize:"14px", fontWeight:500}}>
+                <ModalBody style={{color:"white", fontSize:"14px", fontWeight:500, textAlign:"center"}}>
                     PRODUCT SAVED
-                    <a href="/shop/shop-page" style={{float:"right"}}><Button color="primary">OK</Button></a>{' '}
                 </ModalBody>
                 
                 </Modal> 

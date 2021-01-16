@@ -1,25 +1,7 @@
-/*!
-
-=========================================================
-* Paper Kit React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-kit-react
-
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { Link} from "react-router-dom";
 // reactstrap components
-import { Button, Card, Form, Input, Container, Row, Col, Alert,InputGroup,InputGroupAddon,InputGroupText } from "reactstrap";
+import { Button, Card, Form, Input, Container, Row, Col, Alert,InputGroup,InputGroupAddon,InputGroupText, Spinner } from "reactstrap";
 import history from "../../history.js";
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
@@ -46,8 +28,6 @@ function LoginPage(props){
   const [isActive, setIsActive] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
   const [eye, setEye] = React.useState(false);
-  //const [loggedin, setLoggedin] =React.useState(false);
-  //const [modal, setModal] = React.useState(false);
 
   const toggleEye = () => setEye(!eye);
     
@@ -63,8 +43,6 @@ function LoginPage(props){
     if(res.data.statusCode === 200){
         localStorage.setItem('access_token',res.data.access_token);
         window.location.reload("/")
-        setIsActive(false);
-        
     }
     
     
@@ -85,10 +63,6 @@ function LoginPage(props){
   });
   return (
     <div>
-      <LoadingOverlay 
-      active = {isActive}
-      spinner={<BounceLoader color={'#4071e1'}/>}
-      >
       <div
         className="page-header"
         style={{
@@ -125,9 +99,15 @@ function LoginPage(props){
                     </InputGroupText>
                   </InputGroupAddon>
                   </InputGroup>
-                  <Button block className="btn-round" color="info">
+                  {!isActive?
+                  <Button block className="btn-round" color="info" type='submit'>
                     Login
                   </Button>
+                  :
+                  <Button block className="btn-round" color="info">
+                    <Spinner size="sm" />
+                  </Button>
+                  }
                 </Form>
                 <div className="forgot">
 
@@ -142,7 +122,7 @@ function LoginPage(props){
                     className="btn-link"
                     color="danger"
                     tag={Link}
-                    to="/auth/register"
+                    to="/user/register"
                   >
                     Sign up !!
                   </Button>
@@ -158,7 +138,6 @@ function LoginPage(props){
           </h6>
         </div>
       </div>
-      </LoadingOverlay>
     </div>
   );
 }

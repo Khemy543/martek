@@ -16,8 +16,7 @@ const user = localStorage.getItem('access_token')
 
 function ProductPaymentVerification(props) {
 const [isActive, setIsActive] = React.useState(false);
-const [firtsname, setFirstname] = React.useState("");
-const [lastname, setLastname] = React.useState("");
+const [count, setCount] = React.useState(4);
 
 React.useEffect(()=>{
         console.log(props.location);
@@ -29,12 +28,13 @@ React.useEffect(()=>{
             response : response
         }, {headers:{'Authorization':`Bearer ${user}`}})
         .then(res=>{
-            console.log(res.data)
+            console.log(res.data);
         })
         .catch(error=>{
             console.log(error.response.data)
-        })
-},[])
+        });
+},[]);
+
   return (
     <>
       <div
@@ -57,6 +57,11 @@ React.useEffect(()=>{
                             </p>
                         </CardBody>
                     </Card>
+            </Col>
+          </Row>
+          <Row>
+            <Col className="ml-auto mr-ato" md="6" xs="12" sm="12" lg="6" xl="6">
+                <h1>{count}</h1>
             </Col>
           </Row>
         </Container>

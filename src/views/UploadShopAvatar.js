@@ -33,6 +33,10 @@ class UploadShopAvatar extends React.Component{
          
     }
 
+    componentDidMount(){
+        console.log(this.props.location.state)
+    }
+    
     onDropAvatar(picture) {
         this.setState({
             avatar:picture,
@@ -164,7 +168,7 @@ class UploadShopAvatar extends React.Component{
                 <Button
                 block
                 color="info"
-                disabled={!this.state.activateButton || !this.state.activateButton2}
+                disabled={!this.state.activateButton || !this.state.activateButton2 || !this.state.activateButton3}
                 type="submit"
                 >
                     upload

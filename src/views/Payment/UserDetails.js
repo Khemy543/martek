@@ -8,11 +8,12 @@ import {
   Input,
   Button,
   Form,
-  Col,
+  Col,Modal,ModalBody,
   InputGroup, InputGroupAddon, InputGroupText
 } from "reactstrap";
 // core components
 import history from "../../history.js";
+import axios from 'axios';
 
 function UserDetails(props) {
 const [firtsname, setFirstname] = React.useState("");
@@ -20,6 +21,7 @@ const [lastname, setLastname] = React.useState("");
 const [email, setEmail] = React.useState("");
 const [amount, setAmount] = React.useState((Math.round(props.location.state.amount * 100) / 100).toFixed(2))
 const [phone, setPhoneNumber] = React.useState('');
+const [modal,setModal] = React.useState(false);
 
 console.log(props)
 console.log(history)
@@ -37,6 +39,27 @@ const handleSubmit=(e)=>{
     });
     }
     
+}
+const activateFreeTrial=()=>{
+  let user = localStorage.getItem('access_token')
+axios.post(`https://backend-api.martekgh.com/api/user/toggle/${props.location.state.product_id}/to-free-trial`,null,
+{headers:{'Authorization':`Bearer ${user}`}})
+.then(res=>{
+  console.log(res.data);
+  setModal(true);
+  setTimeout(
+    function () {
+      setModal(false);
+      history.push("/user/user-products")
+
+    },
+    1500
+  )
+
+})
+.catch(error=>{
+  console.log(error.response.data)
+})
 }
 
   return (
@@ -118,10 +141,12 @@ const handleSubmit=(e)=>{
                             <Button color="primary" type="submit">Pay</Button>
                         </Col>
                         <Col md="6" sm="6" xs="6" lg="6" xl="6">
-                          <a href="/auth/shop-login"><h4 style={{fontSize:"14px", fontWeight:600, marginTop:"4px",color:"#6ec7e0"}}>Try Free Now ! <i className="fa fa-chevron-right"/></h4></a>
+                          <h4 style={{fontSize:"14px", fontWeight:600, marginTop:"4px",color:"#6ec7e0", cursor:"pointer"}}
+                            onClick={()=>activateFreeTrial()}
+                          >Try Free Now ! <i className="fa fa-chevron-right"/></h4>
                         </Col>
                     </Row>
-                    <p style={{textAlign:"center", marginTop:"15px", fontSize:"12px",fontWeight:600}}>Contact <a style={{color:"blue"}} href="mailto://martekgh@gmail.com">martekgh@gmail.com</a> for any questions</p>
+                    <p style={{textAlign:"center", marginTop:"15px", fontSize:"12px",fontWeight:600}}>Contact <a style={{color:"#6ec7e0"}} href="mailto://support@martekgh.com">support@martekgh.com</a> for any questions</p>
                   </Form>
                 </CardBody>
               </Card>
@@ -135,6 +160,11 @@ const handleSubmit=(e)=>{
             </Col>
           </Row>
         </Container>
+        <Modal isOpen={modal} className="login-modal">
+            <ModalBody style={{ color: "white", fontSize: "12px", fontWeight: 500 }} className="text-center">
+              FREE TRIAL ACTIVATED
+            </ModalBody>
+        </Modal>
         </div>
     </>
   );

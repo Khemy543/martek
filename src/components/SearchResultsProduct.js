@@ -17,17 +17,27 @@ import history from "../history.js";
 import { ProductConsumer } from "../context";
 
 class SearchResultsProducts extends React.Component{
+    /* state={
+        product = this.props.product;
+    }
+
+    componentDidMount(){
+        console.log(th.product['image']);
+        this.props.product['image'] = this.props.product['product_images'];
+        delete this.state.product['images'];
+    } */
+
     render(){
         const {id , product_name , image ,price, description } = this.props.product;
         return(
             <ProductConsumer>
                 {value=>(
-                <Col lg="12" md="12" sm="6" xs="6" className="search-product">
+                <Col lg="12" md="12" sm="12" xs="12" className="search-product">
                     <Row>
                         <Col md="3" lg="3" xl="3" sm="12" xs="12"  onClick={() => history.push("/user/product-details",{id:id})}>
                             <div style={{textAlign:"center", cursor:"pointer"}}>
                                 <div>
-                                <img alt="#" src={`https://backend-api.martekgh.com/${image[0].path}`} style={{width:"140px", height:"140px", borderRadius:"5px", marginTop:"10px"}}/>  
+                                <img alt="#" src={`https://backend-api.martekgh.com/${image[0].path}`} style={{width:"180px", height:"180px", borderRadius:"5px", marginTop:"10px"}}/>  
                                 </div>
                             </div>
                         </Col>
@@ -45,6 +55,7 @@ class SearchResultsProducts extends React.Component{
                                 <h3 className="price" style={{color:"#5588b7", fontSize:"18px", fontWeight:500}}>GH¢ {price}</h3>                          
                                 </Col>
                             </Row>
+                            <br/>
                             <Row>
                                 <Col md="12" xs="12" sm="12">
                                     <Button
@@ -53,7 +64,7 @@ class SearchResultsProducts extends React.Component{
                                         block
                                         onClick={()=>{value.addToCart(this.props.product)}}
                                     >
-                                    <div><i className="fa fa-cart-plus mr-2"/>Add to cart</div>
+                                    <i className="fa fa-cart-plus mr-2"/>Add to cart
                                     </Button>
                                 </Col>
                             </Row>

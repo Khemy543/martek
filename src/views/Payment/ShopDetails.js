@@ -12,13 +12,10 @@ import {
   InputGroup, InputGroupAddon, InputGroupText
 } from "reactstrap";
 // core components
-import LoadingOverlay from "react-loading-overlay";
-import FadeLoader from "react-spinners/FadeLoader";
-import history from "../../history.js";
-import { Link } from "react-router-dom";
+import axios from 'axios';
+ 
 
 function ShopDetails(props) {
-const [isActive, setIsActive] = React.useState(false);
 const [firtsname, setFirstname] = React.useState("");
 const [lastname, setLastname] = React.useState("");
 const [email, setEmail] = React.useState("");
@@ -52,6 +49,8 @@ const handleSubmit=(e)=>{
     }
     
 }
+
+
 
   return (
     <>
@@ -129,10 +128,10 @@ const handleSubmit=(e)=>{
                     <Row style={{marginTop:"30px"}}>
                         <Col md="6" sm="6" xs="6" lg="6" xl="6"> 
                             <Button color="primary" type="submit">Pay</Button>
-                        </Col>
+                        </Col>{/* 
                         <Col md="6" sm="6" xs="6" lg="6" xl="6">
-                          <Link to="/user/home"><h4 style={{fontSize:"14px", fontWeight:600, marginTop:"4px",color:"#6ec7e0"}}>Try Free Now ! <i className="fa fa-chevron-right"/></h4></Link>
-                        </Col>
+                          <h4 style={{fontSize:"14px", fontWeight:600, marginTop:"4px",color:"#6ec7e0", cursor:"pointer"}} onClick={()=>props.history.push('/shop/free-trial',{shopType:props.location.state.shopType})}>Try Free Now ! <i className="fa fa-chevron-right"/></h4>
+                        </Col> */}
                     </Row>
                     <p style={{textAlign:"center", marginTop:"15px", fontSize:"12px",fontWeight:600}}>Contact <a href="!#">martekgh@gmail.com</a> for any questions</p>
                   </Form>

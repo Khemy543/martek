@@ -31,6 +31,8 @@ class UploadImages extends React.Component {
          
     }
 
+  
+
     onDrop(picture) {
         this.setState({
             pictures: picture,
@@ -39,10 +41,6 @@ class UploadImages extends React.Component {
         });
     }
     
-    /* componentDidMount(){
-        console.log(this.props.location.state.product_id)
-    }
-     */
     handleSubmit=(e)=>{
         console.log(".....uploading....")    
         this.setState({isActive:true})
@@ -56,46 +54,49 @@ class UploadImages extends React.Component {
         for (var pair of bodyFormData.entries()) {
             console.log(pair[0]+ ', ' + pair[1]); 
         }
-    axios({
-            method:'post',
-            headers:{
-                "Authorization":`Bearer ${user}`
-            },
-            data:bodyFormData,
-            url:"https://backend-api.martekgh.com/api/e-trader/"+this.state.product_id+"/product-images",
-            onUploadProgress: (progressEvent) => {
-                const {loaded , total} = progressEvent;
-                let percentage = Math.floor(loaded * 100 / total);
-                console.log(percentage)
-                if(percentage<100){
-                    this.setState({percentage:percentage});
+        axios({
+                method:'post',
+                headers:{
+                    "Authorization":`Bearer ${user}`
+                },
+                data:bodyFormData,
+                url:"https://backend-api.martekgh.com/api/e-trader/"+this.state.product_id+"/product-images",
+                onUploadProgress: (progressEvent) => {
+                    const {loaded , total} = progressEvent;
+                    let percentage = Math.floor(loaded * 100 / total);
+                    console.log(percentage)
+                    if(percentage<100){
+                        this.setState({percentage:percentage});
+                    }
                 }
-            }
-    }).then(res=>{
-        console.log(res);
-        this.setState({isActive:false, modal:true,percentage:100})
-        setTimeout(
-            function(){
-                    this.setState({modal:false});
-                    this.props.history.push('/user/payment/information',{
-                        product_id:this.state.product_id,
-                        amount:this.props.location.state.amount
-                    })
-            }
-            .bind(this),
-            1500
-        )
-    }).catch(error=>{
-        console.log(error)
-    })
-}
+        }).then(res=>{
+            console.log(res);
+            this.setState({isActive:false, modal:true,percentage:100})
+            setTimeout(
+                function(){
+                        this.setState({modal:false});
+                        if(this.props.location.state.amount > 0){
+                        this.props.history.push('/user/payment/information',{
+                            product_id:this.state.product_id,
+                            amount:this.props.location.state.amount
+                        })
+                    }
+                    else{
+                        this.props.history.push('/user/user-products')
+                    }
+                }
+                .bind(this),
+                1500
+            )
+        }).catch(error=>{
+            this.setState({isActive:false})
+            console.log(error)
+        })
+    }
+
     render(){
     return(
         <div>
-            <LoadingOverlay 
-                active = {this.state.isActive}
-                spinner={<BounceLoader color={'#4071e1'}/>}
-                >
             <div className="main">
                 <div className="section">
                     <br/>
@@ -117,7 +118,7 @@ class UploadImages extends React.Component {
                             imgExtension={['.jpg','.png', '.jpeg', '.jfif', '.heic']}
                             fileSizeError="file size is too big"
                             fileTypeError="is not supported"
-                            maxFileSize={5242880}
+                            maxFileSize={50242880}
                             value={this.state.activateButton}
                             
                         />
@@ -156,7 +157,6 @@ class UploadImages extends React.Component {
                         </Container>
                     </div>
                 </div>
-                </LoadingOverlay>
                 <Modal isOpen={this.state.modal} className="login-modal">
       
                 <ModalBody style={{color:"white", fontSize:"12px", fontWeight:500}} className="text-center">

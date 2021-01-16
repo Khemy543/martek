@@ -33,11 +33,11 @@ const {increment, decrement, removeItem } = value;
                     </Col>
                     <Col md="8" style={{textAlign:"left", padding:"7px 0px 4px 0px"}}>
                         <div className="Row">
-                            <div className="col-12" style={{fontWeight:500, fontSize:"16px", color:"#333333",padding:"0px 15px 0px 0px"}}>
+                            <div className="col-12" style={{fontWeight:500, fontSize:"16px", color:"#333333",padding:"0px 15px 0px 0px"}} onClick={() => history.push("/user/product-details",{id:id})}>
                                     {product_name}
                             </div>
-                            <div className="col-12" style={{marginTop:"5px",padding:"0px 15px 0px 0px"}}>
-                                <div style={{color:"#6ec7e0 "}} onClick={()=>removeItem(id)}><h5 style={{fontSize:"14px",fontWeight:600}}><i className="fa fa-trash mr-1"/> REMOVE</h5></div>
+                            <div className="col-12" style={{marginTop:"10px",padding:"0px 15px 0px 0px", cursor:"pointer"}}>
+                                <div style={{color:"#6ec7e0 "}}><h5 style={{fontSize:"14px",fontWeight:600}} onClick={()=>removeItem(id)}><i className="fa fa-trash mr-1"/> REMOVE</h5></div>
                             </div>
                         </div>
                     </Col>

@@ -362,6 +362,11 @@ logout = ()=>{
             product.quantity=1;
             const price=product.price;
             product.total=price;
+            if(product['image'] !== undefined){
+                console.log('im there');
+                product['product_images'] = product['image'];
+                delete product['image'];
+            }
             
             var total = parseFloat(this.state.cartTotal) + parseFloat(product.total);
             

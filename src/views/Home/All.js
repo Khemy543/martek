@@ -54,7 +54,7 @@ function All({history}){
             setNewItems(res.data);
         })
         .catch(error=>{
-            console.log(error.response.data)
+            console.log(error)
         })
         setProducts();
       },[])
@@ -68,7 +68,7 @@ function All({history}){
              setPhones(categories)
          })
          .catch(error=>{
-             console.log(error.response.data)
+             console.log(error)
          })
  
          axios.get("https://backend-api.martekgh.com/api/3/product-index")
@@ -186,12 +186,12 @@ function All({history}){
                                 <CardBody>
                                     <Container>
                                     <Row>
-                                        <Col md="12" style={{padding:"0px 0px 0px 0px"}}>
+                                        <Col md="12" style={{padding:"0px 0px 0px 0px"}} >
                                         <Slider {...settings} infinite={newItems.length>5}>
                                         {newItems.map((value,key)=>(
                                             <div key={key}>
                                                 <Col style={{padding:"0px 3px 0px 3px"}}>
-                                                <div style={{textAlign:"center"}}>
+                                                <div style={{textAlign:"center", cursor:"pointer"}}>
                                                     <div style={{textAlign:"center"}} onClick={() => history.push("/user/product-details",{id:value.id})}>
                                                     <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"185.13px", width:"180px", borderRadius:'5px'}}/>
                                                     </div>

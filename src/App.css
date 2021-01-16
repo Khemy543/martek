@@ -130,7 +130,7 @@
 
 @media(min-width:801px){
     .product-button{
-        margin-top: 30%;
+        margin-top: 20%;
     }
     .price{
         text-align: right;
@@ -399,7 +399,6 @@
  .search-product:hover{
      box-shadow: 0 2px 12px rgba(0,0,0,0.1);
      cursor: pointer;
-     margin: 1px;
  }
  .search-product{
      padding: 10px;
@@ -408,4 +407,55 @@
  tbody tr td{
      font-size: 13px;
      font-weight: 500;
+ }
+
+ .product-container:hover{
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+ }
+ .card-head{
+     font-weight: 600;
+     font-size: 25px;
+     color: #57288f !important;
+     line-height: 1.6;
+ }
+
+ .card-description{
+     font-size: 14px;
+     color: #57288f !important;
+     font-weight: 500;
+ }
+
+ .card-price{
+    font-weight: 600;
+    font-size: 19px;
+    color: #57288f !important;
+
+ }
+
+ .free-button{
+     background-color: #66615b14 !important;
+     border-color: #66615b00 !important;
+     color:#5e72e4 !important;
+ }
+
+ .active .card-main{
+     background-color: #57288f !important;
+     color: white !important;
+ }
+
+ .active .card-head{
+     color: white !important;
+ }
+
+ .active .card-description{
+     color: white !important;
+ }
+
+ .active .card-price{
+     color: white !important;
+ }
+
+ .active .free-button{
+     background-color: #5e72e4 !important;
+     color: white !important;
  }
