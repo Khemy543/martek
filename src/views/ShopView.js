@@ -165,7 +165,7 @@ function ShopView(props) {
       >
 
         <div className="section profile-content text-center">
-          <img alt="#" src={`https://backend-api.martekgh.com/${cover}`} style={{ width: "95%", marginTop: '10px' }} className="cover-photo" />
+          <img alt="#" src={`https://backend-api.martekgh.com/${cover}`} style={{ width: "95%", marginTop: '10px', objectFit:"cover" }} className="cover-photo" />
 
           <Container>
             <br />
@@ -180,7 +180,7 @@ function ShopView(props) {
                       alt="..."
                       id="img-circle"
                       className="img-circle img-no-padding img-responsive"
-                      style={{ border: "1px solid #eaeaea", width: "120px", height: "120px" }}
+                      style={{ border: "1px solid #eaeaea", width: "120px", height: "120px", objectFit:"cover" }}
                       src={`https://backend-api.martekgh.com/${avatar}`}
                     />
                   </div>

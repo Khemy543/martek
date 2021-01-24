@@ -27,7 +27,7 @@ const {increment, decrement, removeItem } = value;
                         className="image-fluid"
                         alt="#"
                         src={`https://backend-api.martekgh.com/${product_images[0].path}`}
-                        style={{height:"4.5rem", width:'4.5rem'}}
+                        style={{height:"4.5rem", width:'4.5rem',objectFit:"cover"}}
                         />
                         </div>
                     </Col>
@@ -72,7 +72,7 @@ const {increment, decrement, removeItem } = value;
                                 className="image-fluid"
                                 alt="#"
                                 src={`https://backend-api.martekgh.com/${product_images[0].path}`}
-                                style={{height:"4.5rem", width:'4.5rem'}}
+                                style={{height:"4.5rem", width:'4.5rem', objectFit:"cover"}}
                                 />
                                 </div>
                             </Col>
@@ -89,7 +89,7 @@ const {increment, decrement, removeItem } = value;
                         <Row>
                         <Col md="6" sm="5" xs="5" style={{fontWeight:"bold",borderRight:"1px solid #eaeaea", padding:"10px 10px 10px 25px"}}>
                             <div>
-                                <div style={{color:"#6ec7e0 "}} onClick={()=>removeItem(id)}><h5 style={{fontSize:"14px",fontWeight:600}}><i className="fa fa-trash mr-1"/> REMOVE</h5></div>
+                                <div style={{color:"#6ec7e0 "}}><h5 style={{fontSize:"14px",fontWeight:600}} onClick={()=>removeItem(id)}><i className="fa fa-trash mr-1"/> REMOVE</h5></div>
                             </div>
                             <strong className="text-uppercase">GH¢ </strong>
                             {total}

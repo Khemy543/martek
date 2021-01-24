@@ -23,7 +23,7 @@ class UserProduct extends React.Component{
                         <div style={{textAlign:"center", cursor:"pointer"}}>
                         <div>
                             <div onClick={() => history.push("/user/user-product-details",{id:id})}>
-                            <img alt="#" src={`https://backend-api.martekgh.com/${product_image[0].path}`} style={{width:"180px", height:"180px", borderRadius:"5px"}}/>  
+                            <img alt="#" src={`https://backend-api.martekgh.com/${product_image[0].path}`} style={{width:"180px", height:"180px", objectFit:"cover", borderRadius:"5px"}}/>  
                             </div>
                             
                                 <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left", overflow:"hidden",  height:"20px"}}>

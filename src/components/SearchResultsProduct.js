@@ -37,7 +37,7 @@ class SearchResultsProducts extends React.Component{
                         <Col md="3" lg="3" xl="3" sm="12" xs="12"  onClick={() => history.push("/user/product-details",{id:id})}>
                             <div style={{textAlign:"center", cursor:"pointer"}}>
                                 <div>
-                                <img alt="#" src={`https://backend-api.martekgh.com/${image[0].path}`} style={{width:"180px", height:"180px", borderRadius:"5px", marginTop:"10px"}}/>  
+                                <img alt="#" src={`https://backend-api.martekgh.com/${image[0].path}`} style={{width:"180px", height:"180px", objectFit:"cover", borderRadius:"5px", marginTop:"10px"}}/>  
                                 </div>
                             </div>
                         </Col>

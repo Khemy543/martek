@@ -17,6 +17,7 @@ import{
 import CarouselView from "../../components/Carousel/Carousel.js";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import StoreIcon from '@material-ui/icons/Store';
 
 function AllCategories({history}){
     const [activeTab, setActiveTab] = React.useState("3");
@@ -72,7 +73,7 @@ function AllCategories({history}){
                                     tag={Link}
                                     to="/user/shops"
                                 >
-                                    <i className="fa fa-shopping-bag"/>Shops
+                                   <StoreIcon style={{marginLeft:'-9px', marginRight:"3px", fontSize:"19px", marginBottom:"4px"}}/>Shops
                                 </NavLink>
                                 </NavItem>
                                 <NavItem>

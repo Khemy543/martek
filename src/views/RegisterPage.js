@@ -70,18 +70,20 @@ function RegisterPage(props) {
         if (res.data.status === "success") {
           setIsActive(false);
           setModal(true);
-          setTimeout(
-            function () {
-              setModal(false);
-              history.push("/auth/wait-verification", { email: email })
-
-            },
-            1500
-          )
-
-        }
-        else {
-          alert("wrong data provided")
+          axios.post('https://backend-api.martekgh.com/api/auth/login',{
+            email, password
+          })
+          .then(res=>{
+            console.log(res.data);
+            localStorage.setItem('access_token',res.data.access_token);
+            setTimeout(
+              function () {
+                setModal(false);
+                history.push("/auth/wait-verification", { email: email })
+              },
+              1500
+            )
+          })
         }
       }).catch(error => {
         setIsActive(false);

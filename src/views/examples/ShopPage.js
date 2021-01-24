@@ -117,21 +117,22 @@ let merchandiser = localStorage.getItem("shop_access_token")
       </Container>
       :
       <>
-      <img alt="#" src={`https://backend-api.martekgh.com/${cover}`} style={{width:"95%", marginTop:"10px"}} className="cover-photo"/>
+      <img alt="#" src={`https://backend-api.martekgh.com/${cover}`} style={{width:"95%", marginTop:"10px", objectFit:"cover"}} className="cover-photo"/>
       
         <Container>
         <br/>
         <br/>
+        <br/>
+        <br/>
         <Container>
           <Row>
-            <Col md="4" sm="4" xs="4" xl="4" lg="4" className="ml-auto mr-auto">
+            <Col md="5" sm="6" xs="6" xl="5" lg="5" className="ml-auto mr-auto">
             <div className="avatar">
               <img
                   alt="..."
-                  id="shop-circle"
+                  id="img-circle"
                   className="img-circle img-no-padding img-responsive"
-                  width="150px"
-                  style={{border:"1px solid #eaeaea", marginTop:"200px"}}
+                  style={{border:"1px solid #eaeaea", width:"120px",height:"120px", marginTop:"200px",objectFit:"cover"}}
                   src={`https://backend-api.martekgh.com/${avatar}`}
               />
             </div>

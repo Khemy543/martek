@@ -62,7 +62,7 @@ const Register=(id)=>{
   props.history.push('/user/shop-register',
   {
     shop_id:id,
-    status:"register"
+    status:0
   })
 }
 
@@ -70,7 +70,7 @@ const FreeTrial=(id)=>{
   props.history.push('/user/shop-register',
   {
     shop_id:id,
-    status:"free-trial"
+    status:1
   })
 }
 

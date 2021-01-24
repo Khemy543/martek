@@ -44,6 +44,7 @@
     .image{
         width:93% !important;
         height: 45vh;
+        object-fit: cover;
 
     }
 
@@ -52,5 +53,6 @@
     #modal{
         margin-top: 100%;
         margin-left: 23%;
+        object-fit: cover;
     }
 }

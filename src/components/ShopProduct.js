@@ -22,8 +22,8 @@ class ShopProduct extends React.Component{
                 <Col lg="2" md="2" sm="6" xs="6" style={{padding:"15px 3px 0px 3px"}}>
                         <div style={{textAlign:"center", cursor:"pointer"}}>
                         <div>
-                            <div onClick={() => history.push("/shop/shop-product-details",{id:id})}>
-                            <img alt="#" src={`https://backend-api.martekgh.com/${product_image[0].path}`} style={{width:"180px", height:"180px", borderRadius:"5px"}}/>  
+                            <div onClick={() => history.push("/shop/shop-product-details",{id:id})} style={{textAlign:"center"}}>
+                            <img alt="#" src={`https://backend-api.martekgh.com/${product_image[0].path}`} style={{width:"180px", height:"180px", borderRadius:"5px",objectFit:"cover"}}/>  
                             </div>
                             
                                 <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left", overflow:"hidden",  height:"20px"}}>

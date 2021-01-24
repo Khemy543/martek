@@ -29,7 +29,7 @@ class SearchResultsShops extends React.Component{
                     <Row>
                         <Col md="3" lg="3" xl="3" sm="12" xs="12"  onClick={() => history.push("/user/shop-view",{id:id})}>
                             <div style={{textAlign:"center", cursor:"pointer"}}>
-                                <img alt="#" src={`https://backend-api.martekgh.com/${avatar}`} style={{width:"180px", height:"180px", borderRadius:"50%", marginTop:"10px"}}/>  
+                                <img alt="#" src={`https://backend-api.martekgh.com/${avatar}`} style={{width:"180px", height:"180px", borderRadius:"50%", marginTop:"10px", objectFit:"cover"}}/>  
                             </div>
                         </Col>
                         <Col md="9" sm="12" xl="9" xs="12" onClick={() => history.push("/user/shop-view",{id:id})} >

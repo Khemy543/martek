@@ -34,7 +34,7 @@ function ShopCard(props){
     return(
         <Col md="3" sm="6" xs="6" style={{padding:"0px 6px"}}>
         <Card className="card-plain" style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}} >
-        <CardImg top id="card-cover" className="cardimage" style={{width:"96%", borderRadius:"5px", margin:"5px"}} src={`https://backend-api.martekgh.com/${cover_photo}`} alt="Card image cap" onClick={()=>history.push("/user/shop-view", 
+        <CardImg top id="card-cover" className="cardimage" style={{width:"96%", borderRadius:"5px", margin:"5px", objectFit:"cover"}} src={`https://backend-api.martekgh.com/${cover_photo}`} alt="Card image cap" onClick={()=>history.push("/user/shop-view", 
             {id:id || shop_id}
             )}/>
             {loggedIn?
@@ -63,7 +63,7 @@ function ShopCard(props){
                 <img
                     alt="#"
                     src={`https://backend-api.martekgh.com/${avatar}`}
-                    style={{border:"1px solid #eaeaea"}}
+                    style={{border:"1px solid #eaeaea", objectFit:"cover"}}
                 />
             </div>
         </Col>

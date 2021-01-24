@@ -71,15 +71,14 @@ export default function OwnShop(props){
 
       setIsActive(true);
     axios.post('https://backend-api.martekgh.com/api/register-merchandiser',
-    {company_name, email,phone:`233${phone}`,password, campus_id,company_description,shop_type_id}
+    {company_name, email,phone:`233${phone}`,password, campus_id,company_description,shop_type_id, free_trail:props.location.state.status}
   ).then(res => {
-    console.log(res.data)
+    console.log(res)
         setTimeout(
           function(){
             history.push("/auth/upload-avatar",
             {
-              id:res.data.merchandiser_id,
-              status:props.location.state.status
+              id:res.data.merchandiser_id
             });
           },
           100
@@ -88,10 +87,10 @@ export default function OwnShop(props){
       console.log("error",error);
       console.log(error.response.data)
       setIsActive(false);
-      setAlert(true);
+     /*  setAlert(true);
       if(error){
       setErrorMessage(error.response.data.errors.email || error.response.data.errors.phone)
-      }
+      } */
     })
   
   }
@@ -165,7 +164,7 @@ export default function OwnShop(props){
                 <br/>
                 <Row>
                   <Col>
-                    <label style={{fontWeight:500}}>Phone</label>
+                    <label style={{fontWeight:500}}>Description</label>
                     <Input 
                       value={company_description} onChange={e=>setCompany_description(e.target.value)} 
                       placeholder='Tell us about your shop...'

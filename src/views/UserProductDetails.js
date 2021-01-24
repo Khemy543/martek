@@ -118,7 +118,7 @@ function UserProductDetails(props){
                                         <Col md="4">
                                         <div style={{textAlign:"center", marginTop:"30px"}} >
                                             <img alt= "#" src={`https://backend-api.martekgh.com/${first}`} 
-                                            style={{width:"200px", height:"200px"}}
+                                            style={{width:"200px", height:"200px", objectFit:"cover"}}
                                             />
                                         </div>
                                         </Col>

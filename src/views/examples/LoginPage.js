@@ -32,14 +32,13 @@ function LoginPage(props){
   const toggleEye = () => setEye(!eye);
     
 
-  var storageData= [];
-
   const handleSubmit = (e) =>{
     e.preventDefault();
      setIsActive(true)
   axios.post('https://backend-api.martekgh.com/api/auth/login', {
     config, email, password
   }).then(res => {
+    console.log(res.data)
     if(res.data.statusCode === 200){
         localStorage.setItem('access_token',res.data.access_token);
         window.location.reload("/")

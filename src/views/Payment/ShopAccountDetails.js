@@ -12,8 +12,6 @@ import {
   Col, CardFooter,ListGroup, ListGroupItem, Spinner 
 } from "reactstrap";
 // core components
-import LoadingOverlay from "react-loading-overlay";
-import FadeLoader from "react-spinners/FadeLoader";
 import axios from "axios";
 
 //let merchandiser = localStorage.getItem("shop_access_token")

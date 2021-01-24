@@ -17,6 +17,9 @@ import StarRatings from 'react-star-ratings';
 import Slider from "react-slick";
 import { ProductConsumer } from "../context";
 import Gallery from 'react-grid-gallery';
+import StoreIcon from '@material-ui/icons/Store';
+import ProductCarousel from '../components/ProductCarousel.js'
+
 let user = localStorage.getItem('access_token');
 
 
@@ -52,7 +55,8 @@ function DetailsPage(props){
     const [tipmodal, setTipmodal] = React.useState(false);
     const [related, setRelated] = React.useState([]);
     const [images, setImages] = React.useState([]);
-    const [first, setFirst] = React.useState(null)
+    const [first, setFirst] = React.useState(null);
+    const [productImages, setProductImages] = React.useState([])
     const [productid, setProductId] = React.useState(props.location.state.id);
    
      const toggle = () => setModal(!modal);
@@ -61,7 +65,8 @@ function DetailsPage(props){
         return ({
            height:"170px",
            width:"170px",
-           cursor:"zoom-in"
+           cursor:"zoom-in",
+           objectFit:"cover"
         });
      }
 
@@ -76,9 +81,10 @@ function DetailsPage(props){
                 setCampus_name(res.data.product_owner.campus);
                 setRelated(res.data.related_product);
                 setisActive(false);
+                setProductImages(res.data.product_images)
                 setFirst(res.data.product_images[0].path);
                 let images = res.data.product_images;
-                for(var i=1; i<images.length;i++){
+                for(var i=0; i<images.length;i++){
                     newImageArray.push({
                         src: `https://backend-api.martekgh.com/${images[i].path}`,
                         thumbnail: `https://backend-api.martekgh.com/${images[i].path}`,
@@ -173,14 +179,17 @@ function DetailsPage(props){
                             {value=>(
                                     <Container>
                                     <Row>
-                        <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
+                                <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                             
                                 <CardBody>
                                     <Row>
                                         <Col md="4">
                                         <div style={{textAlign:"center", marginTop:"30px"}} >
-                                            <img alt= "#" src={`https://backend-api.martekgh.com/${first}`} 
+                                            {/* <img alt= "#" src={`https://backend-api.martekgh.com/${first}`} 
                                             style={{width:"200px", height:"200px"}}
+                                            /> */}
+                                            <ProductCarousel 
+                                                images={productImages}
                                             />
                                         </div>
                                         </Col>
@@ -193,12 +202,21 @@ function DetailsPage(props){
                                         </h3>
                                             <Row>
                                                 <Col md="6" sm="6" xs="6" lg="6">
-                                                <h4 style={{fontSize:"14px", marginLeft:"20px", marginTop:"3px",cursor:"pointer"}} onClick={()=>{
-                                                if(merchandiser_id){
-                                                    props.history.push("/user/shop-view",{id:merchandiser_id})
+                                                {merchandiser_id === undefined?
+                                                    <h4 style={{fontSize:"14px", marginLeft:"20px", marginTop:"3px",cursor:"pointer"}} onClick={()=>{
+                                                    if(merchandiser_id){
+                                                        props.history.push("/user/shop-view",{id:merchandiser_id})
+                                                    }
+                                                    }}>| {name}
+                                                    </h4>
+                                                    :
+                                                    <h4 style={{fontSize:"14px", marginLeft:"20px", marginTop:"3px",cursor:"pointer"}} onClick={()=>{
+                                                    if(merchandiser_id){
+                                                        props.history.push("/user/shop-view",{id:merchandiser_id})
+                                                    }
+                                                    }}>| <StoreIcon style={{marginLeft:'-9px', marginRight:"3px"}}/> {company_name}
+                                                    </h4>
                                                 }
-                                                }}>| {name}  {company_name}
-                                            </h4>
                                                 </Col>
                                                 <Col  md="6" sm="6" xs="6" lg="6">
                                                 <StarRatings
@@ -466,7 +484,7 @@ function DetailsPage(props){
                                                 <Col style={{padding:"0px 3px 0px 3px", cursor:"pointer"}}>
                                                 <div style={{textAlign:"center"}}>
                                                     <div style={{textAlign:"center"}} onClick={() => Reload(value.id)}>
-                                                    <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"185.13px", width:"180px", borderRadius:'5px'}}/>
+                                                    <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"185.13px", width:"180px", borderRadius:'5px',objectFit:"cover"}}/>
                                                     </div>
                                                     <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>
                                                     {value.product_name}

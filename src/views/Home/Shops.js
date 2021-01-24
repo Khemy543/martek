@@ -20,6 +20,7 @@ import axios from "axios";
 import Pagination from "react-js-pagination";
 //context
 import { Link } from "react-router-dom";
+import StoreIcon from '@material-ui/icons/Store';
 
 function Shops({history}){
     const [activeTab, setActiveTab] = React.useState("2");
@@ -106,7 +107,7 @@ function Shops({history}){
                                     tag={Link}
                                     to="/user/shops"
                                 >
-                                    <i className="fa fa-shopping-bag"/>Shops
+                                    <StoreIcon style={{marginLeft:'-9px', marginRight:"3px", fontSize:"19px", marginBottom:"4px"}}/>Shops
                                 </NavLink>
                                 </NavItem>
                                 <NavItem>

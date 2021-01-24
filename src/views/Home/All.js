@@ -21,6 +21,7 @@ import Product from "../../components/Product.js";
 import CarouselView from "../../components/Carousel/Carousel.js";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import StoreIcon from '@material-ui/icons/Store';
 
 var settings = {
     dots: true,
@@ -122,7 +123,7 @@ function All({history}){
                                     tag={Link}
                                     to="/user/shops"
                                 >
-                                    <i className="fa fa-shopping-bag"/>Shops
+                                   <StoreIcon style={{marginLeft:'-9px', marginRight:"3px", fontSize:"19px", marginBottom:"4px"}}/>Shops
                                 </NavLink>
                                 </NavItem>
                                 <NavItem>
@@ -193,7 +194,7 @@ function All({history}){
                                                 <Col style={{padding:"0px 3px 0px 3px"}}>
                                                 <div style={{textAlign:"center", cursor:"pointer"}}>
                                                     <div style={{textAlign:"center"}} onClick={() => history.push("/user/product-details",{id:value.id})}>
-                                                    <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"185.13px", width:"180px", borderRadius:'5px'}}/>
+                                                    <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"180px", width:"180px", borderRadius:'5px', objectFit:"cover"}}/>
                                                     </div>
                                                     <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>
                                                     {value.product_name}
