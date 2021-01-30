@@ -22,7 +22,6 @@ import ReactDOM from 'react-dom';
 import App from './App.js';
 import { ProductProvider } from "./context";
 import * as serviceWorker from './serviceWorker';
-import axios from "axios";
 /* axios.interceptors.request.use(request=>{
   console.log(request);
   return request;

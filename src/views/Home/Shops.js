@@ -56,14 +56,13 @@ function Shops({history}){
         <Row>
         <Col md="10" className="ml-auto mr-auto">    
         <Pagination
-        totalItemsCount={meta&&meta.total}
-        activePage={meta&&meta.current_page}
-        itemsCountPerPage={meta&&meta.per_page}
-        onChange={(pageNumber)=>getShops(pageNumber)}
-        itemClass="page-item"
-        linkClass="page-link"
-        firstPageText="First"
-        lastPageText = "Last"
+            totalItemsCount={meta&&meta.total}
+            activePage={meta&&meta.current_page}
+            itemsCountPerPage={meta&&meta.per_page}
+            onChange={(pageNumber)=>getShops(pageNumber)}
+            pageRangeDisplayed={5   }
+            itemClass="page-item"
+            linkClass="page-link"
         />
         </Col>
         </Row>

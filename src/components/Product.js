@@ -19,7 +19,7 @@ class Product extends React.Component{
     render(){
         const {id , product_name , product_image, price }= this.props.product;
                 return(
-                <Col lg="2" md="2" sm="6" xs="6" style={{padding:"0px 3px 0px 3px"}} className="product-container">
+                <Col lg="2" md="2" sm="6" xs="6" style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}} className="product-container">
                         <div style={{textAlign:"center", cursor:"pointer"}}>
                         <div>
                             <div onClick={() => history.push("/user/product-details",{id:id})} style={{textAlign:"center"}}>

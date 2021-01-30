@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Kit React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-kit-react
-
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { Link } from "react-router-dom";
 // reactstrap components
@@ -31,11 +13,6 @@ import {
 } from "reactstrap";
 
 import axios from "axios";
-import {ProductConsumer } from "../../context.js";
-// core components
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
-import Product from "components/Product.js"
 import StarRatings from 'react-star-ratings';
 import ShopProduct from "components/ShopProduct.js";
 import history from '../../history.js';
@@ -213,7 +190,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
                               <br/>
                               <Link to="/shop/add-to-shop">
                               <div style={{textAlign:"center"}}>
-                              <img alt="#" src={require("../../assets/img/addproduct.png")} style={{ maxHeight:"170.13px",maxWidth:"100px"}}/>
+                              <img alt="#" src={require("../../assets/img/addproduct.png")} style={{ maxHeight:"80px",maxWidth:"auto"}}/>
                               </div>
                               </Link>
                               <br/>

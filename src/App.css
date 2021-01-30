@@ -50,6 +50,9 @@
     /* .rwt__tabpanel{
         margin-top: 100px;
     }  */
+    .product-carousel{
+        height: 100% !important;
+    }
     .category{
         font-size: 14px !important;
     }
@@ -100,10 +103,10 @@
         margin-left:14%;
     }
     .cover-photo{
-        height: 25vh !important;
+        height: 40vh !important;
     }
     #img-circle{
-        margin-top: -200px !important;
+        margin-top: -150px !important;
     }
     #shop-circle{
         margin-top: -140px !important;
@@ -129,6 +132,9 @@
 
 
 @media(min-width:801px){
+    .product-carousel{
+        height: 300px !important;
+    }
     .product-button{
         margin-top: 20%;
     }
@@ -142,10 +148,10 @@
         margin-top: -170px !important;
     }
     .cover-photo{
-        height: 40vh !important;
+        height: 50vh !important;
     }
     #img-circle{
-        margin-top: -230px !important;
+        margin-top: -150px !important;
     }
     .category{
         font-size: 20px;

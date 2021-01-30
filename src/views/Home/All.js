@@ -191,13 +191,13 @@ function All({history}){
                                         <Slider {...settings} infinite={newItems.length>5}>
                                         {newItems.map((value,key)=>(
                                             <div key={key}>
-                                                <Col style={{padding:"0px 3px 0px 3px"}}>
-                                                <div style={{textAlign:"center", cursor:"pointer"}}>
-                                                    <div style={{textAlign:"center"}} onClick={() => history.push("/user/product-details",{id:value.id})}>
-                                                    <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"180px", width:"180px", borderRadius:'5px', objectFit:"cover"}}/>
+                                                <Col style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}}>
+                                                <div style={{cursor:"pointer"}}>
+                                                    <div class="text-center" onClick={() => history.push("/user/product-details",{id:value.id})}>
+                                                        <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"180px", width:"180px", borderRadius:'5px', objectFit:"cover"}}/>
                                                     </div>
                                                     <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>
-                                                    {value.product_name}
+                                                        {value.product_name}
                                                     </h3>
                                                     <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:600, textAlign:"left", marginTop:"3px"}}>GH¢ {value.price}</h3>
                                                 </div>

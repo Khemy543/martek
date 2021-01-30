@@ -88,10 +88,10 @@ function LoginPage(props){
                 
                 <Form className="register-form" onSubmit={handleSubmit}>
                   <label style={{fontWeight:500}}>Email</label>
-                  <Input placeholder="Email" type="text" name="email" value={email} onChange={e => setEmail(e.target.value)} required/>
+                  <Input placeholder="Email" type="text" style={{fontWeight:500}} name="email" value={email} onChange={e => setEmail(e.target.value)} required/>
                   <label style={{fontWeight:500}}>Password</label>
                   <InputGroup>
-                  <Input placeholder="Password" type={eye?"text":"password"} name="password" value={password} onChange={e => setPassword(e.target.value)} required/>
+                  <Input placeholder="Password" style={{fontWeight:500}} type={eye?"text":"password"} name="password" value={password} onChange={e => setPassword(e.target.value)} required/>
                   <InputGroupAddon addonType="append">
                     <InputGroupText>
                     <i className={eye?"fa fa-eye-slash":"fa fa-eye"} onClick={toggleEye} style={{cursor:"pointer"}}/>
@@ -123,7 +123,7 @@ function LoginPage(props){
                     tag={Link}
                     to="/user/register"
                   >
-                    Sign up !!
+                    Sign up
                   </Button>
                 </div>
               </Card>

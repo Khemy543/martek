@@ -2,12 +2,8 @@ import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ExamplesNavbar from "../components/Navbars/ExamplesNavbar.js";
 import DemoFooter from "../components/Footers/DemoFooter.js" ;
-
-import PageNotFound from "../views/PageNotFound.js";
-import ProtectedRoute from '../ProtectedRoutes.js';
+import ScrollToTop from "react-scroll-up";
 import ProtectedShopRoute from '../ProtectedShopRoutes.js';
-import ProtectedLoginRoute from '../ProtectedLoginRoutes.js';
-import ProtectedShopLoginRoute from '../ProtectedShopLoginRoutes.js';
 
 import routes from "../layoutRoutes.js";
 
@@ -47,6 +43,11 @@ class ShopLayout extends React.Component{
             <Redirect from="*" to="/shop/shop-page" />
         </Switch>
         <DemoFooter prop={this.props}/>
+        <ScrollToTop showUnder={160}>
+          <span style={{backgroundColor:"#eaeaea", border:"1px solid rgb(214 213 213)" , textAlign:"center", padding:"5px 5px 5px 5px"}}>
+            <i class="fa fa-chevron-up"></i>
+          </span>
+        </ScrollToTop>
         </div>
     );
 }

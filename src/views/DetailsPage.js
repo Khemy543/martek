@@ -173,7 +173,6 @@ function DetailsPage(props){
             <div>
                 <div>
                     <br/>
-                    <br/>
                     <div className="section">
                         <ProductConsumer>
                             {value=>(
@@ -181,10 +180,10 @@ function DetailsPage(props){
                                     <Row>
                                 <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                             
-                                <CardBody>
+                                <CardBody sty>
                                     <Row>
-                                        <Col md="4">
-                                        <div style={{textAlign:"center", marginTop:"30px"}} >
+                                        <Col md="6">
+                                        <div style={{textAlign:"center"}} >
                                             {/* <img alt= "#" src={`https://backend-api.martekgh.com/${first}`} 
                                             style={{width:"200px", height:"200px"}}
                                             /> */}
@@ -193,128 +192,95 @@ function DetailsPage(props){
                                             />
                                         </div>
                                         </Col>
-                                        <Col md="4">
-                                        <Card className="card-plain" style={{borderRight:"1px solid #eaeaea"}}>
+                                        <Col md="6">
+                                        <Row>
+                                            <Col>
+                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea"}}>
                                         <CardTitle style={{padding:"15px 0px 0px 0px", margin:"10px 15px 15px 15px"}}>
 
-                                        <h3 className="category" style={{marginTop:"5px", marginLeft:"20px", fontWeight:500}}>
+                                        <h1 className="category" style={{marginTop:"5px", fontSize:"25px",  fontWeight:500}}>
                                             {product_name}
-                                        </h3>
-                                            <Row>
-                                                <Col md="6" sm="6" xs="6" lg="6">
-                                                {merchandiser_id === undefined?
-                                                    <h4 style={{fontSize:"14px", marginLeft:"20px", marginTop:"3px",cursor:"pointer"}} onClick={()=>{
-                                                    if(merchandiser_id){
-                                                        props.history.push("/user/shop-view",{id:merchandiser_id})
-                                                    }
-                                                    }}>| {name}
-                                                    </h4>
-                                                    :
-                                                    <h4 style={{fontSize:"14px", marginLeft:"20px", marginTop:"3px",cursor:"pointer"}} onClick={()=>{
-                                                    if(merchandiser_id){
-                                                        props.history.push("/user/shop-view",{id:merchandiser_id})
-                                                    }
-                                                    }}>| <StoreIcon style={{marginLeft:'-9px', marginRight:"3px"}}/> {company_name}
-                                                    </h4>
+                                        </h1>
+                                            {merchandiser_id === undefined?
+                                                <h4 style={{fontSize:"16px", marginTop:"7px",cursor:"pointer"}} onClick={()=>{
+                                                if(merchandiser_id){
+                                                    props.history.push("/user/shop-view",{id:merchandiser_id})
                                                 }
-                                                </Col>
-                                                <Col  md="6" sm="6" xs="6" lg="6">
-                                                <StarRatings
+                                                }}>| {name}
+                                                </h4>
+                                                :
+                                                <h4 style={{fontSize:"14px",  marginTop:"7px",cursor:"pointer"}} onClick={()=>{
+                                                if(merchandiser_id){
+                                                    props.history.push("/user/shop-view",{id:merchandiser_id})
+                                                }
+                                                }}>| <StoreIcon style={{marginLeft:'-9px', marginRight:"3px"}}/> {company_name}
+                                                </h4>
+                                            }
+                                            <div style={{ marginTop:"7px"}}>
+                                            <StarRatings
                                                 rating={average}
                                                 starRatedColor="#CFB53B"
                                                 numberOfStars={5}
                                                 name='rating'
-                                                starDimension="20px"
+                                                starDimension="15px"
                                                 starSpacing="2px"
-                                                />
-                                                </Col>
-                                            </Row>
-                                            
-                                            <Row>
+                                            />
+                                            </div>
+                                            <h4 style={{fontSize:"16px", fontWeight:"bold", marginTop:"20px"}}>GH¢ {price}</h4>
+                                            <div>
+                                            <div style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
+                                                <h4 style={{fontSize:"14px", fontWeight:500, margin: "30px 0px 5px 0px"}}>DESCRIPTION</h4>
+                                            </div>
+                                            <div>
+                                                <p style={{fontWeight:500, fontSize:"14px", marginTop:"8px"}}> 
+                                                {description}
+                                                </p>
+                                            </div>
+                                            </div>
+                                            {/* <Row>
                                             <Col>
-                                            <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>¢ {price}</h4>
                                             </Col>
                                             <Col>
                                             <h5 style={{fontSize:"13px", marginTop:"20px",fontWeight:"bold"}}>IN STOCK : {in_stock}</h5>
                                             </Col>
+                                            </Row> */}
+                                            <br/>
+                                            <Row>
+                                                <Col>
+                                                {in_stock==0?
+                                                <Button disabled color="warning" block
+                                                    style={{  marginTop:"20px"}}
+                                                >out of stock 
+                                                </Button>:
+                                                <Button
+                                                    color="info"
+                                                    block
+                                                    onClick={()=>{value.addToCart(product)}}>
+                                            <   div>Add to cart</div>
+                                                </Button>}
+                                                </Col>
+                                                <Col>
+                                                <Button color="danger" block
+                                                    onClick={()=>{
+                                                        setModal(true);
+                                                        setTipmodal(true);
+                                                    }}>
+                                                    buy now
+                                                </Button>
+                                                </Col>
                                             </Row>
-                                            {in_stock==0?
-                                            <Button
-                                            disabled
-                                            color="warning"
-                                            block
-                                            style={{ marginRight:"30px", marginTop:"20px"}}
-                                            >out of stock 
-                                            </Button>:
-                                            <Button
-                                            style={{ marginRight:"30px", marginTop:"20px"}}
-                                            color="info"
-                                            block
-                                            
-                                            onClick={()=>{value.addToCart(product)}}
-                                            >
-                                           <div><i className="fa fa-cart-plus mr-2"/>Add to cart</div>
-
-                                            
-                                            </Button>
-                                            }
-                                            
                                         
-                                        <Button
-                                        color="danger"
-                                        block
-                                        onClick={()=>{
-                                            setModal(true);
-                                            setTipmodal(true);
-                                        }}>
-                                            buy now
-                                        </Button>
-                                            <Modal isOpen={modal} toggle={toggle}>
-                                            <ModalHeader>
-                                                    Seller's Information
-                                                    </ModalHeader>
-                                            <ModalBody>
-                                               
-                                                <div>
-                                                    <h4 style={{fontWeight:500, marginBottom:"-12px"}}>{name || company_name}</h4>
-                                                    <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{phone}</h4>
-                                                    <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{email}</h4>
-                                                    <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{campus}</h4>
-                                                </div>
-                                                <br/>
-                                                <br/>
-                                                <Row>
-                                                    <Col lg="4" md="4" sm="4" xs="4">
-                                                <a href={`tel:${phone}`} style={{marginRight:"20px"}}><Button color="info" block><i className="fa fa-phone fa-2x"/></Button></a> 
-                                                    </Col>
-                                                    <Col lg="4" md="4" sm="4" xs="4">
-                                                <a href={`mailto:${email}`} style={{marginRight:"20px"}}><Button color="danger" block><i className="fa fa-envelope fa-2x"/></Button></a>
-                                                    </Col>
-                                                    <Col lg="4" md="4" sm="4" xs="">
-                                                <a href={`https://wa.me/${phone}`} target="_blank"  rel="noopener noreferrer" style={{marginRight:"20px"}}><Button color="success" block><i className="fa fa-whatsapp fa-2x"/></Button></a>
-                                                    </Col>
-                                                </Row>
-                                            </ModalBody>
-                                            
-                                            </Modal>
-
-                                            <Modal isOpen={tipmodal}>
-                                                <ModalHeader>
-                                                    <h4 style={{fontWeight:500, fontSize:"17px"}}>Tips</h4>    
-                                                </ModalHeader>
-                                                <ModalBody style={{fontWeight:400}}>
-                                                    1. Ensure to meet a campus seller in person, check the item(s) and make sure you are satisfied with the product.<br/>
-                                                    2. Make payments only on delivery.<br/>
-                                                    3. Avoid deals that are too good to be true; unrealistically low prices inclusive.<br/>
-                                                    4. Never give out personal Information.<br/>
-                                                    (This includes bank details, and any other information which could be misused).<br/><br/>
-                                                    <Button color="danger" onClick={()=>setTipmodal(false)}>Close</Button>
-                                                </ModalBody>
-                                            </Modal>
                                         </CardTitle>
                                         </Card>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col>
+                                            
+                                            </Col>
+                                        </Row>
                                         </Col>
-                                        <Col md="4">
+                                        {/* <Col md="4">
                                             <Card className="card-plain">
                                             <CardTitle style={{padding:"0px 0px 0px 0px", margin:"0px 15px 15px 15px"}}>
                                                 <h4 style={{fontSize:"18px", fontWeight:500, }}>SELLER INFORMATION</h4>
@@ -328,7 +294,7 @@ function DetailsPage(props){
                                             </div>
                                             </CardBody>
                                             </Card>
-                                        </Col>
+                                        </Col> */}
 
                                         </Row>
 
@@ -338,23 +304,10 @@ function DetailsPage(props){
                         </Row>
                         
                         {/* discription, review, images */}
-                        <Row style={{ marginTop:"-15px"}}>
+                        <Row>
                             {/* discription and review */}
-                            <Col md="8" style={{padding:"0px 3px 0px 0px"}}>
+                            <Col md="12" style={{padding:"0px 3px 0px 0px"}}>
                             <Row>
-                                <Col md="12">
-                                <Card className="card-plain" style={{backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
-                                    <CardTitle style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
-                                        <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>DESCRIPTION</h4>
-                                        </CardTitle>
-                                    <CardBody>
-                                        <p style={{fontWeight:500, fontSize:"14px", margin:"10px"}}> 
-                                        {description}
-                                        </p>
-                                        </CardBody>
-                                    </Card>
-
-                                </Col>
                                 {/* reviews start */}
                                 <Col md="12">
                                 <Row style={{marginTop:"-15px"}}>
@@ -443,7 +396,7 @@ function DetailsPage(props){
                             </Row>
                             </Col>
                             {/* images */}
-                            <Col md="4" style={{padding:"0px 0px 0px 3px"}}>
+                           {/*  <Col md="4" style={{padding:"0px 0px 0px 3px"}}>
                                 <Card className="card-plain" style={{backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
                                     <CardTitle style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
                                         <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>IMAGES</h4>
@@ -462,7 +415,7 @@ function DetailsPage(props){
                                     />
                                     </CardBody>
                                     </Card>
-                            </Col>
+                            </Col> */}
                             
                             </Row>
 
@@ -509,6 +462,50 @@ function DetailsPage(props){
                         </ProductConsumer>
                         </div>
                     </div>
+
+                    {/* user info modal */}
+                    <Modal isOpen={modal} toggle={toggle}>
+                    <ModalHeader>
+                            Seller's Information
+                            </ModalHeader>
+                    <ModalBody>
+                        
+                        <div>
+                            <h4 style={{fontWeight:500, marginBottom:"-12px"}}>{name || company_name}</h4>
+                            <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{phone}</h4>
+                            <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{email}</h4>
+                            <h4 style={{fontSize:"14px", marginBottom:"-12px"}}>{campus}</h4>
+                        </div>
+                        <br/>
+                        <br/>
+                        <Row>
+                            <Col lg="4" md="4" sm="4" xs="4">
+                        <a href={`tel:${phone}`} style={{marginRight:"20px"}}><Button color="info" block><i className="fa fa-phone fa-2x"/></Button></a> 
+                            </Col>
+                            <Col lg="4" md="4" sm="4" xs="4">
+                        <a href={`mailto:${email}`} style={{marginRight:"20px"}}><Button color="danger" block><i className="fa fa-envelope fa-2x"/></Button></a>
+                            </Col>
+                            <Col lg="4" md="4" sm="4" xs="">
+                        <a href={`https://wa.me/${phone}`} target="_blank"  rel="noopener noreferrer" style={{marginRight:"20px"}}><Button color="success" block><i className="fa fa-whatsapp fa-2x"/></Button></a>
+                            </Col>
+                        </Row>
+                    </ModalBody>
+
+                    {/* buying tips */}
+                    <Modal isOpen={tipmodal}>
+                        <ModalHeader>
+                            <h4 style={{fontWeight:500, fontSize:"17px"}}>Tips</h4>    
+                        </ModalHeader>
+                        <ModalBody style={{fontWeight:400}}>
+                            1. Ensure to meet a campus seller in person, check the item(s) and make sure you are satisfied with the product.<br/>
+                            2. Make payments only on delivery.<br/>
+                            3. Avoid deals that are too good to be true; unrealistically low prices inclusive.<br/>
+                            4. Never give out personal Information.<br/>
+                            (This includes bank details, and any other information which could be misused).<br/><br/>
+                            <Button color="danger" onClick={()=>setTipmodal(false)}>Close</Button>
+                        </ModalBody>
+                    </Modal>
+                    </Modal>
                 </div>
         );
     }

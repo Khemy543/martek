@@ -110,7 +110,7 @@ function UserEditProduct(props) {
                             <i className="nc-icon nc-money-coins" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Price" type="number" name="price" value={price} onChange={e => setPrice(e.target.value)}/>
+                        <Input placeholder="Price" type="number" name="price" value={price} onChange={e => setPrice(e.target.value)} disabled/>
                       </InputGroup>
                     </Col>
                   </Row>

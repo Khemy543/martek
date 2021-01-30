@@ -124,7 +124,7 @@ return (
                   tag={Link}
                   to="/user/shop/free-trial"
                 >
-                  Own a shop!!
+                  Own a shop
                 </Button>
 
                 <Button

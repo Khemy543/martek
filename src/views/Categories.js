@@ -106,17 +106,16 @@ class Categories extends React.Component {
                 
                 <div style={{textAlign:"center"}}>
                 <img src={require(`assets/img/categories/${this.props.location.state.image}`)} style={{width:"100%",height:"auto"}}/>
-                
                 </div>
                 {this.state.products !== null && this.state.products.data !== undefined && this.state.products.data[0].length <=0?
-                    <Row>
+                <Row>
                     <Col md="6" className="ml-auto mr-auto">
 
                     <h4 style={{fontWeight:500}}>No Products Available</h4>
                     </Col>
-                    </Row>
+                </Row>
                     :
-                <Row style={{marginTop:"30px"}}>
+                <Row style={{marginTop:"5px"}}>
                 {products && this.renderProducts()}
                 </Row>
                 }

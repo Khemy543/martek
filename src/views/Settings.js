@@ -243,7 +243,7 @@ function _handleCoverChange(e) {
           <Row> 
                   <Col sm="12" xs="12" md="6">
                       <small className=" d-block text-uppercase font-weight-bold mb-4">
-                        Shop Avatar
+                        Shop Logo
                       </small>
                       <img
                         alt="..."

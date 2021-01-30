@@ -104,11 +104,11 @@ class UploadShopAvatar extends React.Component{
         <Row className="mt-auto mb-auto" style={{marginTop:"50px"}}> 
             <Col md="4" lg="4"  className="ml-auto mr-auto">
             <div>
-            <label>Shop Avatar</label>
+            <label>Shop Logo</label>
             <ImageUploader
                 withIcon={true}
                 withPreview={true}
-                buttonText='Shop Avatar'
+                buttonText='Shop Logo'
                 onChange={this.onDropAvatar}
                 imgExtension={['.jpg', '.png','.jpeg', '.jfif', '.heic']}
                 maxFileSize={5242880}

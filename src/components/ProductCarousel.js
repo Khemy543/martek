@@ -17,7 +17,7 @@ const ProductCarousel = (props) => {
     if (animating) return;
     const nextIndex = activeIndex === props.images.length - 1 ? 0 : activeIndex + 1;
     setActiveIndex(nextIndex);
-  }
+  } 
 
   const previous = () => {
     if (animating) return;
@@ -37,7 +37,10 @@ const ProductCarousel = (props) => {
         onExited={() => setAnimating(false)}
         key={item.src}
       >
-        <img src={`https://backend-api.martekgh.com/${item.path}`} alt="allt" style={{width:"220px", height:"220px", objectFit:"cover"}}/>
+        <div style={{textAlign:"center"}}>   
+          <img src={`https://backend-api.martekgh.com/${item.path}`} alt="product images" 
+          style={{width:"100%", objectFit:"cover", height:"100%", borderRadius:"0px"}}/>
+        </div>
       </CarouselItem>
     );
   });

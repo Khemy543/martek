@@ -45,7 +45,9 @@ class UserLayout extends React.Component{
         </Switch>
         <DemoFooter prop = {this.props}/>
         <ScrollToTop showUnder={160}>
-          <span><i class="fa fa-arrow-circle-up fa-3x" aria-hidden="true"></i></span>
+          <span style={{backgroundColor:"#eaeaea", border:"1px solid rgb(214 213 213)" , textAlign:"center", padding:"5px 5px 5px 5px"}}>
+            <i class="fa fa-chevron-up"></i>
+          </span>
         </ScrollToTop>
         </div>
     );
