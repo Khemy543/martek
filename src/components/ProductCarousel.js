@@ -50,6 +50,7 @@ const ProductCarousel = (props) => {
       activeIndex={activeIndex}
       next={next}
       previous={previous}
+      ride="carousel"
     >
       <CarouselIndicators items={props.images} activeIndex={activeIndex} onClickHandler={goToIndex} />
       {slides}

@@ -51,7 +51,6 @@ const CarouselView = (props) => {
         onExiting={() => setAnimating(true)}
         onExited={() => setAnimating(false)}
         key={item.src}
-       
       >
       <div className="box" style={{textAlign:"center"}}>
         <img src={item.src} alt={item.altText} className="image"/>
@@ -69,6 +68,7 @@ const CarouselView = (props) => {
       previous={previous}
       enableTouch={true}
       slide={true}
+      ride="carousel"
     >
       <CarouselIndicators items={items} activeIndex={activeIndex} onClickHandler={goToIndex} />
       {slides}
