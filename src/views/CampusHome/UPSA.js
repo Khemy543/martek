@@ -325,7 +325,7 @@ class Upsa extends React.Component{
 
 
                     
-                        <Row>
+                        {/* <Row>
                         <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white", boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                             <CardTitle style={{borderBottom:"1px solid #eaeaea", fontWeight:"bold", marginLeft:"15px", marginRight:"15px", fontSize:"20px"}}>
                             <i className="fa fa-gg" style={{color:"#ff8d00"}}/>  FEATURED CATEGORY
@@ -398,7 +398,7 @@ class Upsa extends React.Component{
                                     </CardBody>
     
                             </Card>
-                            </Row>
+                            </Row> */}
                     
                             </Container>
                             </TabPane>

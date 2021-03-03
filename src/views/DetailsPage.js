@@ -180,7 +180,7 @@ function DetailsPage(props){
                                     <Row>
                                 <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
                             
-                                <CardBody sty>
+                                <CardBody>
                                     <Row>
                                         <Col md="6">
                                         <div style={{textAlign:"center"}} >
@@ -206,7 +206,7 @@ function DetailsPage(props){
                                                 if(merchandiser_id){
                                                     props.history.push("/user/shop-view",{id:merchandiser_id})
                                                 }
-                                                }}>| {name}
+                                                }}> {name}
                                                 </h4>
                                                 :
                                                 <h4 style={{fontSize:"14px",  marginTop:"7px",cursor:"pointer"}} onClick={()=>{
@@ -216,6 +216,7 @@ function DetailsPage(props){
                                                 }}>| <StoreIcon style={{marginLeft:'-9px', marginRight:"3px"}}/> {company_name}
                                                 </h4>
                                             }
+                                            <h5 style={{marginTop:"5px", fontSize:"11px", fontWeight:500}}>{campus}</h5>
                                             <div style={{ marginTop:"7px"}}>
                                             <StarRatings
                                                 rating={average}
@@ -237,13 +238,6 @@ function DetailsPage(props){
                                                 </p>
                                             </div>
                                             </div>
-                                            {/* <Row>
-                                            <Col>
-                                            </Col>
-                                            <Col>
-                                            <h5 style={{fontSize:"13px", marginTop:"20px",fontWeight:"bold"}}>IN STOCK : {in_stock}</h5>
-                                            </Col>
-                                            </Row> */}
                                             <br/>
                                             <Row>
                                                 <Col>
@@ -280,21 +274,6 @@ function DetailsPage(props){
                                             </Col>
                                         </Row>
                                         </Col>
-                                        {/* <Col md="4">
-                                            <Card className="card-plain">
-                                            <CardTitle style={{padding:"0px 0px 0px 0px", margin:"0px 15px 15px 15px"}}>
-                                                <h4 style={{fontSize:"18px", fontWeight:500, }}>SELLER INFORMATION</h4>
-                                                </CardTitle>
-                                            <CardBody>
-                                            <div style={{ margin:"10px"}}>
-                                                <h4 style={{fontWeight:500, fontSize:"16px", margin:"10px 0px"}}>{name || company_name}</h4>
-                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{phone}</h4>
-                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{email}</h4>
-                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{campus}</h4>
-                                            </div>
-                                            </CardBody>
-                                            </Card>
-                                        </Col> */}
 
                                         </Row>
 

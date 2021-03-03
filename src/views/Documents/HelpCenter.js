@@ -89,7 +89,6 @@ export default function HelpCenter(){
                             
                     <Row>
                         <Col md="10" style={{marginLeft:"auto", marginRight:"auto"}}>
-                            <h3 style={{textAlign:"center", fontWeight:600}}>Welcome To Martek's Help And Support Page</h3>
                             {/* <p style={{textAlign:"center"}}>Here you can find answers to our most frequently asked questions and learn about Martek, how to use it, how to stay safe and how to get in touch with us.</p>
                              */}<div style={{textAlign:"center"}}>
                             <img alt="#" src={require("assets/img/help.png")} style={{height:"auto", width:"100%"}} />

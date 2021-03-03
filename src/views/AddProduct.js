@@ -32,7 +32,6 @@ function AddProduct(props){
   const [description, setDescription] = React.useState('');
   const [isActive , setIsAcitve] = React.useState(false);
 
-  let user = localStorage.getItem('access_token')
   console.log("aahh",localStorage.getItem('validity'))
   let valid = localStorage.getItem('validity');
   if(valid === "false"){
@@ -63,9 +62,10 @@ function AddProduct(props){
       if(price <= 20){
         amount = 0;
       }else
-      if(20 > price && price <=1000){
+      if(20 < price && price <=1000){
         amount = price*0.01;
       }
+    let user = localStorage.getItem('access_token')
     axios.post('https://backend-api.martekgh.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
       headers:{'Authorization':`Bearer ${user}`}
     }).then(res => {
@@ -124,7 +124,7 @@ function AddProduct(props){
                             <i className="nc-icon nc-money-coins" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Price" type="number" name="price" value={price} onChange={e => setPrice(e.target.value)} required/>
+                        <Input placeholder="Price" type="text" name="price" value={price} onChange={e => setPrice(e.target.value)} required/>
                       </InputGroup>
                     </Col>
                   </Row>

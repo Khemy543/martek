@@ -16,6 +16,8 @@ import axios from 'axios';
 //import history from "../history.js";
 import Gallery from 'react-grid-gallery';
 import StarRatings from 'react-star-ratings';
+import ProductCarousel from '../components/ProductCarousel.js'
+import StoreIcon from '@material-ui/icons/Store';
 
 //context
 import { ProductConsumer } from "../context";
@@ -30,6 +32,7 @@ function UserProductDetails(props){
     const [average,setAverage] = React.useState(0);
     const [images, setImages] = React.useState([]);
     const [first, setFirst] = React.useState(null)
+    const [productImages, setProductImages] = React.useState([])
     const [productid, setProductId] = React.useState(props.location.state.id);
    
     
@@ -44,15 +47,13 @@ function UserProductDetails(props){
                 setProduct(res.data);
                 setOwner(res.data.product_owner);
                 setCampus_name(res.data.product_owner.campus);
+                setProductImages(res.data.product_images)
                 setIsActive(false);
-                setFirst(res.data.product_images[0].path);
                 let images = res.data.product_images;
-                for(var i=1; i<images.length;i++){
+                for(var i=0; i<images.length;i++){
                     newImageArray.push({
                         src: `https://backend-api.martekgh.com/${images[i].path}`,
                         thumbnail: `https://backend-api.martekgh.com/${images[i].path}`,
-                        thumbnailWidth: 180,
-                        thumbnailHeight: 180,
                     })
                 }
                 setImages(newImageArray)
@@ -94,7 +95,7 @@ function UserProductDetails(props){
 
 
 
-    const {product_name, price, in_stock,description} = product;
+    const {product_name, price, in_stock,description, id} = product;
     const {name ,email,phone,company_name,merchandiser_id} = owner;
     const {campus} = campus_name;
     
@@ -115,82 +116,97 @@ function UserProductDetails(props){
                             
                                 <CardBody>
                                     <Row>
-                                        <Col md="4">
-                                        <div style={{textAlign:"center", marginTop:"30px"}} >
-                                            <img alt= "#" src={`https://backend-api.martekgh.com/${first}`} 
-                                            style={{width:"200px", height:"200px", objectFit:"cover"}}
+                                        <Col md="6">
+                                        <div style={{textAlign:"center"}} >
+                                            <ProductCarousel 
+                                                images={productImages}
                                             />
                                         </div>
                                         </Col>
-                                        <Col md="4">
-                                        <Card className="card-plain" style={{borderRight:"1px solid #eaeaea"}}>
-                                        <CardTitle style={{padding:"15px 0px 0px 0px", margin:"10px 15px 15px 15px"}}>
-                                        <h3 className="category" style={{marginTop:"5px", marginLeft:"20px"}}>
-                                            {product_name}
-                                        </h3>
+                                        <Col md="6">
                                         <Row>
                                             <Col>
-                                            <h4 style={{fontSize:"14px", marginLeft:"20px", marginTop:"3px"}}>{company_name} | share</h4>
-                                            <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>¢ {price}</h4>
-                                            <h4 style={{fontSize:"16px", marginLeft:"20px", fontWeight:"bold", marginTop:"20px"}}>in stock : {in_stock}</h4>
-                                            {/* <div style={{float:'right', marginTop:"-15px", marginRight:"40%"}}>
-                                            <i className="fa fa-heart-o mr-2" style={{fontWeight:"bold", color:"red"}}/>
-                                            <i className="fa fa-share-alt" style={{fontWeight:"bold", color:"blue"}}/>
-                                            </div> */}
-                                            </Col>
-                                            <Col  md="6" sm="6" xs="6" lg="6" className="mt-5">
-                                                <StarRatings
+                                            <Card className="card-plain" style={{borderRight:"1px solid #eaeaea"}}>
+                                        <CardTitle style={{padding:"15px 0px 0px 0px", margin:"10px 15px 15px 15px"}}>
+
+                                        <h1 className="category" style={{marginTop:"5px", fontSize:"25px",  fontWeight:500}}>
+                                            {product_name}
+                                        </h1>
+                                            {merchandiser_id === undefined?
+                                                <h4 style={{fontSize:"16px", marginTop:"7px",cursor:"pointer"}} onClick={()=>{
+                                                if(merchandiser_id){
+                                                    props.history.push("/user/shop-view",{id:merchandiser_id})
+                                                }
+                                                }}>| {name}
+                                                </h4>
+                                                :
+                                                <h4 style={{fontSize:"14px",  marginTop:"7px",cursor:"pointer"}} onClick={()=>{
+                                                if(merchandiser_id){
+                                                    props.history.push("/user/shop-view",{id:merchandiser_id})
+                                                }
+                                                }}>| <StoreIcon style={{marginLeft:'-9px', marginRight:"3px"}}/> {company_name}
+                                                </h4>
+                                            }
+                                            <div style={{ marginTop:"7px"}}>
+                                            <StarRatings
                                                 rating={average}
                                                 starRatedColor="#CFB53B"
                                                 numberOfStars={5}
                                                 name='rating'
-                                                starDimension="20px"
+                                                starDimension="15px"
                                                 starSpacing="2px"
-                                                />
-                                                </Col>
-                                        </Row>
-                                           
-                                            <Button
-                                            style={{ marginRight:"30px", marginTop:"20px"}}
-                                            color="info"
-                                            block
-                                            onClick={()=>props.history.push("/user/edit-user-products",{id:props.location.state.id})}
-                                            
-                                            >
-                                           Edit Product
-
-                                            
-                                        </Button>
-                                        
-                                        <Button
-                                        color="danger"
-                                        block
-                                        id="Popover1"
-                                        >
-                                            delete product
-                                            </Button>
-                                            <Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>
-                                            <PopoverHeader>Do you want to delete?</PopoverHeader>
-                                            <br/>
-                                            <PopoverBody><Button color="danger" onClick={handleDelete}>yes</Button> <Button color="info" onClick={toggle} style={{marginLeft:"15px"}}>no</Button></PopoverBody>
-                                        </Popover>
-                                </CardTitle>
-                                        </Card>
-                                        </Col> 
-                                        <Col md="4">
-                                            <Card className="card-plain">
-                                            <CardTitle style={{padding:"0px 0px 0px 0px", margin:"0px 15px 15px 15px"}}>
-                                                <h4 style={{fontSize:"18px", fontWeight:500, }}>SELLER INFORMATION</h4>
-                                                </CardTitle>
-                                            <CardBody>
-                                            <div style={{ margin:"10px"}}>
-                                                <h4 style={{fontWeight:500, fontSize:"16px", margin:"10px 0px"}}>{name || company_name}</h4>
-                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{phone}</h4>
-                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{email}</h4>
-                                                <h4 style={{fontWeight:500,fontSize:"14px", margin:"10px 0px"}}>{campus}</h4>
+                                            />
                                             </div>
-                                            </CardBody>
-                                            </Card>
+                                            <h4 style={{fontSize:"16px", fontWeight:"bold", marginTop:"20px"}}>GH¢ {price}</h4>
+                                            <div>
+                                            <div style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
+                                                <h4 style={{fontSize:"14px", fontWeight:500, margin: "30px 0px 5px 0px"}}>DESCRIPTION</h4>
+                                            </div>
+                                            <div>
+                                                <p style={{fontWeight:500, fontSize:"14px", marginTop:"8px"}}> 
+                                                {description}
+                                                </p>
+                                            </div>
+                                            </div>
+                                            <br/>
+                                            <Row>
+                                                <Col md="6">
+                                                <Button
+                                                    color="info"
+                                                    block
+                                                    onClick={()=>props.history.push("/user/edit-user-products",{id:props.location.state.id})}
+                                                    >
+                                                    Edit Product
+                                                </Button>
+                                                </Col>
+                                                <Col md="6">
+                                                <Button
+                                                    color="danger"
+                                                    block
+                                                    id="Popover1"
+                                                    >
+                                                    delete product
+                                                </Button>
+                                                </Col>
+                                            </Row>
+                                            <br/>
+                                            <Row>
+                                            <Col md="12">
+                                                <Button block onClick={()=>props.history.push('/user/payment/information',{amount:price, product_id:id})}>
+                                                    Make Payment
+                                                </Button>
+                                                </Col>
+                                            </Row>
+                                        
+                                        </CardTitle>
+                                        </Card>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col>
+                                            
+                                            </Col>
+                                        </Row>
                                         </Col>
 
                                         </Row>
@@ -200,25 +216,9 @@ function UserProductDetails(props){
                             </Card>
                         </Row>
                             
-                        {/* discription, review, images */}
-                        <Row style={{ marginTop:"-15px"}}>
-                            {/* discription and review */}
-                            <Col md="8" style={{padding:"0px 3px 0px 0px"}}>
+                        <Row>
+                            <Col md="12" style={{padding:"0px 3px 0px 0px"}}>
                             <Row>
-                                <Col md="12">
-                                <Card className="card-plain" style={{backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
-                                    <CardTitle style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
-                                        <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>DESCRIPTION</h4>
-                                        </CardTitle>
-                                    <CardBody>
-                                        <p style={{fontWeight:500, fontSize:"14px", margin:"10px"}}> 
-                                        {description}
-                                        </p>
-                                        </CardBody>
-                                    </Card>
-
-                                </Col>
-                                {/* reviews start */}
                                 <Col md="12">
                                 <Row style={{marginTop:"-15px"}}>
                                     <Col md="12">
@@ -266,18 +266,6 @@ function UserProductDetails(props){
                                 </Col>
                             </Row>
                             </Col>
-                            {/* images */}
-                            <Col md="4" style={{padding:"0px 0px 0px 3px"}}>
-                                <Card className="card-plain" style={{backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}}>
-                                    <CardTitle style={{paddingTop:"0px", borderBottom:"1px solid #F1EAE0"}}>
-                                        <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>IMAGES</h4>
-                                        </CardTitle>
-                                    <CardBody>
-                                    <Gallery images={images}/>
-                                    </CardBody>
-                                    </Card>
-                            </Col>
-                            
                             </Row>
                             </Container>
 

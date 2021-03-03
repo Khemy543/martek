@@ -92,7 +92,7 @@ function AddToShop(){
                             <i className="nc-icon nc-money-coins" />
                           </InputGroupText>
                         </InputGroupAddon>
-                        <Input placeholder="Price" type="number" name="price" value={price} onChange={e => setPrice(e.target.value)} required/>
+                        <Input placeholder="Price" type="text" name="price" value={price} onChange={e => setPrice(e.target.value)} required/>
                       </InputGroup>
                     </Col>
                   </Row>

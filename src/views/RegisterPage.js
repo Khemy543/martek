@@ -1,7 +1,7 @@
 import React from "react";
 
 // reactstrap components
-import { Button, Card, Form, Input, Container, Row, Col, Modal, ModalBody, Alert, InputGroup, InputGroupAddon, InputGroupText, Spinner } from "reactstrap";
+import { Button, Card, FormFeedback, Form, Input, Container, Row, Col, Modal, ModalBody, Alert, InputGroup, InputGroupAddon, InputGroupText, Spinner } from "reactstrap";
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
 import history from "../history.js";
@@ -36,9 +36,9 @@ function RegisterPage(props) {
   const [campusList, setCampusList] = React.useState([]);
   const [isActive, setIsActive] = React.useState(false);
   const [modal, setModal] = React.useState(false);
-  const [alert, setAlert] = React.useState(false);
   const [errorMessage, setErrorMessage] = React.useState("");
   const [confrimPassword, setConfirmPassword] = React.useState("");
+  const [errors, setErrors] = React.useState({});
 
 
   React.useEffect(() => {
@@ -58,11 +58,24 @@ function RegisterPage(props) {
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsActive(true);
-    if (password != confrimPassword) {
-      setIsActive(false)
-      setErrorMessage("Passwords do not match");
+    setErrors({});
+      let tempErrors = {};
+      if(phone.length != 9){
+        tempErrors.phone = "9 digit number without preceding 0"
+      }
+      if(password.length < 6){
+        tempErrors.password = "Password must have more than 6 characters";
+      }
+      if(password != confrimPassword){
+        tempErrors.confirm_password = "Passwords do not match";
+      }
 
-    } else {
+      if(!(Object.keys(tempErrors).length === 0 && tempErrors.constructor === Object)){
+        console.log(tempErrors)
+        setErrors(tempErrors);
+        setIsActive(false)
+        return;
+      }
       axios.post('https://backend-api.martekgh.com/api/register-user', {
         config, name, email, phone: `233${phone}`, password, campus_id
       }).then(res => {
@@ -86,15 +99,12 @@ function RegisterPage(props) {
           })
         }
       }).catch(error => {
-        setIsActive(false);
-        setAlert(true);
-        console.log(error.response.data);
-        if (error) {
-          setErrorMessage(error.response.data.errors.email || error.response.data.errors.phone)
+        console.log(error.response)
+        if(error.response.status == 422){
+          setErrors(error.response.data.errors)
         }
+        setIsActive(false)
       })
-
-    }
   }
 
   document.documentElement.classList.remove("nav-open");
@@ -111,59 +121,60 @@ function RegisterPage(props) {
           <Row>
             <Col className="ml-auto mr-auto" lg="6" md="6">
               <h4 className="title mx-auto" style={{ fontWeight: 600, fontSize: "15px", color: "#ff6a00" }}>Create Account</h4>
-              {alert ?
-                <Alert color="warning" fade={true} style={{ textAlign: "center", fontWeight: 500 }}>
-                  {errorMessage}
-                </Alert>
-                :
-                <></>
-              }
               <Form onSubmit={handleSubmit}>
                 <Row>
                   <Col>
                     <label style={{ fontWeight: 500 }}>Name</label>
-                    <Input placeholder="Name" type="text" name="name" value={name} onChange={e => setName(e.target.value)} required />
+                    <Input invalid={errors.name} placeholder="Name" type="text" name="name" value={name} onChange={e => setName(e.target.value)} required />
+                    <FormFeedback style={{fontWeight:500}}>{errors.name}</FormFeedback>
                   </Col>
                 </Row>
                 <br />
                 <Row>
                   <Col>
                     <label style={{ fontWeight: 500 }}>Email</label>
-                    <Input placeholder="Email" type="text" name="email" value={email} onChange={e => setEmail(e.target.value)} required />
+                    <Input invalid={errors.email} placeholder="Email" type="email" name="email" value={email} onChange={e => setEmail(e.target.value)} required />
+                    <FormFeedback style={{fontWeight:500}}>{errors.email}</FormFeedback>
                   </Col>
                 </Row>
                 <br />
                 <Row>
                   <Col md="6">
                     <label style={{ fontWeight: 500 }}>Phone</label>
-                    <InputGroup>
+                    <InputGroup style={{borderColor:"inherit"}}>
                       <InputGroupAddon addonType="prepend">
                         <InputGroupText>
                           +233
                               </InputGroupText>
                       </InputGroupAddon>
-                      <Input placeholder="Phone" type="text" name="country_code" title="9 digit number" pattern="[1-9]{1}[0-9]{8}" value={phone} onChange={e => setPhone(e.target.value)} required />
+                      <Input invalid={errors.phone} placeholder="Phone" type="text" name="country_code" value={phone} onChange={e => setPhone(e.target.value)} required />
+                      <FormFeedback style={{fontWeight:500}}>{errors.phone}</FormFeedback>
                     </InputGroup>
+                    
                   </Col>
                   <Col md="6">
                     <label style={{ fontWeight: 500 }}>Campus</label>
-                    <Input placeholder="Campus" type="select" name="phone" value={campus_id} onChange={e => setCampus_id(e.target.value)} required>
+                    <Input invalid={errors.campus} placeholder="Campus" type="select" name="phone" value={campus_id} onChange={e => setCampus_id(e.target.value)} required>
                       {campusList.map(value => <option key={value.id} value={value.id}>{value.campus}</option>)}
                     </Input>
+                    <FormFeedback style={{fontWeight:500}}>{errors.campus}</FormFeedback>
                   </Col>
                 </Row>
                 <br />
                 <Row>
                   <Col>
                     <label style={{ fontWeight: 500 }}>Password</label>
-                    <Input placeholder="Password" type="password" name="password" value={password} onChange={e => setPassword(e.target.value)} required />
+                    <Input invalid={errors.password} placeholder="Password" type="password" name="password"
+                    value={password} onChange={e => setPassword(e.target.value)} required />
+                    <FormFeedback style={{fontWeight:500}}>{errors.password}</FormFeedback>
                   </Col>
                 </Row>
                 <br />
                 <Row>
                   <Col>
                     <label style={{ fontWeight: 500 }}>Confirm Password</label>
-                    <Input placeholder="Confirm Password" type="password" name="confirmPassword" value={confrimPassword} onChange={e => setConfirmPassword(e.target.value)} required />
+                    <Input invalid={errors.confirm_password} placeholder="Confirm Password" type="password" name="confirmPassword" value={confrimPassword} onChange={e => setConfirmPassword(e.target.value)} required />
+                    <FormFeedback style={{fontWeight:500}}>{errors.confirm_password}</FormFeedback>
                   </Col>
                 </Row>
                  <br />

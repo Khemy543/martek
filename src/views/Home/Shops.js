@@ -26,6 +26,8 @@ function Shops({history}){
     const [activeTab, setActiveTab] = React.useState("2");
     const [isActive, setIsActive] = React.useState(true);
     const [shops, setShops] = React.useState([]);
+    const [activeCampus, setActiveCampus] = React.useState(localStorage.getItem('activeCampus_id'));
+    const [pagination,setPagination] = React.useState({});
     
       React.useEffect(()=>{
 
@@ -33,14 +35,18 @@ function Shops({history}){
         
       },[])
       function getShops(pageNumber=1){
-        axios.get("https://backend-api.martekgh.com/api/all-shops?page="+pageNumber+"")
+        axios.get("https://backend-api.martekgh.com/api/all-shops",
+        {
+            params:{
+                page:pageNumber,
+                campus_id:activeCampus,
+            }
+        })
         .then(res=>{
             console.log(res.data)
             setShops(res.data);
             setIsActive(false)
         })
-        .catch(error=>{
-        });
       }
 
 

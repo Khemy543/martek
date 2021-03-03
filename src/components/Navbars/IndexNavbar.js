@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Kit React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-kit-react
-
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 import { Link, NavLink as Naver, Redirect } from "react-router-dom";
 
@@ -56,7 +38,7 @@ function IndexNavbar(props) {
   const [campusList , setCampusList] = React.useState([]);
   const [loggedin, setLoggedin] =React.useState(false);
   const [dropdownCampusOpen, setDropdowncampusOpen] =React.useState(false);
-  const [campusName, setCampusName] = React.useState('Campus');
+  const [campusName, setCampusName] = React.useState(localStorage.getItem('activeCampus') || 'Campus');
 
   
  
@@ -79,6 +61,16 @@ function IndexNavbar(props) {
     document.documentElement.campusList.toggle("nav-open")
   }
   
+  const campusChange=(id, campus)=>{
+    if(id === null){
+      localStorage.removeItem('activeCampus_id')
+    }else{
+      localStorage.setItem('activeCampus_id',id); 
+    }
+    localStorage.setItem('activeCampus', campus)
+    setDropdowncampusOpen(false);
+    window.location.reload("/")
+  }
   
 
 React.useEffect(()=>{
@@ -233,19 +225,19 @@ React.useEffect(()=>{
               
               <UncontrolledPopover placement="bottom" isOpen={dropdownCampusOpen} toggle={toggleCampus} target="campusPopOver" trigger="legacy">
                   
-                  <PopoverBody  style={{paddingLeft:"0px", paddingRight:"0px"}}>
-                    <ListGroup>
-                  {campusList.map((value,index)=>(
-                     <ListGroupItem style={{border:"none", marginTop:"-10px", textAlign:"left"}} className="campuspop"
-                     onClick={()=>{history.push(`/user/campus-home/${value.campus}`,{id:value.id});setDropdowncampusOpen(false);setCampusName(`${value.campus}`)}}
-                     ><i className="fa fa-graduation-cap mr-3"/>{value.campus}</ListGroupItem>
-                  ))}
-                  </ListGroup>
-                  </PopoverBody>
+                    <PopoverBody  style={{paddingLeft:"0px", paddingRight:"0px"}}>
+                      <ListGroup>
+                        <ListGroupItem onClick={()=>campusChange(null,'Campus')} style={{border:"none", marginTop:"-10px", textAlign:"left"}} className="campuspop"
+                        ><i className="fa fa-graduation-cap mr-3"/>All</ListGroupItem>
+                        {campusList.map((value,index)=>(
+                          <ListGroupItem style={{border:"none", marginTop:"-10px", textAlign:"left"}} className="campuspop"
+                          onClick={()=>campusChange(value.id , value.campus)}
+                          ><i className="fa fa-graduation-cap mr-3"/>{value.campus}</ListGroupItem>
+                        ))}
+                    </ListGroup>
+                    </PopoverBody>
                 </UncontrolledPopover>
                 </div>
-              
-              
             </NavItem>
             <NavItem>
               
@@ -411,18 +403,16 @@ React.useEffect(()=>{
 
             <NavItem style={{borderBottom:"1px solid #eaeaea", borderTop:"1px solid #eaeaea"}}>
               <NavLink onClick={toggleCampusCollapse}>
-              Campus <i className={!campusCollapse? "fa fa-chevron-down ml-3":"fa fa-chevron-up ml-3"}/>
+              <h4 style={{color:"#51bcda",fontWeight:"bold",fontSize:"12px", marginTop:"0px"}}>{campusName} <i className={!campusCollapse? "fa fa-chevron-down ml-3":"fa fa-chevron-up ml-3"}/></h4>
               </NavLink>
             </NavItem>
             <Collapse isOpen={campusCollapse}>
+            <NavLink onClick={()=>campusChange(null,'Campus')} style={{fontWeight:600, fontSize:"12px", lineHeight:"1.5em", color:"#9A9A9A"}} className="text-uppercase"
+              ><i className="fa fa-graduation-cap mr-3"/>All</NavLink>
             {campusList.map((value,index)=>(
               <div key={index}>
               <NavLink style={{fontWeight:600, fontSize:"12px", lineHeight:"1.5em", color:"#9A9A9A"}} className="text-uppercase"
-              onClick={()=>{
-                history.push("/user/campus-home/"+value.campus+"",{id:value.id}); 
-                document.documentElement.classList.toggle("nav-open");
-                setNavbarCollapse(false)
-                }}
+               onClick={()=>campusChange(value.id , value.campus)}
               >
               <i className="fa fa-graduation-cap mr-3"/> {value.campus}
               </NavLink>

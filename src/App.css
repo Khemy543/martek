@@ -131,6 +131,10 @@
         margin-top: 0px;
         text-align: left;
     }
+    .searchbar{
+        max-width:200px;
+        min-width: 180px;
+    }
 }
 
 

@@ -72,7 +72,7 @@ handleCardSubmit=(e)=>{
         this.setState({isActive:false})
     })
     .catch(error=>{
-        console.log(error.response.data);
+        console.log(error);
         this.setState({isActive:false})
     })
 }

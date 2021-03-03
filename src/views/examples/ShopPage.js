@@ -94,7 +94,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
       </Container>
       :
       <>
-      <img alt="#" src={`https://backend-api.martekgh.com/${cover}`} style={{width:"95%", marginTop:"10px", objectFit:"cover"}} className="cover-photo"/>
+      <img alt="#" src={cover != null?`https://backend-api.martekgh.com/${cover}`: require('assets/img/cover.jpg')} style={{width:"95%", marginTop:"10px", objectFit:"cover"}} className="cover-photo"/>
       
         <Container>
         <br/>
@@ -110,7 +110,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
                   id="img-circle"
                   className="img-circle img-no-padding img-responsive"
                   style={{border:"1px solid #eaeaea", width:"120px",height:"120px", marginTop:"200px",objectFit:"cover"}}
-                  src={`https://backend-api.martekgh.com/${avatar}`}
+                  src={avatar != null?`https://backend-api.martekgh.com/${avatar}` : require('assets/img/avatar.png')}
               />
             </div>
             </Col>

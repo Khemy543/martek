@@ -23,7 +23,8 @@ import axios from "axios";
 class Categories extends React.Component {
     state={
         isActive:false,
-        products:null
+        products:null,
+        activeCampus:localStorage.getItem('activeCampus_id')
     }
 
     componentDidMount(){
@@ -32,7 +33,13 @@ class Categories extends React.Component {
 
     getProducts(pageNumber=1){
         this.setState({isActive:true});
-        axios.get("https://backend-api.martekgh.com/api/category/"+this.props.location.state.category_id+"/products?page="+pageNumber+"")
+        axios.get("https://backend-api.martekgh.com/api/category/"+this.props.location.state.category_id+"/products",
+        {
+            params:{
+                campus_id:this.state.activeCampus,
+                page:pageNumber,
+            }
+        })
         .then(res=>{
             console.log(res.data)
             this.setState({products:res.data});

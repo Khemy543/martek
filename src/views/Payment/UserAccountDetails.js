@@ -14,7 +14,6 @@ import {
 // core components
 import axios from "axios";
 
-let user =localStorage.getItem('access_token');
 class UserAccountDetails extends React.Component{
     state={
         isActive:false,
@@ -39,6 +38,7 @@ class UserAccountDetails extends React.Component{
     }
 
 handleCardSubmit=(e)=>{
+    let user =localStorage.getItem('access_token');
     this.setState({isActive:true})
     e.preventDefault();
     let tempDate = this.state.date;
@@ -74,6 +74,7 @@ handleCardSubmit=(e)=>{
 
 
 handleMobileSubmit=(e)=>{
+    let user =localStorage.getItem('access_token');
     this.setState({isActive:true})
     e.preventDefault();
     if(this.state.network === 'VODAFONE'){
@@ -113,7 +114,7 @@ handleMobileSubmit=(e)=>{
         window.location=`${res.data.data.link}`
     })
     .catch(error=>{
-        console.log(error.response.data);
+        console.log(error);
         this.setState({isActive:false})
     })
 }

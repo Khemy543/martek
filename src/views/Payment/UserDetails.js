@@ -58,7 +58,7 @@ axios.post(`https://backend-api.martekgh.com/api/user/toggle/${props.location.st
 
 })
 .catch(error=>{
-  console.log(error.response.data)
+  console.log(error)
 })
 }
 

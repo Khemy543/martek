@@ -360,7 +360,7 @@ function _handleCoverChange(e) {
        block
        type="button"
        color="danger"
-       onClick={()=>history.push('/shop/delete-shop')}
+       onClick={()=>history.push('/shop/delete-shop',{name:company_name})}
        >
        Delete Shop
          </Button>
@@ -440,8 +440,8 @@ function _handleCoverChange(e) {
        </div>
                 <Col className="ml-auto mr-auto" md="12">
                 <Modal isOpen={modal} style={{maxHeight:"40px", maxWidth:"500px"}} className="alert-modal">
-                    <ModalBody>
-                    <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white"}}>{message}!!</h4>
+                    <ModalBody style={{ color: "white", fontSize: "12px", fontWeight: 500 }} className="text-center">
+                    {message}!
                     </ModalBody>
                     
                     </Modal>

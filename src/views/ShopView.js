@@ -1,21 +1,3 @@
-/*!
-
-=========================================================
-* Paper Kit React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-kit-react
-
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 // reactstrap components
 import {
@@ -36,8 +18,7 @@ import axios from "axios";
 import { ProductConsumer } from "../context.js";
 import StarRatings from 'react-star-ratings';
 // core components
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
+import Skeleton,{SkeletonTheme} from 'react-loading-skeleton';
 import Product from "components/Product.js";
 
 
@@ -159,13 +140,50 @@ function ShopView(props) {
   });
   return (
     <div>
-      <LoadingOverlay
-        active={isActive}
-        spinner={<BounceLoader color={'#4071e1'} />}
-      >
+      {isActive?
+      <div className="section profile-content text-center">
+        <Skeleton style={{marginTop:"10px", width:"95%", textAlign:"center"}} className="cover-photo"/>
+        <div className="avatar">
+        <Skeleton circle height={120} width={120} 
+            id="img-circle"
+            className="img-circle img-no-padding img-responsive"
+            style={{marginTop:"-500px"}}/>
+        </div>
+        <div>
+          <Container>
+            <Row>
+              <Col md="5" sm="5" xs="5" xl="5" lg="5" style={{padding:"0px"}}>
+                  <div>
+                    <h4 style={{ fontSize: "19px", marginTop: "0px", fontWeight: "bold" }}>
+                      <Skeleton width={200} height={12} />
+                    </h4>
 
+                    <Skeleton width={150} height={12} />
+
+                  </div>
+                </Col>
+                <Col></Col>
+                <Col md="4" sm="4" xs="4" xl="4" lg="4">
+                  <Skeleton width={150} height={12} />
+                  <br/>
+                  <Skeleton width={100} height={12} />
+                </Col>
+            </Row>
+            <Row style={{ marginTop: "10px" }}>
+                <Col md="7" sm="12" xs="12" lg="7" xl="7" className="mr-auto ml-auto">
+                  <Skeleton width={200} height={12} />
+                  <br/>
+                  <Skeleton width={150} height={12} />
+                  <br/>
+                  <Skeleton width={100} height={12}/>
+                </Col>
+              </Row>
+          </Container>
+        </div>
+      </div>
+      :
         <div className="section profile-content text-center">
-          <img alt="#" src={`https://backend-api.martekgh.com/${cover}`} style={{ width: "95%", marginTop: '10px', objectFit:"cover" }} className="cover-photo" />
+          <img alt="#" src={cover != null?`https://backend-api.martekgh.com/${cover}` : require('assets/img/cover.jpg')} style={{ width: "95%", marginTop: '10px', objectFit:"cover" }} className="cover-photo" />
 
           <Container>
             <br />
@@ -181,15 +199,15 @@ function ShopView(props) {
                       id="img-circle"
                       className="img-circle img-no-padding img-responsive"
                       style={{ border: "1px solid #eaeaea", width: "120px", height: "120px", objectFit:"cover" }}
-                      src={`https://backend-api.martekgh.com/${avatar}`}
+                      src={avatar != null?`https://backend-api.martekgh.com/${avatar}`:require('assets/img/avatar.png')}
                     />
                   </div>
                 </Col>
               </Row>
               <Row style={{ marginTop: "-70px" }}>
-                <Col md="5" sm="5" xs="5" xl="5" lg="5">
+                <Col md="5" sm="5" xs="5" xl="5" lg="5" style={{padding:"0px"}}>
                   <div>
-                    <h4 style={{ fontSize: "20px", marginTop: "0px", fontWeight: "bold" }}>
+                    <h4 style={{ fontSize: "19px", marginTop: "0px", fontWeight: "bold" }}>
                       {name}
                     </h4>
 
@@ -198,7 +216,7 @@ function ShopView(props) {
                       starRatedColor="#CFB53B"
                       numberOfStars={5}
                       name='rating'
-                      starDimension="17px"
+                      starDimension="16px"
                       starSpacing="1px"
                     />
 
@@ -364,7 +382,7 @@ function ShopView(props) {
             </TabContent>
           </Container>
         </div>
-      </LoadingOverlay>
+      }
     </div>
   );
 }

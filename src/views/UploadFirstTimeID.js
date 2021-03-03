@@ -15,9 +15,6 @@ import history from '../history.js';
 //import IndexNavbar from "../components/Navbars/IndexNavbar.js";
 //import DemoFooter from "../components/Footers/DemoFooter";
 
-let user = localStorage.getItem('access_token')
-
-
 class UploadValidID extends React.Component{
 
     constructor(props) {
@@ -51,6 +48,7 @@ class UploadValidID extends React.Component{
 
     handleSubmit=(e)=>{
     e.preventDefault();
+    let user = localStorage.getItem('access_token')
     this.setState({isActive:true})
     const valid_id_file = new Blob(this.state.valid_id);
      const bodyFormData = new FormData();

@@ -18,8 +18,9 @@ let user_id=null;
 
 
 class ProductProvider extends React.Component{
-    
-    state={
+    constructor(){
+    super();
+    this.state={
         cart:[],
         cartSubTotal:0,
         cartTax:0,
@@ -34,8 +35,9 @@ class ProductProvider extends React.Component{
         followShops:[],
         followLoader:false,
         followingLoader:false,
-        id:""
+        id:"",
     }
+}
 
     toggle=()=>{
         this.setState({modal:!this.state.modal}) 

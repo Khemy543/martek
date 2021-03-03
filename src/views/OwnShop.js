@@ -5,7 +5,7 @@ import Link from '@material-ui/core/Link';
 import history from "../history.js";
 import {
   Alert,Row,Col,Container, Input,
-  InputGroup, InputGroupAddon, InputGroupText,Button
+  InputGroup, InputGroupAddon, InputGroupText,Button, FormFeedback
 } from "reactstrap";
  
 import axios from "axios";
@@ -26,9 +26,9 @@ export default function OwnShop(props){
   const [alert, setAlert] = React.useState(false);
   const [errorMessage, setErrorMessage ] = React.useState("");
   const [confrimPassword, setConfirmPassword] = React.useState("");
-  const [error, setError]= React.useState(false)
   const [eye, setEye] = React.useState(false);
   const [eye2, setEye2] = React.useState(false);
+  const [errors, setErrors] = React.useState({});
   
   //const [storeId, setStoreId]=React.useState(undefined);
   
@@ -61,15 +61,26 @@ export default function OwnShop(props){
   
   const handleSubmit=(e)=>{
       e.preventDefault();
-      if(password != confrimPassword){
-        setIsActive(false)
-        setErrorMessage("Passwords do not match");
-        setAlert(true);
-        
-      }else{
-      if(phone.length === 9){
-
       setIsActive(true);
+      setErrors({});
+      let tempErrors = {};
+      if(phone.length != 9){
+        tempErrors.phone = "9 digit number without preceding 0"
+      }
+      if(password.length < 6){
+        tempErrors.password = "Password must have more than 6 characters";
+      }
+      if(password != confrimPassword){
+        tempErrors.confrim_password = "Passwords do not match";
+      }
+
+      if(!(Object.keys(tempErrors).length === 0 && tempErrors.constructor === Object)){
+        console.log(tempErrors)
+        setErrors(tempErrors);
+        setIsActive(false)
+        return;
+      }
+
     axios.post('https://backend-api.martekgh.com/api/register-merchandiser',
     {company_name, email,phone:`233${phone}`,password, campus_id,company_description,shop_type_id, free_trail:props.location.state.status}
   ).then(res => {
@@ -84,18 +95,16 @@ export default function OwnShop(props){
           100
       )
     }).catch(error => {
-      console.log("error",error);
+      /* console.log("error",error);
       console.log(error.response.data)
-      setIsActive(false);
-     /*  setAlert(true);
-      if(error){
-      setErrorMessage(error.response.data.errors.email || error.response.data.errors.phone)
-      } */
+      setIsActive(false); */
+      if(error.response.status == 422){
+        setErrors(error.response.data.errors)
+      }
+      setIsActive(false)
     })
   
   }
-}
-}
 
   return (
     <div className="main">
@@ -105,17 +114,12 @@ export default function OwnShop(props){
           <Row>
             <Col md='7' className="mr-auto ml-auto">
           <h4 className="title mx-auto" style={{ fontWeight: 600, fontSize: "15px", color: "#ff6a00" }}>Own A Shop</h4>
-          {alert?
-            <Alert color="warning" fade={true} style={{textAlign:"center", fontWeight:500}}>
-              {errorMessage}
-            </Alert>
-            :
-            <></>}
           <form onSubmit={handleSubmit}>
               <Row>
                 <Col item xs='12' sm="12" md="12" lg="12" xl="12">
-                    <label style={{fontWeight:500}}>Shop Name</label>
+                  <label style={{fontWeight:500}}>Shop Name</label>
                   <Input
+                    invalid={errors.company_name}
                     required={true}
                     id="shop_name"
                     label="Shop Name"
@@ -124,6 +128,7 @@ export default function OwnShop(props){
                     placeholder="Shop Name"
                     value={company_name} onChange={e=>setCompany_name(e.target.value)}
                   />
+                  <FormFeedback style={{fontWeight:500}}>{errors.company_name}</FormFeedback>
                   </Col>
                 </Row> 
                 <br/>
@@ -131,6 +136,7 @@ export default function OwnShop(props){
                   <Col item xs='12' sm="12" md="6" lg="6" xl="6">
                     <label style={{fontWeight:500}}>Email</label>
                     <Input
+                      invalid={errors.email}
                       required={true}
                       name="email"
                       label="Email"
@@ -139,6 +145,7 @@ export default function OwnShop(props){
                       placeholder="Email"
                       value={email} onChange={e=>setEmail(e.target.value)}
                     />
+                    <FormFeedback style={{fontWeight:500}}>{errors.email}</FormFeedback>
                   </Col>
                   <Col item xs='12' sm="12" md="6" lg="6" xl="6">
                     <label style={{fontWeight:500}}>Phone</label>
@@ -148,7 +155,8 @@ export default function OwnShop(props){
                               +233
                             </InputGroupText>
                           </InputGroupAddon>
-                    <Input placeholder="Phone" type="text" name="country_code" title="9 digit number" pattern="[1-9]{1}[0-9]{8}" value={phone} onChange={e => setPhone(e.target.value)} required/>
+                    <Input invalid={errors.phone} placeholder="Phone" type="text" name="country_code" value={phone} onChange={e => setPhone(e.target.value)} required/>
+                    <FormFeedback style={{fontWeight:500}}>{errors.phone}</FormFeedback>
                     </InputGroup>
                   </Col>
                 </Row>
@@ -156,9 +164,10 @@ export default function OwnShop(props){
                 <Row>
                   <Col item md={12} sm={12} xs={12} lg={12} xl={12}>
                     <label style={{fontWeight:500}}>Campus</label>
-                    <Input type="select" value={campus_id} onChange={e=>setCampus_id(e.target.value)}>
+                    <Input invalid={errors.campus} type="select" value={campus_id} onChange={e=>setCampus_id(e.target.value)}>
                       {campusList.map((value)=>(<option value={value.id}>{value.campus}</option>))}
                     </Input>
+                    <FormFeedback style={{fontWeight:500}}>{errors.campus}</FormFeedback>
                   </Col>
                 </Row>
                 <br/>
@@ -166,36 +175,27 @@ export default function OwnShop(props){
                   <Col>
                     <label style={{fontWeight:500}}>Description</label>
                     <Input 
+                      invalid={errors.company_description}
                       value={company_description} onChange={e=>setCompany_description(e.target.value)} 
                       placeholder='Tell us about your shop...'
                       type="textarea"
                     />
+                    <FormFeedback style={{fontWeight:500}}>{errors.company_description}</FormFeedback>
                   </Col>
                 </Row>
                 <br/>
                 <Row>
                   <Col sm="12" xs="12" md="6">
                     <label style={{fontWeight:500}}>Password</label>
-                      <InputGroup>
-                        <Input placeholder="Password" type={eye?"text":"password"} name="password" value={password} onChange={e => setPassword(e.target.value)} required/>
-                          <InputGroupAddon addonType="append" onClick={()=>toggleEye()}>
-                            <InputGroupText>
-                              <i className= {eye?'fa fa-eye':"fa fa-eye-slash"} style={{cursor:"pointer"}}/>
-                            </InputGroupText>
-                          </InputGroupAddon>
-                    </InputGroup>
+                        <Input invalid={errors.password} placeholder="Password" type={eye?"text":"password"} name="password"
+                        value={password} onChange={e => setPassword(e.target.value)} required/>
+                        <FormFeedback style={{fontWeight:500}}>{errors.password}</FormFeedback>        
                   </Col>
                   <br/>
                     <Col sm="12" xs="12" md="6">
                       <label style={{fontWeight:500}}>Confirm Password</label>
-                      <InputGroup>
-                      <Input placeholder="Confirm Password" type={eye2?"text":"password"} name="confirmPassword" value={confrimPassword} onChange={e => setConfirmPassword(e.target.value)} required/>
-                         <InputGroupAddon addonType="append" onClick={()=>toggleEye2()}>
-                            <InputGroupText>
-                              <i className= {eye2?'fa fa-eye':"fa fa-eye-slash"} style={{cursor:"pointer"}}/>
-                            </InputGroupText>
-                          </InputGroupAddon>
-                      </InputGroup>
+                      <Input invalid={errors.confrim_password} placeholder="Confirm Password" type={eye2?"text":"password"} name="confirmPassword" value={confrimPassword} onChange={e => setConfirmPassword(e.target.value)} required/>
+                      <FormFeedback style={{fontWeight:500}}>{errors.confrim_password}</FormFeedback>
                    </Col>
                 </Row>
                   <br/>{/* 

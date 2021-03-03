@@ -45,11 +45,15 @@ function All({history}){
     const [newItems,setNewItems] = React.useState([]);
     const [electronics,setElectronics] = React.useState([]);
     const [fashion, setFashion] = React.useState([]);
-    const [phones,setPhones] = React.useState([])
-    
+    const [phones,setPhones] = React.useState([]);
+    const [activeCampus, setActiveCampus] = React.useState(localStorage.getItem('activeCampus_id'));
+     
 
       React.useEffect(()=>{
-        axios.get('https://backend-api.martekgh.com/api/fetch/new-this-week')
+        axios.get('https://backend-api.martekgh.com/api/fetch/new-this-week',
+        {
+            params:{campus_id:activeCampus}
+        })
         .then(res=>{
             console.log(res.data);
             setNewItems(res.data);
@@ -57,12 +61,11 @@ function All({history}){
         .catch(error=>{
             console.log(error)
         })
-        setProducts();
-      },[])
 
-      const setProducts =() =>{
-        // localStorage.clear();
-         axios.get("https://backend-api.martekgh.com/api/2/product-index")
+        axios.get("https://backend-api.martekgh.com/api/2/product-index",
+         {
+            params:{campus_id:activeCampus}
+        })
          .then(res=>{
              console.log(res.data)
              const categories = res.data[0];
@@ -72,19 +75,30 @@ function All({history}){
              console.log(error)
          })
  
-         axios.get("https://backend-api.martekgh.com/api/3/product-index")
+         axios.get("https://backend-api.martekgh.com/api/3/product-index",
+         {
+            params:{campus_id:activeCampus}
+        })
          .then(res=>{
              console.log(res.data)
              const categories = res.data[0];
              setFashion(categories)
          })
  
-         axios.get("https://backend-api.martekgh.com/api/1/product-index")
+         axios.get("https://backend-api.martekgh.com/api/1/product-index",
+         {
+            params:{campus_id:activeCampus}
+        })
          .then(res=>{
              console.log(res.data)
              const nextProducts = res.data[0];
              setElectronics(nextProducts)
          })
+      },[activeCampus])
+
+      const setProducts =() =>{
+        // localStorage.clear();
+         
          
      };
  
