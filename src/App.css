@@ -1,3 +1,27 @@
+.swal-title {
+    margin: 0px;
+    font-size: 16px;
+    margin-bottom: 28px;
+  }
+
+  .swal-text {
+    background-color: #FEFAE3;
+    padding: 17px;
+    border: 1px solid #F0E1A1;
+    display: block;
+    margin: 0 22px 0 22px;
+    font-weight: 500;
+    text-align: center;
+    color: #61534e;
+  }
+  /* f5593d */
+  .swal-button--confirm {
+    padding: 10px 30px;
+    border-radius: 2px;
+    font-size: 12px;
+    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+  }
+
 .card-plain{
     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }

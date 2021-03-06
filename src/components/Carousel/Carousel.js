@@ -23,7 +23,13 @@ const CarouselView = (props) => {
 
   React.useEffect(()=>{
     console.log('activeCampus',activeCampus)
-    axios.get(`https://backend-api.martekgh.com/api/admin/campus/${activeCampus}/carousel-images`)
+    var url = ''
+    if(activeCampus == null){
+      url = `https://backend-api.martekgh.com/api/admin/fetch/all/carousel-images`
+    }else{
+      url = `https://backend-api.martekgh.com/api/admin/campus/${activeCampus}/carousel-images`
+    }
+    axios.get(url)
     .then(res=>{
       console.log(res.data);
       let items = [];

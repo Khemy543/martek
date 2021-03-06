@@ -98,6 +98,21 @@ function UserProductDetails(props){
     const {product_name, price, in_stock,description, id} = product;
     const {name ,email,phone,company_name,merchandiser_id} = owner;
     const {campus} = campus_name;
+
+    let real_amount = 0;
+    if(1000 < price && price <= 3000){
+        real_amount = 12;
+    }
+    else
+    if(price > 3000){
+        real_amount = 15;
+    }else 
+    if(price <= 20){
+        real_amount = 0;
+    }else
+    if(20 < price && price <=1000){
+        real_amount = price*0.01;
+    }
     
 
         return(
@@ -192,9 +207,12 @@ function UserProductDetails(props){
                                             <br/>
                                             <Row>
                                             <Col md="12">
+                                                {real_amount > 0?
                                                 <Button block onClick={()=>props.history.push('/user/payment/information',{amount:price, product_id:id})}>
                                                     Make Payment
                                                 </Button>
+                                                :
+                                                null}
                                                 </Col>
                                             </Row>
                                         

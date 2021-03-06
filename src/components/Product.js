@@ -22,7 +22,7 @@ class Product extends React.Component{
                 <Col lg="2" md="2" sm="6" xs="6" style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}} className="product-container">
                         <div style={{textAlign:"center", cursor:"pointer"}}>
                         <div>
-                            <div onClick={() => history.push("/user/product-details",{id:id})} style={{textAlign:"center"}}>
+                            <div onClick={() => history.push(`/user/product-details/${id}/${product_name}`,{id:id})} style={{textAlign:"center"}}>
                             <img alt="#" src={`https://backend-api.martekgh.com/${product_image[0].path}`} style={{width:"180px", height:"180px", borderRadius:"5px", objectFit:"cover"}}/>  
                             </div>
                             

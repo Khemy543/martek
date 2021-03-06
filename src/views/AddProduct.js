@@ -51,20 +51,6 @@ function AddProduct(props){
       console.log("....")
       e.preventDefault();
       setIsAcitve(true);
-      let amount = 0;
-      if(1000 < price && price <= 3000){
-        amount = 12;
-      }
-      else
-      if(price > 3000){
-        amount = 15;
-      }else 
-      if(price <= 20){
-        amount = 0;
-      }else
-      if(20 < price && price <=1000){
-        amount = price*0.01;
-      }
     let user = localStorage.getItem('access_token')
     axios.post('https://backend-api.martekgh.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
       headers:{'Authorization':`Bearer ${user}`}
@@ -74,7 +60,7 @@ function AddProduct(props){
         const product_id = res.data.product_id;
         setIsAcitve(false);
         history.push("/user/upload-images",{
-          product_id, amount
+          product_id, amount:price
         })
       }else{
         if(res.data.status === "Valid ID required"){

@@ -19,12 +19,27 @@ function UserDetails(props) {
 const [firtsname, setFirstname] = React.useState("");
 const [lastname, setLastname] = React.useState("");
 const [email, setEmail] = React.useState("");
-const [amount, setAmount] = React.useState((Math.round(props.location.state.amount * 100) / 100).toFixed(2))
+const [amount, setAmount] = React.useState()
 const [phone, setPhoneNumber] = React.useState('');
 const [modal,setModal] = React.useState(false);
 
-console.log(props)
-console.log(history)
+React.useEffect(()=>{
+  let real_amount = 0;
+  if(1000 < props.location.state.amount && props.location.state.amount <= 3000){
+    real_amount = 12;
+  }
+  else
+  if(props.location.state.amount > 3000){
+    real_amount = 15;
+  }else 
+  if(props.location.state.amount <= 20){
+    real_amount = 0;
+  }else
+  if(20 < props.location.state.amount && props.location.state.amount <=1000){
+    real_amount = props.location.state.amount*0.01;
+  }
+  setAmount((Math.round(real_amount * 100) / 100).toFixed(2));
+},[])
 const handleSubmit=(e)=>{
     console.log("....")
     e.preventDefault();

@@ -28,12 +28,6 @@ import UploadShopAvatar from "./views/UploadShopAvatar.js";
 import VerifyEmail from "./views/VerifyEmail.js";
 import WaitVerification from "./views/wait-verification.js";
 
-import Knust from "./views/CampusHome/KNUST.js";
-import Ucc from "./views/CampusHome/UCC.js";
-import Legon from "./views/CampusHome/LEGON.js";
-import Uner from "./views/CampusHome/UNER.js";
-import Umat from "./views/CampusHome/UMAT.js";
-import Upsa from "./views/CampusHome/UPSA.js";
 import UserProductDetails from "views/UserProductDetails.js";
 import UserEditProduct from "views/UserEditProduct.js";
 import VerifyShopEmail from "views/verifyShopMail.js";
@@ -88,37 +82,7 @@ var routes = [
       layout: "/user"
     },
     {
-      path: "/campus-home/KNUST",
-      component: Knust,
-      layout: "/user"
-    },
-    {
-      path: "/campus-home/UCC",
-      component: Ucc,
-      layout: "/user"
-    },
-    {
-      path: "/campus-home/LEGON",
-      component: Legon,
-      layout: "/user"
-    },
-    {
-      path: "/campus-home/UENR",
-      component: Uner,
-      layout: "/user"
-    },
-    {
-      path: "/campus-home/UMAT",
-      component: Umat,
-      layout: "/user"
-    },
-    {
-      path: "/campus-home/UPSA",
-      component: Upsa,
-      layout: "/user"
-    },
-    {
-        path: "/product-details",
+        path: "/product-details/:id/:product_name",
         component: DetailsPage,
         layout: "/user"
       },
@@ -182,7 +146,7 @@ var routes = [
         layout: "/user"
       },
       {
-        path: "/shop-view",
+        path: "/shop-view/:id/:shop_name",
         component: ShopView,
         layout: "/user"
       },

@@ -57,7 +57,7 @@ function DetailsPage(props){
     const [images, setImages] = React.useState([]);
     const [first, setFirst] = React.useState(null);
     const [productImages, setProductImages] = React.useState([])
-    const [productid, setProductId] = React.useState(props.location.state.id);
+    const [productid, setProductId] = React.useState(props.match.params.id);
    
      const toggle = () => setModal(!modal);
 
@@ -71,6 +71,7 @@ function DetailsPage(props){
      }
 
         React.useEffect(()=>{
+            console.log("props", props)
             setisActive(true);
             let newImageArray = []
             axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/details")
@@ -201,17 +202,17 @@ function DetailsPage(props){
                                         <h1 className="category" style={{marginTop:"5px", fontSize:"25px",  fontWeight:500}}>
                                             {product_name}
                                         </h1>
-                                            {merchandiser_id === undefined?
+                                            {merchandiser_id == undefined?
                                                 <h4 style={{fontSize:"16px", marginTop:"7px",cursor:"pointer"}} onClick={()=>{
                                                 if(merchandiser_id){
-                                                    props.history.push("/user/shop-view",{id:merchandiser_id})
+                                                    props.history.push(`/user/shop-view/${merchandiser_id}/${name}`,{id:merchandiser_id})
                                                 }
                                                 }}> {name}
                                                 </h4>
                                                 :
                                                 <h4 style={{fontSize:"14px",  marginTop:"7px",cursor:"pointer"}} onClick={()=>{
                                                 if(merchandiser_id){
-                                                    props.history.push("/user/shop-view",{id:merchandiser_id})
+                                                    props.history.push(`/user/shop-view/${merchandiser_id}/${company_name}`,{id:merchandiser_id})
                                                 }
                                                 }}>| <StoreIcon style={{marginLeft:'-9px', marginRight:"3px"}}/> {company_name}
                                                 </h4>

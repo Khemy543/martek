@@ -207,7 +207,7 @@ function All({history}){
                                             <div key={key}>
                                                 <Col style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}}>
                                                 <div style={{cursor:"pointer"}}>
-                                                    <div class="text-center" onClick={() => history.push("/user/product-details",{id:value.id})}>
+                                                    <div class="text-center" onClick={() => history.push(`/user/product-details/${value.id}/${value.product_name}`,{id:value.id})}>
                                                         <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"180px", width:"180px", borderRadius:'5px', objectFit:"cover"}}/>
                                                     </div>
                                                     <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>

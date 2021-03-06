@@ -21,7 +21,7 @@ const {increment, decrement, removeItem } = value;
             <div className="row my-2 text-capitalize">
                 <Col md="6" style={{borderRight:"1px solid #eaeaea"}}>
                 <Row>
-                    <Col md="3" onClick={() => history.push("/user/product-details",{id:id})}>
+                    <Col md="3" onClick={() => history.push(`/user/product-details/${id}/${product_name}`,{id:id})}>
                         <div style={{textAlign:"center"}}>
                         <img
                         className="image-fluid"
@@ -64,7 +64,7 @@ const {increment, decrement, removeItem } = value;
 
                 <Card style={{borderRadius:"0px", marginBottom:"8px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain phone-nav" >
                 <div className="row my-2 text-capitalize">
-                    <Col md="6" style={{borderBottom:"1px solid #eaeaea",padding:"15px"}} onClick={() => history.push("/user/product-details",{id:id})}>
+                    <Col md="6" style={{borderBottom:"1px solid #eaeaea",padding:"15px"}} onClick={() => history.push(`/user/product-details/${id}/${product_name}`,{id:id})}>
                         <Row>
                             <Col sm="4" xs="4">
                                 <div style={{textAlign:"center"}}>

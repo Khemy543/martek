@@ -50,8 +50,9 @@ function ShopView(props) {
     }
   };
   React.useEffect(() => {
+    console.log("props",props)
     setIsActive(true)
-    axios.get("https://backend-api.martekgh.com/api/merchandiser/" + props.location.state.id + "/products"
+    axios.get("https://backend-api.martekgh.com/api/merchandiser/" + props.match.params.id + "/products"
     )
       .then(response => {
         setShopProducts(response.data[0]);
@@ -67,7 +68,7 @@ function ShopView(props) {
       setLoggedIn(false);
     }
 
-    axios.get("https://backend-api.martekgh.com/api/shop/" + props.location.state.id + "/details")
+    axios.get("https://backend-api.martekgh.com/api/shop/" + props.match.params.id + "/details")
       .then(res => {
         console.log(res.data)
         setName(res.data.company_name);
@@ -83,7 +84,7 @@ function ShopView(props) {
       })
 
 
-    axios.get("https://backend-api.martekgh.com/api/shop/" + props.location.state.id + "/reviews")
+    axios.get("https://backend-api.martekgh.com/api/shop/" + props.match.params.id + "/reviews")
       .then(res => {
         console.log("reviews:", res.data);
         setReviews(res.data.product_reviews);
@@ -93,7 +94,7 @@ function ShopView(props) {
         console.log(error)
       })
 
-  }, [props.location.state.id]);
+  }, [props.match.params.id]);
 
   const postReview = () => {
     if (reviewAdd !== "" || rating !== 0) {
@@ -102,7 +103,7 @@ function ShopView(props) {
         {
           rating: rating,
 
-          merchandiser_id: props.location.state.id,
+          merchandiser_id: props.match.params.id,
 
           review: reviewAdd
         },

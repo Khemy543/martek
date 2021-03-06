@@ -80,6 +80,7 @@ React.useEffect(()=>{
   }else{
     setLoggedin(false);
   }
+   if(user != null){
       axios.get("https://backend-api.martekgh.com/api/auth/user",{
           headers:{ 'Authorization':`Bearer ${user}`}
   }
@@ -93,6 +94,7 @@ React.useEffect(()=>{
         }
   }).catch(error=>{
   });
+}
 
   axios.get("https://backend-api.martekgh.com/api/campuses")
   .then(res=>{

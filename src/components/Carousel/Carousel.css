@@ -31,11 +31,12 @@
 
 @media(max-width:799px){
     .image{
-        width:100% ;
+        width:98% !important;
         height: auto;
         overflow: hidden;
         object-fit: cover;
         margin-top: 15px;
+        border-radius: 5px;
     }
 }
 
@@ -45,7 +46,7 @@
         width:95% !important;
         height: 45vh;
         object-fit: cover;
-
+        border-radius: 5px;
     }
 
 }

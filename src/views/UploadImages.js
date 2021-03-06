@@ -9,8 +9,6 @@ import{
 import axios from "axios";
 //import { Link } from "react-router-dom";
 import ImageUploader from 'react-images-upload';
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
 
 
 let user = localStorage.getItem('access_token')  
@@ -74,8 +72,22 @@ class UploadImages extends React.Component {
             this.setState({isActive:false, modal:true,percentage:100})
             setTimeout(
                 function(){
+                    let real_amount = 0;
+                        if(1000 < this.props.location.state.amount && this.props.location.state.amount <= 3000){
+                            real_amount = 12;
+                        }
+                        else
+                        if(this.props.location.state.amount > 3000){
+                            real_amount = 15;
+                        }else 
+                        if(this.props.location.state.amount <= 20){
+                            real_amount = 0;
+                        }else
+                        if(20 < this.props.location.state.amount && this.props.location.state.amount <=1000){
+                            real_amount = this.props.location.state.amount*0.01;
+                        }
                         this.setState({modal:false});
-                        if(this.props.location.state.amount > 0){
+                        if(real_amount > 0){
                         this.props.history.push('/user/payment/information',{
                             product_id:this.state.product_id,
                             amount:this.props.location.state.amount

@@ -14,11 +14,8 @@ import{
     Button, InputGroup, InputGroupAddon, InputGroupText,Popover,PopoverBody,PopoverHeader,
     
 } from "reactstrap";
-//import { ProductConsumer } from "../context";
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
-//import ShopCard from "../components/ShopCard.js";
 import history from "../history.js";
+import swal from 'sweetalert';
 
 function Profile(){
   const [name, setName] = React.useState("");
@@ -36,8 +33,16 @@ function Profile(){
   let user = localStorage.getItem('access_token')
   
   const handleDelete=()=>{
-    setPopoverOpen(false);
-    setIsActive(true);
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this account!",
+      buttons: true,
+      dangerMode: true,
+      showConfirmButton:true,
+      confirmButtonColor:"blue",
+      confirmButtonText:"Yes, Delete Account"
+    });
+    /* setIsActive(true);
     axios.delete("https://backend-api.martekgh.com/api/auth/user/delete",{
         headers:{"Authorization":`Bearer ${user}`}
     })
@@ -49,7 +54,7 @@ function Profile(){
     })
     .catch(error=>{
         setIsActive(false)
-    })
+    }) */
 }
 
   React.useEffect(()=>{
@@ -150,14 +155,14 @@ function Profile(){
                         <Button
                         color="danger"
                         block
-                        id="Popover1"
+                        onClick={handleDelete}
                         >delete account
                             </Button>
-                            <Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>
+                            {/* <Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>
                                 <PopoverHeader>Do you want to delete?</PopoverHeader>
                                 <br/>
                                 <PopoverBody><Button color="danger" onClick={handleDelete}>yes</Button> <Button color="info" onClick={toggle} style={{marginLeft:"15px"}}>no</Button></PopoverBody>
-                            </Popover>
+                            </Popover> */}
                             </Col>
                         </Row>
                     </Col>

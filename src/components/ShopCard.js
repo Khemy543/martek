@@ -35,7 +35,7 @@ function ShopCard(props){
         <Col md="3" sm="6" xs="6" style={{padding:"0px 6px"}}>
         <Card className="card-plain" style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}} >
         <CardImg top id="card-cover" className="cardimage" style={{width:"96%", borderRadius:"5px", margin:"5px", objectFit:"cover"}} 
-        src={cover_photo != null?`https://backend-api.martekgh.com/${cover_photo}`: require('assets/img/cover.jpg')} alt="Card image cap" onClick={()=>history.push("/user/shop-view", 
+        src={cover_photo != null?`https://backend-api.martekgh.com/${cover_photo}`: require('assets/img/cover.jpg')} alt="Card image cap" onClick={()=>history.push(`/user/shop-view/${shop_id||id}/${company_name || shop_name}`, 
             {id:id || shop_id}
             )}/>
             {loggedIn?
@@ -53,7 +53,7 @@ function ShopCard(props){
         <div></div>
         }
             
-        <CardBody onClick={()=>history.push("/user/shop-view", 
+        <CardBody onClick={()=>history.push(`/user/shop-view/${id||shop_id}/${company_name || shop_name}`, 
             {id:id || shop_id}
             )}>
         <Row>
@@ -70,7 +70,7 @@ function ShopCard(props){
         </Col>
         </Row>
         <Row>
-            <Col md="12" onClick={()=>history.push("/user/shop-view", 
+            <Col md="12" onClick={()=>history.push(`/user/shop-view/${id||shop_id}/${company_name || shop_name}`, 
                 {id:id || shop_id}
                 )}>
             <h5 style={{textAlign:"left", fontWeight:500, marginTop:"6px"}} className="truncate">{company_name || shop_name}</h5>

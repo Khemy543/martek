@@ -69,16 +69,17 @@ class ProductProvider extends React.Component{
         this.isShopTokenExpired();
 
 
-        /* localStorage.clear(); */
-
+        if(user != null){
+        console.log('we are here')
         axios.get("https://backend-api.martekgh.com/api/user-cart",{headers:{'Authorization':`Bearer ${user}`}})
         .then(res=>{
             if(res.data !== null){
                 this.setState({cart:res.data.cart[0], cartTotal:res.data.cart[1], spinner:false});
             }
         }).catch(error=>{
-            
+            console.log(error.response.data)
         });
+    }
 
         
     }
