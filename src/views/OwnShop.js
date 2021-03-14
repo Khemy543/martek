@@ -9,6 +9,7 @@ import {
 } from "reactstrap";
  
 import axios from "axios";
+import swal from 'sweetalert'
 
 export default function OwnShop(props){
 
@@ -84,7 +85,15 @@ export default function OwnShop(props){
     axios.post('https://backend-api.martekgh.com/api/register-merchandiser',
     {company_name, email,phone:`233${phone}`,password, campus_id,company_description,shop_type_id, free_trail:props.location.state.status}
   ).then(res => {
-    console.log(res)
+    console.log(res);
+    axios.post('https://backend-api.martekgh.com/api/merchandiser/login', {email, password}).then(response=>{localStorage.setItem('shop_access_token', response.data.access_token)})
+        swal({
+          title: "Success!",
+          text: "Registration Successful!",
+          icon: "success",
+          buttons:false,
+          timer:2500
+        })
         setTimeout(
           function(){
             history.push("/auth/upload-avatar",
@@ -160,6 +169,8 @@ export default function OwnShop(props){
                     </InputGroup>
                   </Col>
                 </Row>
+                {shop_type_id != 3?
+                <>
                 <br/>
                 <Row>
                   <Col item md={12} sm={12} xs={12} lg={12} xl={12}>
@@ -170,6 +181,9 @@ export default function OwnShop(props){
                     <FormFeedback style={{fontWeight:500}}>{errors.campus}</FormFeedback>
                   </Col>
                 </Row>
+                </>
+                :
+                null }
                 <br/>
                 <Row>
                   <Col>

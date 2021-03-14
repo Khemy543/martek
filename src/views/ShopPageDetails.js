@@ -16,6 +16,7 @@ import axios from 'axios';
 //import history from "../history.js";
 import Gallery from 'react-grid-gallery';
 import StarRatings from 'react-star-ratings';
+import swal from 'sweetalert';
 
 //context
 import { ProductConsumer } from "../context";
@@ -80,17 +81,28 @@ let merchandiser = localStorage.getItem("shop_access_token")
 
     
     const handleDelete=()=>{
-        setIsActive(true)
-        axios.delete("https://backend-api.martekgh.com/api/e-trader/product/"+props.location.state.id+"/delete",{
-            headers:{"Authorization":`Bearer ${merchandiser}`}
-        })
-        .then(res=>{
-            props.history.push("/shop/shop-page");
-            setIsActive(false)
-        })
-        .catch(error=>{
-            setIsActive(false)
-        })
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this account!",
+            buttons: true,
+            dangerMode: true,
+            buttons:["Cancel","Yes, Delete Product"]
+          }).then(res=>{
+              if(res){
+                setIsActive(true)
+                axios.delete("https://backend-api.martekgh.com/api/e-trader/product/"+props.location.state.id+"/delete",{
+                    headers:{"Authorization":`Bearer ${merchandiser}`}
+                })
+                .then(res=>{
+                    props.history.push("/shop/shop-page");
+                    setIsActive(false)
+                })
+                .catch(error=>{
+                    setIsActive(false)
+                })
+              }
+          })
+        
     }
 
     const {product_name, price, in_stock,description} = product;
@@ -164,15 +176,10 @@ let merchandiser = localStorage.getItem("shop_access_token")
                                         <Button
                                         color="danger"
                                         block
-                                        id="Popover1"
+                                        onClick={handleDelete}
                                         >
                                             delete product
                                             </Button>
-                                            <Popover placement="bottom" isOpen={popoverOpen} target="Popover1" toggle={toggle}>
-                                            <PopoverHeader>Do you want to delete?</PopoverHeader>
-                                            <br/>
-                                            <PopoverBody><Button color="danger" onClick={handleDelete}>yes</Button> <Button color="info" onClick={toggle} style={{marginLeft:"15px"}}>no</Button></PopoverBody>
-                                        </Popover>
                                 </CardTitle>
                                         </Card>
                                         </Col> 

@@ -3,8 +3,7 @@ import { Link} from "react-router-dom";
 // reactstrap components
 import { Button, Card, Form, Input, Container, Row, Col, Alert,InputGroup,InputGroupAddon,InputGroupText, Spinner } from "reactstrap";
 import history from "../history.js";
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
+import swal from 'sweetalert';
 
 //axios
 import axios from "axios";
@@ -29,8 +28,6 @@ export default function ShopLoginPage(props) {
   const [isActive, setIsActive] = React.useState(false);
   const [alert, setAlert] = React.useState(false);
   const [eye, setEye] = React.useState(false);
-  //const [loggedin, setLoggedin] =React.useState(false);
-  //const [modal, setModal] = React.useState(false);
 
   const toggleEye = () => setEye(!eye);
     
@@ -49,7 +46,13 @@ export default function ShopLoginPage(props) {
     
   }).catch(error => {
     setIsActive(false);
-    setAlert(true)
+    swal({
+      title: "Invalid Credentials",
+      text: "Please Try Again!",
+      icon: "error",
+      buttons:false,
+      timer:2000
+    })
   })
 
 }

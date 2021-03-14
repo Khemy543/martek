@@ -8,8 +8,7 @@ import history from "../history.js";
 
 //axios
 import axios from "axios";
-import IndexNavbar from "components/Navbars/IndexNavbar.js";
-import DemoFooter from "components/Footers/DemoFooter.js";
+import swal from 'sweetalert';
 
 axios.defaults.withCredentials = false;
 //axios.defaults.headers.common['Auth-Token'] = 'foo bar';
@@ -82,21 +81,27 @@ function RegisterPage(props) {
         console.log(res.data)
         if (res.data.status === "success") {
           setIsActive(false);
-          setModal(true);
-          axios.post('https://backend-api.martekgh.com/api/auth/login',{
-            email, password
+          swal({
+            title: "Success!",
+            text: "Registration Successful!",
+            icon: "success",
+            buttons:false,
+            timer:2500
           })
-          .then(res=>{
-            console.log(res.data);
-            localStorage.setItem('access_token',res.data.access_token);
-            setTimeout(
-              function () {
-                setModal(false);
-                history.push("/auth/wait-verification", { email: email })
-              },
-              1500
-            )
-          })
+            axios.post('https://backend-api.martekgh.com/api/auth/login',{
+              email, password
+            })
+            .then(res=>{
+              console.log(res.data);
+              localStorage.setItem('access_token',res.data.access_token);
+              setTimeout(
+                function () {
+                  setModal(false);
+                  history.push("/auth/wait-verification", { email: email })
+                },
+                1500
+              )
+            })
         }
       }).catch(error => {
         console.log(error.response)

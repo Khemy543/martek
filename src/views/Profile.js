@@ -23,11 +23,7 @@ function Profile(){
   const [phone, setPhone] = React.useState("");
   const [campus, setCampus] = React.useState("");
   const [isActive, setIsActive] = React.useState(false);
-  const [popoverOpen, setPopoverOpen] = React.useState(false);
   
-  
-    
-  const toggle = () => setPopoverOpen(!popoverOpen);
 
 
   let user = localStorage.getItem('access_token')
@@ -38,23 +34,23 @@ function Profile(){
       text: "Once deleted, you will not be able to recover this account!",
       buttons: true,
       dangerMode: true,
-      showConfirmButton:true,
-      confirmButtonColor:"blue",
-      confirmButtonText:"Yes, Delete Account"
-    });
-    /* setIsActive(true);
-    axios.delete("https://backend-api.martekgh.com/api/auth/user/delete",{
-        headers:{"Authorization":`Bearer ${user}`}
+      buttons:["Cancel","Yes, Delete Account"]
+    }).then(response=>{
+      if(response){
+         setIsActive(true);
+        axios.delete("https://backend-api.martekgh.com/api/auth/user/delete",{
+            headers:{"Authorization":`Bearer ${user}`}
+        })
+        .then(res=>{
+            localStorage.removeItem('access_token');
+            window.location.reload("/");
+            setIsActive(false)
+        })
+        .catch(error=>{
+            setIsActive(false)
+        })
+      }
     })
-    .then(res=>{
-      console.log(res.data)
-        localStorage.removeItem('access_token');
-        window.location.reload("/");
-        setIsActive(false)
-    })
-    .catch(error=>{
-        setIsActive(false)
-    }) */
 }
 
   React.useEffect(()=>{

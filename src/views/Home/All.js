@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 //import { Link } from "react-scroll";
 // reactstrap components
 import{
@@ -12,7 +12,8 @@ import{
     TabPane,
     Nav,
     NavLink,
-    NavItem
+    NavItem,
+    Spinner
 } from "reactstrap";
 
 // core components
@@ -22,6 +23,9 @@ import CarouselView from "../../components/Carousel/Carousel.js";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import StoreIcon from '@material-ui/icons/Store';
+import {ProductConsumer,ProductContext} from '../../context.js'
+import Pagination from "react-js-pagination";
+import ShopCard from "../../components/ShopCard.js";
 
 var settings = {
     dots: true,
@@ -40,16 +44,26 @@ var settings = {
       ]
   };
 function All({history}){
-    const [activeTab, setActiveTab] = React.useState("1");
     const [isActive, setIsActive] = React.useState(false);
     const [newItems,setNewItems] = React.useState([]);
     const [electronics,setElectronics] = React.useState([]);
     const [fashion, setFashion] = React.useState([]);
     const [phones,setPhones] = React.useState([]);
+    const [shops, setShops] = React.useState([]);
     const [activeCampus, setActiveCampus] = React.useState(localStorage.getItem('activeCampus_id'));
-     
+    const [categoryList, setCategoryList]=React.useState([]);
+    
+    
 
       React.useEffect(()=>{
+        getShops();
+        axios.get("https://backend-api.martekgh.com/api/categories")
+        .then(res=>{
+          const categories = res.data;
+          console.log(categories)
+          setCategoryList(categories);
+          setIsActive(false)
+        });
         axios.get('https://backend-api.martekgh.com/api/fetch/new-this-week',
         {
             params:{campus_id:activeCampus}
@@ -96,12 +110,49 @@ function All({history}){
          })
       },[activeCampus])
 
-      const setProducts =() =>{
-        // localStorage.clear();
-         
-         
-     };
- 
+      
+      function getShops(pageNumber=1){
+        axios.get("https://backend-api.martekgh.com/api/all-shops",
+        {
+            params:{
+                page:pageNumber,
+                campus_id:activeCampus,
+            }
+        })
+        .then(res=>{
+            console.log(res.data)
+            setShops(res.data);
+            setIsActive(false)
+        })
+      }
+
+
+      function renderShops(){
+        const {data, meta} = shops;
+        return(
+        <React.Fragment>
+        <Row>
+            {data && data.map(shop=>{
+            return<ShopCard key={shop.id} shop={shop} />
+        })}
+        </Row>
+        <Row>
+        <Col md="10" className="ml-auto mr-auto">    
+        <Pagination
+            totalItemsCount={meta&&meta.total}
+            activePage={meta&&meta.current_page}
+            itemsCountPerPage={meta&&meta.per_page}
+            onChange={(pageNumber)=>getShops(pageNumber)}
+            pageRangeDisplayed={5   }
+            itemClass="page-item"
+            linkClass="page-link"
+        />
+        </Col>
+        </Row>
+        </React.Fragment>
+    )
+
+    }
 
 
         return(
@@ -115,6 +166,8 @@ function All({history}){
                 <div style={{marginTop:"-15px", background:"#f7f7f7"}}>
                 <div className="section" style={{marginTop:"-90px"}}>
                     <CarouselView />
+                    <ProductConsumer>
+                        {value=>(
                     <Container>
                         
                         <div className="nav-tabs-navigation" style={{marginTop:"10px", marginBottom:"-4px"}}>
@@ -123,9 +176,9 @@ function All({history}){
                                 <NavItem>
                                 <NavLink
                                     style={{cursor:"pointer"}}
-                                    className={activeTab === "1" ? "active" : ""}
+                                    className={value.activeTabIndex === "1" ? "active" : ""}
                                     tag={Link}
-                                    to="/user/home"
+                                    onClick={()=>value.actions.changeIndex("1")}
                                 >
                                    <i className="fa fa-home"/> All
                                 </NavLink>
@@ -133,9 +186,9 @@ function All({history}){
                                 <NavItem>
                                 <NavLink
                                 style={{cursor:"pointer"}}
-                                    className={activeTab === "2" ? "active" : ""}
+                                    className={value.activeTabIndex === "2" ? "active" : ""}
                                     tag={Link}
-                                    to="/user/shops"
+                                    onClick={()=>value.actions.changeIndex("2")}
                                 >
                                    <StoreIcon style={{marginLeft:'-9px', marginRight:"3px", fontSize:"19px", marginBottom:"4px"}}/>Shops
                                 </NavLink>
@@ -143,20 +196,21 @@ function All({history}){
                                 <NavItem>
                                 <NavLink
                                 style={{cursor:"pointer"}}
-                                    className={activeTab === "3" ? "active" : ""}
+                                    className={value.activeTabIndex === "3" ? "active" : ""}
                                     tag={Link}
-                                    to="/user/all-categories"
+                                    onClick={()=>value.actions.changeIndex("3")}
                                 >
                                     <i className="fa fa-bars"/>Categories
                                 </NavLink>
                                 </NavItem>
                             </Nav>
+                            {console.log("store",value.activeTabIndex)}
                             </div>
                         </div>
 
                          {/*Tabs*/}
 
-                         <TabContent className="" activeTab={activeTab}>
+                         <TabContent className="" activeTab={value.activeTabIndex}>
                             <TabPane tabId="1" id="home">
                             <Container>
                             <Row>
@@ -295,9 +349,51 @@ function All({history}){
                             </TabPane>
                            
                         </TabContent>
+                        <TabContent className="" activeTab={value.activeTabIndex}>
+                            <TabPane className="text-center" tabId="2" id="shops">
+                                {isActive?
+                                    <Spinner color="info" size="sm"
+                                        style={{marginTop:"10px"}}
+                                    />
+                                    :
+                                    <>
+                                    {shops.data !== undefined && shops.data.length<=0?
+                                    <Container>
+                                    <h4 style={{fontWeight:500}}>No Shops Available</h4>
+                                    </Container>
+                                    :
+                                    <Container>
+                                    {shops && renderShops()}
+                                    
+                                    </Container>
+                                    }
+                                    </>
+                                }
+                            </TabPane>
+                        </TabContent>
+                        <TabContent className="" activeTab={value.activeTabIndex}>
+                            <TabPane className="text-center" tabId="3" id="categories">
+                                {isActive?
+                                    <Spinner size="sm" color="info" style={{marginTop:"10px"}}/>
+                                :
+                                <Row>
+                                {categoryList.map((value,index)=>(
+                                    <Col md="4" className="mt-auto mb-auto">
+                                    <img src={require(`assets/img/categories/${value.id}.jpeg`)} 
+                                        style={{width:"100%",height:"105px", borderRadius:"10px", marginBottom:"20px", cursor:"pointer"}}
+                                        onClick = {()=>history.push("/user/categories",{category_id:value.id, category_name:value.category, image:`${value.id}.jpeg`})}
+                                    />
+                                    </Col>
+                                ))}
+                                </Row>
+                                }
+                            </TabPane>
+                            
+                        </TabContent>
                        
                         </Container>
-                        
+                        )}
+                        </ProductConsumer>
                     </div>
                     </div>
                 </React.Fragment>

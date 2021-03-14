@@ -34,14 +34,14 @@ class SearchResultsProducts extends React.Component{
                 {value=>(
                 <Col lg="12" md="12" sm="12" xs="12" className="search-product">
                     <Row>
-                        <Col md="3" lg="3" xl="3" sm="12" xs="12"  onClick={() => history.push("/user/product-details",{id:id})}>
+                        <Col md="3" lg="3" xl="3" sm="12" xs="12"  onClick={() => history.push(`/user/product-details/${id}/${product_name}`,{id:id})}>
                             <div style={{textAlign:"center", cursor:"pointer"}}>
                                 <div>
                                 <img alt="#" src={`https://backend-api.martekgh.com/${image[0].path}`} style={{width:"180px", height:"180px", objectFit:"cover", borderRadius:"5px", marginTop:"10px"}}/>  
                                 </div>
                             </div>
                         </Col>
-                        <Col md="6" sm="12" xl="6" xs="12" onClick={() => history.push("/user/product-details",{id:id})} >
+                        <Col md="6" sm="12" xl="6" xs="12" onClick={() => history.push(`/user/product-details/${id}/${product_name}`,{id:id})} >
                             <h3 style={{color:"#5588b7", fontSize:"18px", fontWeight:"500", textAlign:"left", overflow:"hidden"}}>
                                 {product_name}
                             </h3>

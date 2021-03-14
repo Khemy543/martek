@@ -63,8 +63,8 @@ handleCardSubmit=(e)=>{
         payment_method:'card_payment'
     },{headers:{ 'Authorization':`Bearer ${user}`}})
     .then(res=>{
-        console.log(res.data);
-        window.location=`${res.data.authurl}`
+        console.log(res.data);/* 
+        window.location=`${res.data.authurl}` */
     })
     .catch(error=>{
         console.log(error.response.data);
@@ -90,8 +90,8 @@ handleMobileSubmit=(e)=>{
         payment_method:'momo'
     },{headers:{ 'Authorization':`Bearer ${user}`}})
     .then(res=>{
-        console.log(res.data);
-        window.location=`${res.data.data.link}`
+        console.log(res.data);/* 
+        window.location=`${res.data.data.link}` */
     })
     .catch(error=>{
         console.log(error.response.data);

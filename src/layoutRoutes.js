@@ -1,5 +1,3 @@
-
-import Home from "./views/Home.js";
 import DetailsPage from "./views/DetailsPage.js";
 import Cart from "./views/Cart";
 import Categories from "./views/Categories.js";
@@ -50,8 +48,6 @@ import AboutUs from "views/Documents/AboutUs.js";
 import UploadValidID from "views/UploadFirstTimeID.js";
 import ReportShop from "views/ReportShop.js";
 import All from "views/Home/All.js";
-import Shops from "views/Home/Shops.js";
-import AllCategories from "views/Home/Category.js";
 import ReportProduct from "views/ReportProduct.js";
 import DeleteShop from 'views/Delete/DeleteShop.js';
 import ShopAccountDetails from "views/Payment/ShopAccountDetails.js";
@@ -69,16 +65,6 @@ var routes = [
     {
       path: "/home",
       component: All,
-      layout: "/user"
-    },
-    {
-      path: "/shops",
-      component: Shops,
-      layout: "/user"
-    },
-    {
-      path: "/all-categories",
-      component: AllCategories,
       layout: "/user"
     },
     {

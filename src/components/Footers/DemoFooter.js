@@ -1,22 +1,3 @@
-/*!
-
-=========================================================
-* Paper Kit React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-kit-react
-
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
-/*eslint-disable*/
 import React,{useState} from "react";
 import { Link } from "react-router-dom";
 // reactstrap components
@@ -25,8 +6,8 @@ import { Row, Container,Nav, NavLink, NavItem,Col
 } from "reactstrap";
 
 
-function DemoFooter(props) {/* 
-  console.log(props.prop.location.pathname) */
+function DemoFooter(props) {
+  console.log(props.prop)
 
   return (
     <footer className="footer">
@@ -59,12 +40,12 @@ function DemoFooter(props) {/*
               <li>
               <Link to="/user/how-to-buy-on-martek">How to buy on Martek</Link>
               </li>
-              {props.prop.location.pathname === "/user/shop-view"?
+              {props.prop.location.pathname.split("/")[2] == "shop-view"?
               <li>
               <a style={{cursor:"pointer"}} onClick={()=>props.prop.history.push("/user/report-shop",{id:props.prop.location.state.id})}>Report This Shop</a>
               </li>
               :
-              props.prop.location.pathname === '/user/product-details'?
+              props.prop.location.pathname.split('/')[2] == 'product-details'?
               <li>
               <a style={{cursor:"pointer"}} onClick={()=>props.prop.history.push("/user/report-product",{id:props.prop.location.state.id})}>Report This Product</a>
               </li>

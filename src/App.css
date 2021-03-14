@@ -4,7 +4,7 @@
     margin-bottom: 28px;
   }
 
-  .swal-text {
+  /* .swal-text {
     background-color: #FEFAE3;
     padding: 17px;
     border: 1px solid #F0E1A1;
@@ -13,15 +13,21 @@
     font-weight: 500;
     text-align: center;
     color: #61534e;
-  }
+  } */
   /* f5593d */
-  .swal-button--confirm {
-    padding: 10px 30px;
-    border-radius: 2px;
-    font-size: 12px;
-    text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.3);
+  .swal-button-container {
+      width: 45%;
   }
 
+  .swal-button {
+    width: 100%;
+}
+
+  .swal-footer{
+      display: flex;
+      justify-content: space-between;
+
+  }
 .card-plain{
     box-shadow: 0 2px 12px rgba(0,0,0,0.1);
 }
@@ -74,6 +80,9 @@
     /* .rwt__tabpanel{
         margin-top: 100px;
     }  */
+    .shop-view-name{
+        text-align: left !important;
+    }
     .product-container{
         border-bottom:1px solid #eaeaea;
     }

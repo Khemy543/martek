@@ -18,6 +18,7 @@ import Gallery from 'react-grid-gallery';
 import StarRatings from 'react-star-ratings';
 import ProductCarousel from '../components/ProductCarousel.js'
 import StoreIcon from '@material-ui/icons/Store';
+import swal from 'sweetalert';
 
 //context
 import { ProductConsumer } from "../context";
@@ -39,6 +40,7 @@ function UserProductDetails(props){
     let user = localStorage.getItem("access_token")
 
     React.useEffect(()=>{
+        console.log(props.location.state)
         setIsActive(true);
             let newImageArray = []
             axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/details")
@@ -80,17 +82,28 @@ function UserProductDetails(props){
     const toggle = () => setPopoverOpen(!popoverOpen);
 
     const handleDelete=()=>{
-        setIsActive(true)
-        axios.delete("https://backend-api.martekgh.com/api/e-trader/product/"+props.location.state.id+"/delete",{
-            headers:{"Authorization":`Bearer ${user}`}
-        })
-        .then(res=>{
-            props.history.push("/user/user-products");
-            setIsActive(false)
-        })
-        .catch(error=>{
-            setIsActive(false)
-        })
+        swal({
+            title: "Are you sure?",
+            text: "Once deleted, you will not be able to recover this account!",
+            buttons: true,
+            dangerMode: true,
+            buttons:["Cancel","Yes, Delete Product"]
+          }).then(response=>{
+            if(response){
+                setIsActive(true)
+                axios.delete("https://backend-api.martekgh.com/api/e-trader/product/"+props.location.state.id+"/delete",{
+                    headers:{"Authorization":`Bearer ${user}`}
+                })
+                .then(res=>{
+                    props.history.push("/user/user-products");
+                    setIsActive(false)
+                })
+                .catch(error=>{
+                    setIsActive(false)
+                })
+            }
+          })
+        
     }
 
 
@@ -98,21 +111,6 @@ function UserProductDetails(props){
     const {product_name, price, in_stock,description, id} = product;
     const {name ,email,phone,company_name,merchandiser_id} = owner;
     const {campus} = campus_name;
-
-    let real_amount = 0;
-    if(1000 < price && price <= 3000){
-        real_amount = 12;
-    }
-    else
-    if(price > 3000){
-        real_amount = 15;
-    }else 
-    if(price <= 20){
-        real_amount = 0;
-    }else
-    if(20 < price && price <=1000){
-        real_amount = price*0.01;
-    }
     
 
         return(
@@ -198,7 +196,7 @@ function UserProductDetails(props){
                                                 <Button
                                                     color="danger"
                                                     block
-                                                    id="Popover1"
+                                                    onClick={handleDelete}
                                                     >
                                                     delete product
                                                 </Button>
@@ -207,7 +205,7 @@ function UserProductDetails(props){
                                             <br/>
                                             <Row>
                                             <Col md="12">
-                                                {real_amount > 0?
+                                                {props.location.state.payment_status == "requires payment"?
                                                 <Button block onClick={()=>props.history.push('/user/payment/information',{amount:price, product_id:id})}>
                                                     Make Payment
                                                 </Button>

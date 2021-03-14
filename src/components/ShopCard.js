@@ -14,7 +14,8 @@ function ShopCard(props){
         const [liked, setLiked] = React.useState(false)
         const [unliked, setUnliked] = React.useState(false);
         const [loggedIn, setLoggedIn] = React.useState(false);
-        const {id , shop_id, company_name ,shop_name, company_description, campus, number_of_followers, avatar , cover_photo, avg_rating} = props.shop;
+        const [followers, setFollowers] = React.useState(props.shop.number_of_followers)
+        const {id , shop_id, company_name ,shop_name, company_description, campus, avatar , cover_photo, avg_rating} = props.shop;
         React.useEffect(()=>{
             let authenticated = localStorage.getItem('access_token');
             if(authenticated !== null){
@@ -43,9 +44,10 @@ function ShopCard(props){
                 {value=>(
                     <div id="top-right" style={{backgroundColor:"white", borderRadius:"50%", height:"25px", width:"25px"}}>
                     {value.followShops.some(item=>item.shop_id === id ||item.shop_id === shop_id)?
-                    <i onClick={()=>{value.unfollow(id || shop_id); toggleUnlike()}} className={!unliked?"fa fa-heart":"fa fa-heart-o"} style={{fontWeight:600, color:"red", textAlign:"center", marginTop:"5px"}} />
+                    <i onClick={()=>{value.unfollow(id || shop_id); toggleUnlike();setFollowers(followers-1)}} className={!unliked?"fa fa-heart":"fa fa-heart-o"} style={{fontWeight:600, color:"red", textAlign:"center", marginTop:"5px"}} />
                     :
-                    <i className={!liked?"fa fa-heart-o":"fa fa-heart"} onClick={()=>{value.follow(id || shop_id); toggleLike()}}  style={{color:"red",fontWeight:600, textAlign:"center", marginTop:"5px"}}/>}
+                    <i className={!liked?"fa fa-heart-o":"fa fa-heart"} onClick={()=>{value.follow(id || shop_id); toggleLike();setFollowers(followers+1)}}  style={{color:"red",fontWeight:600, textAlign:"center", marginTop:"5px"}}/>}
+                    {console.log('value', value.followShops)}
                     </div>
                 )}
             </ProductConsumer>
@@ -106,7 +108,7 @@ function ShopCard(props){
         </Row>
         <Row style={{marginTop:"0px"}}>
             <Col md="12" style={{textAlign:"left",color:"#676464"}}>
-                <h5 style={{display:"inline", textAlign:"left", fontSize:"14px", fontWeight:"bold"}}>{number_of_followers} </h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
+                <h5 style={{display:"inline", textAlign:"left", fontSize:"14px", fontWeight:"bold"}}>{followers} </h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
             </Col>
         </Row>
         </CardBody>

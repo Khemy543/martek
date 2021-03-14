@@ -17,12 +17,12 @@ import history from "../history.js";
 class UserProduct extends React.Component{
 
     render(){
-        const {id , product_name , product_image, price }= this.props.product;
+        const {id , product_name , product_image, price,payment_status }= this.props.product;
                 return(
                 <Col lg="2" md="2" sm="6" xs="6" style={{padding:"15px 3px 0px 3px"}} className="product-container">
                         <div style={{textAlign:"center", cursor:"pointer"}}>
                         <div>
-                            <div onClick={() => history.push("/user/user-product-details",{id:id})}>
+                            <div onClick={() => history.push("/user/user-product-details",{id:id,payment_status})}>
                             <img alt="#" src={`https://backend-api.martekgh.com/${product_image[0].path}`} style={{width:"180px", height:"180px", objectFit:"cover", borderRadius:"5px"}}/>  
                             </div>
                             

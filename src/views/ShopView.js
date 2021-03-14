@@ -206,8 +206,8 @@ function ShopView(props) {
                 </Col>
               </Row>
               <Row style={{ marginTop: "-70px" }}>
-                <Col md="5" sm="5" xs="5" xl="5" lg="5" style={{padding:"0px"}}>
-                  <div>
+                <Col md="5" sm="5" xs="5" xl="5" lg="5" style={{paddingLeft:"0px"}}>
+                  <div className="shop-view-name">
                     <h4 style={{ fontSize: "19px", marginTop: "0px", fontWeight: "bold" }}>
                       {name}
                     </h4>
@@ -236,7 +236,7 @@ function ShopView(props) {
                       <ProductConsumer>
                         {value => (
                           <div>
-                            {value.followShops.find(item => item.shop_id === props.location.state.id) ? <Button size="sm" style={{ fontSize: "9px" }} className="btn-round" disabled={followDisable} color="info" onClick={() => { value.unfollow(props.location.state.id); setfollowingLoader(true); setfollowLoader(false); setFollowers(followers - 1); setFollowDisable(true); setUnfollowDisable(false) }}>{followingloader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>following</p>}</Button> : <Button size="sm" disabled={unfollowDisable} color='info' style={{ fontSize: "9px" }} className="btn-round" onClick={() => { value.follow(props.location.state.id); setUnfollowDisable(true); setFollowDisable(false); setfollowingLoader(false); setFollowers(followers + 1); setfollowLoader(true) }}>{followloader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>+follow</p>}</Button>}
+                            {value.followShops.find(item => item.shop_id === props.match.params.id) ? <Button size="sm" style={{ fontSize: "9px" }} className="btn-round" disabled={followDisable} color="info" onClick={() => { value.unfollow(props.match.params.id); setfollowingLoader(true); setfollowLoader(false); setFollowers(followers - 1); setFollowDisable(true); setUnfollowDisable(false) }}>{followingloader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>following</p>}</Button> : <Button size="sm" disabled={unfollowDisable} color='info' style={{ fontSize: "9px" }} className="btn-round" onClick={() => { value.follow(props.match.params.id); setUnfollowDisable(true); setFollowDisable(false); setfollowingLoader(false); setFollowers(followers + 1); setfollowLoader(true) }}>{followloader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>+follow</p>}</Button>}
                           </div>
                         )}
                       </ProductConsumer>

@@ -27,12 +27,12 @@ class SearchResultsShops extends React.Component{
                 {value=>(
                 <Col lg="12" md="12" sm="12" xs="12" className="search-product">
                     <Row>
-                        <Col md="3" lg="3" xl="3" sm="12" xs="12"  onClick={() => history.push("/user/shop-view",{id:id})}>
+                        <Col md="3" lg="3" xl="3" sm="12" xs="12"  onClick={() => history.push(`/user/shop-view/${id}/${company_name}`,{id:id})}>
                             <div style={{textAlign:"center", cursor:"pointer"}}>
                                 <img alt="#" src={`https://backend-api.martekgh.com/${avatar}`} style={{width:"180px", height:"180px", borderRadius:"50%", marginTop:"10px", objectFit:"cover"}}/>  
                             </div>
                         </Col>
-                        <Col md="9" sm="12" xl="9" xs="12" onClick={() => history.push("/user/shop-view",{id:id})} >
+                        <Col md="9" sm="12" xl="9" xs="12" onClick={() => history.push(`/user/shop-view/${id}/${company_name}`,{id:id})} >
                             <h3 style={{color:"#5588b7", fontSize:"18px", fontWeight:"500", textAlign:"left", overflow:"hidden"}}>
                                 {company_name}
                             </h3>

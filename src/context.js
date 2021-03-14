@@ -36,6 +36,10 @@ class ProductProvider extends React.Component{
         followLoader:false,
         followingLoader:false,
         id:"",
+		activeTabIndex:"1",
+		actions: {
+			changeIndex: index => this.setState({ activeTabIndex: index })
+		}
     }
 }
 
@@ -67,7 +71,7 @@ class ProductProvider extends React.Component{
 
         this.isTokenExpired();
         this.isShopTokenExpired();
-
+        this.followingShops();
 
         if(user != null){
         console.log('we are here')
@@ -114,6 +118,18 @@ isTokenExpired() {
     }
  }
 
+
+ followingShops=()=>{
+    axios.get("https://backend-api.martekgh.com/api/following-shops",
+        {headers:{'Authorization':`Bearer ${user}`}})
+        .then(res=>{
+            console.log(res.data);
+            this.setState({followShops:res.data})
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+ }
    
 
     follow = (id)=>{
@@ -515,4 +531,4 @@ const ProductConsumer = ProductContext.Consumer;
 
 
 
-export {ProductProvider,ProductConsumer};
+export {ProductProvider,ProductConsumer,ProductContext};
