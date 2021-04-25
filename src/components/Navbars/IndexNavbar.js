@@ -86,7 +86,6 @@ React.useEffect(()=>{
   }
   )
   .then(res=>{
-    console.log(res.data)
         localStorage.setItem("user_id",res.data.id);
         setName(res.data.name);
         if(res.data.valid_id === null){
@@ -120,7 +119,7 @@ React.useEffect(()=>{
         search:'?search='+query})
     })
     .catch(error=>{
-      console.log(error.response.data);
+      console.log(error);
     })
   }
 
@@ -141,8 +140,10 @@ React.useEffect(()=>{
           <NavbarBrand
             data-placement="bottom"
             title="Martek gh online"
+            tag={Link}
+            to="/user/home"
           >
-          <Link to="/user/home" style={{textDecoration:'none', color:"white", fontWeight:"bold"}}>
+          {/* <Link to="/user/home" style={{textDecoration:'none', color:"white", fontWeight:"bold"}}> */}
           <img alt="#" src= {require("../../assets/img/martlogo.png")}
             style={{maxWidth:"80px", height:"auto",marginRight:"8px"}}
             className="top"
@@ -152,7 +153,7 @@ React.useEffect(()=>{
             className="bottom"
             />
             
-            </Link>
+            {/* </Link> */}
           </NavbarBrand>
 
           <Row>

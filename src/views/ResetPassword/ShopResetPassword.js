@@ -10,7 +10,7 @@ import{
     Row,
     Card,
     CardBody,
-    Button, Alert, Input, InputGroup, InputGroupAddon, InputGroupText
+    Button, Alert, Input, InputGroup, InputGroupAddon, InputGroupText,FormFeedback
 } from "reactstrap";
 
 var domain = "https://backend-api.martekgh.com"
@@ -22,12 +22,25 @@ export default function ShopResetPassword(props){
     const [color, setColor] = React.useState("");
     const [eye1 , setEye1]= React.useState(false);
     const [eye2 , setEye2]= React.useState(false);
+    const [errors , setErrors] = React.useState([]);
 
     const toggle=()=>setVisible(!visible);
 
     const handleSubmit=(e)=>{
-        if(password === confirmPassword){
         e.preventDefault()
+        let tempErrors = {};
+        if(password.length < 6){
+            tempErrors.password = "Password must have more than 6 characters";
+        }
+
+        if(password != confirmPassword){
+            tempErrors.confrim_password = "Passwords do not match";
+        }
+
+        if(!(Object.keys(tempErrors).length === 0 && tempErrors.constructor === Object)){
+            setErrors(tempErrors);
+            return;
+        }
         console.log(props.location);
         const param = queryString.parse(props.location.search);
         console.log(param.token);
@@ -41,23 +54,16 @@ export default function ShopResetPassword(props){
             setVisible(true);
         })
         .catch(error=>{
-            console.log(error.response.data)
-            setMessage(error.response.data.status)
-            setVisible(true)
-            setColor("danger")
+            console.log(error);
+            if(error.response.status == 422){
+                setErrors(error.response.data.errors)
+            }
         })
-    }
-    else{
-        setMessage("Passwords Do Not Match!!")
-        setVisible(true)
-        setColor("danger")
-    }
 }
    
     return(
     
             <div
-            
             className="page-header"
             style={{height:"100vh"}}>
             
@@ -80,24 +86,12 @@ export default function ShopResetPassword(props){
                             <br/>
                             <form onSubmit={handleSubmit}>
                             <label style={{fontWeight:500}}>New Password</label>
-                            <InputGroup>
-                            <Input type={!eye1?"password":"text"} placeholder="New Password" required value={password} onChange={e=>setPassword(e.target.value)}/>
-                            <InputGroupAddon addonType="append">
-                            <InputGroupText>
-                                <i className={eye1?"fa fa-eye":"fa fa-eye-slash"}  onClick={()=>setEye1(!eye1)}/>
-                            </InputGroupText>
-                            </InputGroupAddon>
-                            </InputGroup>
+                            <Input invalid={errors.password} type={!eye1?"password":"text"} placeholder="New Password" required value={password} onChange={e=>setPassword(e.target.value)}/>
+                            <FormFeedback style={{fontWeight:500}}>{errors.password}</FormFeedback>
                             <br/>
                             <label style={{fontWeight:500}}>ReType Password</label>
-                            <InputGroup>
-                            <Input type={!eye2?"password":"text"} placeholder="ReType Password" required value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)}/>
-                                    <InputGroupAddon addonType="append">
-                                <InputGroupText>
-                                    <i className={eye2?"fa fa-eye":"fa fa-eye-slash"}  onClick={()=>setEye2(!eye2)}/>
-                                </InputGroupText>
-                                </InputGroupAddon>
-                            </InputGroup>
+                            <Input invalid={errors.confrim_password} type={!eye2?"password":"text"} placeholder="ReType Password" required value={confirmPassword} onChange={e=>setConfirmPassword(e.target.value)}/>
+                            <FormFeedback style={{fontWeight:500}}>{errors.confrim_password}</FormFeedback>
                             <br/>
                             <Button style={{marginTop:"50px"}} block color='success' type="submit" >Submit</Button>
                             </form>

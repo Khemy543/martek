@@ -40,6 +40,8 @@ function ExamplesNavbar() {
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
   const [company_name, setCompany_name] = React.useState("");
   const [loggedin , setLoggedin] = React.useState(false);
+  const [paymentRequired, setPaymentRequired] = React.useState(false)
+  const [shopType, setShopType] = React.useState('')
   
   const toggle = () => setDropdownOpen(prevState => !prevState);
  
@@ -55,8 +57,11 @@ function ExamplesNavbar() {
     if(res.data !== null){
       setCompany_name(res.data.company_name);
       setLoggedin(true);
-      
-    }
+      setShopType(res.data.shop_type);
+      if(res.data.payment_status === 'payment required'){
+        setPaymentRequired(true)
+      }
+    } 
 
 }).catch(error=>{
    
@@ -100,8 +105,10 @@ const Logout=(e)=>{
       <div className="navbar-translate">
           <NavbarBrand
             data-placement="bottom"
+            tag={Link}
+            to="/shop/shop-page"
           >
-          <Link to="/shop/shop-page" style={{textDecoration:'none', color:"white", fontWeight:"bold"}}>
+          {/* <Link to="/shop/shop-page" style={{textDecoration:'none', color:"white", fontWeight:"bold"}}> */}
           <img alt="#" src= {require("../../assets/img/martlogo.png")}
           style={{maxWidth:"100px", height:"auto", marginTop:"-5px",marginRight:"8px"}}
           className="top"
@@ -111,7 +118,7 @@ const Logout=(e)=>{
           className="bottom"
           />
             
-            </Link>
+            {/* </Link> */}
           </NavbarBrand>
           <button
           aria-expanded={navbarCollapse}
@@ -177,7 +184,16 @@ const Logout=(e)=>{
                 history.push('/shop/settings')
               }}><i className="fa fa-user mr-1"/>{company_name}
               </ListGroupItem>
-
+              {!paymentRequired?
+              null
+              :
+              <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop"onClick={() => {
+                document.documentElement.classList.toggle("nav-open");
+                setDropdownOpen(false);
+                history.push('/shop/payment/information',{shopType:shopType})
+              }}><i className="fa fa-credit-card mr-1"/>Make Payment
+              </ListGroupItem>
+              }
               <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop"onClick={() => {
                 document.documentElement.classList.toggle("nav-open");
                 setDropdownOpen(false);
@@ -189,7 +205,6 @@ const Logout=(e)=>{
             </PopoverBody>
             </UncontrolledPopover>
               </div>}
-                
             </NavItem>
             </Nav>
 
@@ -230,7 +245,22 @@ const Logout=(e)=>{
               <i className="fa fa-cog mr-3"/> settings
               </NavLink>
             </NavItem>
-
+            {!paymentRequired?
+            null
+            :
+            <NavItem>
+              <NavLink
+              tag={Naver}
+              onClick={() => {
+                document.documentElement.classList.toggle("nav-open");
+                setNavbarCollapse(false);
+                history.push('/shop/payment/information',{shopType:shopType})
+              }}
+              >
+              <i className="fa fa-credit-card mr-3"/> Make Payment
+              </NavLink>
+            </NavItem>
+            }
             <NavItem>
               <NavLink
               tag={Naver}

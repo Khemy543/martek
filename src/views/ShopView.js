@@ -184,7 +184,7 @@ function ShopView(props) {
       </div>
       :
         <div className="section profile-content text-center">
-          <img alt="#" src={cover != null?`https://backend-api.martekgh.com/${cover}` : require('assets/img/cover.jpg')} style={{ width: "95%", marginTop: '10px', objectFit:"cover" }} className="cover-photo" />
+          <img alt="#" src={cover != null?`https://backend-api.martekgh.com/${cover}` : require('assets/img/banner3.png')} style={{ width: "95%", marginTop: '10px', objectFit:"cover" }} className="cover-photo" />
 
           <Container>
             <br />
@@ -200,7 +200,7 @@ function ShopView(props) {
                       id="img-circle"
                       className="img-circle img-no-padding img-responsive"
                       style={{ border: "1px solid #eaeaea", width: "120px", height: "120px", objectFit:"cover" }}
-                      src={avatar != null?`https://backend-api.martekgh.com/${avatar}`:require('assets/img/avatar.png')}
+                      src={avatar != null?`https://backend-api.martekgh.com/${avatar}`:require('assets/img/thumbnail2.png')}
                     />
                   </div>
                 </Col>
@@ -236,7 +236,7 @@ function ShopView(props) {
                       <ProductConsumer>
                         {value => (
                           <div>
-                            {value.followShops.find(item => item.shop_id === props.match.params.id) ? <Button size="sm" style={{ fontSize: "9px" }} className="btn-round" disabled={followDisable} color="info" onClick={() => { value.unfollow(props.match.params.id); setfollowingLoader(true); setfollowLoader(false); setFollowers(followers - 1); setFollowDisable(true); setUnfollowDisable(false) }}>{followingloader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>following</p>}</Button> : <Button size="sm" disabled={unfollowDisable} color='info' style={{ fontSize: "9px" }} className="btn-round" onClick={() => { value.follow(props.match.params.id); setUnfollowDisable(true); setFollowDisable(false); setfollowingLoader(false); setFollowers(followers + 1); setfollowLoader(true) }}>{followloader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>+follow</p>}</Button>}
+                            {value.followShops.some(item => item.shop_id == props.match.params.id) ? <Button size="sm" style={{ fontSize: "9px" }} className="btn-round" disabled={followDisable} color="info" onClick={() => { value.unfollow(props.match.params.id); setfollowingLoader(true); setfollowLoader(false); setFollowers(followers - 1); setFollowDisable(true); setUnfollowDisable(false) }}>{followingloader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>following</p>}</Button> : <Button size="sm" disabled={unfollowDisable} color='info' style={{ fontSize: "9px" }} className="btn-round" onClick={() => { value.follow(props.match.params.id); setUnfollowDisable(true); setFollowDisable(false); setfollowingLoader(false); setFollowers(followers + 1); setfollowLoader(true) }}>{followloader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>+follow</p>}</Button>}
                           </div>
                         )}
                       </ProductConsumer>

@@ -24,11 +24,12 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import StoreIcon from '@material-ui/icons/Store';
 import {ProductConsumer,ProductContext} from '../../context.js'
-import Pagination from "react-js-pagination";
+/* import Pagination from "react-js-pagination"; */
 import ShopCard from "../../components/ShopCard.js";
+import Pagination from '../../components/Pagination/Pagination.js';
 
 var settings = {
-    dots: true,
+    dots: false,
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 1,
@@ -41,7 +42,7 @@ var settings = {
               slidesToShow:1
           }
         }
-      ]
+      ] 
   };
 function All({history}){
     const [isActive, setIsActive] = React.useState(false);
@@ -50,6 +51,7 @@ function All({history}){
     const [fashion, setFashion] = React.useState([]);
     const [phones,setPhones] = React.useState([]);
     const [shops, setShops] = React.useState([]);
+    const [pagination, setPagination] = React.useState({});
     const [activeCampus, setActiveCampus] = React.useState(localStorage.getItem('activeCampus_id'));
     const [categoryList, setCategoryList]=React.useState([]);
     
@@ -60,7 +62,6 @@ function All({history}){
         axios.get("https://backend-api.martekgh.com/api/categories")
         .then(res=>{
           const categories = res.data;
-          console.log(categories)
           setCategoryList(categories);
           setIsActive(false)
         });
@@ -69,7 +70,6 @@ function All({history}){
             params:{campus_id:activeCampus}
         })
         .then(res=>{
-            console.log(res.data);
             setNewItems(res.data);
         })
         .catch(error=>{
@@ -81,7 +81,6 @@ function All({history}){
             params:{campus_id:activeCampus}
         })
          .then(res=>{
-             console.log(res.data)
              const categories = res.data[0];
              setPhones(categories)
          })
@@ -94,7 +93,6 @@ function All({history}){
             params:{campus_id:activeCampus}
         })
          .then(res=>{
-             console.log(res.data)
              const categories = res.data[0];
              setFashion(categories)
          })
@@ -104,57 +102,53 @@ function All({history}){
             params:{campus_id:activeCampus}
         })
          .then(res=>{
-             console.log(res.data)
              const nextProducts = res.data[0];
              setElectronics(nextProducts)
          })
       },[activeCampus])
 
       
-      function getShops(pageNumber=1){
-        axios.get("https://backend-api.martekgh.com/api/all-shops",
+      function getShops(page){
+        setIsActive(true)
+        let new_page = page || `https://backend-api.martekgh.com/api/all-shops?page=1`
+        axios.get(new_page,
         {
             params:{
-                page:pageNumber,
                 campus_id:activeCampus,
             }
         })
-        .then(res=>{
-            console.log(res.data)
-            setShops(res.data);
-            setIsActive(false)
+        .then(response=>{
+            setShops(response.data.data);
+            let paginationData = {
+                current_page : response.data.meta.current_page,
+                last_page : response.data.meta.last_page,
+                from_page : response.data.meta.from,
+                to_page : response.data.meta.to,
+                total_page : response.data.meta.total,
+                path_page : response.data.meta.path+"?page=",
+                first_link : response.data.links.first,
+                last_link : response.data.links.last,
+                prev_link : response.data.links.prev,
+                next_link : response.data.links.next
+              }
+              setPagination(paginationData)
         })
+        .finally((_)=>setIsActive(false))
       }
 
 
       function renderShops(){
-        const {data, meta} = shops;
         return(
         <React.Fragment>
         <Row>
-            {data && data.map(shop=>{
+            {shops && shops.map(shop=>{
             return<ShopCard key={shop.id} shop={shop} />
         })}
-        </Row>
-        <Row>
-        <Col md="10" className="ml-auto mr-auto">    
-        <Pagination
-            totalItemsCount={meta&&meta.total}
-            activePage={meta&&meta.current_page}
-            itemsCountPerPage={meta&&meta.per_page}
-            onChange={(pageNumber)=>getShops(pageNumber)}
-            pageRangeDisplayed={5   }
-            itemClass="page-item"
-            linkClass="page-link"
-        />
-        </Col>
         </Row>
         </React.Fragment>
     )
 
     }
-
-
         return(
             <div>
             <React.Fragment>
@@ -178,6 +172,7 @@ function All({history}){
                                     style={{cursor:"pointer"}}
                                     className={value.activeTabIndex === "1" ? "active" : ""}
                                     tag={Link}
+                                    to="#"
                                     onClick={()=>value.actions.changeIndex("1")}
                                 >
                                    <i className="fa fa-home"/> All
@@ -185,26 +180,27 @@ function All({history}){
                                 </NavItem>
                                 <NavItem>
                                 <NavLink
-                                style={{cursor:"pointer"}}
+                                    style={{cursor:"pointer"}}
                                     className={value.activeTabIndex === "2" ? "active" : ""}
                                     tag={Link}
                                     onClick={()=>value.actions.changeIndex("2")}
+                                    to="#"
                                 >
                                    <StoreIcon style={{marginLeft:'-9px', marginRight:"3px", fontSize:"19px", marginBottom:"4px"}}/>Shops
                                 </NavLink>
                                 </NavItem>
                                 <NavItem>
                                 <NavLink
-                                style={{cursor:"pointer"}}
+                                    style={{cursor:"pointer"}}
                                     className={value.activeTabIndex === "3" ? "active" : ""}
                                     tag={Link}
                                     onClick={()=>value.actions.changeIndex("3")}
+                                    to="#"
                                 >
                                     <i className="fa fa-bars"/>Categories
                                 </NavLink>
                                 </NavItem>
                             </Nav>
-                            {console.log("store",value.activeTabIndex)}
                             </div>
                         </div>
 
@@ -225,7 +221,7 @@ function All({history}){
                                 </Col>
                                 <Col sm="4" md="3" lg="3" xl="3" xs="4">
                                 <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}} 
-                                onClick = {()=>history.push("/user/categories",{category_id:2, category_name:"Phones and Accessories", image:"2.jpeg"})}
+                                onClick = {()=>history.push("/user/categories",{category_id:2, category_name:"Phones and Accessories", image:"2.png"})}
                                 >See All<i className="fa fa-chevron-right"/></p>
                                 </Col>
                                 </Row>
@@ -261,7 +257,7 @@ function All({history}){
                                             <div key={key}>
                                                 <Col style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}}>
                                                 <div style={{cursor:"pointer"}}>
-                                                    <div class="text-center" onClick={() => history.push(`/user/product-details/${value.id}/${value.product_name}`,{id:value.id})}>
+                                                    <div className="text-center" onClick={() => history.push(`/user/product-details/${value.id}/${value.product_name}`,{id:value.id})}>
                                                         <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"180px", width:"180px", borderRadius:'5px', objectFit:"cover"}}/>
                                                     </div>
                                                     <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>
@@ -294,7 +290,7 @@ function All({history}){
                                 </Col>
                                 <Col sm="4" md="3" lg="3" xl="3" xs="4">
                                 <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}}
-                                onClick = {()=>history.push("/user/categories",{category_id:3, category_name:"Fashion", image:"3.jpeg"})}
+                                onClick = {()=>history.push("/user/categories",{category_id:3, category_name:"Fashion", image:"3.png"})}
                                 >See All <i className="fa fa-chevron-right"/></p>
                                 </Col>
                             </Row>
@@ -327,7 +323,7 @@ function All({history}){
                                 </Col>
                                 <Col sm="4" md="3" lg="3" xl="3" xs="4">
                                 <p style={{fontWeight:500, fontSize:"12px", float:"right",marginTop:"20px", marginBottom:"0px", cursor:"pointer"}}
-                                onClick = {()=>history.push("/user/categories",{category_id:1, category_name:"Electronics", image:"1.jpeg"})}
+                                onClick = {()=>history.push("/user/categories",{category_id:1, category_name:"Electronics", image:"1.png"})}
                                 >See All <i className="fa fa-chevron-right"/></p>
                                 </Col>
                             </Row>
@@ -349,6 +345,7 @@ function All({history}){
                             </TabPane>
                            
                         </TabContent>
+                        {value.activeTabIndex === '2'?
                         <TabContent className="" activeTab={value.activeTabIndex}>
                             <TabPane className="text-center" tabId="2" id="shops">
                                 {isActive?
@@ -364,13 +361,18 @@ function All({history}){
                                     :
                                     <Container>
                                     {shops && renderShops()}
-                                    
+                                    <Pagination
+                                        pagination={pagination && pagination}
+                                        loadData={getShops}
+                                    />
                                     </Container>
                                     }
                                     </>
                                 }
                             </TabPane>
                         </TabContent>
+                        :
+                        null}
                         <TabContent className="" activeTab={value.activeTabIndex}>
                             <TabPane className="text-center" tabId="3" id="categories">
                                 {isActive?
@@ -379,9 +381,9 @@ function All({history}){
                                 <Row>
                                 {categoryList.map((value,index)=>(
                                     <Col md="4" className="mt-auto mb-auto">
-                                    <img src={require(`assets/img/categories/${value.id}.jpeg`)} 
-                                        style={{width:"100%",height:"105px", borderRadius:"10px", marginBottom:"20px", cursor:"pointer"}}
-                                        onClick = {()=>history.push("/user/categories",{category_id:value.id, category_name:value.category, image:`${value.id}.jpeg`})}
+                                    <img src={require(`assets/img/categories/${value.id}.png`)} 
+                                        style={{width:"100%",height:"105px", borderRadius:"10px", marginBottom:"20px", cursor:"pointer", objectFit:"cover"}}
+                                        onClick = {()=>history.push("/user/categories",{category_id:value.id, category_name:value.category, image:`${value.id}.png`})}
                                     />
                                     </Col>
                                 ))}

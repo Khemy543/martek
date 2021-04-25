@@ -90,8 +90,8 @@ handleMobileSubmit=(e)=>{
         payment_method:'momo'
     },{headers:{ 'Authorization':`Bearer ${user}`}})
     .then(res=>{
-        console.log(res.data);/* 
-        window.location=`${res.data.data.link}` */
+        console.log(res.data);
+        window.location=`${res.data.data.link}`
     })
     .catch(error=>{
         console.log(error.response.data);
@@ -206,7 +206,7 @@ handleMobileSubmit=(e)=>{
                     <Form onSubmit={this.handleMobileSubmit}>
                         <Row>
                             <Col md="12">
-                        <h5 style={{fontWeight:500}}>GHS {this.state.amount}.00</h5>
+                        <h5 style={{fontWeight:500}}>GHS {this.state.amount}</h5>
                         <p style={{fontSize:"12px", fontWeight:500,marginTop:"-5px"}}>{this.props.location.state.email}</p>
                             </Col>
                         </Row>

@@ -36,7 +36,7 @@ function ShopCard(props){
         <Col md="3" sm="6" xs="6" style={{padding:"0px 6px"}}>
         <Card className="card-plain" style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}} >
         <CardImg top id="card-cover" className="cardimage" style={{width:"96%", borderRadius:"5px", margin:"5px", objectFit:"cover"}} 
-        src={cover_photo != null?`https://backend-api.martekgh.com/${cover_photo}`: require('assets/img/cover.jpg')} alt="Card image cap" onClick={()=>history.push(`/user/shop-view/${shop_id||id}/${company_name || shop_name}`, 
+        src={cover_photo != null?`https://backend-api.martekgh.com/${cover_photo}`: require('assets/img/banner3.png')} alt="Card image cap" onClick={()=>history.push(`/user/shop-view/${shop_id||id}/${company_name || shop_name}`, 
             {id:id || shop_id}
             )}/>
             {loggedIn?
@@ -47,7 +47,6 @@ function ShopCard(props){
                     <i onClick={()=>{value.unfollow(id || shop_id); toggleUnlike();setFollowers(followers-1)}} className={!unliked?"fa fa-heart":"fa fa-heart-o"} style={{fontWeight:600, color:"red", textAlign:"center", marginTop:"5px"}} />
                     :
                     <i className={!liked?"fa fa-heart-o":"fa fa-heart"} onClick={()=>{value.follow(id || shop_id); toggleLike();setFollowers(followers+1)}}  style={{color:"red",fontWeight:600, textAlign:"center", marginTop:"5px"}}/>}
-                    {console.log('value', value.followShops)}
                     </div>
                 )}
             </ProductConsumer>
@@ -65,7 +64,7 @@ function ShopCard(props){
             <div className="circular" style={{marginTop:"-70px", width:"80px",height:"80px"}}>
                 <img
                     alt="#"
-                    src={avatar != null?`https://backend-api.martekgh.com/${avatar}` :require('assets/img/avatar.png')}
+                    src={avatar != null?`https://backend-api.martekgh.com/${avatar}` :require('assets/img/thumbnail2.png')}
                     style={{ objectFit:"cover"}}
                 />
             </div>

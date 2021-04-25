@@ -40,7 +40,6 @@ export default function ShopLoginPage(props) {
   axios.post('https://backend-api.martekgh.com/api/merchandiser/login', {
     config, email, password
   }).then(res => {
-    console.log(res.data)
         localStorage.setItem('shop_access_token', res.data.access_token)
         history.push("/shop/shop-page")
     
@@ -133,7 +132,7 @@ return (
                 <Button
                   className="btn-link"
                   tag={Link}
-                  to="/auth/forgot-password"
+                  to="/auth/shop-forgot-password"
                   style={{marginTop:"-10px"}}
                 >
                   Forgot password?

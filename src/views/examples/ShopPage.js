@@ -11,6 +11,7 @@ import {
   Row,
   Col, Card, CardBody,CardTitle, Spinner
 } from "reactstrap";
+import Skeleton,{SkeletonTheme} from 'react-loading-skeleton'
 
 import axios from "axios";
 import StarRatings from 'react-star-ratings';
@@ -29,6 +30,7 @@ function ShopPage(props) {
   const [noFollowing, setNumberFollowing] = React.useState(0);
   const [average, setAverage] = React.useState(0);
   const [isActive, setIsActive] = React.useState(false);
+  const [paymentRequired, setPaymentRequired] = React.useState(false);
 
   const toggle = tab => {
     if (activeTab !== tab) {
@@ -39,17 +41,15 @@ function ShopPage(props) {
 let merchandiser = localStorage.getItem("shop_access_token")
   
   React.useEffect(()=>{
-    console.log(history)
     setIsActive(true);
       axios.get("https://backend-api.martekgh.com/api/merchandiser",{
           headers:{ 'Authorization':`Bearer ${merchandiser}`}
-  }
-  )
+  })
   .then(res=>{
-        console.log(res.data);
         if(res.data.payment_status === "payment required"){
-          history.push('/shop/payment/information',{shopType:res.data.shop_type})
-        }else{
+         /*  history.push('/shop/payment/information',{shopType:res.data.shop_type}) */
+         setPaymentRequired(true)
+        }
         setAvatar(res.data.avatar);
         setCompany_name(res.data.company_name);
         setCompany_description(res.data.company_description);
@@ -66,7 +66,6 @@ let merchandiser = localStorage.getItem("shop_access_token")
         })
         .catch(error=>{
         })
-      }
   })
  
 },[merchandiser])
@@ -81,19 +80,49 @@ let merchandiser = localStorage.getItem("shop_access_token")
   });
   return (
     <div>
-      <div className="section profile-content text-center">
       {isActive?
-      <Container>
-      <br/>
-      <br/>
-        <Row>
-          <Col className="mr-auto ml-auto">
-            <Spinner size="sm" color="info"/> Please Wait
-          </Col>
-        </Row>
-      </Container>
+      <div className="section profile-content text-center">
+      <Skeleton style={{marginTop:"10px", width:"95%", textAlign:"center"}} className="cover-photo"/>
+      <div className="avatar">
+      <Skeleton circle height={120} width={120} 
+          id="img-circle"
+          className="img-circle img-no-padding img-responsive"
+          style={{marginTop:"-500px"}}/>
+      </div>
+      <div>
+        <Container>
+          <Row>
+            <Col md="5" sm="5" xs="5" xl="5" lg="5" style={{padding:"0px"}}>
+                <div>
+                  <h4 style={{ fontSize: "19px", marginTop: "0px", fontWeight: "bold" }}>
+                    <Skeleton width={200} height={12} />
+                  </h4>
+
+                  <Skeleton width={150} height={12} />
+
+                </div>
+              </Col>
+              <Col></Col>
+              <Col md="4" sm="4" xs="4" xl="4" lg="4">
+                <Skeleton width={150} height={12} />
+                <br/>
+                <Skeleton width={100} height={12} />
+              </Col>
+          </Row>
+          <Row style={{ marginTop: "10px" }}>
+              <Col md="7" sm="12" xs="12" lg="7" xl="7" className="mr-auto ml-auto">
+                <Skeleton width={200} height={12} />
+                <br/>
+                <Skeleton width={150} height={12} />
+                <br/>
+                <Skeleton width={100} height={12}/>
+              </Col>
+            </Row>
+        </Container>
+      </div>
+    </div>
       :
-      <>
+      <div className="section profile-content text-center">
       <img alt="#" src={cover != null?`https://backend-api.martekgh.com/${cover}`: require('assets/img/cover.jpg')} style={{width:"95%", marginTop:"10px", objectFit:"cover"}} className="cover-photo"/>
       
         <Container>
@@ -181,7 +210,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
                   <CardBody>
                     <Container>
                       <Row>
-                      {shopProducts.length<20?
+                      {shopProducts.length<20 && !paymentRequired?
                           <Col lg="2" md="2" sm="6" xs="6" xl="2">
                           <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"10px 0px 0px 0px", padding:"0px 0px 0px 0px"}}>
                               <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
@@ -213,10 +242,9 @@ let merchandiser = localStorage.getItem("shop_access_token")
             </TabPane>
           </TabContent>
         </Container>
-        </>
+        </div>
       }
       </div>
-    </div>
   );
 }
 

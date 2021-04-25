@@ -7,7 +7,6 @@ import { Row, Container,Nav, NavLink, NavItem,Col
 
 
 function DemoFooter(props) {
-  console.log(props.prop)
 
   return (
     <footer className="footer">

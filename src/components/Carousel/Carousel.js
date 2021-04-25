@@ -22,7 +22,6 @@ const CarouselView = (props) => {
   const [images, setImages] = React.useState([]);
 
   React.useEffect(()=>{
-    console.log('activeCampus',activeCampus)
     var url = ''
     if(activeCampus == null){
       url = `https://backend-api.martekgh.com/api/admin/fetch/all/carousel-images`
@@ -31,12 +30,10 @@ const CarouselView = (props) => {
     }
     axios.get(url)
     .then(res=>{
-      console.log(res.data);
       let items = [];
       for(var i=0; i<res.data.length; i++){
         items.push({src:res.data[i].image_path})
       }
-      console.log(items)
       setImages(items)
     })
   },[])

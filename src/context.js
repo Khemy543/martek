@@ -71,7 +71,9 @@ class ProductProvider extends React.Component{
 
         this.isTokenExpired();
         this.isShopTokenExpired();
-        this.followingShops();
+        if(user != null){
+            this.followingShops();
+        }
 
         if(user != null){
         console.log('we are here')
@@ -123,7 +125,6 @@ isTokenExpired() {
     axios.get("https://backend-api.martekgh.com/api/following-shops",
         {headers:{'Authorization':`Bearer ${user}`}})
         .then(res=>{
-            console.log(res.data);
             this.setState({followShops:res.data})
         })
         .catch(error=>{

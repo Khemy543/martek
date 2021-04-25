@@ -7,7 +7,6 @@ import{
     Form, Modal, ModalBody,Progress, Spinner
 } from "reactstrap";
 import axios from "axios";
-//import { Link } from "react-router-dom";
 import ImageUploader from 'react-images-upload';
 
 

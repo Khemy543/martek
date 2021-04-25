@@ -83,7 +83,7 @@ export default function OwnShop(props){
       }
 
     axios.post('https://backend-api.martekgh.com/api/register-merchandiser',
-    {company_name, email,phone:`233${phone}`,password, campus_id,company_description,shop_type_id, free_trail:props.location.state.status}
+    {company_name, email,phone:`233${phone}`,password, campus_id,company_description,shop_type_id, free_trial:props.location.state.status}
   ).then(res => {
     console.log(res);
     axios.post('https://backend-api.martekgh.com/api/merchandiser/login', {email, password}).then(response=>{localStorage.setItem('shop_access_token', response.data.access_token)})
