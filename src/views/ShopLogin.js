@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import { Link} from "react-router-dom";
 // reactstrap components
 import { Button, Card, Form, Input, Container, Row, Col, Alert,InputGroup,InputGroupAddon,InputGroupText, Spinner } from "reactstrap";
@@ -7,6 +7,8 @@ import swal from 'sweetalert';
 
 //axios
 import axios from "axios";
+import { ProductContext } from "../context.js";
+
 
 axios.defaults.withCredentials = false;
   //axios.defaults.headers.common['Auth-Token'] = 'foo bar';
@@ -30,6 +32,7 @@ export default function ShopLoginPage(props) {
   const [eye, setEye] = React.useState(false);
 
   const toggleEye = () => setEye(!eye);
+  const merchandiserContext = useContext(ProductContext);
     
 
   var storageData= [];
@@ -40,8 +43,12 @@ export default function ShopLoginPage(props) {
   axios.post('https://backend-api.martekgh.com/api/merchandiser/login', {
     config, email, password
   }).then(res => {
-        localStorage.setItem('shop_access_token', res.data.access_token)
-        history.push("/shop/shop-page")
+        localStorage.setItem('shop_access_token', res.data.access_token);
+        axios.get('https://backend-api.martekgh.com/api/merchandiser',{headers:{'Authorization':`Bearer ${res.data.access_token}`}})
+        .then(response=>{
+          merchandiserContext.actions.setMerchandiser(response.data)
+          history.push("/shop/shop-page")
+        })
     
   }).catch(error => {
     setIsActive(false);

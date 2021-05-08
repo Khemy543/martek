@@ -15,12 +15,15 @@ const ProductContext = React.createContext();
 
 let user =null;
 let user_id=null;
+let merchandiser = null;
 
 
 class ProductProvider extends React.Component{
     constructor(){
     super();
     this.state={
+        user:{},
+        merchandiser:{},
         cart:[],
         cartSubTotal:0,
         cartTax:0,
@@ -38,7 +41,9 @@ class ProductProvider extends React.Component{
         id:"",
 		activeTabIndex:"1",
 		actions: {
-			changeIndex: index => this.setState({ activeTabIndex: index })
+			changeIndex: index => this.setState({ activeTabIndex: index }),
+            setUser : data => this.setState({user : data}),
+            setMerchandiser : data => this.setState({merchandiser : data})
 		}
     }
 }
@@ -49,24 +54,28 @@ class ProductProvider extends React.Component{
     componentWillMount(){
         user = localStorage.getItem('access_token')
         user_id = localStorage.getItem("user_id");
+        merchandiser = localStorage.getItem('shop_access_token')
         
     }
     
     componentWillUpdate(){
         user = localStorage.getItem('access_token')
         user_id = localStorage.getItem("user_id");
+        merchandiser = localStorage.getItem('shop_access_token')
 
     }
 
     componentDidUpdate(){
         user = localStorage.getItem('access_token')
         user_id = localStorage.getItem("user_id");
+        merchandiser = localStorage.getItem('shop_access_token')
 
     }
 
     componentDidMount(){
         user = localStorage.getItem('access_token')
         user_id = localStorage.getItem("user_id");
+        merchandiser = localStorage.getItem('shop_access_token')
 
 
         this.isTokenExpired();
@@ -76,15 +85,36 @@ class ProductProvider extends React.Component{
         }
 
         if(user != null){
-        console.log('we are here')
         axios.get("https://backend-api.martekgh.com/api/user-cart",{headers:{'Authorization':`Bearer ${user}`}})
         .then(res=>{
             if(res.data !== null){
                 this.setState({cart:res.data.cart[0], cartTotal:res.data.cart[1], spinner:false});
             }
         }).catch(error=>{
-            console.log(error.response.data)
+            console.log(error)
         });
+
+        axios.get('https://backend-api.martekgh.com/api/auth/user',{headers:{'Authorization':`Bearer ${user}`}})
+        .then(response=>{
+            this.setState({user:response.data});
+            localStorage.setItem("user_id",response.data.id);
+            if(response.data.valid_id === null){
+            localStorage.setItem('validity',false)
+            }
+        })
+        .catch(error=>{
+            console.log(error)
+        })
+    }
+
+    if(merchandiser != null){
+        axios.get('https://backend-api.martekgh.com/api/merchandiser',{headers:{'Authorization':`Bearer ${merchandiser}`}})
+        .then(response=>{
+            this.setState({merchandiser:response.data})
+        })
+        .catch(error=>{
+            console.log(error)
+        })
     }
 
         
@@ -193,13 +223,26 @@ logout = ()=>{
       })
       .then(res=>{
         localStorage.clear();
+        this.setState({spinner:false, user:{}});
         window.location.reload("/");
-        this.setState({spinner:false});
       })
       .catch(error=>{
         
         this.setState({spinner:false})
       })
+}
+
+shopLogout =()=>{
+    axios.post("https://backend-api.martekgh.com/api/merchandiser/logout",null,{
+    headers:{ 'Authorization':`Bearer ${merchandiser}`}
+    })
+    .then(res=>{
+        localStorage.removeItem("shop_access_token");;
+        this.setState({merchandiser:{}})
+        window.location.reload('/')
+    })
+    .catch(error=>{
+    })
 }
    
     //incrementaion
@@ -508,6 +551,7 @@ searchShopPrediction=(searchValue)=>{
                 clearCart:this.clearCart,
                 search:this.search,
                 logout:this.logout,
+                shopLogout:this.shopLogout,
                 follow:this.follow,
                 unfollow:this.unfollow
             }}>

@@ -34,7 +34,7 @@ function IndexNavbar(props) {
   const [campusCollapse, setCampusCollapse] = React.useState(false);
   const [searchValue, setSearchValue] = React.useState("");
   const [dropdownOpen, setDropdownOpen] = React.useState(false);
-  const [name , setName] = React.useState("");
+  /* const [name , setName] = React.useState(""); */
   const [campusList , setCampusList] = React.useState([]);
   const [loggedin, setLoggedin] =React.useState(false);
   const [dropdownCampusOpen, setDropdowncampusOpen] =React.useState(false);
@@ -80,7 +80,7 @@ React.useEffect(()=>{
   }else{
     setLoggedin(false);
   }
-   if(user != null){
+  /*  if(user != null){
       axios.get("https://backend-api.martekgh.com/api/auth/user",{
           headers:{ 'Authorization':`Bearer ${user}`}
   }
@@ -93,7 +93,7 @@ React.useEffect(()=>{
         }
   }).catch(error=>{
   });
-}
+} */
 
   axios.get("https://backend-api.martekgh.com/api/campuses")
   .then(res=>{
@@ -306,7 +306,7 @@ React.useEffect(()=>{
                       document.documentElement.classList.toggle("nav-open");
                       setDropdownOpen(false);
                       history.push('/user/profile')
-                      }}><i className="fa fa-user mr-1"/>{name}
+                      }}><i className="fa fa-user mr-1"/>{value.user?.name}
                       </ListGroupItem>
 
                     <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop" onClick={() => {
@@ -456,7 +456,7 @@ React.useEffect(()=>{
               }}
               style={{color:"black"}}
               >
-              <i className="fa fa-user-o mr-3"/> {name}
+              <i className="fa fa-user-o mr-3"/> {value.user?.name}
               </NavLink>
             </NavItem>
             <NavItem>

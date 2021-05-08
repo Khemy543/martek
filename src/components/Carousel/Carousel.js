@@ -64,7 +64,7 @@ const CarouselView = (props) => {
         key={item.src}
       >
       <div className="box" style={{textAlign:"center"}}>
-        <img src={`https://backend-api.martekgh.com/${item.src}`} className="image"/>
+        <img src={`https://backend-api.martekgh.com/${item.src}`} className="image-carousel"/>
       </div> 
         
         <CarouselCaption  captionHeader={item.caption} />

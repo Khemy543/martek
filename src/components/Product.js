@@ -13,6 +13,7 @@ import{
 //context
 import { ProductConsumer } from "../context";
 import history from "../history.js";
+import ImageContainer from 'components/ImageContainer.js'
 
 class Product extends React.Component{
 
@@ -23,7 +24,13 @@ class Product extends React.Component{
                         <div style={{textAlign:"center", cursor:"pointer"}}>
                         <div>
                             <div onClick={() => history.push(`/user/product-details/${id}/${product_name}`,{id:id})} style={{textAlign:"center"}}>
-                            <img alt="#" src={`https://backend-api.martekgh.com/${product_image[0].path}`} style={{width:"180px", height:"180px", borderRadius:"5px", objectFit:"cover"}}/>  
+                                <ImageContainer 
+                                    src={`https://backend-api.martekgh.com/${product_image[0].path}`}
+                                    width={180}
+                                    height={180}
+                                    alt={product_name}
+                                />
+                            {/* <img alt="#" src={`https://backend-api.martekgh.com/${product_image[0].path}`} style={{width:"180px", height:"180px", borderRadius:"5px", objectFit:"cover"}}/> */}  
                             </div>
                             
                                 <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left", overflow:"hidden",  height:"20px"}}>

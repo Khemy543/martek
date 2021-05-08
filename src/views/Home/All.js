@@ -27,11 +27,30 @@ import {ProductConsumer,ProductContext} from '../../context.js'
 /* import Pagination from "react-js-pagination"; */
 import ShopCard from "../../components/ShopCard.js";
 import Pagination from '../../components/Pagination/Pagination.js';
+import ImageContainer from '../../components/ImageContainer.js'
+
 
 var settings = {
     dots: false,
     speed: 500,
     slidesToShow: 5,
+    slidesToScroll: 1,
+    autoplay:true,
+    responsive:[
+        {
+          breakpoint:450,
+          settings:{
+              centerMode:true,
+              slidesToShow:1
+          }
+        }
+      ] 
+  };
+
+  var adssettings = {
+    dots: false,
+    speed: 3000,
+    slidesToShow: 3,
     slidesToScroll: 1,
     autoplay:true,
     responsive:[
@@ -54,11 +73,17 @@ function All({history}){
     const [pagination, setPagination] = React.useState({});
     const [activeCampus, setActiveCampus] = React.useState(localStorage.getItem('activeCampus_id'));
     const [categoryList, setCategoryList]=React.useState([]);
+    const [ads, setAds] = React.useState([])
     
     
 
       React.useEffect(()=>{
         getShops();
+        axios.get('https://backend-api.martekgh.com/api/fetch/all/ads')
+        .then(response=>{
+            console.log(response.data)
+            setAds(response.data.shop_ad)
+        })
         axios.get("https://backend-api.martekgh.com/api/categories")
         .then(res=>{
           const categories = res.data;
@@ -258,7 +283,13 @@ function All({history}){
                                                 <Col style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}}>
                                                 <div style={{cursor:"pointer"}}>
                                                     <div className="text-center" onClick={() => history.push(`/user/product-details/${value.id}/${value.product_name}`,{id:value.id})}>
-                                                        <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"180px", width:"180px", borderRadius:'5px', objectFit:"cover"}}/>
+                                                        <ImageContainer 
+                                                            src={`https://backend-api.martekgh.com/${value.product_image[0].path}`}
+                                                            width={180}
+                                                            height={180}
+                                                            alt="alt"
+                                                        />
+                                                        {/* <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"180px", width:"180px", borderRadius:'5px', objectFit:"cover"}}/> */}
                                                     </div>
                                                     <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>
                                                         {value.product_name}
@@ -307,6 +338,44 @@ function All({history}){
 
                         </Card>
                         </Row>
+
+
+
+
+                        <Row>
+                        <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
+                    
+                                <CardBody style={{padding:"5px"}}>
+                                    <Container>
+                                    <Row>
+                                        <Col md="12" style={{padding:"0px 0px 0px 0px"}} >
+                                        <Slider {...adssettings} infinite={ads.length>3}>
+                                        {ads.map((value,key)=>(
+                                            <div key={key}>
+                                                <Col style={{padding:"0px"}}>
+                                                <div style={{cursor:"pointer"}}>
+                                                    <div className="text-center" onClick={() => history.push(`/user/shop-view/${value.merchandiser_id}/shop`, {id:value.merchandiser_id})}>
+                                                        <ImageContainer 
+                                                            src={`https://backend-api.martekgh.com/${value.ad_path}`}
+                                                            width={350}
+                                                            height={250}
+                                                            alt="alt"
+                                                        />
+                                                       {/*  <img alt="#" src={`https://backend-api.martekgh.com/${value.ad_path}`} style={{height:"230px",width:"100%",borderRadius:'5px', objectFit:"cover", border:"1px solid #eaeaea"}}/> */}
+                                                    </div>
+                                                 </div>
+                                                </Col>
+                                            </div>
+                                            ))}
+                                        </Slider>
+                                        
+                                        </Col>
+                                        </Row>
+                                        </Container>
+                                    </CardBody>
+    
+                            </Card>
+                            </Row>
 
                         
                        
@@ -361,10 +430,13 @@ function All({history}){
                                     :
                                     <Container>
                                     {shops && renderShops()}
+                                    {pagination.last_page > 1?
                                     <Pagination
                                         pagination={pagination && pagination}
                                         loadData={getShops}
                                     />
+                                    : null
+                                    }
                                     </Container>
                                     }
                                     </>

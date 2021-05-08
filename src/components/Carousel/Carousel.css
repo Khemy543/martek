@@ -30,7 +30,7 @@
 
 
 @media(max-width:799px){
-    .image{
+    .image-carousel{
         width:98% !important;
         height: auto;
         overflow: hidden;
@@ -42,9 +42,9 @@
 
 @media(min-width:800px){
     
-    .image{
+    .image-carousel{
         width:95% !important;
-        height: 45vh;
+        height: 50vh;
         object-fit: cover;
         border-radius: 5px;
     }

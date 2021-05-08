@@ -3,6 +3,35 @@
     font-size: 16px;
     margin-bottom: 28px;
   }
+.preview-container{
+    position: relative;
+    display: inline-block;
+}
+.image-container{
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.preview-image{
+    height: 300px;
+    width: 300px;
+    object-fit: cover;
+}
+.image-upload-button{
+    padding: 2px;
+}
+.hidden{
+    display: none;
+}
+.image-upload-button:focus{
+    outline: none;
+}
   #horizontal-list {
     list-style-type: none;
     margin: 0;

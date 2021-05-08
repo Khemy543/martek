@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import { Link } from "react-router-dom";
 // reactstrap components
 import {
@@ -16,59 +16,37 @@ import Skeleton,{SkeletonTheme} from 'react-loading-skeleton'
 import axios from "axios";
 import StarRatings from 'react-star-ratings';
 import ShopProduct from "components/ShopProduct.js";
-import history from '../../history.js';
+import { ProductConsumer, ProductContext } from '../../context.js'
 
 
 function ShopPage(props) {
+  const merchandiserContext = useContext(ProductContext);
+  let id = merchandiserContext.merchandiser.id;
   const [activeTab, setActiveTab] = React.useState("1");
-  const [avatar, setAvatar] = React.useState(undefined);
-  const [cover, setCover] = React.useState(undefined);
-  const [company_name, setCompany_name] = React.useState("");
-  const [company_description, setCompany_description] = React.useState("");
   const [shopProducts, setShopProducts] = React.useState([]);
-  const [campus, setCampus] = React.useState("");
-  const [noFollowing, setNumberFollowing] = React.useState(0);
-  const [average, setAverage] = React.useState(0);
   const [isActive, setIsActive] = React.useState(false);
-  const [paymentRequired, setPaymentRequired] = React.useState(false);
 
   const toggle = tab => {
     if (activeTab !== tab) {
       setActiveTab(tab);
     }
   };
-
-let merchandiser = localStorage.getItem("shop_access_token")
   
   React.useEffect(()=>{
+    if(id){
     setIsActive(true);
-      axios.get("https://backend-api.martekgh.com/api/merchandiser",{
-          headers:{ 'Authorization':`Bearer ${merchandiser}`}
-  })
-  .then(res=>{
-        if(res.data.payment_status === "payment required"){
-         /*  history.push('/shop/payment/information',{shopType:res.data.shop_type}) */
-         setPaymentRequired(true)
-        }
-        setAvatar(res.data.avatar);
-        setCompany_name(res.data.company_name);
-        setCompany_description(res.data.company_description);
-        setCampus(res.data.campus);
-        setNumberFollowing(res.data.no_followers);
-        setCover(res.data.cover_photo);
-        setAverage(res.data.avg_rating)
-        axios.get("https://backend-api.martekgh.com/api/merchandiser/"+res.data.id+"/products"
-      )
-        .then(response=>{
-          console.log(response.data)
-            setShopProducts(response.data[0]);
-            setIsActive(false)
-        })
-        .catch(error=>{
-        })
-  })
+    axios.get(`https://backend-api.martekgh.com/api/merchandiser/${id}/products`)
+    .then(response=>{
+      console.log(response.data)
+        setShopProducts(response.data[0]);
+        setIsActive(false)
+    })
+    .catch(error=>{
+      console.log(error)
+    })
+  }
  
-},[merchandiser])
+},[id])
 
 
   document.documentElement.classList.remove("nav-open");
@@ -123,7 +101,11 @@ let merchandiser = localStorage.getItem("shop_access_token")
     </div>
       :
       <div className="section profile-content text-center">
-      <img alt="#" src={cover != null?`https://backend-api.martekgh.com/${cover}`: require('assets/img/cover.jpg')} style={{width:"95%", marginTop:"10px", objectFit:"cover"}} className="cover-photo"/>
+      <ProductConsumer>
+        {
+          value=>(
+            <>
+      <img alt="#" src={value.merchandiser?.cover_photo != null?`https://backend-api.martekgh.com/${value.merchandiser?.cover_photo}`: require('assets/img/cover.jpg')} style={{width:"95%", marginTop:"10px", objectFit:"cover"}} className="cover-photo"/>
       
         <Container>
         <br/>
@@ -131,7 +113,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
         <br/>
         <br/>
         <Container>
-          <Row>
+                  <Row>
             <Col md="5" sm="6" xs="6" xl="5" lg="5" className="ml-auto mr-auto">
             <div className="avatar">
               <img
@@ -139,7 +121,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
                   id="img-circle"
                   className="img-circle img-no-padding img-responsive"
                   style={{border:"1px solid #eaeaea", width:"120px",height:"120px", marginTop:"200px",objectFit:"cover"}}
-                  src={avatar != null?`https://backend-api.martekgh.com/${avatar}` : require('assets/img/avatar.png')}
+                  src={value.merchandiser?.avatar != null?`https://backend-api.martekgh.com/${value.merchandiser?.avatar}` : require('assets/img/avatar.png')}
               />
             </div>
             </Col>
@@ -147,10 +129,10 @@ let merchandiser = localStorage.getItem("shop_access_token")
             <Row style={{marginTop:"-40px"}}>
               <Col md="4" sm="4" xs="4" lg="4" xl="4">
               <h4 style={{fontSize:"20px", marginTop:"0px",fontWeight:"bold"}}>
-                {company_name}
+                {value.merchandiser?.company_name}
               </h4>
               <StarRatings
-                rating={Number(average)}
+                rating={value.merchandiser?.avg_rating ? Number(value.merchandiser?.avg_rating) : 0}
                 starRatedColor="#CFB53B"
                 numberOfStars={5}
                 name='rating'
@@ -163,19 +145,20 @@ let merchandiser = localStorage.getItem("shop_access_token")
               </Col>
               <Col md="4" sm="4" xs="4" lg="4" xl="4">
               <div>
-                <h5 style={{display:"inline", fontSize:"14px", fontWeight:"bold"}}>{noFollowing}</h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
+                <h5 style={{display:"inline", fontSize:"14px", fontWeight:"bold"}}>{value.merchandiser?.no_followers}</h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
                 
-              <h4 style={{ fontSize:"14px", marginTop:"5px"}}>{campus}</h4>
+              <h4 style={{ fontSize:"14px", marginTop:"5px"}}>{value.merchandiser?.campus}</h4>
               </div>
               </Col>
 
             </Row>  
             <Row style={{marginTop:"10px"}}>
               <Col md="7" xl="7" sm="12" xs="12" lg="7" className="mr-auto ml-auto">
-              <p>{company_description}</p>
+              <p>{value.merchandiser?.company_description}</p>
               </Col>
             </Row>
               
+          
           </Container>
           <br />
           <br/>
@@ -210,7 +193,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
                   <CardBody>
                     <Container>
                       <Row>
-                      {shopProducts.length<20 && !paymentRequired?
+                      {shopProducts.length<20 && !value.paymentRequired?
                           <Col lg="2" md="2" sm="6" xs="6" xl="2">
                           <Card className="card-plain" style={{borderRight:"1px solid #eaeaea",margin:"10px 0px 0px 0px", padding:"0px 0px 0px 0px"}}>
                               <CardTitle style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", padding:"0px 0px 0px 0px"}}>
@@ -242,6 +225,11 @@ let merchandiser = localStorage.getItem("shop_access_token")
             </TabPane>
           </TabContent>
         </Container>
+        
+        </>
+              )
+            }
+          </ProductConsumer>
         </div>
       }
       </div>

@@ -10,7 +10,7 @@ import {
 import history from "../history.js";
 
 function FollowingShpCard(props){
-    const {id , shop_id, company_name ,shop_name, company_description, campus, avatar , cover_photo, avg_rating} = props.shop;
+    const {id , shop_id, company_name ,shop_name, company_description, campus, shop_avatar , cover_photo, avg_rating} = props.shop;
     React.useEffect(()=>{
 
     },[])
@@ -24,7 +24,7 @@ function FollowingShpCard(props){
                         <div className="circular" style={{ width:"80px",height:"80px"}}>
                             <img
                                 alt="#"
-                                src={avatar != null?`https://backend-api.martekgh.com/${avatar}` :require('assets/img/avatar.png')}
+                                src={shop_avatar != null ? `https://backend-api.martekgh.com/${shop_avatar}` : require('assets/img/thumbnail1.png')}
                                 style={{ objectFit:"cover"}}
                             />
                         </div>
