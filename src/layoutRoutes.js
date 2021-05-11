@@ -59,6 +59,8 @@ import ShopTransactions from "views/Transactions/ShopTransactions.js";
 import FreeConditions from "views/Payment/freeCondtions.js";
 import ProductFreeTrial from "views/Payment/ProductFreeTrial.js";
 
+import ManageAd from 'views/ManageAd.js';
+
 
 
 var routes = [
@@ -238,6 +240,12 @@ var routes = [
         path: "/settings",
         protectedShopRoute:true,
         component: Settings,
+        layout: "/shop"
+      },
+      {
+        path: "/:id/manage-ad",
+        protectedShopRoute:true,
+        component: ManageAd,
         layout: "/shop"
       },
       {

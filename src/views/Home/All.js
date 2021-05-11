@@ -15,6 +15,8 @@ import{
     NavItem,
     Spinner
 } from "reactstrap";
+import Skeleton,{SkeletonTheme} from 'react-loading-skeleton';
+
 
 // core components
 import Slider from "react-slick";
@@ -27,11 +29,15 @@ import {ProductConsumer,ProductContext} from '../../context.js'
 /* import Pagination from "react-js-pagination"; */
 import ShopCard from "../../components/ShopCard.js";
 import Pagination from '../../components/Pagination/Pagination.js';
+import ImageContainer from '../../components/ImageContainer.js'
+import ProductHolder from "components/ProductHolder.js";
+import { FormatAlignCenterSharp } from "@material-ui/icons";
+
 
 var settings = {
     dots: false,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: 6,
     slidesToScroll: 1,
     autoplay:true,
     responsive:[
@@ -44,21 +50,68 @@ var settings = {
         }
       ] 
   };
+
+  var adssettings = {
+    dots: false,
+    speed: 1000,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    autoplay:true,
+    responsive:[
+        {
+          breakpoint:450,
+          settings:{
+              centerMode:false,
+              slidesToShow:1
+          }
+        }
+      ] 
+  };
 function All({history}){
     const [isActive, setIsActive] = React.useState(false);
-    const [newItems,setNewItems] = React.useState([]);
-    const [electronics,setElectronics] = React.useState([]);
-    const [fashion, setFashion] = React.useState([]);
-    const [phones,setPhones] = React.useState([]);
+    const [newItems,setNewItems] = React.useState([1,2,3,4,5,6]);
+    const [electronics,setElectronics] = React.useState([1,2,3,4,5,6]);
+    const [fashion, setFashion] = React.useState([1,2,3,4,5,6]);
+    const [phones,setPhones] = React.useState([1,2,3,4,5,6]);
     const [shops, setShops] = React.useState([]);
     const [pagination, setPagination] = React.useState({});
     const [activeCampus, setActiveCampus] = React.useState(localStorage.getItem('activeCampus_id'));
     const [categoryList, setCategoryList]=React.useState([]);
+    const [ads, setAds] = React.useState([]);
+    const [images, setImages] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
+    const [phoneLoading, setPhoneLoading] = React.useState(true);
+    const [newLoading, setNewLoading] = React.useState(true);
+    const [fashionLoading, setFashionLoading] = React.useState(true);
+    const [electronicLoading, setElectronicLoading] = React.useState(true)
     
     
 
       React.useEffect(()=>{
+        setLoading(true)
+        var url = ''
+        if(activeCampus == null){
+          url = `https://backend-api.martekgh.com/api/admin/fetch/all/carousel-images`
+        }else{
+          url = `https://backend-api.martekgh.com/api/admin/campus/${activeCampus}/carousel-images`
+        }
+        axios.get(url)
+        .then(res=>{
+          let items = [];
+          for(var i=0; i<res.data.length; i++){
+            items.push({src:res.data[i].image_path})
+          }
+          setImages(items);
+          setLoading(false)
+        }).catch(error=>{
+          console.log(error)
+        })
+
         getShops();
+        axios.get('https://backend-api.martekgh.com/api/fetch/all/ads')
+        .then(response=>{
+            setAds(response.data.shop_ad)
+        })
         axios.get("https://backend-api.martekgh.com/api/categories")
         .then(res=>{
           const categories = res.data;
@@ -71,6 +124,7 @@ function All({history}){
         })
         .then(res=>{
             setNewItems(res.data);
+            setNewLoading(false)
         })
         .catch(error=>{
             console.log(error)
@@ -83,6 +137,7 @@ function All({history}){
          .then(res=>{
              const categories = res.data[0];
              setPhones(categories)
+             setPhoneLoading(false)
          })
          .catch(error=>{
              console.log(error)
@@ -94,7 +149,8 @@ function All({history}){
         })
          .then(res=>{
              const categories = res.data[0];
-             setFashion(categories)
+             setFashion(categories);
+             setFashionLoading(false)
          })
  
          axios.get("https://backend-api.martekgh.com/api/1/product-index",
@@ -103,7 +159,8 @@ function All({history}){
         })
          .then(res=>{
              const nextProducts = res.data[0];
-             setElectronics(nextProducts)
+             setElectronics(nextProducts);
+             setElectronicLoading(false)
          })
       },[activeCampus])
 
@@ -159,11 +216,40 @@ function All({history}){
                 <br/>
                 <div style={{marginTop:"-15px", background:"#f7f7f7"}}>
                 <div className="section" style={{marginTop:"-90px"}}>
-                    <CarouselView />
                     <ProductConsumer>
                         {value=>(
                     <Container>
-                        
+                        <Row>
+                            <Col md="2" style={{padding:"0px 4px"}} className="d-none d-lg-block">
+                                <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", padding:"15px"}} className="card-plain sidecard">
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                </Card>
+                            </Col>
+                            <Col md="8" sm="12" xs="12" style={{padding:"0px 4px"}}>
+                                {loading?
+                                    <div className="text-center">
+                                        <Skeleton style={{marginTop:"10px", width:"100%", textAlign:"center"}} className="cover-photo"/>
+                                    </div>
+                                :
+                                <CarouselView images={images}/>
+                                }
+                            </Col>
+                            <Col md="2" style={{padding:"0px 4px"}} className="d-none d-lg-block">
+                                <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", padding:"15px"}} className="card-plain sidecard">
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                                </Card>
+                            </Col>
+                        </Row>
                         <div className="nav-tabs-navigation" style={{marginTop:"10px", marginBottom:"-4px"}}>
                             <div className="nav-tabs-wrapper">
                             <Nav role="tablist" tabs>
@@ -230,7 +316,15 @@ function All({history}){
                                     <Container>
                                         <Row>
                                         {phones.map((product)=>(
-                                            <Product key={product.id} product={product}/>
+                                            <>
+                                            {phoneLoading?
+                                                <Col lg="2" md="2" sm="6" xs="6" style={{padding:"0px 2px 0px 2px"}}>
+                                                    <ProductHolder />
+                                                </Col>
+                                                :
+                                                <Product key={product.id} product={product}/>
+                                            }
+                                            </>
                                         ))}
                                         </Row>
                                 </Container>
@@ -250,23 +344,73 @@ function All({history}){
                     
                                 <CardBody>
                                     <Container>
-                                    <Row>
+                                    <Row className="d-none d-lg-block">
                                         <Col md="12" style={{padding:"0px 0px 0px 0px"}} >
                                         <Slider {...settings} infinite={newItems.length>5}>
                                         {newItems.map((value,key)=>(
-                                            <div key={key}>
-                                                <Col style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}}>
-                                                <div style={{cursor:"pointer"}}>
-                                                    <div className="text-center" onClick={() => history.push(`/user/product-details/${value.id}/${value.product_name}`,{id:value.id})}>
-                                                        <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"180px", width:"180px", borderRadius:'5px', objectFit:"cover"}}/>
-                                                    </div>
-                                                    <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>
-                                                        {value.product_name}
-                                                    </h3>
-                                                    <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:600, textAlign:"left", marginTop:"3px"}}>GH¢ {value.price}</h3>
+                                            <>
+                                                {newLoading?
+                                                    <div>
+                                                    <Col style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}}>
+                                                        <ProductHolder />
+                                                    </Col>
                                                 </div>
-                                                </Col>
-                                            </div>
+                                                :
+                                                <div key={key}>
+                                                    <Col className=" ml-auto mr-auto" style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}}>
+                                                        <div className="text-center" onClick={() => history.push(`/user/product-details/${value.id}/${value.product_name}`,{id:value.id})}>
+                                                            <ImageContainer 
+                                                                src={`https://backend-api.martekgh.com/${value.product_image[0].path}`}
+                                                                width={180}
+                                                                height={180}
+                                                                alt="alt"
+                                                            />
+                                                            {/* <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"180px", width:"180px", borderRadius:'5px', objectFit:"cover"}}/> */}
+                                                        <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>
+                                                            {value.product_name}
+                                                        </h3>
+                                                        <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:600, textAlign:"left", marginTop:"3px"}}>GH¢ {value.price}</h3>
+                                                    </div>
+                                                    </Col>
+                                                </div>
+                                                    }
+                                                </>
+                                            ))}
+                                        </Slider>
+                                        
+                                        </Col>
+                                        </Row>
+                                        <Row className="d-block d-lg-none">
+                                        <Col md="12" style={{padding:"0px 0px 0px 0px"}} >
+                                        <Slider {...settings} infinite={newItems.length>5}>
+                                        {newItems.map((value,key)=>(
+                                            <>
+                                                {newLoading?
+                                                    <div>
+                                                    <Col style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}}>
+                                                        <ProductHolder />
+                                                    </Col>
+                                                </div>
+                                                :
+                                                <div key={key}>
+                                                    <Col className=" ml-auto mr-auto" style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}}>
+                                                        <div className="text-center" onClick={() => history.push(`/user/product-details/${value.id}/${value.product_name}`,{id:value.id})}>
+                                                            <ImageContainer 
+                                                                src={`https://backend-api.martekgh.com/${value.product_image[0].path}`}
+                                                                width={226}
+                                                                height={226}
+                                                                alt="alt"
+                                                            />
+                                                            {/* <img alt="#" src={`https://backend-api.martekgh.com/${value.product_image[0].path}`} style={{height:"180px", width:"180px", borderRadius:'5px', objectFit:"cover"}}/> */}
+                                                        <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:"500", textAlign:"left"}}>
+                                                            {value.product_name}
+                                                        </h3>
+                                                        <h3 style={{color:"#5588b7", fontSize:"14px", fontWeight:600, textAlign:"left", marginTop:"3px"}}>GH¢ {value.price}</h3>
+                                                    </div>
+                                                    </Col>
+                                                </div>
+                                                    }
+                                                </>
                                             ))}
                                         </Slider>
                                         
@@ -299,7 +443,15 @@ function All({history}){
                             <Container>
                                         <Row>
                                         {fashion.map((product)=>(
-                                             <Product key={product.id} product={product}/>
+                                            <>
+                                                {fashionLoading?
+                                                <Col lg="2" md="2" sm="6" xs="6">
+                                                    <ProductHolder />
+                                                </Col>
+                                                :
+                                                <Product key={product.id} product={product}/>
+                                                }
+                                            </>
                                         ))}
                                         </Row>
                                     </Container>
@@ -307,6 +459,44 @@ function All({history}){
 
                         </Card>
                         </Row>
+
+
+
+
+                        <Row>
+                        <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
+                    
+                                <CardBody style={{padding:"5px"}}>
+                                    <Container>
+                                    <Row>
+                                        <Col md="12" style={{padding:"0px 0px 0px 0px"}} >
+                                        <Slider {...adssettings} infinite={ads.length>3}>
+                                        {ads.map((value,key)=>(
+                                            <div key={key}>
+                                                <Col style={{padding:"0px"}}>
+                                                <div style={{cursor:"pointer"}}>
+                                                    <div className="text-center" onClick={() => history.push(`/user/shop-view/${value.merchandiser_id}/shop`, {id:value.merchandiser_id})}>
+                                                        <ImageContainer 
+                                                            src={`https://backend-api.martekgh.com/${value.ad_path}`}
+                                                            width={360}
+                                                            height={260}
+                                                            alt="alt"
+                                                        />
+                                                       {/*  <img alt="#" src={`https://backend-api.martekgh.com/${value.ad_path}`} style={{height:"230px",width:"100%",borderRadius:'5px', objectFit:"cover", border:"1px solid #eaeaea"}}/> */}
+                                                    </div>
+                                                 </div>
+                                                </Col>
+                                            </div>
+                                            ))}
+                                        </Slider>
+                                        
+                                        </Col>
+                                        </Row>
+                                        </Container>
+                                    </CardBody>
+    
+                            </Card>
+                            </Row>
 
                         
                        
@@ -332,7 +522,15 @@ function All({history}){
                             <Container>
                                         <Row>
                                         {electronics.map((product)=>(
-                                             <Product key={product.id} product={product}/>
+                                            <>
+                                            {electronicLoading?
+                                                <Col lg="2" md="2" sm="6" xs="6">
+                                                    <ProductHolder />
+                                                </Col>
+                                                :    
+                                                 <Product key={product.id} product={product}/>
+                                            }
+                                            </>
                                         ))}
                                         </Row>
                                     </Container>
@@ -361,10 +559,13 @@ function All({history}){
                                     :
                                     <Container>
                                     {shops && renderShops()}
+                                    {pagination.last_page > 1?
                                     <Pagination
                                         pagination={pagination && pagination}
                                         loadData={getShops}
                                     />
+                                    : null
+                                    }
                                     </Container>
                                     }
                                     </>

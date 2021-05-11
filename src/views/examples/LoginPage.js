@@ -1,4 +1,4 @@
-import React from "react";
+import React,{useContext} from "react";
 import { Link} from "react-router-dom";
 // reactstrap components
 import { Button, Card, Form, Input, Container, Row, Col, Alert,InputGroup,InputGroupAddon,InputGroupText, Spinner } from "reactstrap";
@@ -6,6 +6,7 @@ import { Button, Card, Form, Input, Container, Row, Col, Alert,InputGroup,InputG
 //axios
 import axios from "axios";
 import swal from 'sweetalert';
+import { ProductContext } from '../../context.js'
 
 axios.defaults.withCredentials = false;
 //axios.defaults.headers.common['Auth-Token'] = 'foo bar';
@@ -29,6 +30,10 @@ function LoginPage(props){
 
   const toggleEye = () => setEye(!eye);
     
+  
+  const userContext =  useContext(ProductContext)
+
+
 
   const handleSubmit = (e) =>{
     e.preventDefault();
@@ -39,7 +44,11 @@ function LoginPage(props){
     console.log(res.data)
     if(res.data.statusCode === 200){
         localStorage.setItem('access_token',res.data.access_token);
-        window.location.reload("/")
+        axios.get('https://backend-api.martekgh.com/api/auth/user',{headers:{'Authorization':`Bearer ${res.data.access_token}`}})
+        .then(response=>{
+          userContext.actions.setUser(response.data);
+          window.location.reload("/")
+        })
     }
     
     

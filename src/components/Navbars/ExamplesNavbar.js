@@ -21,6 +21,7 @@ import { Link, NavLink as Naver } from "react-router-dom";
 // nodejs library that concatenates strings
 import classnames from "classnames";
 import history from "../../history.js";
+import { ProductConsumer } from '../../context.js';
 
 // reactstrap components
 import {
@@ -47,7 +48,7 @@ function ExamplesNavbar() {
  
   let merchandiser = localStorage.getItem('shop_access_token')
 
-  React.useEffect(()=>{
+  /* React.useEffect(()=>{
     
     axios.get("https://backend-api.martekgh.com/api/merchandiser",{
         headers:{ 'Authorization':`Bearer ${merchandiser}`}
@@ -66,23 +67,13 @@ function ExamplesNavbar() {
 }).catch(error=>{
    
 })
-},[merchandiser]);
+},[merchandiser]); */
 
-const Logout=(e)=>{
+/* const Logout=(e)=>{
   document.documentElement.classList.toggle("nav-open");
   setDropdownOpen(false);
   setNavbarCollapse(false);
-
-  axios.post("https://backend-api.martekgh.com/api/merchandiser/logout",null,{
-    headers:{ 'Authorization':`Bearer ${merchandiser}`}
-  })
-  .then(res=>{
-    localStorage.removeItem("shop_access_token");
-    history.push("/")
-  })
-  .catch(error=>{
-  })
-}
+} */
 
 
   return (
@@ -139,7 +130,12 @@ const Logout=(e)=>{
           style={{maxWidth:"50%"}}
           id="desktop-cat"
           >
-          <NavItem>
+          <ProductConsumer>
+            {
+              value=>(
+                <>
+                
+                   <NavItem>
               <NavLink 
               tag={Naver}
               to="/user/home"
@@ -161,7 +157,7 @@ const Logout=(e)=>{
               </NavItem>
                             
               <NavItem>
-              {!loggedin?
+              {!value.merchandiser?
               <div>
                 </div>
                 :
@@ -182,9 +178,18 @@ const Logout=(e)=>{
                 document.documentElement.classList.toggle("nav-open");
                 setDropdownOpen(false);
                 history.push('/shop/settings')
-              }}><i className="fa fa-user mr-1"/>{company_name}
+              }}><i className="fa fa-user mr-1"/>{value.merchandiser?.company_name}
               </ListGroupItem>
-              {!paymentRequired?
+              {value.merchandiser?.shop_type === "Max Shop" || value.merchandiser?.shop_type === "Non-student shop"?
+              <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop"onClick={() => {
+                document.documentElement.classList.toggle("nav-open");
+                setDropdownOpen(false);
+                history.push(`/shop/${value.merchandiser?.id}/manage-ad`,{id:value.merchandiser?.id})
+              }}><i className="fa fa-podcast mr-1"/>Manage Ad
+              </ListGroupItem>
+              :
+              null}
+              {value.merchandiser?.payment_status !== 'payment required'?
               null
               :
               <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop"onClick={() => {
@@ -200,12 +205,20 @@ const Logout=(e)=>{
                 history.push('/shop/transactions')
               }}><i className="fa fa-credit-card mr-1"/>Transactions
               </ListGroupItem>
-            <ListGroupItem style={{border:"none", textAlign:"left", cursor:"pointer"}} className="userdrop" onClick={Logout}><i className="fa fa-sign-out"/> Sign Out</ListGroupItem>
+            <ListGroupItem style={{border:"none", textAlign:"left", cursor:"pointer"}} className="userdrop" onClick={()=>{
+              document.documentElement.classList.toggle("nav-open");
+              setDropdownOpen(false);
+              value.shopLogout()}}><i className="fa fa-sign-out"/> Sign Out</ListGroupItem>
             </ListGroup>
             </PopoverBody>
             </UncontrolledPopover>
               </div>}
             </NavItem>
+                </>
+              )
+            }
+          </ProductConsumer>
+         
             </Nav>
 
             <Collapse 
@@ -215,9 +228,13 @@ const Logout=(e)=>{
             <Nav navbar
             className="phone-nav"
             >
-            <NavItem style={{borderBottom:"1px solid  #eaeaea", borderTop:"1px solid #eaeaea"}}>
+            <ProductConsumer>
+              {
+                value=>(
+                  <>
+              <NavItem style={{borderBottom:"1px solid  #eaeaea", borderTop:"1px solid #eaeaea"}}>
               <NavLink>
-              {company_name}
+              {value.merchandiser?.company_name}
               </NavLink>
              </NavItem> 
              <NavItem>
@@ -245,7 +262,22 @@ const Logout=(e)=>{
               <i className="fa fa-cog mr-3"/> settings
               </NavLink>
             </NavItem>
-            {!paymentRequired?
+            {value.merchandiser?.shop_type === "Max Shop" || value.merchandiser?.shop_type === "Non-student shop"?
+            <NavItem>
+              <NavLink
+              tag={Naver}
+              onClick={() => {
+                document.documentElement.classList.toggle("nav-open");
+                setNavbarCollapse(false);
+                history.push(`/shop/${value.merchandiser?.id}/manage-ad`,{id:value.merchandiser?.id})
+              }}
+              >
+              <i className="fa fa-cog mr-3"/> Manage Ad
+              </NavLink>
+            </NavItem>
+            :
+            null}
+            {!value.merchandiser?.payment_status !== 'payment required'?
             null
             :
             <NavItem>
@@ -276,12 +308,19 @@ const Logout=(e)=>{
 
             <NavItem>
               <NavLink
-              
-              onClick={Logout}
+              onClick={()=>{
+                document.documentElement.classList.toggle("nav-open");
+                setNavbarCollapse(false);
+                value.shopLogout()}}
               >
               <i className="fa fa-sign-out mr-3"/> LogOut
               </NavLink>
             </NavItem>
+                  </>
+                )
+              }
+            </ProductConsumer>
+            
             </Nav>  
             </Collapse>
       </Container>

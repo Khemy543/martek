@@ -26,11 +26,15 @@
     }
 } */
 
-
+.skeleton {
+    background-repeat: no-repeat;
+    background-image: 
+      linear-gradient(gray 100%, transparent 0);
+  }
 
 
 @media(max-width:799px){
-    .image{
+    .image-carousel{
         width:98% !important;
         height: auto;
         overflow: hidden;
@@ -40,16 +44,25 @@
     }
 }
 
-@media(min-width:800px){
-    
-    .image{
-        width:95% !important;
-        height: 45vh;
+@media(min-width:800px) and (max-width : 2500px){
+    .image-carousel{
+        width:100% !important;
+        height: 60vh;
         object-fit: cover;
         border-radius: 5px;
     }
 
 }
+
+@media (min-width: 2500px) {
+    .image-carousel{
+        width:100% !important;
+        height: 32vh;
+        object-fit: cover;
+        border-radius: 5px;
+    }
+}
+
 @media(max-width:801px){
     #modal{
         margin-top: 100%;

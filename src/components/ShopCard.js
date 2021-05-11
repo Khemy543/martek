@@ -9,6 +9,7 @@ import{
 import { ProductConsumer } from "../context";
 import history from "../history.js";
 import StarRatings from 'react-star-ratings';
+import ImageContainer from 'components/ImageContainer.js'
 
 function ShopCard(props){
         const [liked, setLiked] = React.useState(false)
@@ -36,7 +37,7 @@ function ShopCard(props){
         <Col md="3" sm="6" xs="6" style={{padding:"0px 6px"}}>
         <Card className="card-plain" style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}} >
         <CardImg top id="card-cover" className="cardimage" style={{width:"96%", borderRadius:"5px", margin:"5px", objectFit:"cover"}} 
-        src={cover_photo != null?`https://backend-api.martekgh.com/${cover_photo}`: require('assets/img/banner3.png')} alt="Card image cap" onClick={()=>history.push(`/user/shop-view/${shop_id||id}/${company_name || shop_name}`, 
+            src={cover_photo != null?`https://backend-api.martekgh.com/${cover_photo}`: require('assets/img/banner2.png')} alt="Card image cap" onClick={()=>history.push(`/user/shop-view/${shop_id||id}/${company_name || shop_name}`, 
             {id:id || shop_id}
             )}/>
             {loggedIn?

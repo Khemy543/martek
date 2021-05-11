@@ -4,6 +4,7 @@ import DemoFooter from "../components/Footers/DemoFooter.js"
 import SearchResultsProducts from "../components/SearchResultsProduct.js";
 import ShopCard from "../components/ShopCard.js";
 import EmptySearch from "../components/EmptySearch.js";
+import Product from '../components/Product.js'
 
 //import reactstrap
 import{
@@ -54,7 +55,9 @@ export default function SearchResults(props){
                             <Container>
                                 <Row>
                                     {props.location.state.products.map((product)=>(
-                                    <SearchResultsProducts key={product.searchable.id} product={product.searchable}/>
+                                        <>
+                                            <Product key={product.searchable?.id} product={product.searchable}/>
+                                        </>
                                     ))}
                                 </Row>
                             </Container>
