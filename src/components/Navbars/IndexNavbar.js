@@ -111,6 +111,7 @@ React.useEffect(()=>{
     {params:{search:searchValue}})
     .then(res=>{
       console.log(res.data);
+      setSearchValue("")
       let products = res.data.filter(item=>item.type === 'products');
       let shops = res.data.filter(item=>item.type === "merchandisers")
       history.push({

@@ -19,6 +19,7 @@ import { ProductConsumer } from "../context";
 import Gallery from 'react-grid-gallery';
 import StoreIcon from '@material-ui/icons/Store';
 import ProductCarousel from '../components/ProductCarousel.js'
+import Skeleton,{SkeletonTheme} from 'react-loading-skeleton';
 
 let user = localStorage.getItem('access_token');
 
@@ -46,7 +47,7 @@ function DetailsPage(props){
     const [product, setProduct] = React.useState([]);
     const [owner, setOwner] = React.useState("");
     const [campus_name, setCampus_name] = React.useState("");
-    const [isActive, setisActive] = React.useState(false);
+    const [isActive, setisActive] = React.useState(true);
     const [reviews, setReviews] = React.useState([]);
     const [reviewAdd, setreviewAdd] = React.useState("");
     const [loggedin, setLoggedin] = React.useState(false);
@@ -71,8 +72,6 @@ function DetailsPage(props){
      }
 
         React.useEffect(()=>{
-            console.log("props", props)
-            setisActive(true);
             let newImageArray = []
             axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/details")
             .then(res=>{
@@ -185,12 +184,13 @@ function DetailsPage(props){
                                     <Row>
                                         <Col md="6">
                                         <div style={{textAlign:"center"}} >
-                                            {/* <img alt= "#" src={`https://backend-api.martekgh.com/${first}`} 
-                                            style={{width:"200px", height:"200px"}}
-                                            /> */}
+                                            {isActive?
+                                            <Skeleton style={{width:"100%", height:"400px"}}/>
+                                            :
                                             <ProductCarousel 
                                                 images={productImages}
                                             />
+                                            }
                                         </div>
                                         </Col>
                                         <Col md="6">

@@ -18,14 +18,14 @@ import ImageContainer from 'components/ImageContainer.js'
 class Product extends React.Component{
 
     render(){
-        const {id , product_name , product_image, price }= this.props.product;
+        const {id , product_name , product_image, price, image }= this.props.product;
                 return(
                 <Col lg="2" md="2" sm="6" xs="6" style={{padding:"0px 3px 0px 3px", borderRight:"1px solid #eaeaea"}} className="product-container">
                         <div style={{textAlign:"center", cursor:"pointer"}}>
                         <div>
                             <div onClick={() => history.push(`/user/product-details/${id}/${product_name}`,{id:id})} style={{textAlign:"center"}}>
                                 <ImageContainer 
-                                    src={`https://backend-api.martekgh.com/${product_image[0].path}`}
+                                    src={`https://backend-api.martekgh.com/${product_image? product_image[0].path : image? image[0].path : null }`}
                                     width={180}
                                     height={180}
                                     alt={product_name}

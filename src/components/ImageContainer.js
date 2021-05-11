@@ -17,16 +17,17 @@ const ImageContainer = props => {
     });
 
     const aspectRatio = (props.height / props.width) * 100;
-    console.log(aspectRatio)
 
     return (
         <div
             ref = {ref}
             style={{background: isVisible? "white" : "rgba(0,0,0,0.05)", paddingBottom:`${aspectRatio}%`, position:"relative", overflow:"hidden", display:"block"}}
         >
-            {isVisible && (
-                <Image src={props.src} alt={props.alt} {...props}/>
-            )}
+            <>
+                {isVisible && (
+                    <Image src={props.src} alt={props.alt} {...props}/>
+                )}
+            </>
         </div>
     )
 }
