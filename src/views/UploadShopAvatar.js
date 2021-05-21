@@ -104,7 +104,7 @@ class UploadShopAvatar extends React.Component{
         <Row className="mt-auto mb-auto" style={{marginTop:"50px"}}> 
             <Col md="4" lg="4"  className="ml-auto mr-auto">
             <div>
-            <label>Shop Logo</label>
+            <label style={{fontWeight:500}}>Shop Logo</label>
             <ImageUploader
                 withIcon={true}
                 withPreview={true}
@@ -120,7 +120,7 @@ class UploadShopAvatar extends React.Component{
             </Col>
             <Col md="4" lg="4" className="ml-auto mr-auto">
                 <div>
-                <label>Cover Photo</label>
+                <label style={{fontWeight:500}}>Cover Photo</label>
                 <ImageUploader
                     withIcon={true}
                     withPreview={true}
@@ -136,7 +136,7 @@ class UploadShopAvatar extends React.Component{
             </Col>
             <Col md="4" lg="4" className="ml-auto mr-auto">
                 <div>
-                <label>Valid ID Card</label>
+                <label style={{fontWeight:500}}>Valid ID Card</label>
                 <ImageUploader
                     withIcon={true}
                     withPreview={true}

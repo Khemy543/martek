@@ -24,7 +24,6 @@ import Product from "../../components/Product.js";
 import CarouselView from "../../components/Carousel/Carousel.js";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import StoreIcon from '@material-ui/icons/Store';
 import {ProductConsumer,ProductContext} from '../../context.js'
 /* import Pagination from "react-js-pagination"; */
 import ShopCard from "../../components/ShopCard.js";
@@ -32,6 +31,7 @@ import Pagination from '../../components/Pagination/Pagination.js';
 import ImageContainer from '../../components/ImageContainer.js'
 import ProductHolder from "components/ProductHolder.js";
 import { FormatAlignCenterSharp } from "@material-ui/icons";
+import StoreIcon from '@material-ui/icons/Store';
 
 
 var settings = {
@@ -219,34 +219,66 @@ function All({history}){
                     <ProductConsumer>
                         {value=>(
                     <Container>
-                        <Row>
-                            <Col md="2" style={{padding:"0px 4px"}} className="d-none d-lg-block">
-                                <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", padding:"15px"}} className="card-plain sidecard">
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                        <Row style={{height:"auto"}}>
+                            <Col md="2" style={{padding:"0px 3px"}} className="d-none d-lg-block">
+                                <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", padding:"15px", height:"100%"}} className="card-plain">
+                                    <h4 style={{fontSize:"12px", fontWeight:500, paddingTop:"0px"}}><i className="fa fa-heart-o mr-1"/> Tips</h4>
+                                    <h4 style={{fontSize:"12px", fontWeight:500}}>
+                                    1. Ensure to meet a campus seller in person, check the item(s) and make sure you are satisfied with the product.<br/><br/>
+                                    2. Make payments only on delivery.<br/><br/>
+                                    3. Avoid deals that are too good to be true; unrealistically low prices inclusive.<br/><br/>
+                                    4. Never give out personal Information.
+                                    </h4>
                                 </Card>
                             </Col>
                             <Col md="8" sm="12" xs="12" style={{padding:"0px 4px"}}>
                                 {loading?
                                     <div className="text-center">
-                                        <Skeleton style={{marginTop:"10px", width:"100%", textAlign:"center"}} className="cover-photo"/>
+                                        <Skeleton style={{marginTop:"10px", width:"100%", textAlign:"center", height:"40vh"}}/>
                                     </div>
                                 :
                                 <CarouselView images={images}/>
-                                }
+                                }  
                             </Col>
-                            <Col md="2" style={{padding:"0px 4px"}} className="d-none d-lg-block">
-                                <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", padding:"15px"}} className="card-plain sidecard">
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
-                                    <h4 style={{fontSize:"12px"}}><i className="fa fa-heart-o mr-1"/> Favorite</h4>
+                            <Col md="2" style={{padding:"0px 3px"}} className="d-none d-lg-block">
+                                <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", padding:"30px 15px", height:"100%"}} className="card-plain">
+                                    
+                                    <Row style={{cursor:'pointer'}} onClick={()=>history.push('/user/add-product')}>
+                                        <Col md="3">
+                                        <div className="rounded-icon">
+                                            <i className="fa fa-money" style={{fontSize:"18px"}}/>
+                                        </div>
+                                        </Col>
+                                        <Col md="9">
+                                            <h3 style={{fontSize:"12px", marginTop:0, fontWeight:500}}>Sell on Martek</h3>
+                                            <p style={{fontSize:"10px"}}>Start advertising</p>
+                                        </Col>
+                                    </Row>
+                                    <br/>
+                                    <Row style={{cursor:'pointer'}} onClick={()=>history.push('/user/shop/free-trial')}>
+                                        <Col md="3">
+                                        <div className="rounded-icon">
+                                            <StoreIcon style={{fontSize:"18px"}}/>
+                                        </div>
+                                        </Col>
+                                        <Col md="9">
+                                            <h3 style={{fontSize:"12px", marginTop:0, fontWeight:500}}>Own a shop</h3>
+                                            <p style={{fontSize:"10px"}}>Get your shop</p>
+                                        </Col>
+                                    </Row>
+                                    <br/>
+                                    <Row style={{cursor:'pointer'}} onClick={()=>history.push('/user/contact-us')}>
+                                        <Col md="3">
+                                        <div className="rounded-icon">
+                                            <i className="fa fa-phone" style={{fontSize:"18px"}}/>
+                                        </div>
+                                        </Col>
+                                        <Col md="9">
+                                            <h3 style={{fontSize:"12px", marginTop:0, fontWeight:500}}>Contact Us</h3>
+                                            <p style={{fontSize:"10px"}}>Let us help you</p>
+                                        </Col>
+                                    </Row>
+                                    <br/>
                                 </Card>
                             </Col>
                         </Row>

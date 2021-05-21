@@ -146,7 +146,7 @@ React.useEffect(()=>{
           >
           {/* <Link to="/user/home" style={{textDecoration:'none', color:"white", fontWeight:"bold"}}> */}
           <img alt="#" src= {require("../../assets/img/martlogo.png")}
-            style={{maxWidth:"80px", height:"auto",marginRight:"8px"}}
+            style={{maxWidth:"100px", height:"auto",marginRight:"8px"}}
             className="top"
             />
             <img alt="#" src= {require("../../assets/img/martek.png")}
