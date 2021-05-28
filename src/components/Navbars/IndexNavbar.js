@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink as Naver, Redirect } from "react-router-dom";
 
-import StoreIcon from '@material-ui/icons/Store';
+import StoreIcon from '@material-ui/icons/Store'; 
 // nodejs library that concatenates strings
 import classnames from "classnames";
 // reactstrap components
@@ -139,7 +139,6 @@ React.useEffect(()=>{
       ) : null}
       <Container>
           <NavbarBrand
-            data-placement="bottom"
             title="Martek gh online"
             tag={Link}
             to="/user/home"
@@ -212,9 +211,8 @@ React.useEffect(()=>{
           </button>
 
           <Nav navbar
-          className="justify-content-end"
-          style={{maxWidth:"50%",float:"right"}}
           id="desktop-cat"
+          style={{display:'flex', justifyContent:"end"}}
           >
             <NavItem>
               <div >
@@ -254,7 +252,7 @@ React.useEffect(()=>{
               </NavLink>
              
             </NavItem>
-            <NavItem>
+            <NavItem className="d-lg-none">
               <NavLink
               tag={Naver}
               to="/user/add-product"
