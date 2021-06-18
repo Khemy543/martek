@@ -11,7 +11,7 @@ import{
     Row,
     Col,
     Form,  Label, Input,
-    Button, InputGroup, InputGroupAddon, InputGroupText, Spinner
+    Button, InputGroup, InputGroupAddon, InputGroupText, Spinner, FormFeedback
 } from "reactstrap";
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
@@ -30,6 +30,7 @@ function AddToShop(){
   //const [imageLink, setImageLink] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [isActive, setIsActive] = React.useState(false);
+  const [error, setError] = React.useState(null)
 
   let merchandiser = localStorage.getItem("shop_access_token")
   React.useEffect(()=>{
@@ -43,6 +44,9 @@ function AddToShop(){
     
     const handleSubmit = (e) =>{
       e.preventDefault();
+      if(typeof(Number(price)) != 'number' || isNaN(Number(price))){
+        return setError('Please enter a valid amount !')
+      }
        setIsActive(true);
     axios.post('https://backend-api.martekgh.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
       headers:{'Authorization':`Bearer ${merchandiser}`}
@@ -85,15 +89,16 @@ function AddToShop(){
                       </InputGroup>
                     </Col>
                     <Col md="6">
-                    <Label>PRICE</Label>
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">
+                    <Label>PRICE (GHS)</Label>
+                        {/* <InputGroupAddon addonType="prepend">
                           <InputGroupText>
                             <i className="nc-icon nc-money-coins" />
                           </InputGroupText>
-                        </InputGroupAddon>
-                        <Input placeholder="Price" type="text" name="price" value={price} onChange={e => setPrice(e.target.value)} required/>
-                      </InputGroup>
+                        </InputGroupAddon> */}
+                        <Input 
+                          invalid={error}
+                          placeholder="Price" type="text" name="price" value={price} onChange={e => setPrice(e.target.value)} required/>
+                         <FormFeedback style={{fontWeight:500}}>{error}</FormFeedback>
                     </Col>
                   </Row>
     

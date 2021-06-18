@@ -102,6 +102,29 @@ class UploadShopAvatar extends React.Component{
                
         <Form onSubmit={this.handleSubmit} style={{marginTop:"50px"}}>
         <Row className="mt-auto mb-auto" style={{marginTop:"50px"}}> 
+            
+            <Col md="4" lg="4" className="ml-auto mr-auto">
+                <div>
+                {this.props.location.state.shop_type_id != 3?
+                <label style={{fontWeight:500}}>Student ID Card</label>
+                :
+                <label style={{fontWeight:500}}>Valid ID Card</label>
+                }
+                <ImageUploader
+                    withIcon={true}
+                    withPreview={true}
+                    buttonText='Valid ID Card'
+                    onChange={this.onDropCard}
+                    label="Max file size:5mb accept:jpg,png,jpeg"
+                    imgExtension={['.jpg','.png', '.jpeg', '.jfif', '.heic']}
+                    fileSizeError="file size is too big"
+                    fileTypeError="is not supported"
+                    value={this.state.activateButton3}
+                    singleImage={true}
+                    fileSizeError="File Size Too Big"
+                />
+                    </div>
+            </Col>
             <Col md="4" lg="4"  className="ml-auto mr-auto">
             <div>
             <label style={{fontWeight:500}}>Shop Logo</label>
@@ -129,24 +152,6 @@ class UploadShopAvatar extends React.Component{
                     imgExtension={['.jpg','.png','.jpeg', '.jfif', '.heic']}
                     maxFileSize={5242880}
                     value={this.state.activateButton2}
-                    singleImage={true}
-                    fileSizeError="File Size Too Big"
-                />
-                    </div>
-            </Col>
-            <Col md="4" lg="4" className="ml-auto mr-auto">
-                <div>
-                <label style={{fontWeight:500}}>Valid ID Card</label>
-                <ImageUploader
-                    withIcon={true}
-                    withPreview={true}
-                    buttonText='Valid ID Card'
-                    onChange={this.onDropCard}
-                    label="Max file size:5mb accept:jpg,png,jpeg"
-                    imgExtension={['.jpg','.png', '.jpeg', '.jfif', '.heic']}
-                    fileSizeError="file size is too big"
-                    fileTypeError="is not supported"
-                    value={this.state.activateButton3}
                     singleImage={true}
                     fileSizeError="File Size Too Big"
                 />

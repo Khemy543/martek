@@ -234,7 +234,7 @@ function DetailsPage(props){
                                                 <h4 style={{fontSize:"14px", fontWeight:500, margin: "30px 0px 5px 0px"}}>DESCRIPTION</h4>
                                             </div>
                                             <div>
-                                                <p style={{fontWeight:500, fontSize:"14px", marginTop:"8px"}}> 
+                                                <p style={{fontWeight:500, fontSize:"14px", marginTop:"8px", whiteSpace:"pre-line"}}> 
                                                 {description}
                                                 </p>
                                             </div>

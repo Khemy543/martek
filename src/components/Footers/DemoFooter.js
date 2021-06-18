@@ -16,7 +16,7 @@ function DemoFooter(props) {
         <Nav>
           <NavItem>
             <NavLink>
-            <img alt="#" src={require("../../assets/img/martlogo.png")} style={{maxWidth:"120px", height:"30px"}}/>
+            <img alt="#" src={require("../../assets/img/martlogo.png")} style={{width:"auto", height:"60px"}}/>
             </NavLink>
           </NavItem>
         </Nav>

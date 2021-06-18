@@ -1,11 +1,6 @@
 import React from "react";
 // core components
-import IndexNavbar from "../components/Navbars/IndexNavbar.js";
-import DemoFooter from "../components/Footers/DemoFooter";
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
 import Pagination from "react-js-pagination";
-import history from "../history.js";
 import Product from "components/Product.js";
 //react strap
 import{
@@ -17,7 +12,6 @@ import{
     Col
     
 } from "reactstrap";
-import { ProductConsumer } from "../context";
 import axios from "axios";
 
 class Categories extends React.Component {
@@ -41,7 +35,6 @@ class Categories extends React.Component {
             }
         })
         .then(res=>{
-            console.log(res.data)
             this.setState({products:res.data});
             this.setState({isActive:false})
         })
@@ -51,6 +44,7 @@ class Categories extends React.Component {
 
     renderProducts(){
         const {data, meta} = this.state.products;
+        let products  = data[0].filter(item=>item.product_image[0] !== undefined)
         return(
             <React.Fragment>
             <Container>
@@ -69,7 +63,7 @@ class Categories extends React.Component {
                                 <CardBody>
                                 <Container>
                                     <Row>
-                                     {data[0].map((product,index)=>{
+                                     {products.map((product,index)=>{
                                         return <Product key={product.id} product={product}/>;
 
                                         })}

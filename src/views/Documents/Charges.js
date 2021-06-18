@@ -256,16 +256,21 @@ export default function Charges(){
                                                     </tr>
                                                     <tr>
                                                         <td>2</td>
-                                                        <td>20.1 – 1,000.00</td>
-                                                        <td>1% of item cost</td>
+                                                        <td>20.1 – 100.00</td>
+                                                        <td>1</td>
                                                     </tr>
                                                     <tr>
                                                         <td>3</td>
+                                                        <td>100.1 – 1,000.00</td>
+                                                        <td>1% of item cost</td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>4</td>
                                                         <td>1,000.01 – 3,000.00</td>
                                                         <td>12</td>
                                                     </tr>
                                                     <tr>
-                                                        <td>4</td>
+                                                        <td>5</td>
                                                         <td>3,000.01 and above</td>
                                                         <td>15</td>
                                                     </tr>    
@@ -278,8 +283,11 @@ export default function Charges(){
                                             <Col md="12" lg="12" sm="12" xs="12" >
                                                     <h4 style={{fontSize:"18px",fontWeight:500,marginBottom:"20px"}}>Own a Shop</h4>
                                                     <p>
-                                                    Owning a shop on Martek is free for the first semester of registration! Sign up on Martek s a Shop owner and sell for free for one whole semester.<br/>
-                                                    After this period, you will be charged a monthly subscription fee depending on the type of shop you own. You can take a look at the fee structure below:
+                                                    Owning a shop on Martek is free for the 3 months of registration! Sign up on Martek as a Shop owner and sell for free for one whole semester.
+                                                    <br/>
+                                                    <br/>
+                                                    After this period, you will be charged a monthly subscription fee depending on the type of shop you own. 
+                                                    Below is the fee structure:
 
                                                     </p>
                                                     
@@ -305,12 +313,12 @@ export default function Charges(){
                                                     <tr>
                                                         <td>2</td>
                                                         <td>Max-Shop</td>
-                                                        <td>40</td>
+                                                        <td>35</td>
                                                     </tr>
                                                     <tr>
                                                         <td>3</td>
                                                         <td>Non-Student Shop</td>
-                                                        <td>80</td>
+                                                        <td>50</td>
                                                     </tr>   
                                                     </tbody>
                                                 </Table>

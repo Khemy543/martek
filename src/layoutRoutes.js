@@ -60,6 +60,8 @@ import FreeConditions from "views/Payment/freeCondtions.js";
 import ProductFreeTrial from "views/Payment/ProductFreeTrial.js";
 
 import ManageAd from 'views/ManageAd.js';
+import Terms from "views/Documents/Terms.js";
+import Privacy from "views/Documents/PrivacyPolicy.js";
 
 
 
@@ -366,6 +368,16 @@ var routes = [
       {
         path: "/product/free-trial",
         component: ProductFreeTrial,
+        layout: "/user"
+      },
+      {
+        path: "/terms-conditions",
+        component: Terms,
+        layout: "/user"
+      },
+      {
+        path: "/privacy-and-policy",
+        component: Privacy,
         layout: "/user"
       },
 

@@ -239,7 +239,7 @@ shopLogout =()=>{
     .then(res=>{
         localStorage.removeItem("shop_access_token");;
         this.setState({merchandiser:{}})
-        window.location.reload('/')
+        window.location.pathname='/user/home';
     })
     .catch(error=>{
     })
@@ -558,15 +558,17 @@ searchShopPrediction=(searchValue)=>{
                
 
                 {this.props.children}
-                <Container>
-                <Col className="ml-auto mr-auto" md="12">
-                    <Modal isOpen={this.state.modal} toggle={this.toggle} style={{maxHeight:"40px", maxWidth:"300px"}} className="alert-modal">
-                        <ModalBody>
-                            <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white", fontSize:"15px"}}>{this.state.modalInfo}!!</h4>
+                <div style={{
+                    display:"flex",
+                    justifyContent:"center",
+                    width:"100vh"
+                }}>
+                    <Modal isOpen={this.state.modal} toggle={this.toggle} style={{maxHeight:"40px", maxWidth:"500px"}} className="alert-modal">
+                        <ModalBody style={{ color: "white", fontSize: "12px", fontWeight: 500 }} className="text-center">
+                           {this.state.modalInfo}!
                         </ModalBody>
                     </Modal>
-                </Col>
-                </Container>
+                </div>
             </ProductContext.Provider>
         );
     }

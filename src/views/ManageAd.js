@@ -73,7 +73,7 @@ class ManageAd extends React.Component{
         .then(response=>{
             console.log(response.data);
             this.setState({
-                modalInfo:"Ad Updated Successfully",
+                modalInfo:"AD UPDATED SUCCESSFULLY",
                 modal:true
             })
             setTimeout(
@@ -95,7 +95,7 @@ class ManageAd extends React.Component{
         axios.delete(`https://backend-api.martekgh.com/api/merchandiser/shop/${this.state.ad_id}/ad`)
         .then(response=>{
             this.setState({
-                modalInfo:"Ad Deleted!",
+                modalInfo:"AD DELETED!",
                 modal:true,
                 imageSrc:null
             })
@@ -120,65 +120,85 @@ class ManageAd extends React.Component{
             <div className="section">
                 <br/>
                 <br/>
-                <br/>
                 <Container>
+                <h4 style={{fontWeight:500, fontSize:'16px'}}>Picture Ad</h4>
+                <p style={{marginBottom:"10px", fontSize:"13px"}}>Choose a picture for your ad</p>
                 <ProductConsumer>
                     {
                         value=>(
                             <>
                             <Row>
-                            <Col md ="6" xs="12" sm="12" className="ml-auto mr-auto" style={{display:"flex", justifyContent:"center"}}>
+                            <Col md ="8" xs="12" sm="12" style={{display:"flex", justifyContent:"center"}}>
                                 <div>
-                                    <input type="file" accept="image/*" ref={input =>this.inputElement = input}  className="hidden" onChange={e=>this.handleChange(e.target.files[0])} />
-                                    <div className="preview-container">
-                                        <img className="preview-image" src={this.state.imageSrc} />
-                                        <div className="image-container">
-                                            <div type="button" className="image-upload-button" onClick={()=>this.browseFiles()}>
-                                                <img src={require('assets/img/uploadicon.png')} />
-                                                {/* <span>Upload File</span> */}
+                                    <div className="ad-icon">
+                                        <i className="fa fa-picture-o" />
+                                    </div>
+                                    <p>Upload a picture from your library</p>
+                                    
+                                    <div>
+                                        <input type="file" accept="image/*" ref={input =>this.inputElement = input}  className="hidden" onChange={e=>this.handleChange(e.target.files[0])} />
+                                        <div className="preview-container" onClick={()=>this.browseFiles()}>
+                                            <img className="preview-image" src={this.state.imageSrc} />
+                                            <div className="image-container">
+                                                <i className="fa fa-picture-o" style={{fontSize:"50px"}}/>
                                             </div>
                                         </div>
                                     </div>
+                                        <br/>
+                                        <br/>
+                                    
+                                        {
+                                            this.state.loading?
+                                            <Button disabled color="info" style={{marginRight:"5px"}}>
+                                                <Spinner size="sm" />
+                                            </Button>
+                                            :
+                                            <Button color="info" onClick={()=>this.submitAd(value.merchandiser?.id)} style={{marginRight:"5px"}}>
+                                                Upload Ad
+                                            </Button>
+
+                                        }
+
+                                        {
+                                            this.state.deleteLoading?
+                                            <Button disabled color="danger"style={{marginLeft:"5px"}}>
+                                                <Spinner size="sm" />
+                                            </Button>
+                                            :
+                                            <Button color="danger" onClick={()=>this.deleteAd(value.merchandiser?.id)} style={{marginLeft:"5px"}}>
+                                                Delete Ad
+                                            </Button>
+
+                                        }
+
                                 </div>
+                            </Col>
+
+                            <Col md="4" style={{borderLeft:"1px solid #9b9999"}}>
+                                <h4 style={{fontWeight:500, fontSize:'16px'}}>Recommended Picture Specs</h4>
+                                <br/>
+                                <ul>
+                                    <li>Format : JPEG, JPG, PNG</li>
+                                    <li>Size : 5mb or less</li>
+                                </ul>
+
                             </Col>
                         </Row>
                         
                         <br/>
                         <br/>
-                        <div>
-                            
-                        <Row>
-                            <Col md="6" className="ml-auto mr-auto" style={{display:"flex", justifyContent:"center"}}>
-                            {
-                                this.state.loading?
-                                <Button disabled color="info" style={{marginRight:"5px"}}>
-                                    <Spinner size="sm" />
-                                </Button>
-                                :
-                                <Button color="info" onClick={()=>this.submitAd(value.merchandiser?.id)} style={{marginRight:"5px"}}>
-                                    Upload Ad
-                                </Button>
-
-                            }
-
-                            {
-                                this.state.deleteLoading?
-                                <Button disabled color="danger"style={{marginLeft:"5px"}}>
-                                    <Spinner size="sm" />
-                                </Button>
-                                :
-                                <Button color="danger" onClick={()=>this.deleteAd(value.merchandiser?.id)} style={{marginLeft:"5px"}}>
-                                    Delete Ad
-                                </Button>
-
-                            }
-                            </Col>
-                        </Row>
-                        <Modal isOpen={this.state.modal} toggle={this.toggle} style={{maxHeight:"40px", maxWidth:"300px"}} className="alert-modal">
-                            <ModalBody>
-                                <h4 style={{textAlign:"center", marginTop:"-3%", fontWeight:"500", color:"white", fontSize:"15px", textTransform:"uppercase"}}>{this.state.modalInfo}!!</h4>
+                        <div style={{
+                            display:"flex",
+                            justifyContent:"center",
+                            width:"100%"
+                        }}>
+                        
+                        <Modal isOpen={this.state.modal} toggle={this.toggle} style={{maxHeight:"40px", maxWidth:"500px"}} className="alert-modal">
+                            <ModalBody style={{ color: "white", fontSize: "12px", fontWeight: 500 }} className="text-center">
+                                {this.state.modalInfo}!
                             </ModalBody>
                         </Modal>
+
                         </div>
                         </>
                         )

@@ -87,13 +87,17 @@ function DeleteShop(props) {
                 </Col>
               </Row>
             </Container>
-            <Col className="ml-auto mr-auto" md="12">
+            <div style={{
+              display:"flex",
+              justifyContent:"center",
+              width:"100%"
+            }}>
                 <Modal isOpen={modal} style={{maxHeight:"40px", maxWidth:"500px"}} className="alert-modal">
                     <ModalBody style={{ color: "white", fontSize: "14px", fontWeight: 500 }} className="text-center">
-                    SHOP DELETED!
+                        SHOP DELETED!
                     </ModalBody>
                 </Modal>
-            </Col>
+            </div>
        </div>
     </div>
   );

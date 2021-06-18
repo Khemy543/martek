@@ -37,8 +37,8 @@ function ShopPage(props) {
     setIsActive(true);
     axios.get(`https://backend-api.martekgh.com/api/merchandiser/${id}/products`)
     .then(response=>{
-      console.log(response.data)
-        setShopProducts(response.data[0]);
+      const categories = response.data[0].filter(item => item.product_image[0] !== undefined);
+        setShopProducts(categories);
         setIsActive(false)
     })
     .catch(error=>{
@@ -105,7 +105,7 @@ function ShopPage(props) {
         {
           value=>(
             <>
-      <img alt="#" src={value.merchandiser?.cover_photo != null?`https://backend-api.martekgh.com/${value.merchandiser?.cover_photo}`: require('assets/img/cover.jpg')} style={{width:"95%", marginTop:"10px", objectFit:"cover"}} className="cover-photo"/>
+      <img alt="#" src={value.merchandiser?.cover_photo != null?`https://backend-api.martekgh.com/${value.merchandiser?.cover_photo}`: require('assets/img/banner3.png')} style={{width:"95%", marginTop:"10px", objectFit:"cover"}} className="cover-photo"/>
       
         <Container>
         <br/>
@@ -121,14 +121,14 @@ function ShopPage(props) {
                   id="img-circle"
                   className="img-circle img-no-padding img-responsive"
                   style={{border:"1px solid #eaeaea", width:"120px",height:"120px", marginTop:"200px",objectFit:"cover"}}
-                  src={value.merchandiser?.avatar != null?`https://backend-api.martekgh.com/${value.merchandiser?.avatar}` : require('assets/img/avatar.png')}
+                  src={value.merchandiser?.avatar != null?`https://backend-api.martekgh.com/${value.merchandiser?.avatar}` : require('assets/img/thumbnail2.png')}
               />
             </div>
-            </Col>
+            </Col> 
             </Row>
             <Row style={{marginTop:"-40px"}}>
               <Col md="4" sm="4" xs="4" lg="4" xl="4">
-              <h4 style={{fontSize:"20px", marginTop:"0px",fontWeight:"bold"}}>
+              <h4 style={{fontSize:"16px", marginTop:"0px",fontWeight:"bold"}}>
                 {value.merchandiser?.company_name}
               </h4>
               <StarRatings
@@ -136,7 +136,7 @@ function ShopPage(props) {
                 starRatedColor="#CFB53B"
                 numberOfStars={5}
                 name='rating'
-                starDimension="18px"
+                starDimension="14px"
                 starSpacing="1px"
                 />
               </Col>
@@ -154,7 +154,7 @@ function ShopPage(props) {
             </Row>  
             <Row style={{marginTop:"10px"}}>
               <Col md="7" xl="7" sm="12" xs="12" lg="7" className="mr-auto ml-auto">
-              <p>{value.merchandiser?.company_description}</p>
+              <p style={{whiteSpace:"pre-line"}}>{value.merchandiser?.company_description}</p>
               </Col>
             </Row>
               

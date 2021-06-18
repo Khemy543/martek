@@ -84,8 +84,8 @@ const FreeTrial=(id)=>{
           <Row>
             <Col md="6" xs="12" sm="12" xl="6" lg="6" className="mr-auto ml-auto">
               <h3 style={{fontWeight:600, color:"#57288f"}} className="text-center">Martek Shop Plans</h3>
-              <p className="text-center" style={{color:"#57288f", fontWeight:500}}>All your free trial plans free trail plans are here for you</p>
-            </Col>
+{/*               <p className="text-center" style={{color:"#57288f", fontWeight:500}}>All your free trial plans free trail plans are here for you</p>
+ */}            </Col>
           </Row>
           <br/>
           <br/>
@@ -96,10 +96,12 @@ const FreeTrial=(id)=>{
                   <CardBody style={{padding:"20px 20px"}}>
                     <h3 className="card-head">Mini Shop</h3>
                     <br/>
-                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Maximum number of items 100</h5>
-                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Maximum number of items 50</h5>
-                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Maximum number of items 100</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Student owned</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Up to 20 items</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Campus specific</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Followers</h5>
                     <h3 className="card-price">¢20 <sub>/month</sub></h3>
+                    <br/>
                     <br/>
                     <Button
                       block
@@ -124,10 +126,12 @@ const FreeTrial=(id)=>{
                   <CardBody style={{padding:"20px 20px"}}>
                     <h3 className="card-head">Max Shop</h3>
                     <br/>
-                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Maximum number of items 100</h5>
-                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Maximum number of items 100</h5>
-                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Maximum number of items 100</h5>
-                    <h3 className="card-price">¢40 <sub>/month</sub></h3>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Student owned</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Unlimited no. of items</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Personalized Ad section</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Campus specific</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Followers</h5>
+                    <h3 className="card-price">¢35 <sub>/month</sub></h3>
                     <br/>
                     <Button
                       block
@@ -152,10 +156,12 @@ const FreeTrial=(id)=>{
                   <CardBody style={{padding:"20px 20px"}}>
                     <h3 className="card-head card-main">Non Student Shop</h3>
                     <br/>
-                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Maximum number of items 100</h5>
-                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Maximum number of items unlimited</h5>
-                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Maximum number of items 100</h5>
-                    <h3 className="card-price">¢80 <sub>/month</sub></h3>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Non-student owned</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Unlimited no. of items</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Personalized Ad section</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> All Campus</h5>
+                    <h5 className="card-description"><i className="fa fa-check-square mr-3"/> Followers</h5>
+                    <h3 className="card-price">¢50 <sub>/month</sub></h3>
                     <br/>
                     <Button
                       block
@@ -176,11 +182,6 @@ const FreeTrial=(id)=>{
               </Col>
           </Row>
         </Container>
-        {/* <Modal isOpen={modal} className="login-modal">]
-          <ModalBody style={{color:"white", fontSize:"12px", fontWeight:500}} className="text-center">
-            FREE TRIAL ACTIVATED
-          </ModalBody>
-        </Modal> */}
         </div>
     </>
   );

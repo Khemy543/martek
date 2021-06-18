@@ -1,11 +1,12 @@
 {
   "name": "martekgh",
-  "description": "E-commerce for campus in Ghana",
+  "description": "Ghana’s cross-campus e-commerce platform where tertiary students sell, buy and advertise various goods and services. Find a great deal right on your campus.*KNUST*UCC*UNER*UG-LEGON*UMAT*UPSA",
   "keywords": [
     "react",
     "reactjs",
     "martek",
     "martekgh",
+    "martek gh",
     "martekgh.com",
     "e-commerce",
     "shop",
@@ -43,7 +44,7 @@
     "react-datetime": "2.16.3",
     "react-dom": "^16.8.6",
     "react-grid-gallery": "^0.5.5",
-    "react-helmet": "^6.0.0",
+    "react-helmet": "^6.1.0",
     "react-images-upload": "^1.2.8",
     "react-js-pagination": "^3.0.3",
     "react-loading-overlay": "^1.0.1",

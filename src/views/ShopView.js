@@ -55,7 +55,8 @@ function ShopView(props) {
     axios.get("https://backend-api.martekgh.com/api/merchandiser/" + props.match.params.id + "/products"
     )
       .then(response => {
-        setShopProducts(response.data[0]);
+        let products = response.data[0].filter(items => items.product_image[0] !== undefined)
+        setShopProducts(products);
       })
       .catch(error => {
       });
@@ -208,7 +209,7 @@ function ShopView(props) {
               <Row style={{ marginTop: "-70px" }}>
                 <Col md="5" sm="5" xs="5" xl="5" lg="5" style={{paddingLeft:"0px"}}>
                   <div className="shop-view-name">
-                    <h4 style={{ fontSize: "19px", marginTop: "0px", fontWeight: "bold" }}>
+                    <h4 style={{ fontSize: "16px", marginTop: "0px", fontWeight: "bold" }}>
                       {name}
                     </h4>
 
@@ -217,7 +218,7 @@ function ShopView(props) {
                       starRatedColor="#CFB53B"
                       numberOfStars={5}
                       name='rating'
-                      starDimension="16px"
+                      starDimension="14px"
                       starSpacing="1px"
                     />
 
@@ -247,7 +248,7 @@ function ShopView(props) {
                 </Col>
 
               </Row>
-              <Row style={{ marginTop: "10px" }}>
+              <Row style={{ marginTop: "10px", whiteSpace:"pre-line" }}>
                 <Col md="7" sm="12" xs="12" lg="7" xl="7" className="mr-auto ml-auto">
                   <p>{description}</p>
                 </Col>

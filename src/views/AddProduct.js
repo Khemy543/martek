@@ -11,7 +11,7 @@ import{
     Row,
     Col,
     Form,  Label, Input,
-    Button, InputGroup, InputGroupAddon, InputGroupText, Spinner
+    Button, InputGroup, InputGroupAddon, InputGroupText, Spinner, FormFeedback
 } from "reactstrap";
 import LoadingOverlay from "react-loading-overlay";
 import BounceLoader from "react-spinners/BounceLoader";
@@ -25,14 +25,14 @@ import { conforms } from "lodash";
 function AddProduct(props){
   const [categoryList, setCategoryList]=React.useState([]);
   const [product_name, setProduct_name] = React.useState('');
-  const [price, setPrice] = React.useState('');
+  const [price, setPrice] = React.useState(null);
   const [category, setCategory] = React.useState(1);
   const [in_stock] = React.useState(1);
   //const [imageLink, setImageLink] = React.useState('');
   const [description, setDescription] = React.useState('');
   const [isActive , setIsAcitve] = React.useState(false);
+  const [error, setError] = React.useState(null);
 
-  console.log("aahh",localStorage.getItem('validity'))
   let valid = localStorage.getItem('validity');
   if(valid === "false"){
     history.push("/user/add-product-validation")
@@ -48,11 +48,17 @@ function AddProduct(props){
     },[]);
     
     const handleSubmit = (e) =>{
-      console.log("....")
       e.preventDefault();
+
+      if(typeof(Number(price)) != 'number' || isNaN(Number(price))){
+        return setError('Please enter a valid amount !')
+      }
+
       setIsAcitve(true);
+
     let user = localStorage.getItem('access_token')
-    axios.post('https://backend-api.martekgh.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
+    axios.post('https://backend-api.martekgh.com/api/e-trader/'+category+'/add-product',
+    {product_name, in_stock, price:parseFloat(price), description}, {
       headers:{'Authorization':`Bearer ${user}`}
     }).then(res => {
       console.log(res.data)
@@ -103,15 +109,18 @@ function AddProduct(props){
                   </Row>
                   <Row>
                   <Col>
-                    <Label>PRICE</Label>
-                      <InputGroup>
-                        <InputGroupAddon addonType="prepend">
+                    <Label>PRICE (GHS)</Label>
+                       {/*  <InputGroupAddon addonType="prepend">
                           <InputGroupText>
-                            <i className="nc-icon nc-money-coins" />
+                            GHS
                           </InputGroupText>
-                        </InputGroupAddon>
-                        <Input placeholder="Price" type="text" name="price" value={price} onChange={e => setPrice(e.target.value)} required/>
-                      </InputGroup>
+                        </InputGroupAddon> */}
+                        <Input 
+                          invalid={error}
+                          placeholder="Price" 
+                          type="number" name="price" 
+                          value={price} onChange={e => setPrice(e.target.value)} required/>
+                        <FormFeedback style={{fontWeight:500}}>{error}</FormFeedback>
                     </Col>
                   </Row>
     

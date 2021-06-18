@@ -438,14 +438,16 @@ function _handleCoverChange(e) {
             </TabContent>
             </Container>
        </div>
-                <Col className="ml-auto mr-auto" md="12">
-                <Modal isOpen={modal} style={{maxHeight:"40px", maxWidth:"500px"}} className="alert-modal">
-                    <ModalBody style={{ color: "white", fontSize: "12px", fontWeight: 500 }} className="text-center">
-                    {message}!
-                    </ModalBody>
-                    
-                    </Modal>
-      </Col>
+       <div style={{
+         display:"flex",
+         justifyContent:"center"
+       }}>
+          <Modal isOpen={modal} style={{maxHeight:"40px", maxWidth:"500px"}} className="alert-modal">
+              <ModalBody style={{ color: "white", fontSize: "12px", fontWeight: 500 }} className="text-center">
+                {message}!
+              </ModalBody> 
+          </Modal>
+      </div>
     </div>
   );
 }

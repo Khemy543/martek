@@ -17,11 +17,10 @@ import 'react-web-tabs/dist/react-web-tabs.css';
 
 
 export default function AboutUs(){
-    const [IsMobile, setIsMobile] = React.useState(false)
+    const [IsMobile, setIsMobile] = React.useState(true)
 
 
     React.useEffect(()=>{
-
         window.addEventListener('resize', () => {
             setIsMobile(window.innerWidth < 800);
         }, false);

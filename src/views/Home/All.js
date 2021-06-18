@@ -15,7 +15,8 @@ import{
     NavItem,
     Spinner
 } from "reactstrap";
-import Skeleton,{SkeletonTheme} from 'react-loading-skeleton';
+import Skeleton from 'react-loading-skeleton';
+import {Helmet} from "react-helmet";
 
 
 // core components
@@ -123,7 +124,8 @@ function All({history}){
             params:{campus_id:activeCampus}
         })
         .then(res=>{
-            setNewItems(res.data);
+            let products = res.data.filter(item => item.product_image[0] !== undefined)
+            setNewItems(products);
             setNewLoading(false)
         })
         .catch(error=>{
@@ -135,7 +137,7 @@ function All({history}){
             params:{campus_id:activeCampus}
         })
          .then(res=>{
-             const categories = res.data[0];
+             const categories = res.data[0].filter(item => item.product_image[0] !== undefined);
              setPhones(categories)
              setPhoneLoading(false)
          })
@@ -148,7 +150,7 @@ function All({history}){
             params:{campus_id:activeCampus}
         })
          .then(res=>{
-             const categories = res.data[0];
+             const categories = res.data[0].filter(item => item.product_image[0] !== undefined);
              setFashion(categories);
              setFashionLoading(false)
          })
@@ -158,7 +160,7 @@ function All({history}){
             params:{campus_id:activeCampus}
         })
          .then(res=>{
-             const nextProducts = res.data[0];
+             const nextProducts = res.data[0].filter(item => item.product_image[0] !== undefined);
              setElectronics(nextProducts);
              setElectronicLoading(false)
          })
@@ -208,6 +210,51 @@ function All({history}){
     }
         return(
             <div>
+                <Helmet>
+                    <title>Martek Gh</title>
+                    <meta name="description" content="Ghana’s cross-campus e-commerce platform where tertiary students sell, buy and advertise various goods and services. Find a great deal right on your campus.
+                    *KNUST
+                    *UCC
+                    *UNER
+                    *UG-LEGON
+                    *UMAT
+                    *UPSA"/>
+
+                    <meta itemprop="name" content="Martek Gh"/>
+                    <meta itemprop="description" content="Ghana’s cross-campus e-commerce platform where tertiary students sell, buy and advertise various goods and services. Find a great deal right on your campus.
+                    *KNUST
+                    *UCC
+                    *UNER
+                    *UG-LEGON
+                    *UMAT
+                    *UPSA"/>
+                    <meta itemprop="image" content="https://www.martekgh.com/static/media/martlogo.44809bdc.png"/>
+
+                    <meta property="og:url" content="https://martekgh.com"/>
+                    <meta property="og:type" content="website"/>
+                    <meta property="og:title" content="Martek Gh"/>
+                    <meta property="og:description" content="Ghana’s cross-campus e-commerce platform where tertiary students sell, buy and advertise various goods and services. Find a great deal right on your campus.
+                    *KNUST
+                    *UCC
+                    *UNER
+                    *UG-LEGON
+                    *UMAT
+                    *UPSA"/>
+                    <meta property="og:image" content="https://www.martekgh.com/static/media/martlogo.44809bdc.png"/>
+
+                    <meta name="twitter:card" content="summary_large_image"/>
+                    <meta name="twitter:title" content="Martek Gh"/>
+                    <meta name="twitter:description" content="Ghana’s cross-campus e-commerce platform where tertiary students sell, buy and advertise various goods and services. Find a great deal right on your campus.
+                    *KNUST
+                    *UCC
+                    *UNER
+                    *UG-LEGON
+                    *UMAT
+                    *UPSA"/>
+                    <meta name="twitter:image" content="https://www.martekgh.com/static/media/martlogo.44809bdc.png"/>
+
+                </Helmet>
+
             <React.Fragment>
                 <br/>
                 <br/>
@@ -220,16 +267,63 @@ function All({history}){
                         {value=>(
                     <Container>
                         <Row style={{height:"auto"}}>
-                            <Col md="2" style={{padding:"0px 3px"}} className="d-none d-lg-block">
-                                <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", padding:"15px", height:"100%"}} className="card-plain">
-                                    <h4 style={{fontSize:"12px", fontWeight:500, paddingTop:"0px"}}><i className="fa fa-heart-o mr-1"/> Tips</h4>
-                                    <h4 style={{fontSize:"12px", fontWeight:500}}>
-                                    1. Ensure to meet a campus seller in person, check the item(s) and make sure you are satisfied with the product.<br/><br/>
-                                    2. Make payments only on delivery.<br/><br/>
-                                    3. Avoid deals that are too good to be true; unrealistically low prices inclusive.<br/><br/>
-                                    4. Never give out personal Information.
-                                    </h4>
-                                </Card>
+                            <Col md="2" className="d-none d-lg-block" style={{padding:"0px 4px"}}>
+                                {/* <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", padding:"15px", height:"100%"}} className="card-plain">
+                                    <div style={{
+                                        width:"100%",
+                                        display:"flex",
+                                        justifyContent:"center",
+                                        textAlign:"center"
+                                    }}>
+                                        <h4 style={{
+                                            backgroundColor:"blue",
+                                            borderRadius:"20px",
+                                            color:"white",
+                                            padding:"5px", fontSize:"15px", fontWeight:1000
+                                        }}>
+                                            Safety Tips
+                                        </h4>
+                                    </div>
+                                    <div style={{
+                                        width:"90%",
+                                        backgroundColor:"blue"
+                                    }}>
+                                        <h4 style={{fontSize:"12px", fontWeight:500}}>
+                                            Ensure to meet a meet a .
+                                        </h4>
+                                    </div>
+
+                                    <div style={{
+                                        width:"90%",
+                                        float:'right',
+                                        textAlign:'right'
+                                    }}>
+                                        <h4 style={{fontSize:"12px", fontWeight:500}}>
+                                            Ensure to meet a meet a.
+                                        </h4>
+                                    </div>
+
+                                    <div style={{
+                                        width:"90%"
+                                    }}>
+                                        <h4 style={{fontSize:"12px", fontWeight:500}}>
+                                            Ensure to meet a meet a .
+                                        </h4>
+                                    </div>
+
+                                    <div style={{
+                                        width:"90%",
+                                        float:'right',
+                                        textAlign:'right'
+                                    }}>
+                                        <h4 style={{fontSize:"12px", fontWeight:500}}>
+                                            Ensure to meet a meet a  .
+                                        </h4>
+                                    </div>
+                                </Card> */}
+                                {/* <div>
+                                    <img src={require('../../assets/img/tips.jpeg')} style={{width:"100%", height:"100%"}}/>
+                                </div> */}
                             </Col>
                             <Col md="8" sm="12" xs="12" style={{padding:"0px 4px"}}>
                                 {loading?
@@ -412,6 +506,9 @@ function All({history}){
                                         
                                         </Col>
                                         </Row>
+
+
+
                                         <Row className="d-block d-lg-none">
                                         <Col md="12" style={{padding:"0px 0px 0px 0px"}} >
                                         <Slider {...settings} infinite={newItems.length>5}>
@@ -443,6 +540,44 @@ function All({history}){
                                                 </div>
                                                     }
                                                 </>
+                                            ))}
+                                        </Slider>
+                                        
+                                        </Col>
+                                        </Row>
+                                        </Container>
+                                    </CardBody>
+    
+                            </Card>
+                            </Row>
+
+                            
+
+
+                        <Row>
+                        <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
+                    
+                                <CardBody style={{padding:"5px"}}>
+                                    <Container>
+                                    <Row>
+                                        <Col md="12" style={{padding:"0px 0px 0px 0px"}} >
+                                        <Slider {...adssettings} infinite={ads.length>3}>
+                                        {ads.map((value,key)=>(
+                                            <div key={key}>
+                                                <Col style={{padding:"0px"}}>
+                                                <div style={{cursor:"pointer"}}>
+                                                    <div className="text-center" onClick={() => history.push(`/user/shop-view/${value.merchandiser_id}/shop`, {id:value.merchandiser_id})}>
+                                                        <ImageContainer 
+                                                            src={`https://backend-api.martekgh.com/${value.ad_path}`}
+                                                            width={360}
+                                                            height={260}
+                                                            alt="alt"
+                                                        />
+                                                       {/*  <img alt="#" src={`https://backend-api.martekgh.com/${value.ad_path}`} style={{height:"230px",width:"100%",borderRadius:'5px', objectFit:"cover", border:"1px solid #eaeaea"}}/> */}
+                                                    </div>
+                                                 </div>
+                                                </Col>
+                                            </div>
                                             ))}
                                         </Slider>
                                         
@@ -491,45 +626,6 @@ function All({history}){
 
                         </Card>
                         </Row>
-
-
-
-
-                        <Row>
-                        <Card style={{width:"100%", border:"1px solid #eaeaea", borderRadius:"5px", backgroundColor:"white",boxShadow:"0 2px 12px rgba(0,0,0,0.1)"}} className="card-plain">
-                    
-                                <CardBody style={{padding:"5px"}}>
-                                    <Container>
-                                    <Row>
-                                        <Col md="12" style={{padding:"0px 0px 0px 0px"}} >
-                                        <Slider {...adssettings} infinite={ads.length>3}>
-                                        {ads.map((value,key)=>(
-                                            <div key={key}>
-                                                <Col style={{padding:"0px"}}>
-                                                <div style={{cursor:"pointer"}}>
-                                                    <div className="text-center" onClick={() => history.push(`/user/shop-view/${value.merchandiser_id}/shop`, {id:value.merchandiser_id})}>
-                                                        <ImageContainer 
-                                                            src={`https://backend-api.martekgh.com/${value.ad_path}`}
-                                                            width={360}
-                                                            height={260}
-                                                            alt="alt"
-                                                        />
-                                                       {/*  <img alt="#" src={`https://backend-api.martekgh.com/${value.ad_path}`} style={{height:"230px",width:"100%",borderRadius:'5px', objectFit:"cover", border:"1px solid #eaeaea"}}/> */}
-                                                    </div>
-                                                 </div>
-                                                </Col>
-                                            </div>
-                                            ))}
-                                        </Slider>
-                                        
-                                        </Col>
-                                        </Row>
-                                        </Container>
-                                    </CardBody>
-    
-                            </Card>
-                            </Row>
-
                         
                        
 

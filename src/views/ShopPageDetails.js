@@ -83,10 +83,10 @@ let merchandiser = localStorage.getItem("shop_access_token")
     const handleDelete=()=>{
         swal({
             title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this account!",
+            text: "You will not be able to recover product once deleted!",
             buttons: true,
             dangerMode: true,
-            buttons:["Cancel","Yes, Delete Product"]
+            buttons:["Cancel","Delete Product"]
           }).then(res=>{
               if(res){
                 setIsActive(true)
@@ -217,7 +217,7 @@ let merchandiser = localStorage.getItem("shop_access_token")
                                         <h4 style={{fontSize:"18px", fontWeight:500, margin: "30px 10px 5px"}}>DESCRIPTION</h4>
                                         </CardTitle>
                                     <CardBody>
-                                        <p style={{fontWeight:500, fontSize:"14px", margin:"10px"}}> 
+                                        <p style={{fontWeight:500, fontSize:"14px", margin:"10px", whiteSpace:"pre-line"}}> 
                                         {description}
                                         </p>
                                         </CardBody>

@@ -27,25 +27,35 @@
 .preview-container{
     position: relative;
     display: inline-block;
+    cursor: pointer;
 }
+.ad-icon{
+    height:40px;
+    width:40px; 
+    border-radius:100px;
+    border:1px solid #9b9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .image-container{
     position: absolute;
+    z-index: 30;
     top: 0;
     height: 100%;
     width: 100%;
     background-color: black;
-    opacity: 25%;
+    opacity: 20%;
     display: flex;
     align-items: center;
     justify-content: center;
+    text-align: center;
 }
 .preview-image{
     height: 300px;
     width: 300px;
     object-fit: cover;
-}
-.image-upload-button{
-    padding: 2px;
 }
 .hidden{
     display: none;
@@ -219,7 +229,7 @@
         display: none;
     }
     .alert-modal{
-        margin-left:14%;
+        
     }
     .cover-photo{
         height: 40vh !important;

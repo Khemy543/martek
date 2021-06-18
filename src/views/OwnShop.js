@@ -1,12 +1,12 @@
 
 import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import history from "../history.js";
 import {
   Alert,Row,Col,Container, Input,
   InputGroup, InputGroupAddon, InputGroupText,Button, FormFeedback
 } from "reactstrap";
+import { Link } from 'react-router-dom';
  
 import axios from "axios";
 import swal from 'sweetalert'
@@ -98,7 +98,8 @@ export default function OwnShop(props){
           function(){
             history.push("/auth/upload-avatar",
             {
-              id:res.data.merchandiser_id
+              id:res.data.merchandiser_id,
+              shop_type_id
             });
           },
           100
@@ -218,7 +219,7 @@ export default function OwnShop(props){
                    <br/> */}
                    <Row>
                      <Col style={{fontWeight:500}}>
-                      Agree to our  <Link to="#" style={{color:"#0b7dda"}}>Terms</Link> & <Link to="#" style={{color:"#0b7dda"}}>Privacy Policy</Link> <Checkbox style={{float:"right" , marginRight:"20px"}} type="checkbox" value="1" required onChange={e=>setCheckbox(!checkbox)}/>
+                      Agree to our  <a target="_blank" href="/user/terms-conditions" style={{color:"#0b7dda"}}>Terms</a> & <a target="_blank" href="/user/privacy-and-policy" style={{color:"#0b7dda"}}>Privacy Policy</a> <Checkbox style={{float:"right" , marginRight:"20px"}} type="checkbox" value="1" required onChange={e=>setCheckbox(!checkbox)}/>
                      </Col>
                    </Row>
                    <Row>
