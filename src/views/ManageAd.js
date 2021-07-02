@@ -71,7 +71,6 @@ class ManageAd extends React.Component{
         axios.post(`https://backend-api.martekgh.com/api/merchandiser/${id}/store-ad`, formData,
         {headers:{'Authorization':`Bearer ${merchandiser}`}})
         .then(response=>{
-            console.log(response.data);
             this.setState({
                 modalInfo:"AD UPDATED SUCCESSFULLY",
                 modal:true
@@ -85,7 +84,6 @@ class ManageAd extends React.Component{
             )
         })
         .catch(error=>{
-            console.log(error)
         })
         .finally((_)=>this.setState({loading:false}))
     }
@@ -107,7 +105,6 @@ class ManageAd extends React.Component{
                 1500
             )
         }).catch(error=>{
-            console.log(error)
         })
         .finally((_)=>{
             this.setState({deleteLoading:false})

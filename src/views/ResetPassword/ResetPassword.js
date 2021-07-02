@@ -43,12 +43,10 @@ export default function ResetPassword(props){
         }
 
         const param = queryString.parse(props.location.search);
-        console.log(param.token);
         let token = param.token;
         axios.post(`${domain}/api/auth/reset/password`,
         {password,token})
         .then(res=>{
-            console.log(res.data);
             setColor("success")
             setMessage(res.data.status);
             setVisible(true);
@@ -60,7 +58,6 @@ export default function ResetPassword(props){
 
         })
         .catch(error=>{
-            console.log(error);
             if(error.response.status == 422){
                 setErrors(error.response.data.errors)
             }

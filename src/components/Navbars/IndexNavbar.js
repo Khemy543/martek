@@ -24,10 +24,6 @@ import axios from "axios";
 import history from "../../history.js";
 
 
-//axios.defaults.withCredentials = false;
-//axios.defaults.headers.common['Auth-Token'] = 'foo bar';
-
-
 
 function IndexNavbar(props) {
   const [navbarCollapse, setNavbarCollapse] = React.useState(false);
@@ -80,20 +76,6 @@ React.useEffect(()=>{
   }else{
     setLoggedin(false);
   }
-  /*  if(user != null){
-      axios.get("https://backend-api.martekgh.com/api/auth/user",{
-          headers:{ 'Authorization':`Bearer ${user}`}
-  }
-  )
-  .then(res=>{
-        localStorage.setItem("user_id",res.data.id);
-        setName(res.data.name);
-        if(res.data.valid_id === null){
-          localStorage.setItem('validity',false)
-        }
-  }).catch(error=>{
-  });
-} */
 
   axios.get("https://backend-api.martekgh.com/api/campuses")
   .then(res=>{
@@ -110,7 +92,6 @@ React.useEffect(()=>{
     axios.get('https://backend-api.martekgh.com/api/search/item',
     {params:{search:searchValue}})
     .then(res=>{
-      console.log(res.data);
       setSearchValue("")
       let products = res.data.filter(item=>item.type === 'products');
       let shops = res.data.filter(item=>item.type === "merchandisers")
@@ -120,7 +101,6 @@ React.useEffect(()=>{
         search:'?search='+query})
     })
     .catch(error=>{
-      console.log(error);
     })
   }
 
@@ -165,28 +145,6 @@ React.useEffect(()=>{
             onChange = {e=>setSearchValue(e.target.value)}
            required
           />
-         {/*  {searchShow?
-          <div className="autocomplete-items">
-          {value.prediction.map((searchValue,index)=>(
-          <Link to="/user/search-results" style={{color:"black", fontWeight:500}}>
-          <div key={index} onClick={()=>{value.search(searchValue.product_name);setSearchShow(false); setSearchValue(searchValue.product_name)}}>
-            <i className="fa fa-search mr-3" style={{color:"#0000008f"}}/>{searchValue.product_name}
-           </div>
-           </Link>
-          ))}
-          {
-            value.shopPredicition.map((searchValue,index)=>(
-          <Link to="/user/search-results" >
-          <div key={index} onClick={()=>{value.searchShop(searchValue.company_name);setSearchShow(false); setSearchValue(searchValue.company_name)}}>
-            <h4 style={{color:"black", fontWeight:500, fontSize:"14px",margin:'0px 0px 0px 0px'}}><i className="fa fa-search mr-3" style={{color:"#0000008f"}}/>{searchValue.company_name}</h4>
-            <p style={{color:"black", fontSize:"11px", fontWeight:400, paddingLeft:"33px"}} className="truncate">{searchValue.company_description}</p>
-           </div>
-           </Link>
-          ))
-          }  
-        </div>:
-        <div>
-        </div> } */}
           </FormGroup>
           <Button type="submit" color="info" className="search-button" style={{height:"35px", borderRadius:5,fontSize:"11px" }}>          
               <i className="fa fa-search" style={{marginRight:"-15px", marginLeft:"-15px"}}/>
@@ -219,7 +177,7 @@ React.useEffect(()=>{
             <NavItem>
               <div >
 
-              <NavLink id="campusPopOver" style={{fontSize:"11px", cursor:'pointer'}}>
+              <NavLink id="campusPopOver" style={{fontSize:"11px", cursor:'pointer'}} key="1">
               {!dropdownCampusOpen?
                 <i className = "fa fa-chevron-down" style={{fontSize:"10px"}}/>
                 :
@@ -234,7 +192,7 @@ React.useEffect(()=>{
                         <ListGroupItem onClick={()=>campusChange(null,'Campus')} style={{border:"none", marginTop:"-10px", textAlign:"left"}} className="campuspop"
                         ><i className="fa fa-graduation-cap mr-3"/>All</ListGroupItem>
                         {campusList.map((value,index)=>(
-                          <ListGroupItem style={{border:"none", marginTop:"-10px", textAlign:"left"}} className="campuspop"
+                          <ListGroupItem key={index} style={{border:"none", marginTop:"-10px", textAlign:"left"}} className="campuspop"
                           onClick={()=>campusChange(value.id , value.campus)}
                           ><i className="fa fa-graduation-cap mr-3"/>{value.campus}</ListGroupItem>
                         ))}
@@ -246,6 +204,7 @@ React.useEffect(()=>{
             <NavItem>
               
               <NavLink 
+              key="2"
               tag={Naver}
               to="/auth/shop-login"
               style={{fontSize:"11px"}}
@@ -256,6 +215,7 @@ React.useEffect(()=>{
             </NavItem>
             <NavItem className="d-lg-none">
               <NavLink
+              key="3"
               tag={Naver}
               to="/user/add-product"
               style={{fontSize:"11px"}}
@@ -267,6 +227,7 @@ React.useEffect(()=>{
               {value=>(
             <NavItem>
               <NavLink
+              key="4"
               tag={Naver}
               to="/user/cart"
               style={{fontSize:"11px"}}
@@ -280,6 +241,7 @@ React.useEffect(()=>{
             <NavItem>
             {!loggedin?
             <NavLink
+            key="5"
             tag={Naver}
             to="/auth/login-page"
             style={{fontSize:"11px"}}
@@ -291,7 +253,7 @@ React.useEffect(()=>{
               <ProductConsumer>
                 {value=>(
                   <div>
-                  <NavLink id="Popover2" style={{fontSize:"11px", cursor:"pointer"}}>
+                  <NavLink id="Popover2" style={{fontSize:"11px", cursor:"pointer"}} key="6">
                     {!dropdownOpen?
                       <i className="fa fa-chevron-down" style={{fontSize:"11px"}}/>
                       :
@@ -300,7 +262,6 @@ React.useEffect(()=>{
                   <i className="fa fa-user-o" style={{fontSize:"11px"}}/> | user
                   </NavLink>
                 <UncontrolledPopover trigger="legacy" isOpen={dropdownOpen} placement="bottom" toggle={toggle} target="Popover2">
-                 {/*  <PopoverHeader>ACCOUNT</PopoverHeader> */}
                   <PopoverBody style={{paddingLeft:"0px",paddingRight:"0px"}}>
                    <ListGroup >  
                     <ListGroupItem style={{border:"none", textAlign:"left",cursor:"pointer"}} className="userdrop" onClick={() => {

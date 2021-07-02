@@ -41,7 +41,6 @@ function LoginPage(props){
   axios.post('https://backend-api.martekgh.com/api/auth/login', {
     config, email, password
   }).then(res => {
-    console.log(res.data)
     if(res.data.statusCode === 200){
         localStorage.setItem('access_token',res.data.access_token);
         axios.get('https://backend-api.martekgh.com/api/auth/user',{headers:{'Authorization':`Bearer ${res.data.access_token}`}})

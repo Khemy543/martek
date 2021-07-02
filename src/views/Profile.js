@@ -59,7 +59,6 @@ function Profile(){
           headers:{ 'Authorization':`Bearer ${user}`}
   })
   .then(res=>{
-    console.log(res.data)
       if(res.data!== null){
         setName(res.data.name);
         setEmail(res.data.email);

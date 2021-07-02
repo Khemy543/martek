@@ -63,7 +63,6 @@ function Home({history}){
         axios.get("https://backend-api.martekgh.com/api/categories")
         .then(res=>{
           const categories = res.data;
-          console.log(categories)
           setCategoryList(categories);
           setIsActive(false)
         });
@@ -75,7 +74,6 @@ function Home({history}){
           setIsActive(true);
         axios.get("https://backend-api.martekgh.com/api/all-shops?page="+pageNumber+"")
         .then(res=>{
-            console.log(res.data)
             setShops(res.data);
             setIsActive(false)
         })
@@ -84,7 +82,6 @@ function Home({history}){
 
         axios.get('https://backend-api.martekgh.com/api/fetch/new-this-week')
         .then(res=>{
-            console.log(res.data);
             setNewItems(res.data)
         })
       }

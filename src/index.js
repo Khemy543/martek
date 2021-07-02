@@ -22,23 +22,6 @@ import ReactDOM from 'react-dom';
 import App from './App.js';
 import { ProductProvider } from "./context";
 import * as serviceWorker from './serviceWorker';
-/* axios.interceptors.request.use(request=>{
-  console.log(request);
-  return request;
-})
- 
-
-axios.interceptors.response.use(
-    response=>{
-  console.log(response);
-  return response;
-},
-error=>{
-    console.log(error);
-    if(!error.response){
-        alert("Please Check Your Internet Connection")
-    }
-}) */
 
 ReactDOM.render(
   <ProductProvider>

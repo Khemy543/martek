@@ -24,17 +24,14 @@ export default function ForgotPassword(props){
 
    const handleSubmit=(e)=>{
     e.preventDefault();
-    console.log(email)
     axios.post(`${domain}/api/auth/request/password/reset`,
     {email})
     .then(res=>{
-        console.log(res.data);
         setColor("success")
         setMessage(res.data.status);
         setVisible(true);
     })
     .catch(error=>{
-        console.log(error.response.data)
         setMessage(error.response.data.status)
         setVisible(true)
         setColor("danger")

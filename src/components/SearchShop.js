@@ -17,9 +17,7 @@ import history from "../history.js";
 import { ProductConsumer } from "../context";
 
 class SearchResultsShops extends React.Component{
-    componentDidMount(){
-        console.log(this.props.shop)
-    }
+   
     render(){
         const {id , company_name , avatar ,campus, followers, company_description } = this.props.shop;
         return(

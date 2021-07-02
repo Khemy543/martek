@@ -17,7 +17,6 @@ import{
 import SearchResultsShops from "components/SearchShop.js";
 
 export default function SearchResults(props){
-    console.log(props.location);
     return(
     
             <div>

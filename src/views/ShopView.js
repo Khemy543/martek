@@ -50,7 +50,6 @@ function ShopView(props) {
     }
   };
   React.useEffect(() => {
-    console.log("props",props)
     setIsActive(true)
     axios.get("https://backend-api.martekgh.com/api/merchandiser/" + props.match.params.id + "/products"
     )
@@ -71,28 +70,24 @@ function ShopView(props) {
 
     axios.get("https://backend-api.martekgh.com/api/shop/" + props.match.params.id + "/details")
       .then(res => {
-        console.log(res.data)
         setName(res.data.company_name);
         setDescription(res.data.company_description);
         setFollowers(res.data.no_followers)
         setAvatar(res.data.avatar)
         setCover(res.data.cover_photo)
-        setIsActive(false)
+        setIsActive(false);
       })
       .catch(error => {
-        console.log(error)
         setIsActive(false)
       })
 
 
     axios.get("https://backend-api.martekgh.com/api/shop/" + props.match.params.id + "/reviews")
       .then(res => {
-        console.log("reviews:", res.data);
         setReviews(res.data.product_reviews);
         setAverage(Math.round(res.data.average_rating));
       })
       .catch(error => {
-        console.log(error)
       })
 
   }, [props.match.params.id]);
@@ -111,7 +106,6 @@ function ShopView(props) {
 
         { headers: { "Authorization": `Bearer ${user}` } })
         .then(res => {
-          console.log(res.data);
           if (res.data.status === "saved") {
             let tempReviews = reviews;
             tempReviews.push({ rating: rating, review: reviewAdd, user: { name: res.data.name } });
@@ -122,7 +116,6 @@ function ShopView(props) {
           }
         })
         .catch(error => {
-          console.log(error)
         })
     }
   }

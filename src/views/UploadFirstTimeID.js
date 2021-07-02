@@ -39,7 +39,6 @@ class UploadValidID extends React.Component{
 
 
     componentDidMount(){
-        console.log(this.props)
         if(localStorage.getItem('validity') === "true"){
            history.push('/user/add-product')
           }
@@ -63,7 +62,6 @@ class UploadValidID extends React.Component{
     onUploadProgress: (progressEvent) => {
         const {loaded , total} = progressEvent;
         let cpercentage = Math.floor(loaded * 100 / total);
-        console.log(cpercentage)
         if(cpercentage<100){
             this.setState({percentage:cpercentage});
         }else{
@@ -71,7 +69,6 @@ class UploadValidID extends React.Component{
         }
     }
     }).then(res=>{
-        console.log(res.data)
         this.setState({modal:true})
         setTimeout(
             function(){
@@ -82,7 +79,6 @@ class UploadValidID extends React.Component{
             1500
         )
     }).catch(error=>{
-        console.log(error)
         this.setState(false)
     })
 }

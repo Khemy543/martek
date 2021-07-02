@@ -51,7 +51,6 @@ function AddToShop(){
     axios.post('https://backend-api.martekgh.com/api/e-trader/'+category+'/add-product',{product_name, in_stock, price, description}, {
       headers:{'Authorization':`Bearer ${merchandiser}`}
     }).then(res => {
-      console.log(res.data)
       if(res.data.status === "success"){
         const product_id = res.data.product_id;
         setIsActive(false)

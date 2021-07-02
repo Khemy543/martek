@@ -9,14 +9,13 @@ import{
 import { ProductConsumer } from "../context";
 import history from "../history.js";
 import StarRatings from 'react-star-ratings';
-import ImageContainer from 'components/ImageContainer.js'
 
 function ShopCard(props){
         const [liked, setLiked] = React.useState(false)
         const [unliked, setUnliked] = React.useState(false);
         const [loggedIn, setLoggedIn] = React.useState(false);
         const [followers, setFollowers] = React.useState(props.shop.number_of_followers)
-        const {id , shop_id, company_name ,shop_name, company_description, campus, avatar , cover_photo, avg_rating} = props.shop;
+        const {id , shop_id, company_name ,shop_name, company_description, campus, avatar , cover_photo, avg_rating, shop_type} = props.shop;
         React.useEffect(()=>{
             let authenticated = localStorage.getItem('access_token');
             if(authenticated !== null){
@@ -33,6 +32,7 @@ function ShopCard(props){
         const toggleUnlike=()=>{
             setUnliked(!unliked)
         }
+
     return(
         <Col md="3" sm="6" xs="6" style={{padding:"0px 6px"}}>
         <Card className="card-plain" style={{backgroundColor:"white", cursor:"pointer",boxShadow:"0 2px 12px rgba(0,0,0,0.1)", borderRadius:"5px"}} >
@@ -93,7 +93,7 @@ function ShopCard(props){
         </Row>
         <Row>
             <Col md="12">
-                <h4 style={{textAlign:"left", fontWeight:500 , fontSize:"14px", marginTop:"5px"}}>{campus.campus}</h4>
+                <h4 style={{textAlign:"left", fontWeight:500 , fontSize:"14px", marginTop:"5px"}}>{shop_type.shop_type == 'Non-student shop' ? "All" : campus.campus}</h4>
             </Col>
         </Row>
         <Row>

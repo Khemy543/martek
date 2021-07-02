@@ -38,19 +38,13 @@ class UploadImages extends React.Component {
         });
     }
     
-    handleSubmit=(e)=>{
-        console.log(".....uploading....")    
+    handleSubmit=(e)=>{ 
         this.setState({isActive:true})
-        console.log(user)
         e.preventDefault();
         let bodyFormData = new FormData();
         this.state.pictures.forEach((file) => {
             bodyFormData.append('product_images[]', file);
         });
-
-        for (var pair of bodyFormData.entries()) {
-            console.log(pair[0]+ ', ' + pair[1]); 
-        }
         axios({
                 method:'post',
                 headers:{
@@ -61,13 +55,11 @@ class UploadImages extends React.Component {
                 onUploadProgress: (progressEvent) => {
                     const {loaded , total} = progressEvent;
                     let percentage = Math.floor(loaded * 100 / total);
-                    console.log(percentage)
                     if(percentage<100){
                         this.setState({percentage:percentage});
                     }
                 }
         }).then(res=>{
-            console.log(res);
             this.setState({isActive:false, modal:true,percentage:100})
             setTimeout(
                 function(){
@@ -101,7 +93,6 @@ class UploadImages extends React.Component {
             )
         }).catch(error=>{
             this.setState({isActive:false})
-            console.log(error)
         })
     }
 

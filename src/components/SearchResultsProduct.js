@@ -17,15 +17,7 @@ import history from "../history.js";
 import { ProductConsumer } from "../context";
 
 class SearchResultsProducts extends React.Component{
-    /* state={
-        product = this.props.product;
-    }
-
-    componentDidMount(){
-        console.log(th.product['image']);
-        this.props.product['image'] = this.props.product['product_images'];
-        delete this.state.product['images'];
-    } */
+   
 
     render(){
         const {id , product_name , image ,price, description } = this.props.product;

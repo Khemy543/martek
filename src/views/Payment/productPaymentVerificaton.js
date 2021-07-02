@@ -19,25 +19,20 @@ function ProductPaymentVerification(props) {
 const [isActive, setIsActive] = React.useState(false);
 
 React.useEffect(()=>{
-        console.log(props.location);
         const param = queryString.parse(props.location.search);
         var response = param.response || param.resp;
-        console.log(response)
         axios.post('https://backend-api.martekgh.com/api/user/product/payment/callback',
         {
             response : response
         }, {headers:{'Authorization':`Bearer ${user}`}})
         .then(res=>{
-            console.log(res.data);
             setIsActive(true);
         })
         .catch(error=>{
-            console.log(error)
         });
 },[]);
 
 const handleComplete=()=>{
-  console.log('completed');
   props.history.push('/user/home')
 }
 

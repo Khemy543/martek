@@ -44,7 +44,6 @@ function UserEditProduct(props) {
 
       axios.get("https://backend-api.martekgh.com/api/product/"+props.location.state.id+"/details")
       .then(res=>{
-        console.log(res.data)
         setProduct_name(res.data.product_name);
         setDescription(res.data.description);
         setIn_stock(res.data.in_stock);
@@ -62,12 +61,10 @@ function UserEditProduct(props) {
     {product_name, in_stock, price, description,category}, {
       headers:{'Authorization':`Bearer ${user}`}
     }).then(res => {
-        console.log(res.data)
         setIsActive(false)
         props.history.push("/user/user-product-details",{id:props.location.state.id})
     }).catch(error => {
       setIsActive(false)
-      console.log(error)
     })
   
   }

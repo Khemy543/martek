@@ -38,18 +38,12 @@ class ShopAccountDetails extends React.Component{
         billingstate:""
     }
 
-    componentDidMount(){
-        console.log(this.props)
-    }
-
 handleCardSubmit=(e)=>{
     this.setState({isActive:true})
     e.preventDefault();
     let tempDate = this.state.date;
     let splitArray = tempDate.split("/");
-    console.log(splitArray[0], splitArray[1])
     let merchandiser = localStorage.getItem("shop_access_token")
-    console.log(merchandiser)
     axios.post("https://backend-api.martekgh.com/api/shop/payment",
     {
         cardno: this.state.cardno,
@@ -67,12 +61,10 @@ handleCardSubmit=(e)=>{
         payment_method:'card_payment'
     },{headers:{ 'Authorization':`Bearer ${merchandiser}`}})
     .then(res=>{
-        console.log(res.data);
         window.location = `${res.data.authurl}`
         this.setState({isActive:false})
     })
     .catch(error=>{
-        console.log(error);
         this.setState({isActive:false})
     })
 }
@@ -94,11 +86,9 @@ handleMobileSubmit=(e)=>{
         payment_method:'momo'
     },{headers:{ 'Authorization':`Bearer ${merchandiser}`}})
     .then(res=>{
-        console.log(res.data);
         window.location=`${res.data.data.link}`
     })
     .catch(error=>{
-        console.log(error.response.data);
         this.setState({isActive:false})
     })
     }else{
@@ -112,11 +102,9 @@ handleMobileSubmit=(e)=>{
         payment_method:'momo'
     },{headers:{ 'Authorization':`Bearer ${merchandiser}`}})
     .then(res=>{
-        console.log(res.data);
         window.location=`${res.data.data.link}`
     })
     .catch(error=>{
-        console.log(error.response.data);
         this.setState({isActive:false})
         this.setState({isActive:false})
     })

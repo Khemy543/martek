@@ -40,12 +40,10 @@ function UserProductDetails(props){
     let user = localStorage.getItem("access_token")
 
     React.useEffect(()=>{
-        console.log(props.location.state)
         setIsActive(true);
             let newImageArray = []
             axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/details")
             .then(res=>{
-                console.log("details",res.data);
                 setProduct(res.data);
                 setOwner(res.data.product_owner);
                 setCampus_name(res.data.product_owner.campus);
@@ -61,12 +59,10 @@ function UserProductDetails(props){
                 setImages(newImageArray)
             })
             .catch(error=>{
-                console.log(error)
             });
 
             axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/reviews")
             .then(res=>{
-                console.log(res.data);
                 setReviews(res.data.product_reviews);
                 if(res.data.average_rating !== null){
                      setAverage(Math.round(res.data.average_rating))
@@ -74,7 +70,6 @@ function UserProductDetails(props){
 
             })
             .catch(error=>{
-                console.log(error)
             })
         
         },[]);

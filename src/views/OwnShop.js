@@ -38,7 +38,6 @@ export default function OwnShop(props){
   const toggleEye2 =()=> setEye2(!eye2);
 
   React.useEffect(()=>{
-    console.log(props.location)
             setIsActive(true)
             axios.get("https://backend-api.martekgh.com/api/campuses")
             .then(res=>{
@@ -76,7 +75,6 @@ export default function OwnShop(props){
       }
 
       if(!(Object.keys(tempErrors).length === 0 && tempErrors.constructor === Object)){
-        console.log(tempErrors)
         setErrors(tempErrors);
         setIsActive(false)
         return;
@@ -85,7 +83,6 @@ export default function OwnShop(props){
     axios.post('https://backend-api.martekgh.com/api/register-merchandiser',
     {company_name, email,phone:`233${phone}`,password, campus_id,company_description,shop_type_id, free_trial:props.location.state.status}
   ).then(res => {
-    console.log(res);
     axios.post('https://backend-api.martekgh.com/api/merchandiser/login', {email, password}).then(response=>{localStorage.setItem('shop_access_token', response.data.access_token)})
         swal({
           title: "Success!",
@@ -105,9 +102,6 @@ export default function OwnShop(props){
           100
       )
     }).catch(error => {
-      /* console.log("error",error);
-      console.log(error.response.data)
-      setIsActive(false); */
       if(error.response.status == 422){
         setErrors(error.response.data.errors)
       }
@@ -177,7 +171,7 @@ export default function OwnShop(props){
                   <Col item md={12} sm={12} xs={12} lg={12} xl={12}>
                     <label style={{fontWeight:500}}>Campus</label>
                     <Input invalid={errors.campus} type="select" value={campus_id} onChange={e=>setCampus_id(e.target.value)}>
-                      {campusList.map((value)=>(<option value={value.id}>{value.campus}</option>))}
+                      {campusList.map((value, index)=>(<option value={value.id} key={index}>{value.campus}</option>))}
                     </Input>
                     <FormFeedback style={{fontWeight:500}}>{errors.campus}</FormFeedback>
                   </Col>

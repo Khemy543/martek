@@ -18,7 +18,6 @@ const [non, setNon] = React.useState('');
 const [modal, setModal] = React.useState(false)
 
 React.useEffect(()=>{
-  console.log(props.location);
   let shop="Mini Shop"
     switch(shop){
       case 'Mini Shop':
@@ -39,11 +38,9 @@ React.useEffect(()=>{
 
 const ActivateFreeTrial=()=>{
   const merchandiser = localStorage.getItem('shop_access_token');
-  console.log(merchandiser);
   axios.post('https://backend-api.martekgh.com/api/merchandiser/activate/free/trial',null,
   {headers:{'Authorization':`Bearer ${merchandiser}`}})
   .then(res=>{
-    console.log(res.data);
     setModal(true);
     setTimeout(
       function(){
@@ -54,7 +51,6 @@ const ActivateFreeTrial=()=>{
   )
   })
   .catch(error=>{
-    console.log(error)
   })
 }
 

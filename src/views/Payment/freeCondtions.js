@@ -12,51 +12,7 @@ import {
 import axios from 'axios';
 
 function FreeConditions(props) {
-/* const [mini, setMini] = React.useState('');
-const [max, setMax] = React.useState('');
-const [non, setNon] = React.useState('');
-const [modal, setModal] = React.useState(false) */
 
-/* React.useEffect(()=>{
-  console.log(props.location);
-  let shop = props.location.state.shopType;
-    switch(shop){
-      case 'Mini Shop':
-        setMini('active');
-        break;
-
-      case 'Max Shop':
-        setMax('active');
-        break;
-
-      case 'Non Student Shop':
-        setNon('active');
-        break;
-
-    }
-},[]); */
-
-
-/* const ActivateFreeTrial=()=>{
-  const merchandiser = localStorage.getItem('shop_access_token');
-  console.log(merchandiser);
-  axios.post('https://backend-api.martekgh.com/api/merchandiser/activate/free/trial',null,
-  {headers:{'Authorization':`Bearer ${merchandiser}`}})
-  .then(res=>{
-    console.log(res.data);
-    setModal(true);
-    setTimeout(
-      function(){
-          setModal(false);
-          props.history.push("/shop/shop-page")
-          },
-      2000
-  )
-  })
-  .catch(error=>{
-    console.log(error)
-  })
-} */
 
 const Register=(id)=>{
   props.history.push('/user/shop-register',

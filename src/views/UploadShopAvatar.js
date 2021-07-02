@@ -4,17 +4,12 @@ import{
     Col,
     Row,
     Button,
-    Form,Progress, Spinner
+    Form,Progress, Spinner, Modal, ModalBody
 } from "reactstrap";
 import axios from "axios";
 import ImageUploader from 'react-images-upload';
-import LoadingOverlay from "react-loading-overlay";
-import BounceLoader from "react-spinners/BounceLoader";
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import DemoFooter from "components/Footers/DemoFooter";
-// core components
-//import IndexNavbar from "../components/Navbars/IndexNavbar.js";
-//import DemoFooter from "../components/Footers/DemoFooter";
 
 class UploadShopAvatar extends React.Component{
 
@@ -25,16 +20,14 @@ class UploadShopAvatar extends React.Component{
               cover:[],
               valid_id:[],
              isActive:false, activateButton:false, activateButton2:false, activateButton3:false,
-             percentage:0
+             percentage:0,
+             modal : false,
+             message : ''
              };
          this.onDropAvatar = this.onDropAvatar.bind(this);
          this.onDropCover = this.onDropCover.bind(this);
          this.onDropCard = this.onDropCard.bind(this);
          
-    }
-
-    componentDidMount(){
-        console.log(this.props.location.state)
     }
     
     onDropAvatar(picture) {
@@ -58,8 +51,23 @@ class UploadShopAvatar extends React.Component{
     
     
     handleSubmit=(e)=>{
-        this.setState({isActive:true})
     e.preventDefault();
+    if(this.state.valid_id.length <= 0 || this.state.valid_id[0] == undefined){
+        this.setState({
+            modal : true,
+            message : 'PLEASE PROVIDE A VALID ID !'
+        });
+        setTimeout(
+            function () {
+                this.setState({
+                    modal : false
+                })
+            }.bind(this),
+            2000
+        );
+        return;
+    }
+    this.setState({isActive:true})
     let avatar_file = this.state.avatar[0]
     let cover_photo_file = this.state.cover[0]
     let valid_id_file = this.state.valid_id[0]
@@ -76,7 +84,6 @@ class UploadShopAvatar extends React.Component{
     onUploadProgress: (progressEvent) => {
         const {loaded , total} = progressEvent;
         let percentage = Math.floor(loaded * 100 / total);
-        console.log(percentage)
         if(percentage<100){
             this.setState({percentage:percentage});
         }
@@ -85,7 +92,6 @@ class UploadShopAvatar extends React.Component{
         this.setState({percentage:100})
         this.props.history.push("/auth/wait-shop-verification",{store_id:this.state.store_id})
     }).catch(error=>{
-        console.log(error.response.data)
         this.setState(false)
     })
 }
@@ -192,6 +198,14 @@ class UploadShopAvatar extends React.Component{
             
         </Form>
         </Container>
+        
+        <Modal isOpen={this.state.modal} className="login-modal">
+
+            <ModalBody style={{ color: "white", fontSize: "12px", fontWeight: 500 }} className="text-center">
+                {this.state.message}
+            </ModalBody>
+
+        </Modal>
         </div>
         </div>
         

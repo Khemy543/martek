@@ -22,10 +22,8 @@ function ReportProduct(props) {
   
     const handlePostReport=(e)=>{
         e.preventDefault()
-        console.log(message);
         let tempMessage = [...message];
         tempMessage.push(additional);
-        console.log(tempMessage);
         if(tempMessage[0] === ''){
             setErrorModal(true)
             setErrorMessage('Reason For Reporting field is required')
@@ -35,7 +33,6 @@ function ReportProduct(props) {
         {report:tempMessage.toString(),product_id:props.location.state.id},
         { headers:{"Authorization":`Bearer ${user}`}})
         .then(res=>{
-          console.log(res.data)
           if(res.data.status === "saved"){
               setModal(true);
               setIsActive(false)
@@ -47,7 +44,6 @@ function ReportProduct(props) {
           }
         })
         .catch(error=>{
-          console.log(error.response.data);
           setIsActive(false);
           if(error.response.data.message === "Unauthenticated."){
               setErrorMessage("Please Login To Submit A Report");
@@ -57,24 +53,7 @@ function ReportProduct(props) {
     }
     }
 
-   /*  const handlePostReport=()=>{
-        axios.post("https://backend-api.martekgh.com/api/add-product/report",
-        {report:message, product_id:props.location.state.id},
-        { headers:{"Authorization":`Bearer ${user}`}})
-        .then(res=>{
-            console.log(res.data);
-            if(res.data.status == "saved"){
-                setReportmodal(true)
-            }
-        })
-        .catch(error=>{
-            console.log(error)
-        })
-    } */
-
-
       const pushType = (value,checked)=>{
-          console.log(value,checked)
         let tempMessages = [...message];
         if(checked){
             tempMessages.push(value);
@@ -87,7 +66,6 @@ function ReportProduct(props) {
            }
         }
         
-        console.log(tempMessages)
     }
 
 

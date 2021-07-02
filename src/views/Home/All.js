@@ -105,7 +105,6 @@ function All({history}){
           setImages(items);
           setLoading(false)
         }).catch(error=>{
-          console.log(error)
         })
 
         getShops();
@@ -129,7 +128,6 @@ function All({history}){
             setNewLoading(false)
         })
         .catch(error=>{
-            console.log(error)
         })
 
         axios.get("https://backend-api.martekgh.com/api/2/product-index",
@@ -142,7 +140,6 @@ function All({history}){
              setPhoneLoading(false)
          })
          .catch(error=>{
-             console.log(error)
          })
  
          axios.get("https://backend-api.martekgh.com/api/3/product-index",

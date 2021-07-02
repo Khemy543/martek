@@ -33,7 +33,6 @@ class ShopUploadImages extends React.Component{
  handleSubmit=(e)=>{
     let merchandiser = localStorage.getItem("shop_access_token")
     e.preventDefault();
-    console.log(this.state.pictures)
     this.setState({isActive:true})
     let bodyFormData = new FormData();
     this.state.pictures.forEach((file) => {
@@ -46,7 +45,6 @@ class ShopUploadImages extends React.Component{
     onUploadProgress: (progressEvent) => {
         const {loaded , total} = progressEvent;
         let percentage = Math.floor(loaded * 100 / total);
-        console.log(percentage)
         if(percentage<100){
             this.setState({percentage:percentage});
         }
@@ -61,7 +59,6 @@ class ShopUploadImages extends React.Component{
             1500
         )
     }).catch(error=>{
-        console.log(error);
         this.setState({isActive:false})
     })
 } 

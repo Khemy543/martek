@@ -42,8 +42,7 @@ function ShopPage(props) {
         setIsActive(false)
     })
     .catch(error=>{
-      console.log(error)
-    })
+    });
   }
  
 },[id])
@@ -147,7 +146,7 @@ function ShopPage(props) {
               <div>
                 <h5 style={{display:"inline", fontSize:"14px", fontWeight:"bold"}}>{value.merchandiser?.no_followers}</h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
                 
-              <h4 style={{ fontSize:"14px", marginTop:"5px"}}>{value.merchandiser?.campus}</h4>
+              <h4 style={{ fontSize:"14px", marginTop:"5px"}}>{value.merchandiser.shop_type === "Non-student shop" ? 'All Campus' : value.merchandiser?.campus}</h4>
               </div>
               </Col>
 

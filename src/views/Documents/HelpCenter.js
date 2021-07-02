@@ -44,7 +44,6 @@ export default function HelpCenter(){
     }
     )
     .then(res=>{
-    console.log("data:", res.data)
     if(res.data!== null){
         setName(res.data.name);
         setEmail(res.data.email);
@@ -57,13 +56,11 @@ export default function HelpCenter(){
 
     const handleSubmit = (e) =>{
         e.preventDefault();
-        console.log(e);
         setIsActive(true);
          
       axios.post('https://backend-api.martekgh.com/api/make-enquiries', {
         name, email, message,phone
       }).then(res => {
-        console.log(res.data.status);
         if(res.data.status === "mail sent"){
           setIsActive(false)
           setName("");
@@ -74,7 +71,6 @@ export default function HelpCenter(){
          
       }) 
       .catch(error=>{
-        console.log(error);
       })
     }
 

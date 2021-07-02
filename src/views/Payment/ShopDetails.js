@@ -23,7 +23,6 @@ const [amount, setAmount] = React.useState("");
 const [phone, setPhoneNumber] = React.useState('')
 
 React.useEffect(()=>{
-  console.log(props.location.state.shopType);
   let shopType = props.location.state.shopType;
   if(shopType === 'Mini Shop'){
     setAmount((Math.round(20 * 100) / 100).toFixed(2));
@@ -35,7 +34,6 @@ React.useEffect(()=>{
 },[])
 
 const handleSubmit=(e)=>{
-    console.log("....")
     e.preventDefault();
     if(true){
     props.history.push("/shop/payment/account", 

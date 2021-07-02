@@ -21,20 +21,16 @@ export default function VerifyEmail(props){
     const toggle=()=>setVisible(!visible);
 
     const handleVerify=()=>{
-        console.log(props.location);
         const param = queryString.parse(props.location.search);
-        console.log(param.token);
         let token = param.token;
         axios.post(`${domain}/api/auth/email/verify`,{token:token})
         .then(res=>{
-            console.log(res.data);
             if(res.data.message === "verified"){
                 props.history.push("/user/home")
             }
         })
         .catch(error=>{
             if(error.response){
-            console.log(error.response.data)
             setMessage(error.response.data.message);
             setVisible(true)
         }

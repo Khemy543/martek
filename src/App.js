@@ -1,21 +1,4 @@
-/*!
 
-=========================================================
-* Paper Kit React - v1.0.0
-=========================================================
-
-* Product Page: https://www.creative-tim.com/product/paper-kit-react
-
-* Copyright 2019 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/paper-kit-react/blob/master/LICENSE.md)
-
-* Coded by Creative Tim
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-*/
 import React from "react";
 
 // styles
@@ -39,20 +22,6 @@ class App extends React.Component{
     return new Promise(resolve => setTimeout(resolve, 2000)) // 2 seconds
   }
 
-    /* componentDidMount(){
-
-        this.authenticate().then(() => {
-            const ele = document.getElementById('ipl-progress-indicator')
-            if(ele){
-              // fade out
-              ele.classList.add('available')
-              setTimeout(() => {
-                // remove from DOM
-                ele.outerHTML = ''
-              }, 2000)
-            }
-          })
-    } */
     
     render(){
         return(

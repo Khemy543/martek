@@ -22,10 +22,6 @@ const CarouselView = (props) => {
   const [activeCampus, setActiveCampus] = React.useState(localStorage.getItem('activeCampus_id'));
   const [isActive, setIsActive] = React.useState(true);
 
-  /* React.useEffect(()=>{
-    
-  },[]) */
-
   const next = () => {
     if (animating) return;
     const nextIndex = activeIndex === props.images.length - 1 ? 0 : activeIndex + 1;
@@ -55,7 +51,7 @@ const CarouselView = (props) => {
         <img src={`https://backend-api.martekgh.com/${item.src}`} className="image-carousel"/>
         </div> 
         
-        <CarouselCaption  captionHeader={item.caption} />
+        <CarouselCaption captionText={item.caption}  captionHeader={item.caption} />
       </CarouselItem>
     );
   });

@@ -41,7 +41,6 @@ function AddProduct(props){
   React.useEffect(()=>{
       axios.get("https://backend-api.martekgh.com/api/categories")
       .then(res=>{
-        console.log(res.data)
         const categories = res.data
         setCategoryList(categories);
       })
@@ -61,7 +60,6 @@ function AddProduct(props){
     {product_name, in_stock, price:parseFloat(price), description}, {
       headers:{'Authorization':`Bearer ${user}`}
     }).then(res => {
-      console.log(res.data)
       if(res.data.status === "success"){
         const product_id = res.data.product_id;
         setIsAcitve(false);
@@ -75,7 +73,6 @@ function AddProduct(props){
       }
      
     }).catch(error => {
-      console.log(error)
       setIsAcitve(false)
     })
   

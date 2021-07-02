@@ -27,14 +27,12 @@ export default function WaitVerification(props){
         let email=props.location.state.email
         axios.post(`${domain}/api/auth/email/resend`,{email:email})
         .then(res=>{
-            console.log(res.data);
             setMessage(res.data.message);
             setVisible(true);
             setColor("success")
         })
         .catch(error=>{
             if(error.response){
-            console.log(error.response.data)
             setMessage(error.response.data.message);
             setVisible(true);
             setColor("danger")

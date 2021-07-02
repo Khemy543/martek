@@ -20,10 +20,6 @@ const [isActive, setIsActive] = React.useState(false);
 const [firtsname, setFirstname] = React.useState("");
 const [lastname, setLastname] = React.useState("");
 
-
-console.log(props)
-console.log(history) 
-
   return (
     <>
       <div

@@ -49,7 +49,6 @@ function EditProfile(props){
    {headers:{'Authorization':`Bearer ${user}`}}
   )
   .then(res=>{
-    console.log(res.data);
     if(res.data.status === "success"){
       setIsActive(false);
       setModal(true);
@@ -65,7 +64,6 @@ function EditProfile(props){
     }
   })
   .catch(error=>{
-    console.log(error.response.data);
     setIsActive(false);
     setAlert(true)
   })
@@ -109,7 +107,6 @@ function EditProfile(props){
     {password,new_password},{
       headers:{ 'Authorization':`Bearer ${user}`}
 }).then(res=>{
-  console.log(res.data);
   setModal(true);
   setMessage(res.data.status)
   setTimeout(
@@ -121,7 +118,6 @@ function EditProfile(props){
 )
 })
 .catch(error=>{
-  console.log(error)
 })
 
   }

@@ -12,7 +12,6 @@ import {
 
 export default function CartItem({items, value}){
 
-console.log("value", items)
 const {id, product_name, product_images, price, total, quantity} = items;
 const {increment, decrement, removeItem } = value;
     return(

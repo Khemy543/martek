@@ -62,7 +62,6 @@ const tabToggle = tab => {
       headers:{ 'Authorization':`Bearer ${merchandiser}`}
 })
     .then(res=>{
-      console.log(res.data)
       setCompany_name(res.data.company_name);
       setCompany_description(res.data.company_description);
       setShopType(res.data.shop_type);
@@ -115,7 +114,6 @@ const tabToggle = tab => {
     axios.patch("https://backend-api.martekgh.com/api/merchandiser/"+id+"/update",{company_name,campus_id,company_description,phone,email},
     { headers:{"Authorization":`Bearer ${merchandiser}`}})
     .then(res=>{
-      console.log(res.data)
       if(res.data.status === "success"){
         setModal(true);
         setMessage("UPDATED")
@@ -144,7 +142,6 @@ const tabToggle = tab => {
     {password,new_password},{
       headers:{ 'Authorization':`Bearer ${merchandiser}`}
 }).then(res=>{
-  console.log(res.data);
   setModal(true);
   setMessage("Password Changed")
   setTimeout(
@@ -155,7 +152,6 @@ const tabToggle = tab => {
 )
 })
 .catch(error=>{
-  console.log(error)
 })
 
   }
@@ -182,7 +178,36 @@ function _handleAvatarChange(e) {
     setAvatarImage(reader.result)
   }
 
-  reader.readAsDataURL(file)
+  reader.readAsDataURL(file);
+
+  let bodyFormData = new FormData();
+  bodyFormData.append('avatar',file);
+  axios({method:"post",
+  url:`https://backend-api.martekgh.com/api/merchandiser/${id}/store-photos`,
+  data:bodyFormData,
+  headers:{
+    "Content-Type": "multipart/form-data",
+  },
+  onUploadProgress: (progressEvent) => {
+      const {loaded , total} = progressEvent;
+      let percentage = Math.floor(loaded * 100 / total);
+      if(percentage<100){
+
+      }
+  }})
+ .then(res=>{
+  setModal(true);
+  setMessage("SHOP LOGO UPDATED !")
+  setTimeout(
+    function(){
+        setModal(false);
+    },
+    1500
+)
+ })
+ .catch(error=>{
+ })
+
 }
 
 function _handleCoverChange(e) {
@@ -196,7 +221,35 @@ function _handleCoverChange(e) {
    setCoverImage(reader.result)
   }
 
-  reader.readAsDataURL(file)
+  reader.readAsDataURL(file);
+
+  let bodyFormData = new FormData();
+   bodyFormData.append('cover_photo',file);
+   axios({method:"post",
+   url:`https://backend-api.martekgh.com/api/merchandiser/${id}/store-photos`,
+   data:bodyFormData,
+   headers:{
+     "Content-Type": "multipart/form-data",
+   },
+   onUploadProgress: (progressEvent) => {
+       const {loaded , total} = progressEvent;
+       let percentage = Math.floor(loaded * 100 / total);
+       if(percentage<100){
+
+       }
+   }})
+  .then(res=>{
+    setModal(true);
+  setMessage("COVER PHOTO UPDATED !")
+  setTimeout(
+    function(){
+        setModal(false);
+    },
+    1500
+)
+  })
+  .catch(error=>{
+  })
 }
 
   return (
@@ -325,8 +378,7 @@ function _handleCoverChange(e) {
                   <i className="nc-icon nc-money-coins" />
                 </InputGroupText>
               </InputGroupAddon>
-              {console.log("cam:",campus_id)}
-              <Input placeholder="Campus" type="select" value={campus_id} onChange={e=>{setCampus_id(e.target.value); console.log(e.target.value)}}>
+              <Input placeholder="Campus" type="select" value={campus_id} onChange={e=>{setCampus_id(e.target.value);}}>
                       {campusList.map(value => <option key={value.id} value={value.id}>{value.campus}</option>)}
                       </Input>
             </InputGroup>

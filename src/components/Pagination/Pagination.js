@@ -13,7 +13,6 @@ export default function Pagination(props){
     }
     React.useEffect(()=>{
         getArray();
-        console.log(pagination)
     },[])
 
     return(

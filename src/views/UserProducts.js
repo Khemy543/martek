@@ -23,12 +23,11 @@ function UserProducts(props){
     axios.get("https://backend-api.martekgh.com/api/e-trader/get-user-products",{
       headers:{"Authorization":`Bearer ${user}`}
   }).then(res=>{
-          console.log(res.data)
-          setProducts(res.data);
+            const products = res.data.filter(item => item.product_image[0] !== undefined);
+          setProducts(products);
           setIsActive(false)
       })
       .catch(error=>{
-          console.log(error)
       })
   },[])
 

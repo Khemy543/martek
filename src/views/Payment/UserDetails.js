@@ -41,7 +41,6 @@ React.useEffect(()=>{
   setAmount((Math.round(real_amount * 100) / 100).toFixed(2));
 },[])
 const handleSubmit=(e)=>{
-    console.log("....")
     e.preventDefault();
     if(true){
     props.history.push("/user/payment/account", {
@@ -60,7 +59,6 @@ const activateFreeTrial=()=>{
 axios.post(`https://backend-api.martekgh.com/api/user/toggle/${props.location.state.product_id}/to-free-trial`,null,
 {headers:{'Authorization':`Bearer ${user}`}})
 .then(res=>{
-  console.log(res.data);
   setModal(true);
   setTimeout(
     function () {
@@ -73,7 +71,6 @@ axios.post(`https://backend-api.martekgh.com/api/user/toggle/${props.location.st
 
 })
 .catch(error=>{
-  console.log(error)
 })
 }
 

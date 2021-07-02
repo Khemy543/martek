@@ -43,13 +43,11 @@ function RegisterPage(props) {
   React.useEffect(() => {
     axios.get("https://backend-api.martekgh.com/api/campuses")
       .then(res => {
-        console.log(res.data)
         if (res.status === 200) {
           setCampusList(res.data)
         }
       })
       .catch(error => {
-        console.log(error)
       })
   }, []);
 
@@ -70,7 +68,6 @@ function RegisterPage(props) {
       }
 
       if(!(Object.keys(tempErrors).length === 0 && tempErrors.constructor === Object)){
-        console.log(tempErrors)
         setErrors(tempErrors);
         setIsActive(false)
         return;
@@ -78,7 +75,6 @@ function RegisterPage(props) {
       axios.post('https://backend-api.martekgh.com/api/register-user', {
         config, name, email, phone: `233${phone}`, password, campus_id
       }).then(res => {
-        console.log(res.data)
         if (res.data.status === "success") {
           setIsActive(false);
           swal({
@@ -92,7 +88,6 @@ function RegisterPage(props) {
               email, password
             })
             .then(res=>{
-              console.log(res.data);
               localStorage.setItem('access_token',res.data.access_token);
               setTimeout(
                 function () {
@@ -104,7 +99,6 @@ function RegisterPage(props) {
             })
         }
       }).catch(error => {
-        console.log(error.response)
         if(error.response.status == 422){
           setErrors(error.response.data.errors)
         }

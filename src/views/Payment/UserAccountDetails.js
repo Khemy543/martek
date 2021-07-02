@@ -33,17 +33,12 @@ class UserAccountDetails extends React.Component{
         billingcity:""
     }
 
-    componentDidMount(){
-        console.log(this.props)
-    }
-
 handleCardSubmit=(e)=>{
     let user =localStorage.getItem('access_token');
     this.setState({isActive:true})
     e.preventDefault();
     let tempDate = this.state.date;
     let splitArray = tempDate.split("/");
-    console.log(splitArray[0], splitArray[1])
 
     axios.post("https://backend-api.martekgh.com/api/user/product/payment",
     {
@@ -63,11 +58,9 @@ handleCardSubmit=(e)=>{
         payment_method:'card_payment'
     },{headers:{ 'Authorization':`Bearer ${user}`}})
     .then(res=>{
-        console.log(res.data);/* 
-        window.location=`${res.data.authurl}` */
+        window.location=`${res.data.authurl}`
     })
     .catch(error=>{
-        console.log(error.response.data);
         this.setState({isActive:false})
     })
 }
@@ -90,11 +83,9 @@ handleMobileSubmit=(e)=>{
         payment_method:'momo'
     },{headers:{ 'Authorization':`Bearer ${user}`}})
     .then(res=>{
-        console.log(res.data);
         window.location=`${res.data.data.link}`
     })
     .catch(error=>{
-        console.log(error.response.data);
         this.setState({isActive:false})
     })
     }
@@ -110,11 +101,9 @@ handleMobileSubmit=(e)=>{
         payment_method:'momo'
     },{headers:{ 'Authorization':`Bearer ${user}`}})
     .then(res=>{
-        console.log(res.data);
         window.location=`${res.data.data.link}`
     })
     .catch(error=>{
-        console.log(error);
         this.setState({isActive:false})
     })
 }

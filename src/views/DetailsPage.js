@@ -75,7 +75,6 @@ function DetailsPage(props){
             let newImageArray = []
             axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/details")
             .then(res=>{
-                console.log("details",res.data);
                 setProduct(res.data);
                 setOwner(res.data.product_owner);
                 setCampus_name(res.data.product_owner.campus);
@@ -93,12 +92,10 @@ function DetailsPage(props){
                 setImages(newImageArray)
             })
             .catch(error=>{
-                console.log(error)
             });
 
             axios.get("https://backend-api.martekgh.com/api/product/"+productid+"/reviews")
             .then(res=>{
-                console.log(res.data);
                 setReviews(res.data.product_reviews);
                 if(res.data.average_rating !== null){
                      setAverage(Math.round(res.data.average_rating))
@@ -106,7 +103,6 @@ function DetailsPage(props){
 
             })
             .catch(error=>{
-                console.log(error)
             })
 
         let authenticated = localStorage.getItem('access_token');
@@ -132,7 +128,6 @@ function DetailsPage(props){
             { headers:{"Authorization":`Bearer ${user}`}} 
             )
             .then(res=>{
-                console.log(res.data);
                 var today = new Date();
                 var dd = String(today.getDate()).padStart(2, '0');
                 var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -141,7 +136,6 @@ function DetailsPage(props){
                 if(res.data.status === "saved"){
                     let tempReview = [...reviews];
                     tempReview.push({rating:rating, date:date, review:reviewAdd, user:{name:res.data.name}});
-                    console.log(tempReview)
                     setReviews(tempReview);
                     setreviewAdd("");
                     setRating(0);
@@ -149,7 +143,6 @@ function DetailsPage(props){
                 }
             })
             .catch(error=>{
-                console.log(error)
             })
         }
 
