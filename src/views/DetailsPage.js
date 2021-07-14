@@ -20,6 +20,7 @@ import Gallery from 'react-grid-gallery';
 import StoreIcon from '@material-ui/icons/Store';
 import ProductCarousel from '../components/ProductCarousel.js'
 import Skeleton,{SkeletonTheme} from 'react-loading-skeleton';
+import { Helmet } from 'react-helmet';
 
 let user = localStorage.getItem('access_token');
 
@@ -164,6 +165,11 @@ function DetailsPage(props){
       
         return(
             <div>
+                <Helmet>
+                    <title>
+                        Details | Martekgh
+                    </title>
+                </Helmet>
                 <div>
                     <br/>
                     <div className="section">
