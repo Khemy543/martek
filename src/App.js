@@ -14,7 +14,6 @@ import "slick-carousel/slick/slick-theme.css";
 //route
 import Routes from "./route.js";
 
-
 class App extends React.Component{
 
   // fake authentication Promise
