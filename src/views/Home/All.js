@@ -174,7 +174,8 @@ function All({history}){
             }
         })
         .then(response=>{
-            setShops(response.data.data);
+            const shops = response.data?.data.filter(item => item.valid_id !== null);
+            setShops(shops);
             let paginationData = {
                 current_page : response.data.meta.current_page,
                 last_page : response.data.meta.last_page,

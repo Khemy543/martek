@@ -362,6 +362,7 @@ var routes = [
       },
       {
         path: "/shop/free-trial",
+        protectedShopLogin:true,
         component: FreeConditions,
         layout: "/user"
       },

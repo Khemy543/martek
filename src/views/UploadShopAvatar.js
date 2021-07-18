@@ -4,12 +4,13 @@ import{
     Col,
     Row,
     Button,
-    Form,Progress, Spinner, Modal, ModalBody
+    Form,Progress, Spinner, Modal, ModalBody, ModalHeader, ModalFooter
 } from "reactstrap";
 import axios from "axios";
 import ImageUploader from 'react-images-upload';
 import IndexNavbar from "components/Navbars/IndexNavbar";
 import DemoFooter from "components/Footers/DemoFooter";
+import NavigationPrompt from "react-router-navigation-prompt";
 
 class UploadShopAvatar extends React.Component{
 
@@ -22,7 +23,8 @@ class UploadShopAvatar extends React.Component{
              isActive:false, activateButton:false, activateButton2:false, activateButton3:false,
              percentage:0,
              modal : false,
-             message : ''
+             message : '',
+             prompt: true
              };
          this.onDropAvatar = this.onDropAvatar.bind(this);
          this.onDropCover = this.onDropCover.bind(this);
@@ -47,6 +49,19 @@ class UploadShopAvatar extends React.Component{
             valid_id:picture,
             activateButton3:true
         });
+    }
+
+
+    handleShopDelete(){
+        let merchandiser = localStorage.getItem("shop_access_token")
+        axios.delete("https://backend-api.martekgh.com/api/merchandiser/delete",{
+            headers:{"Authorization":`Bearer ${merchandiser}`}
+        })
+        .then(res=>{
+            localStorage.removeItem('shop_access_token')
+        })
+        .catch(error=>{
+        })
     }
     
     
@@ -99,6 +114,22 @@ class UploadShopAvatar extends React.Component{
     return(
         <div>
         <IndexNavbar/>
+        <NavigationPrompt when={this.state.prompt} 
+            afterConfirm={()=>this.handleShopDelete()}
+            disableNative={false}
+            >
+        {({ onConfirm, onCancel }) => (
+            <Modal isOpen={this.state.prompt} className="login-modal">
+                <ModalBody style={{ color: "white", fontSize: "12px", fontWeight: 500 }} className="text-uppercase">
+                    You have unsaved changes, are you sure you want to leave?
+                </ModalBody>
+                <ModalFooter>
+                    <Button color="danger" onClick={onConfirm}>Yes</Button>
+                    <Button color="info" onClick={onCancel}>No</Button>
+                </ModalFooter>
+            </Modal>
+        )}
+        </NavigationPrompt>
         
         <div className="main">
                 <div className="section">

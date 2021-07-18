@@ -93,7 +93,7 @@ function ShopCard(props){
         </Row>
         <Row>
             <Col md="12">
-                <h4 style={{textAlign:"left", fontWeight:500 , fontSize:"14px", marginTop:"5px"}}>{shop_type.shop_type == 'Non-student shop' ? "All" : campus.campus}</h4>
+                <h4 style={{textAlign:"left", fontWeight:500 , fontSize:"14px", marginTop:"5px"}}>{shop_type.shop_type == 'Non-student shop' ? "ALL CAMPUSES " : campus.campus}</h4>
             </Col>
         </Row>
         <Row>

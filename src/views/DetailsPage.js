@@ -457,7 +457,7 @@ function DetailsPage(props){
                         <a href={`mailto:${email}`} style={{marginRight:"20px"}}><Button color="danger" block><i className="fa fa-envelope fa-2x"/></Button></a>
                             </Col>
                             <Col lg="4" md="4" sm="4" xs="">
-                        <a href={`https://wa.me/${phone}`} target="_blank"  rel="noopener noreferrer" style={{marginRight:"20px"}}><Button color="success" block><i className="fa fa-whatsapp fa-2x"/></Button></a>
+                        <a href={`https://wa.me/${phone}/?text=https://martekgh.com${props.location.pathname}`} target="_blank"  rel="noopener noreferrer" style={{marginRight:"20px"}}><Button color="success" block><i className="fa fa-whatsapp fa-2x"/></Button></a>
                             </Col>
                         </Row>
                     </ModalBody>
@@ -465,7 +465,7 @@ function DetailsPage(props){
                     {/* buying tips */}
                     <Modal isOpen={tipmodal}>
                         <ModalHeader>
-                            <h4 style={{fontWeight:500, fontSize:"17px"}}>Tips</h4>    
+                            <p style={{fontWeight:500, fontSize:"17px"}}>Tips</p>    
                         </ModalHeader>
                         <ModalBody style={{fontWeight:400}}>
                             1. Ensure to meet a campus seller in person, check the item(s) and make sure you are satisfied with the product.<br/>
