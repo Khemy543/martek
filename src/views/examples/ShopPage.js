@@ -9,9 +9,9 @@ import {
   TabPane,
   Container,
   Row,
-  Col, Card, CardBody,CardTitle, Spinner
+  Col, Card, CardBody,CardTitle,Button,UncontrolledPopover,PopoverBody, PopoverHeader
 } from "reactstrap";
-import Skeleton,{SkeletonTheme} from 'react-loading-skeleton'
+import Skeleton from 'react-loading-skeleton'
 
 import axios from "axios";
 import StarRatings from 'react-star-ratings';
@@ -25,12 +25,17 @@ function ShopPage(props) {
   const [activeTab, setActiveTab] = React.useState("1");
   const [shopProducts, setShopProducts] = React.useState([]);
   const [isActive, setIsActive] = React.useState(false);
+  const [popover, setPopover] = React.useState(false)
 
   const toggle = tab => {
     if (activeTab !== tab) {
       setActiveTab(tab);
     }
   };
+
+  const ShareToggle =()=>{
+    setPopover(!popover)
+  }
   
   React.useEffect(()=>{
     if(id){
@@ -143,10 +148,12 @@ function ShopPage(props) {
 
               </Col>
               <Col md="4" sm="4" xs="4" lg="4" xl="4">
-              <div>
-                <h5 style={{display:"inline", fontSize:"14px", fontWeight:"bold"}}>{value.merchandiser?.no_followers}</h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
-                
-              <h4 style={{ fontSize:"14px", marginTop:"5px"}}>{value.merchandiser.shop_type === "Non-student shop" ? 'All Campus' : value.merchandiser?.campus}</h4>
+              <div className="d-flex justify-content-between">
+                <div>
+                  <h5 style={{display:"inline", fontSize:"14px", fontWeight:"bold"}}>{value.merchandiser?.no_followers}</h5><h4 style={{display:"inline",fontSize:"14px"}}> | followers</h4>
+                    
+                    <h4 style={{ fontSize:"14px", marginTop:"5px"}}>{value.merchandiser.shop_type === "Non-student shop" ? 'All Campus' : value.merchandiser?.campus}</h4>
+                </div>
               </div>
               </Col>
 
@@ -154,6 +161,35 @@ function ShopPage(props) {
             <Row style={{marginTop:"10px"}}>
               <Col md="7" xl="7" sm="12" xs="12" lg="7" className="mr-auto ml-auto">
               <p style={{whiteSpace:"pre-line"}}>{value.merchandiser?.company_description}</p>
+              <div className="mt-1">
+                    <Button size="sm" className="btn-round" color="info" id="sharebutton" onClick={()=> setPopover(true)} >Share</Button>
+                    <UncontrolledPopover trigger="legacy" isOpen={popover} placement="bottom" toggle={ShareToggle} target="sharebutton">
+                      <PopoverHeader style={{fontWeight:"bold"}}>Share !!</PopoverHeader>
+                      <PopoverBody>
+                        <div className="d-flex mt-2">
+                            <a href={`https://www.facebook.com/sharer/sharer.php?u=https://martekgh.com/user/shop-view/${id}/${value.merchandiser?.company_name}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                            <i className="fa fa-facebook-square fa-2x" style={{color:'#4267B2'}}/>
+                            </a>
+                            <a href={`https://twitter.com/intent/tweet?text=Check%20out&url=https://martekgh.com/user/shop-view/${id}/${value.merchandiser?.company_name}`} 
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              style={{marginLeft:"20px"}}>
+                            <i className="fa fa-twitter-square fa-2x" style={{color:"#1DA1F2"}}/>
+                            </a>
+                            <a href={`https://wa.me/?text=https://martekgh.com/user/shop-view/${id}/${value.merchandiser?.company_name}`} 
+                              style={{marginLeft:"20px"}}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <i className="fa fa-whatsapp fa-2x" style={{color:'#25D366'}}/>
+                            </a>
+                        </div>
+                      </PopoverBody>
+                    </UncontrolledPopover>
+                </div>
               </Col>
             </Row>
               

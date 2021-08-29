@@ -22,6 +22,7 @@ const config = {
 };
 
 function LoginPage(props){
+  console.log(props)
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [isActive, setIsActive] = React.useState(false);

@@ -14,7 +14,6 @@ ReactGA.initialize(TRACKING_ID, {
 const history = createBrowserHistory();
 
 history.listen(location => {
-    console.log('location',location);
     ReactGA.set({page : location.pathname});
     ReactGA.pageview(location.pathname);
 })

@@ -104,10 +104,10 @@ class UploadShopAvatar extends React.Component{
         }
     }
     }).then(res=>{
-        this.setState({percentage:100})
+        this.setState({percentage:100, prompt:false})
         this.props.history.push("/auth/wait-shop-verification",{store_id:this.state.store_id})
     }).catch(error=>{
-        this.setState(false)
+        this.setState({isActive:false})
     })
 }
     render(){

@@ -10,7 +10,7 @@ import {
 import history from "../history.js";
 
 function FollowingShpCard(props){
-    const {id , shop_id, company_name ,shop_name, company_description, campus, shop_avatar , cover_photo, avg_rating} = props.shop;
+    const {id , shop_id, company_name ,shop_name, company_description, shop_avatar } = props.shop;
     React.useEffect(()=>{
 
     },[])

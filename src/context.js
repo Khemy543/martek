@@ -37,9 +37,11 @@ class ProductProvider extends React.Component{
         setShops:[],
         followShops:[],
         followLoader:false,
-        followingLoader:false,
+        unfollowLoader:false,
+        activeShopFollowers:null,
         id:"",
 		activeTabIndex:"1",
+        followModal:false,
 		actions: {
 			changeIndex: index => this.setState({ activeTabIndex: index }),
             setUser : data => this.setState({user : data}),
@@ -159,43 +161,56 @@ isTokenExpired() {
  }
    
 
-    follow = (id)=>{
-        user = localStorage.getItem('access_token')
-    
-           axios.post("https://backend-api.martekgh.com/api/follow/"+id+"/shop",null,{headers:{
-            "Authorization":`Bearer ${user}`}})
-            .then(res=>{
-                
-                axios.get("https://backend-api.martekgh.com/api/following-shops",{headers:{'Authorization':`Bearer ${user}`}})
-                .then(res=>{
-                    return(this.setState({followShops:res.data}))
-                })
-                .catch(error=>{
-                    
-                    
-                })
-            })
-            .catch(error=>{
-            })
+    follow = ({id, name, description, avatar})=>{
+        user = localStorage.getItem('access_token');
+        
+        if(!user){
+            return this.setState({followModal:true})
         }
+
+        this.setState({followLoader:true})
+    
+        axios.post("https://backend-api.martekgh.com/api/follow/"+id+"/shop",null,{headers:{
+        "Authorization":`Bearer ${user}`}})
+        .then(res=>{
+            if(res && res.data){
+                let shops = this.state.followShops;
+                let newShop = {
+                    shop_id:id,
+                    company_name:name,
+                    company_description:description,
+                    shop_avatar : avatar
+                }
+
+                this.setState({followShops:[...shops,newShop], activeShopFollowers:res.data.shop_followers})
+            }
+        })
+        .catch(error=>{
+        })
+        .finally((_) => {
+            this.setState({followLoader:false})
+        })
+    }
 
     unfollow=(id)=>{
         user = localStorage.getItem('access_token')
-        this.setState({loader:true})
+        this.setState({unfollowLoader:true})
         axios.post("https://backend-api.martekgh.com/api/unfollow/"+id+"/shop",null,{headers:{
             "Authorization":`Bearer ${user}`}})
             .then(res=>{
-                
-                axios.get("https://backend-api.martekgh.com/api/following-shops",{headers:{'Authorization':`Bearer ${user}`}})
-                .then(res=>{
-                    return(this.setState({followShops:res.data, loader:false}))
-                })
-                .catch(error=>{
-                    
-                })
+                if(res && res.data){
+                    let shops = [...this.state.followShops];
+                    shops = shops.filter(shop => shop.shop_id != id);
+                    this.setState({followShops:shops,activeShopFollowers:res.data.shop_followers})
+                }
             })
             .catch(error=>{
             })
+            .finally((_) => this.setState({unfollowLoader:false}))
+    }
+
+    closeFollowModal=()=>{
+        this.setState({followModal:false})
     }
 
 
@@ -503,7 +518,8 @@ shopLogout =()=>{
                 logout:this.logout,
                 shopLogout:this.shopLogout,
                 follow:this.follow,
-                unfollow:this.unfollow
+                unfollow:this.unfollow,
+                closeFollowModal:this.closeFollowModal
             }}>
                
 

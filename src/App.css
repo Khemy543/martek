@@ -72,13 +72,13 @@
   
   #horizontal-list li {
     float: left;
-    background-color: #eaeaea;
+    background-color: white;
     margin-right: 12px;
-    padding: 0px 10px;
+    padding: 0px 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgb(214, 213, 213);
+    border-radius: 100%;
     text-align: center;
     box-shadow:0 2px 12px rgba(0,0,0,0.1);
     cursor: pointer;
@@ -94,7 +94,11 @@
   }
   
   .active-page{
-      background-color: #acbcc0 !important;
+      background-color: #6ec7e0 !important;
+  }
+  .active-page p {
+
+    color: white !important;
   }
 
   /* .swal-text {

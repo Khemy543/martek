@@ -15,8 +15,8 @@ import {
   Nav,
   Container,
   Input,Row,Col,
-  Form,Dropdown, DropdownToggle, DropdownMenu, DropdownItem, Badge,
-  UncontrolledPopover,PopoverBody,PopoverHeader, ListGroup, ListGroupItem,ListGroupItemText,FormGroup
+  Form, Badge,
+  UncontrolledPopover,PopoverBody, ListGroup, ListGroupItem,FormGroup
 } from "reactstrap";
 
 import { ProductConsumer } from "../../context";

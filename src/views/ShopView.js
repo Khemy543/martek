@@ -18,19 +18,17 @@ import axios from "axios";
 import { ProductConsumer } from "../context.js";
 import StarRatings from 'react-star-ratings';
 // core components
-import Skeleton,{SkeletonTheme} from 'react-loading-skeleton';
+import Skeleton from 'react-loading-skeleton';
 import Product from "components/Product.js";
 
 
 function ShopView(props) {
   const [activeTab, setActiveTab] = React.useState("1");
-  const [followloader, setfollowLoader] = React.useState(false)
-  const [followingloader, setfollowingLoader] = React.useState(false);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [name, setName] = React.useState("");
   const [description, setDescription] = React.useState("");
-  const [followers, setFollowers] = React.useState("");
   const [isActive, setIsActive] = React.useState(false);
+  const [followers, setFollowers] = React.useState("");
   const [shopProducts, setShopProducts] = React.useState([]);
   const [followDisable, setFollowDisable] = React.useState(false);
   const [unfollowDisable, setUnfollowDisable] = React.useState(false);
@@ -38,7 +36,6 @@ function ShopView(props) {
   const [reviewAdd, setReview] = React.useState("");
   const [rating, setRating] = React.useState(0);
   const [average, setAverage] = React.useState(0);
-  const [reportmodal, setReportmodal] = React.useState(false);
   const [avatar, setAvatar] = React.useState('');
   const [cover, setCover] = React.useState('')
 
@@ -221,23 +218,48 @@ function ShopView(props) {
                   <br />
                 </Col>
                 <Col md="4" sm="4" xs="4" xl="4" lg="4">
+                  <ProductConsumer>
+                    {value => (
+                      <>
                   <div>
-                    <h5 style={{ display: "inline", fontSize: "14px", fontWeight: "bold", marginTop: "-15px" }}>{followers} </h5><h4 style={{ display: "inline", fontSize: "14px" }}> | followers</h4>
-                    {/* <h5 style={{display:"inline", fontSize:"14px", fontWeight:"bold", marginLeft:"20px"}}> {shopProducts.length}</h5><h4 style={{display:"inline",fontSize:"14px"}}> | Products</h4>
-                */} <br />
-                    <br />
-                    {loggedIn ?
-                      <ProductConsumer>
-                        {value => (
+                    <h5 style={{ display: "inline", fontSize: "14px", fontWeight: "bold", marginTop: "-15px" }}>{value.activeShopFollowers ? value.activeShopFollowers : followers} </h5><h4 style={{ display: "inline", fontSize: "14px" }}> | followers</h4>
+                      <br />
+                      <br />
                           <div>
-                            {value.followShops.some(item => item.shop_id == props.match.params.id) ? <Button size="sm" style={{ fontSize: "9px" }} className="btn-round" disabled={followDisable} color="info" onClick={() => { value.unfollow(props.match.params.id); setfollowingLoader(true); setfollowLoader(false); setFollowers(followers - 1); setFollowDisable(true); setUnfollowDisable(false) }}>{followingloader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>following</p>}</Button> : <Button size="sm" disabled={unfollowDisable} color='info' style={{ fontSize: "9px" }} className="btn-round" onClick={() => { value.follow(props.match.params.id); setUnfollowDisable(true); setFollowDisable(false); setfollowingLoader(false); setFollowers(followers + 1); setfollowLoader(true) }}>{followloader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>+follow</p>}</Button>}
+                            {value.followShops.some(item => item.shop_id == props.match.params.id) 
+                            ? <Button size="sm" style={{ fontSize: "9px" }} 
+                                className="btn-round" 
+                                disabled={followDisable} 
+                                color="info" 
+                                onClick={() => { value.unfollow(props.match.params.id)}}>
+                                {value.unfollowLoader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>following</p>}
+                              </Button> 
+                              : 
+                              <Button size="sm" disabled={unfollowDisable} color='info' style={{ fontSize: "9px" }} className="btn-round" 
+                                onClick={() => { value.follow({id:props.match.params.id,name,description,avatar}) }}>
+                                {value.followLoader ? <Spinner animation="grow" size="sm" /> : <p style={{ fontWeight: 1000, fontSize: "9px" }}>+follow</p>}</Button>}
                           </div>
+
+                            <Modal isOpen={value.followModal}>
+                              <ModalBody>
+                                <div style={{fontSize:"16px", fontWeight:"500", textTransform:"capitalize", textAlign:"center"}}>
+                                  Please Login to follow a shop
+                                </div>
+                                <img src={require('assets/img/Push notifications-rafiki.svg')} alt="notifications" />
+                              </ModalBody>
+                              <ModalFooter>
+                                <Button color="info" onClick={()=>props.history.push('/auth/login-page')}>
+                                  Login
+                                </Button>
+                                <Button color="danger" onClick={()=>value.closeFollowModal()}>
+                                  Cancel
+                                </Button>
+                              </ModalFooter>
+                            </Modal>
+                            </div>
+                          </>
                         )}
                       </ProductConsumer>
-                      :
-                      <div></div>
-                    }
-                  </div>
                 </Col>
 
               </Row>

@@ -4,7 +4,6 @@ import { Route, Switch, Redirect } from "react-router-dom";
 import IndexNavbar from "../components/Navbars/IndexNavbar.js";
 import DemoFooter from "../components/Footers/DemoFooter.js";
 import ProtectedRoute from '../ProtectedRoutes.js';
-import ProtectedLoginRoute from '../ProtectedLoginRoutes.js';
 import ScrollToTop from "react-scroll-up";
 
 import routes from "../layoutRoutes.js";
@@ -17,9 +16,9 @@ class UserLayout extends React.Component{
               if(prop.protectedRoute === true){
                   return(
                       <ProtectedRoute
-                      path={prop.layout + prop.path}
-                      component={prop.component}
-                      key={key}
+                        path={prop.layout + prop.path}
+                        component={prop.component}
+                        key={key}
                       />
                   )
               }else

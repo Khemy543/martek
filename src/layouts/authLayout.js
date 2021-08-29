@@ -47,7 +47,6 @@ class AuthLayout extends React.Component{
         <div>
         <Switch>
             {this.getRoutes(routes)}
-            <Redirect from="*" to="/auth/login-page" />
         </Switch>
         </div>
     );
