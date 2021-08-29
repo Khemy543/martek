@@ -1,6 +1,4 @@
-import React,{useContext} from "react";
-//import { Link } from "react-scroll";
-// reactstrap components
+import React from "react";
 import{
     Container,
     Row,
@@ -13,7 +11,7 @@ import{
     Nav,
     NavLink,
     NavItem,
-    Spinner
+    Spinner,Modal,ModalBody,ModalFooter,Button
 } from "reactstrap";
 import Skeleton from 'react-loading-skeleton';
 import {Helmet} from "react-helmet";
@@ -25,13 +23,12 @@ import Product from "../../components/Product.js";
 import CarouselView from "../../components/Carousel/Carousel.js";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import {ProductConsumer,ProductContext} from '../../context.js'
+import {ProductConsumer} from '../../context.js'
 /* import Pagination from "react-js-pagination"; */
 import ShopCard from "../../components/ShopCard.js";
 import Pagination from '../../components/Pagination/Pagination.js';
 import ImageContainer from '../../components/ImageContainer.js'
 import ProductHolder from "components/ProductHolder.js";
-import { FormatAlignCenterSharp } from "@material-ui/icons";
 import StoreIcon from '@material-ui/icons/Store';
 
 
@@ -571,7 +568,6 @@ function All({history}){
                                                             height={260}
                                                             alt="alt"
                                                         />
-                                                       {/*  <img alt="#" src={`https://backend-api.martekgh.com/${value.ad_path}`} style={{height:"230px",width:"100%",borderRadius:'5px', objectFit:"cover", border:"1px solid #eaeaea"}}/> */}
                                                     </div>
                                                  </div>
                                                 </Col>
@@ -624,6 +620,23 @@ function All({history}){
 
                         </Card>
                         </Row>
+
+                    <Modal isOpen={value.followModal}>
+                        <ModalBody>
+                        <div style={{fontSize:"16px", fontWeight:"500", textTransform:"capitalize", textAlign:"center"}}>
+                            Please Login to follow a shop
+                        </div>
+                        <img src={require('assets/img/Push notifications-rafiki.svg')} alt="notifications" />
+                        </ModalBody>
+                        <ModalFooter>
+                        <Button color="info" onClick={()=>history.push('/auth/login-page')}>
+                            Login
+                        </Button>
+                        <Button color="danger" onClick={()=>value.closeFollowModal()}>
+                            Cancel
+                        </Button>
+                        </ModalFooter>
+                    </Modal>
                         
                        
 
@@ -711,6 +724,8 @@ function All({history}){
                                     <img src={require(`assets/img/categories/${value.id}.png`)} 
                                         style={{width:"100%",height:"105px", borderRadius:"10px", marginBottom:"20px", cursor:"pointer", objectFit:"cover"}}
                                         onClick = {()=>history.push("/user/categories",{category_id:value.id, category_name:value.category, image:`${value.id}.png`})}
+                                        alt={value.name}
+
                                     />
                                     </Col>
                                 ))}

@@ -3,35 +3,15 @@ import{
     Col,
     Card,
     CardBody,
-    Row,
-    Button, Spinner, CardImg
+    Row, CardImg,Modal, ModalBody,ModalFooter,Button
 } from "reactstrap";
 import { ProductConsumer } from "../context";
 import history from "../history.js";
 import StarRatings from 'react-star-ratings';
 
 function ShopCard(props){
-        const [liked, setLiked] = React.useState(false)
-        const [unliked, setUnliked] = React.useState(false);
-        const [loggedIn, setLoggedIn] = React.useState(false);
         const [followers, setFollowers] = React.useState(props.shop.number_of_followers)
         const {id , shop_id, company_name ,shop_name, company_description, campus, avatar , cover_photo, avg_rating, shop_type} = props.shop;
-        React.useEffect(()=>{
-            let authenticated = localStorage.getItem('access_token');
-            if(authenticated !== null){
-             setLoggedIn(true);
-            }
-            else{
-                setLoggedIn(false);
-            }
-        },[]);
-
-        const toggleLike=()=>{
-            setLiked(!liked)
-        }
-        const toggleUnlike=()=>{
-            setUnliked(!unliked)
-        }
 
     return(
         <Col md="3" sm="6" xs="6" style={{padding:"0px 6px"}}>
@@ -40,20 +20,18 @@ function ShopCard(props){
             src={cover_photo != null?`https://backend-api.martekgh.com/${cover_photo}`: require('assets/img/banner2.png')} alt="Card image cap" onClick={()=>history.push(`/user/shop-view/${shop_id||id}/${company_name || shop_name}`, 
             {id:id || shop_id}
             )}/>
-            {loggedIn?
             <ProductConsumer>
                 {value=>(
+                    <>
                     <div id="top-right" style={{backgroundColor:"white", borderRadius:"50%", height:"25px", width:"25px"}}>
                     {value.followShops.some(item=>item.shop_id === id ||item.shop_id === shop_id)?
-                    <i onClick={()=>{value.unfollow(id || shop_id); toggleUnlike();setFollowers(followers-1)}} className={!unliked?"fa fa-heart":"fa fa-heart-o"} style={{fontWeight:600, color:"red", textAlign:"center", marginTop:"5px"}} />
+                    <i onClick={()=>{value.unfollow(id || shop_id)}} className="fa fa-heart" style={{fontWeight:600, color:"red", textAlign:"center", marginTop:"5px"}} />
                     :
-                    <i className={!liked?"fa fa-heart-o":"fa fa-heart"} onClick={()=>{value.follow(id || shop_id); toggleLike();setFollowers(followers+1)}}  style={{color:"red",fontWeight:600, textAlign:"center", marginTop:"5px"}}/>}
+                    <i className="fa fa-heart-o" onClick={()=>value.follow({id:id || shop_id, name:shop_name || company_name, description:company_description, avatar:avatar})}  style={{color:"red",fontWeight:600, textAlign:"center", marginTop:"5px"}}/>}
                     </div>
+                    </>
                 )}
             </ProductConsumer>
-        :
-        <div></div>
-        }
             
         <CardBody onClick={()=>history.push(`/user/shop-view/${id||shop_id}/${company_name || shop_name}`, 
             {id:id || shop_id}
